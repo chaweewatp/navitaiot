@@ -16,6 +16,7 @@ def testReport(request):
     # print('Raw Data: "%s"' % request.body)
     return HttpResponse("OK")
 
+@csrf_exempt
 def testControl(request):
     print('Raw Data: "%s"' % request.body)
     return HttpResponse("OK")
