@@ -12,5 +12,7 @@ def home(request):
 
 @csrf_exempt
 def test1(request):
-    print('Raw Data: "%s"' % request.body)
+    print('Raw Data: "%s"' % request.__dict__)
+    # print('Raw Data: "%s"' % request.body)
+
     return HttpResponse("OK")
