@@ -11,8 +11,11 @@ def home(request):
     return render(request, 'myiot/home.html')
 
 @csrf_exempt
-def test1(request):
+def testReport(request):
     print('Raw Data: "%s"' % request.__dict__)
     # print('Raw Data: "%s"' % request.body)
+    return HttpResponse("OK")
 
+def testControl(request):
+    print('Raw Data: "%s"' % request.body)
     return HttpResponse("OK")
