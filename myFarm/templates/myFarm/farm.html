@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+{#    <link rel="stylesheet" href="{% static  'css/landingPage.css' %}">#}
+{#    <link rel="stylesheet" href="{% static 'css/landingPageFonts.css' %}">#}
+{#    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">#}
+{#    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>#}
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+{#    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>#}
+        <title>Title</title>
+
+</head>
+<body>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  var firebaseConfig = {
+    apiKey: "AIzaSyCs9xyouIlR_7SBQwCpL_Bde22ZDC4vpWM",
+    authDomain: "navitaiot.firebaseapp.com",
+    databaseURL: "https://navitaiot.firebaseio.com",
+    projectId: "navitaiot",
+    storageBucket: "navitaiot.appspot.com",
+    messagingSenderId: "840926440731",
+    appId: "1:840926440731:web:9e7d0a635d9e89ff0db7be",
+    measurementId: "G-5FY5JL3YN1"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+    var farmRef = firebase.database().ref("farmCode/"+'{{ farmCode }}');
+      farmRef.on('value', function (snapshot) {
+        console.log(snapshot.val());
+        var arr = snapshot.val();
+        console.log(arr['flow1Status'])
+        if (arr['flow1Status'] == true){
+            document.getElementById("flowSensor1").innerHTML = "เปิด";
+        } else if (arr['flow1Status'] == false) {
+            document.getElementById("flowSensor1").innerHTML = "ปิด";
+        } else{
+            document.getElementById("flowSensor1").innerHTML = "N/A";
+        }
+
+      });
+
+    {#firebase.database().ref("farmCode/" + '{{ farmCode }}').set(#}
+    {#    {#}
+    {#        'airHumidSensor':79.6,#}
+    {#        'airTempSensor':30.1,#}
+    {#        'valve1Status': false,#}
+    {#        'valve2Status': false,#}
+    {#        'valve3Status': false,#}
+    {#        'valve4Status': false,#}
+    {#        'relay1Status': false,#}
+    {#        'relay2Status': false,#}
+    {#        'flow1Status': false,#}
+    {#        'flow2Status': false,#}
+    {#        'flow3Status': false,#}
+    {#    }#}
+    {#)#}
+
+</script>
+
+
+
+
+  <div class="body">
+      <div class="container-fluid">
+          <div class="row">
+                <div class="col-xs-12 col-md12 text-title">
+                    <p>{{ farmName }}</p>
+                    <p>{{ farmCode }}</p>
+                </div>
+          </div>
+
+
+          <div class="row">
+                <div class="col-xs-12 col-md12 text-title">
+                    <p>ค่าวัด sensor</p>
+                    <p>Flow sensor 1: <span id="flowSensor1"></span></p>
+                </div>
+          </div>
+    </div>
+  </div>
+
+{#  <script src="../../static/js/vendor/modernizr-3.8.0.min.js"></script>#}
+{#  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>#}
+{#  <script>window.jQuery || document.write('<script src="./js/vendor/jquery-3.4.1.min.js"><\/script>')</script>#}
+{#  <script src="../../static/js/plugins.js"></script>#}
+{#  <script src="../../static/js/main.js"></script>#}
+
+</body>
+</html>
