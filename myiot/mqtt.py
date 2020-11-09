@@ -17,5 +17,5 @@ client.on_connect = on_connect
 client.on_message = on_message
 
 client.username_pw_set("hjjfrnei:hjjfrnei", password='2YTkbiI66pGxct-1sG2r2grx2yT7sAXj')
-client.connect("grouse.rmq.cloudamqp.com", 1883, 60)
+client.connect("jaguar.rmq.cloudamqp.com", 1883, 60)
 
