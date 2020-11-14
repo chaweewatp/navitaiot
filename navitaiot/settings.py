@@ -79,9 +79,18 @@ WSGI_APPLICATION = 'navitaiot.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'dck9vfq2mmh7fc',
+        'USER': 'yqybgghxkptwvw',
+        'PASSWORD': '245a8d86a503fece7b249bff361e22c700e55990bbab40749264f043c9b25af3',
+        'HOST': 'ec2-52-202-66-191.compute-1.amazonaws.com',
+        'PORT': '5432',
+        'CONN_MAX_AGE': 500,
     }
 }
 
