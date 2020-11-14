@@ -1,9 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
 from .models import farm, airTempSensor
 import pyrebase
-
+from myiot.views import sendCommandONLED, sendCommandOffLED
 config = {
   "apiKey": "AIzaSyCs9xyouIlR_7SBQwCpL_Bde22ZDC4vpWM",
   "authDomain": "navitaiot.firebaseapp.com",
@@ -25,7 +25,23 @@ def pageFarm(request, id):
         'farmName' : farm.objects.get(farmCode=id).farmName,
         'farmCode' : farm.objects.get(farmCode=id).farmCode
     }
+
+    if (request.method == "POST"):
+        command = request.POST.get("command")
+        print(command)
+        if (command == "ON"):
+            print("get command ON")
+            sendCommandONLED()
+        elif (command == "OFF"):
+            print("get command OFF")
+            sendCommandOffLED()
+        else:
+            print("get command N/A")
+
+        return redirect(pageFarm, id='AA0001')
+
     return render(request, 'myFarm/farm.html', context)
+
 
 
 def updateFirebase(request):
