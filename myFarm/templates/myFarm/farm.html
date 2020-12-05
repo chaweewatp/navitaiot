@@ -87,8 +87,44 @@
             document.getElementById("statusRelay1").innerHTML = "N/A";
         }
 
+        if (arr['relay2On'] == true) {
+            document.getElementById("statusRelay2").innerHTML = "เปิด";
+        } else if (arr['relay2On'] == false) {
+            document.getElementById("statusRelay2").innerHTML = "ปิด";
+        } else {
+            document.getElementById("statusRelay2").innerHTML = "N/A";
+        }
 
+                if (arr['relay3On'] == true) {
+            document.getElementById("statusRelay3").innerHTML = "เปิด";
+        } else if (arr['relay3On'] == false) {
+            document.getElementById("statusRelay3").innerHTML = "ปิด";
+        } else {
+            document.getElementById("statusRelay3").innerHTML = "N/A";
+        }
 
+                        if (arr['relay4On'] == true) {
+            document.getElementById("statusRelay4").innerHTML = "เปิด";
+        } else if (arr['relay4On'] == false) {
+            document.getElementById("statusRelay4").innerHTML = "ปิด";
+        } else {
+            document.getElementById("statusRelay4").innerHTML = "N/A";
+        }
+        if (arr['relay5On'] == true) {
+            document.getElementById("statusRelay5").innerHTML = "เปิด";
+        } else if (arr['relay5On'] == false) {
+            document.getElementById("statusRelay5").innerHTML = "ปิด";
+        } else {
+            document.getElementById("statusRelay5").innerHTML = "N/A";
+        }
+
+        if (arr['relay6On'] == true) {
+            document.getElementById("statusRelay6").innerHTML = "เปิด";
+        } else if (arr['relay6On'] == false) {
+            document.getElementById("statusRelay6").innerHTML = "ปิด";
+        } else {
+            document.getElementById("statusRelay6").innerHTML = "N/A";
+        }
     });
 
     {#firebase.database().ref("farmCode/" + '{{ farmCode }}').set(#}
@@ -202,7 +238,7 @@
                             </div>
                             <div class="row">
                                 <div class="col12">
-                                    Status: On
+                                    Status: <span id="statusRelay2"></span>
                                 </div>
                             </div>
                             <div class="row">
@@ -234,7 +270,7 @@
                             </div>
                             <div class="row">
                                 <div class="col12">
-                                    Status: On
+                                    Status: <span id="statusRelay3"></span>
                                 </div>
                             </div>
                             <div class="row">
@@ -269,7 +305,7 @@
                             </div>
                             <div class="row">
                                 <div class="col12">
-                                    Status: On
+                                    Status: <span id="statusRelay4"></span>
                                 </div>
                             </div>
                             <div class="row">
@@ -303,7 +339,7 @@
                             </div>
                             <div class="row">
                                 <div class="col12">
-                                    Status: On
+                                    Status: <span id="statusRelay5"></span>
                                 </div>
                             </div>
                             <div class="row">
@@ -335,7 +371,7 @@
                             </div>
                             <div class="row">
                                 <div class="col12">
-                                    Status: On
+                                    Status: <span id="statusRelay6"></span>
                                 </div>
                             </div>
                             <div class="row">
