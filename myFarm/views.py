@@ -16,11 +16,11 @@ firebase = pyrebase.initialize_app(config)
 # Create your views here.
 
 def home(request):
-    print('Hello world')
+    print('User access to home page')
     return render(request, 'myFarm/home.html')
 
 def pageFarm(request, id):
-    print('Hello world')
+    print('User access to myFarm page')
     context={
         'farmName' : farm.objects.get(farmCode=id).farmName,
         'farmCode' : farm.objects.get(farmCode=id).farmCode
@@ -44,9 +44,12 @@ def pageFarm(request, id):
 
 
 
-def updateFirebase(request):
+def updateFirebase(request, farmID, text):
+
     # https://github.com/thisbejim/Pyrebase
     db = firebase.database()
-    db.child("farmCode").child("AA0001").update({"flow1Status": False})
+    # db.child("farmCode").child("AA0001").update({"flow1Status": False})
+    db.child("farmCode").child(farmID).update(text)
+
     return HttpResponse("OK")
 
