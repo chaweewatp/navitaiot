@@ -15,7 +15,15 @@ import paho.mqtt.client as mqtt
 # from .mqtt import client, sendToMQTT
 from .__init__ import client
 
+from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.triggers.cron import CronTrigger
+from django.core.management.base import BaseCommand
+from django_apscheduler.jobstores import DjangoJobStore
+from django_apscheduler.models import DjangoJobExecution
 
+
+
+from myFarm.models import scheduleRelay, relayDevice, farm
 
 # Create your views here.
 
@@ -107,3 +115,104 @@ def testAPI2(request):
         else:
             pass
     return Response("OK")
+
+def sendCommandOnDuration(chipID, device, duration):
+    topic = chipID
+    msg = device+"/turnOnDuration/"+str(duration)
+    client.publish(topic, msg)
+    print('Message publish to ' + chipID + ", msg :" + msg)
+
+def sendScheduleToIoT(text):
+    """ send set of command to IoT"""
+    print(text)
+    chipId="AA0001"
+    device="relay1"
+    duration=20000
+    sendCommandOnDuration(chipID=chipId, device=device, duration=duration)
+    print('Send command to IoT')
+
+
+
+def sendCommandOnTest(text):
+    print(text)
+    topic = "AA0001"
+    msg = "relay3"+"/turnOn"
+    client.publish(topic, msg)
+    print('Message publish to ' + "AA0001" + ", msg :" + msg)
+
+def delete_old_job_executions(max_age=604_800):
+    """This job deletes all apscheduler job executions older than `max_age` from the database."""
+    DjangoJobExecution.objects.delete_old_job_executions(max_age)
+
+
+
+
+@api_view(['POST'])
+@permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
+def createSchedule(request):
+
+    data = json.loads(str(request.body, encoding='utf-8'))
+    print(data)
+    farmID=data["farmID"]
+    device=data["detail"]["device"]
+    duration=data["detail"]["duration"]
+    hour=data["detail"]["hour"]
+    minute=data["detail"]["minute"]
+    period=data["detail"]["period"]
+    scheduleID='{}_{}_period{}'.format(farmID,device,period)
+
+    try:
+        newSch = scheduleRelay.objects.get(scheduleId=scheduleID)
+        print('schedule is exist')
+        newSch.period = period
+        newSch.startTime = '{}:{}'.format(hour, minute)
+        newSch.duration = duration
+        newSch.dayOfWeek = 'x'
+        newSch.enable = True
+        newSch.save()
+        newSch.updateScheduleName()
+
+    except:
+        print('create new schedule')
+        f1 = farm.objects.get(farmCode=farmID)
+        r1 = relayDevice.objects.get(farm_id=f1, relayNumber=device[-1])
+        newSch = scheduleRelay(relay=r1, period=period, startTime='{}:{}'.format(hour,minute), duration=duration,
+                               dayOfWeek='x', enable=True)
+        newSch.save()
+        newSch.updateScheduleName()
+
+    jobId=str(newSch.scheduleId)
+    scheduler = BackgroundScheduler()
+    scheduler.add_jobstore(DjangoJobStore(), "default")
+    text="'farmID':{},'device':{}, 'start_at':{}-{},'duration':{}".format(farmID, device, hour,minute,duration)
+    # scheduler.add_job(updateSchedule, 'interval', minutes=1)
+    # scheduler.add_job(sendCommandOnTest, 'cron', id=jobId, replace_existing=True, day_of_week='mon, tue, wed, thu, fri, sat, sun', hour=hour, minute=minute, args=["{'farmID':'AA0001','device':'relay1'}"])
+    # scheduler.add_job(sendCommandOnTest, trigger=CronTrigger(day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=hour, minute=minute),
+    #                   id=jobId, replace_existing=True, args=[text])
+    scheduler.add_job(sendScheduleToIoT, trigger=CronTrigger(day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=hour, minute=minute),
+                      id=jobId, replace_existing=True, args=[text], misfire_grace_time=3600)
+    scheduler.start()
+    print("Schedule created {}".format(text))
+    return Response("OK")
+
+@api_view(['POST'])
+@permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
+def removeSchedule(request):
+    data = json.loads(str(request.body, encoding='utf-8'))
+    farmID=data["farmID"]
+    device=data["detail"]["device"]
+    scheduler = BackgroundScheduler()
+    scheduler.remove_job('{}_{}'.format(farmID,device))
+    return Response("OK")
+
+
+@api_view(['POST'])
+@permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
+def printSchedule(request):
+    scheduler = BackgroundScheduler()
+    scheduler.print_jobs()
+    print(scheduler.get_jobs())
+    print(scheduler.get_job('AA0001_relay1'))
+    return Response("OK")
+
+

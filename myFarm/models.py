@@ -35,6 +35,7 @@ class soilHumidSensor(models.Model):
     def __str__(self):
         return "{}-{}-{}".format(self.id, self.farm, self.sensorNumber)
 
+
 class boardHumidSensor(models.Model):
     farm = models.ForeignKey(farm, on_delete=models.CASCADE)
     sensorNumber = models.CharField(max_length=10)
@@ -52,14 +53,7 @@ class boardTempSensor(models.Model):
     def __str__(self):
         return "{}-{}-{}".format(self.id, self.farm, self.sensorNumber)
 
-class soilHumidSensor(models.Model):
-    farm = models.ForeignKey(farm, on_delete=models.CASCADE)
-    sensorNumber = models.CharField(max_length=10)
 
-    class Meta:
-        ordering = ['farm', 'sensorNumber']
-    def __str__(self):
-        return "{}-{}-{}".format(self.id, self.farm, self.sensorNumber)
 
 class airHumidSensor(models.Model):
     farm = models.ForeignKey(farm, on_delete=models.CASCADE)
@@ -144,6 +138,8 @@ class valveDevice(models.Model):
 class relayDevice(models.Model):
     farm = models.ForeignKey(farm, on_delete=models.CASCADE)
     relayNumber = models.CharField(max_length=10)
+    scheduleStatus=models.BooleanField(blank=True, null=True)
+    currentStatus=models.BooleanField(blank=True, null=True)
 
     class Meta:
         ordering = ['farm', 'relayNumber']
@@ -164,3 +160,30 @@ class relayData(models.Model):
     dataCreated = models.DateTimeField(default = datetime.now)
     def __str__(self):
         return "{}-{}".format(self.id, self.device)
+
+
+period_choice=[ ('0','0'),
+                ('1','1'),
+               ('2','2'),
+               ('3','3'),
+               ('4','4'),
+               ('5','5'),
+               ('6','6')]
+
+class scheduleRelay(models.Model):
+    relay=models.ForeignKey(relayDevice, on_delete=models.CASCADE, null=True)
+    scheduleId=models.CharField(max_length=255, default="not assign")
+    period=models.CharField(max_length=2, choices=period_choice, blank=True, default='0')
+    startTime=models.CharField(max_length=10, blank=True, default="00:00")
+    duration=models.IntegerField(default=0, blank=True)
+    dayOfWeek=models.TextField(max_length=255, default="sun, mon, tue, wed, thu, fri, sat", blank=True)
+    enable=models.BooleanField(default=False, blank=True)
+
+    def __str__(self):
+        return "{}".format(self.scheduleId)
+
+    def updateScheduleName(self):
+        self.scheduleId='{}_relay{}_period{}'.format(self.relay.farm.farmCode, self.relay.relayNumber, self.period)
+        self.save()
+
+
