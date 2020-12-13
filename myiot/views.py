@@ -216,3 +216,28 @@ def printSchedule(request):
     return Response("OK")
 
 
+
+@api_view(['POST'])
+@permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
+def wakeUp(request):
+    data = json.loads(str(request.body, encoding='utf-8'))
+    print(data)
+    farmID=data["farmID"]
+    f1=farm.objects.get(farmCode=farmID)
+    relay_list=relayDevice.objects.filter(farm=f1)
+    relay_num=[]
+    command=[]
+    for item in relay_list:
+        relay_num.append(item.relayNumber)
+        command.append(item.scheduleStatus)
+
+    command = ['turnOn' if item is True else 'turnOff' for item in command]
+
+    topic = "AA0001/getCurrentCommand"
+    msg = "relay"+relay_num[0]+'/'+command[0]+",relay"+relay_num[1]+'/'+command[1]+",relay"+relay_num[2]+'/'+command[2]
+    client.publish(topic, msg)
+    print('Message publish to ' + "AA0001" + ", msg :" + msg)
+
+    return Response("OK")
+
+
