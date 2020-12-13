@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from datetime import datetime
 
-from .models import farm, airTempSensor
+from .models import farm, airTempSensor, scheduleRelay
+from myiot.views import sendCommandOff, sendCommandOn, sendCommandONLED, sendCommandOffLED
+
+
 import pyrebase
-from myiot.views import sendCommandONLED, sendCommandOffLED
 config = {
   "apiKey": "AIzaSyCs9xyouIlR_7SBQwCpL_Bde22ZDC4vpWM",
   "authDomain": "navitaiot.firebaseapp.com",
@@ -12,6 +15,10 @@ config = {
 }
 
 firebase = pyrebase.initialize_app(config)
+
+from myFarm import schedulejobs
+from apscheduler.schedulers.background import BackgroundScheduler
+
 
 # Create your views here.
 
@@ -52,4 +59,8 @@ def updateFirebase(request, farmID, text):
     db.child("farmCode").child(farmID).update(text)
 
     return HttpResponse("OK")
+
+
+
+# schedule added, updated and removed here
 
