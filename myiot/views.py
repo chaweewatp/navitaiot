@@ -218,8 +218,9 @@ def createSchedule(request):
     print("Schedule created {}".format(text))
 
     if pause == False:
-        scheduler.resume_job(jobId)
-        print("Schedule resume {}".format(text))
+        # scheduler.resume_job(jobId)
+        # print("Schedule resume {}".format(text))
+        pass
     else:
         scheduler.pause_job(jobId)
         print("Schedule pause {}".format(text))
@@ -257,8 +258,9 @@ def createSchedule(request):
     scheduler.start()
     print("Schedule created {}".format(text))
     if pause == False:
-        scheduler.resume_job(jobId)
-        print("Schedule resume {}".format(text))
+        # scheduler.resume_job(jobId)
+        # print("Schedule resume {}".format(text))
+        pass
 
     else:
         scheduler.pause_job(jobId)

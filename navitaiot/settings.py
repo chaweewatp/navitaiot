@@ -55,6 +55,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
 ROOT_URLCONF = 'navitaiot.urls'
 
 TEMPLATES = [
@@ -75,6 +76,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'navitaiot.wsgi.application'
+
+
 
 
 # Database
@@ -137,6 +140,23 @@ STATIC_URL = '/static/'
 
 #activate Django-heroku
 django_heroku.settings(locals())
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.AllowAny',),
+    'DEFAULT_RENDERER_CLASSES': (
+    #   'rest_framework.renderers.XMLRenderer',
+    'rest_framework.renderers.JSONRenderer',
+    #   'rest_framework.renderers.BrowsableAPIRenderer',
+    ),
+'DEFAULT_AUTHENTICATION_CLASSES': [
+    # 'rest_framework.authentication.SessionAuthentication',
+    'rest_framework.authentication.BasicAuthentication',
+]
+
+
+}
+
 
 
 CORS_ALLOWED_ORIGINS = [
