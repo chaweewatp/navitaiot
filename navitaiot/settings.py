@@ -27,7 +27,7 @@ SECRET_KEY = '-pe5g$#y#8x%%^58&1*^5haqq3)8ljux8x+w6qauv*z(xht$g_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -39,9 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'myFarm.apps.MyfarmConfig',
-    'myiot',
+    'myFarm',
+    'myiot.apps.MyiotConfig',
     'django_apscheduler',
+'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -136,6 +137,15 @@ STATIC_URL = '/static/'
 
 #activate Django-heroku
 django_heroku.settings(locals())
+
+
+CORS_ALLOWED_ORIGINS = [
+    "https://example.com",
+    "https://sub.example.com",
+    "http://localhost:8080",
+    "http://127.0.0.1:8000",
+    "https://navitaiot.herokuapp.com"
+]
 
 # Format string for displaying run time timestamps in the Django admin site. The default
 # just adds seconds to the standard Django format, which is useful for displaying the timestamps
