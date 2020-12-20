@@ -8,4 +8,3 @@ admin.site.register(airTempData)
 admin.site.register(relayDevice)
 
 admin.site.register(scheduleRelay)
-
