@@ -1,1 +1,1 @@
-web: gunicorn navitaiot.wsgi
+web: bin/start-pgbouncer-stunnel gunicorn navitaiot.wsgi
