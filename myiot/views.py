@@ -1,9 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.db import close_old_connections
+
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+
 import json
 
 from rest_framework.decorators import api_view, permission_classes
@@ -265,6 +268,8 @@ def createSchedule(request):
     else:
         scheduler.pause_job(jobId)
         print("Schedule pause {}".format(text))
+
+    close_old_connections()
 
     return Response("OK")
 
