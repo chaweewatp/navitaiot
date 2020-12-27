@@ -28,8 +28,6 @@ def on_connect(client, userdata, flags, rc):
     client.subscribe("reportRelay")
     client.subscribe("wakeUp")
 
-
-
 def on_message(client, userdata, msg):
     urlServer =  "https://navitaiot.herokuapp.com/"  # "http://127.0.0.1:8000" #"https://pupaplug.herokuapp.com"
     # print(msg.topic)
@@ -78,37 +76,48 @@ def on_message(client, userdata, msg):
         farmID=data.split('/')[0]
         content=data.split('/')[1]
         print("farm id is ", farmID, ' content is ', content)
+        db = firebase.database()
 
         if content == 'relay1On':
-            text={"relay1On":True}
+            text={'cur_status': True}
+            db.child("farmCode").child(farmID).child('Relay1').update(text)
         elif content == 'relay1Off':
-            text = {"relay1On": False}
+            text={'cur_status': False}
+            db.child("farmCode").child(farmID).child('Relay1').update(text)
         elif content == 'relay2On':
-            text = {"relay2On": True}
+            text={'cur_status': True}
+            db.child("farmCode").child(farmID).child('Relay2').update(text)
         elif content == 'relay2Off':
-            text = {"relay2On": False}
+            text={'cur_status': False}
+            db.child("farmCode").child(farmID).child('Relay2').update(text)
         elif content == 'relay3On':
-            text = {"relay3On": True}
+            text={'cur_status': True}
+            db.child("farmCode").child(farmID).child('Relay2').update(text)
         elif content == 'relay3Off':
-            text = {"relay3On": False}
+            text={'cur_status': False}
+            db.child("farmCode").child(farmID).child('Relay3').update(text)
         elif content == 'relay4On':
-            text = {"relay4On": True}
+            text={'cur_status': True}
+            db.child("farmCode").child(farmID).child('Relay4').update(text)
         elif content == 'relay4Off':
-            text = {"relay4On": False}
+            text={'cur_status': False}
+            db.child("farmCode").child(farmID).child('Relay4').update(text)
         elif content == 'relay5On':
-            text = {"relay5On": True}
+            text={'cur_status': True}
+            db.child("farmCode").child(farmID).child('Relay5').update(text)
         elif content == 'relay5Off':
-            text = {"relay5On": False}
+            text={'cur_status': False}
+            db.child("farmCode").child(farmID).child('Relay5').update(text)
         elif content == 'relay6On':
-            text = {"relay6On": True}
+            text={'cur_status': True}
+            db.child("farmCode").child(farmID).child('Relay6').update(text)
         elif content == 'relay6Off':
-            text = {"relay6On": False}
+            text={'cur_status': False}
+            db.child("farmCode").child(farmID).child('Relay6').update(text)
         else:
             print("text is NA")
             text={"relaystatus": "NA"}
-        db = firebase.database()
-        # db.child("farmCode").child("AA0001").update({"flow1Status": False})
-        db.child("farmCode").child(farmID).update(text)
+            db.child("farmCode").child(farmID).update(text)
 
 
 
