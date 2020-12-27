@@ -63,26 +63,22 @@ def setMode(request):
     if data['method']=="setMode":
         relay=data['detail']['device']
         if data['detail']['mode']=="schedule":
-            # resume on schedule
-
-            # scheduleID_On = '{}_{}_period{}_On'.format(farmID, device, period)
-            # scheduleID_Off = '{}_{}_period{}_Off'.format(farmID, device, period)
-            # scheduleId = scheduleID_Off
-            # scheduleId = scheduleID_On
-            # jobId = str(newSch.scheduleId)
-            # scheduler = BackgroundScheduler()
-            # scheduler.pause_job(jobId)
-
+            # set manual mode "False" in relay model
+            f1 = farm.objects.get(farmCode=farmID)
+            r1 =relayDevice.objects.get(farm=f1, relayNumber=relay[-1])
+            r1.manualMode=False
+            r1.save()
             #update firebase
-            text={'manual':False}
 
+            text={'manual':False}
             db = firebase.database()
             db.child("farmCode").child(farmID).child(relay).update(text)
         elif data['detail']['mode']=="manual":
-            # pause on schedule
-
-
-
+            # set manual mode "True" in relay model
+            f1 = farm.objects.get(farmCode=farmID)
+            r1 = relayDevice.objects.get(farm=f1, relayNumber=relay[-1])
+            r1.manualMode = True
+            r1.save()
 
             # update firebase
             text={'manual':True}
@@ -195,24 +191,34 @@ def sendScheduleToIoT(text):
     print(text)
     res = json.loads(text)
     print(res)
+    chipId = res["farmID"]
+    device = res["device"]
+    f1 = farm.objects.get(farmCode=chipId)
+    r1 = relayDevice.objects.get(farm=f1, relayNumber=device[-1])
+    print(r1.__dict__)
     if res["command"] == "On":
-        # chipId="AA0001"
-        # device="relay1"
-        # duration=20000
-        chipId = res["farmID"]
-        device = res["device"]
-        duration = res["duration"]
         # sendCommandOnDuration(chipID=chipId, device=device, duration=duration)
-        sendCommandOn(chipID=chipId, device=device)
-        print('Send command to IoT')
+        if r1.manualMode == False:
+            sendCommandOn(chipID=chipId, device=device)
+            print('Send command to IoT')
+        r1.scheduleStatus=True
+        r1.save()
+        text = {'sch_status':True}
+        db = firebase.database()
+        db.child("farmCode").child(chipId).child('Relay' + str(device[-1])).update(text)
+
     elif res["command"] == "Off":
-        # chipId="AA0001"
-        # device="relay1"
-        chipId = res["farmID"]
-        device = res["device"]
-        duration = 20000
-        sendCommandOff(chipID=chipId, device=device)
-        print('Send command to IoT')
+        if r1.manualMode == False:
+            sendCommandOff(chipID=chipId, device=device)
+            print('Send command to IoT')
+        r1.scheduleStatus=False
+        r1.save()
+        text = {'sch_status':False}
+        db = firebase.database()
+        db.child("farmCode").child(chipId).child('Relay' + str(device[-1])).update(text)
+
+    else:
+        print('Relay was set to manual')
 
 
 def sendCommandOnTest(text):
