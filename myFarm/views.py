@@ -28,9 +28,12 @@ def home(request):
 
 def pageFarm(request, id):
     print('User access to myFarm page')
+    serverTime=datetime.timestamp(datetime.now())
+    print(serverTime)
     context={
         'farmName' : farm.objects.get(farmCode=id).farmName,
-        'farmCode' : farm.objects.get(farmCode=id).farmCode
+        'farmCode' : farm.objects.get(farmCode=id).farmCode,
+        'serverTime': serverTime
     }
 
     if (request.method == "POST"):
@@ -52,12 +55,10 @@ def pageFarm(request, id):
 
 
 def updateFirebase(request, farmID, text):
-
     # https://github.com/thisbejim/Pyrebase
     db = firebase.database()
     # db.child("farmCode").child("AA0001").update({"flow1Status": False})
     db.child("farmCode").child(farmID).update(text)
-
     return HttpResponse("OK")
 
 

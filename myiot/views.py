@@ -26,6 +26,17 @@ from django_apscheduler.models import DjangoJobExecution
 
 from myFarm.models import scheduleRelay, relayDevice, farm
 
+# firebase config
+import pyrebase
+config = {
+  "apiKey": "AIzaSyCs9xyouIlR_7SBQwCpL_Bde22ZDC4vpWM",
+  "authDomain": "navitaiot.firebaseapp.com",
+  "databaseURL": "https://navitaiot.firebaseio.com",
+  "storageBucket": "navitaiot.appspot.com",
+}
+firebase = pyrebase.initialize_app(config)
+
+
 
 # Create your views here.
 
@@ -40,6 +51,56 @@ def testAPI(request):
     print('Raw Data: "%s"' % request.__dict__)
     print('Body Data: "%s"' % request.body)
     return Response("OK")
+
+
+@api_view(['POST'])
+@permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
+def setMode(request):
+    print('Raw Data: "%s"' % request.__dict__)
+    print('Body Data: "%s"' % request.body)
+    data = json.loads(str(request.body, encoding='utf-8'))
+    farmID=data['farmID']
+    if data['method']=="setMode":
+        relay=data['detail']['device']
+        if data['detail']['mode']=="schedule":
+            # resume on schedule
+
+            # scheduleID_On = '{}_{}_period{}_On'.format(farmID, device, period)
+            # scheduleID_Off = '{}_{}_period{}_Off'.format(farmID, device, period)
+            # scheduleId = scheduleID_Off
+            # scheduleId = scheduleID_On
+            # jobId = str(newSch.scheduleId)
+            # scheduler = BackgroundScheduler()
+            # scheduler.pause_job(jobId)
+
+            #update firebase
+            text={'manual':False}
+
+            db = firebase.database()
+            db.child("farmCode").child(farmID).child(relay).update(text)
+        elif data['detail']['mode']=="manual":
+            # pause on schedule
+
+
+
+
+            # update firebase
+            text={'manual':True}
+            db = firebase.database()
+            db.child("farmCode").child(farmID).child(relay).update(text)
+        else:
+            pass
+    return Response("OK")
+
+
+def updateFirebase(request, farmID, text):
+    # https://github.com/thisbejim/Pyrebase
+    db = firebase.database()
+    # db.child("farmCode").child("AA0001").update({"flow1Status": False})
+    db.child("farmCode").child(farmID).update(text)
+    return HttpResponse("OK")
+
+
 
 
 #
@@ -181,12 +242,12 @@ def createSchedule(request):
     end_hour = data["detail"]["end_hour"]
     end_minute = data["detail"]["end_minute"]
     end_second = data["detail"]["end_second"]
-
     period = data["detail"]["period"]
     pause = data["detail"]["pause"]
     scheduleID_On = '{}_{}_period{}_On'.format(farmID, device, period)
     scheduleID_Off = '{}_{}_period{}_Off'.format(farmID, device, period)
 
+    # on time
     try:
         newSch = scheduleRelay.objects.get(scheduleId=scheduleID_On)
         print('schedule is exist')
@@ -222,12 +283,18 @@ def createSchedule(request):
 
     if pause == False:
         # scheduler.resume_job(jobId)
-        # print("Schedule resume {}".format(text))
-        pass
+        print("Schedule resume {}".format(text))
+        # pass
     else:
         scheduler.pause_job(jobId)
         print("Schedule pause {}".format(text))
 
+    #update to firebase
+    text = {'sch_duration':duration, "sch_on": "{:02d}:{:02d}:{:02d}".format(int(start_hour), int(start_minute), int(start_second)),  "pause":pause}
+    db = firebase.database()
+    db.child("farmCode").child(farmID).child('Relay'+str(device[-1])).child('Schedule').child('Period'+str(period)).update(text)
+
+    # off time
     try:
         newSch = scheduleRelay.objects.get(scheduleId=scheduleID_Off)
         print('schedule is exist')
@@ -262,13 +329,17 @@ def createSchedule(request):
     print("Schedule created {}".format(text))
     if pause == False:
         # scheduler.resume_job(jobId)
-        # print("Schedule resume {}".format(text))
-        pass
+        print("Schedule resume {}".format(text))
+        # pass
 
     else:
         scheduler.pause_job(jobId)
         print("Schedule pause {}".format(text))
+    #update to firebase
 
+    text = {"sch_off": "{:02d}:{:02d}:{:02d}".format(int(end_hour), int(end_minute), int(end_second)), "pause":pause}
+    db = firebase.database()
+    db.child("farmCode").child(farmID).child('Relay'+str(device[-1])).child('Schedule').child('Period'+str(period)).update(text)
     close_old_connections()
 
     return Response("OK")

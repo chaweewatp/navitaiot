@@ -66,11 +66,120 @@
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     firebase.analytics();
+    var relay1Period1Ref=firebase.database().ref("farmCode/"+'{{ farmCode }}'+"/Relay1/Schedule/Period1");
+    relay1Period1Ref.on('value',function (snapshot) {
+                var arr = snapshot.val();
+        console.log(arr)
+        console.log(arr['sch_on'])
+        console.log(arr['sch_off'])
+        console.log(arr['sch_duration'])
+        document.getElementById("R1_Sch1_on").innerHTML = arr['sch_on'];
+        document.getElementById("R1_Sch1_off").innerHTML = arr['sch_off'];
+        document.getElementById("R1_Sch1_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause']==false){
+            document.getElementById("R1_Sch1_pause").innerHTML = "(enable)";
+        }else{
+            document.getElementById("R1_Sch1_pause").innerHTML = "(disable)";
+        }
+    });
+
+
+        var relay1Period2Ref=firebase.database().ref("farmCode/"+'{{ farmCode }}'+"/Relay1/Schedule/Period2");
+    relay1Period2Ref.on('value',function (snapshot) {
+                var arr = snapshot.val();
+        console.log(arr)
+        console.log(arr['sch_on'])
+        console.log(arr['sch_off'])
+        console.log(arr['sch_duration'])
+        document.getElementById("R1_Sch2_on").innerHTML = arr['sch_on'];
+        document.getElementById("R1_Sch2_off").innerHTML = arr['sch_off'];
+        document.getElementById("R1_Sch2_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause']==false){
+            document.getElementById("R1_Sch2_pause").innerHTML = "(enable)";
+        }else{
+            document.getElementById("R1_Sch2_pause").innerHTML = "(disable)";
+        }
+    });
+
+        var relay1Period3Ref=firebase.database().ref("farmCode/"+'{{ farmCode }}'+"/Relay1/Schedule/Period3");
+    relay1Period3Ref.on('value',function (snapshot) {
+                var arr = snapshot.val();
+        console.log(arr)
+        console.log(arr['sch_on'])
+        console.log(arr['sch_off'])
+        console.log(arr['sch_duration'])
+        document.getElementById("R1_Sch3_on").innerHTML = arr['sch_on'];
+        document.getElementById("R1_Sch3_off").innerHTML = arr['sch_off'];
+        document.getElementById("R1_Sch3_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause']==false){
+            document.getElementById("R1_Sch3_pause").innerHTML = "(enable)";
+        }else{
+            document.getElementById("R1_Sch3_pause").innerHTML = "(disable)";
+        }
+    });
+
+        var relay1Period4Ref=firebase.database().ref("farmCode/"+'{{ farmCode }}'+"/Relay1/Schedule/Period4");
+    relay1Period4Ref.on('value',function (snapshot) {
+                var arr = snapshot.val();
+        console.log(arr)
+        console.log(arr['sch_on'])
+        console.log(arr['sch_off'])
+        console.log(arr['sch_duration'])
+        document.getElementById("R1_Sch4_on").innerHTML = arr['sch_on'];
+        document.getElementById("R1_Sch4_off").innerHTML = arr['sch_off'];
+        document.getElementById("R1_Sch4_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause']==false){
+            document.getElementById("R1_Sch4_pause").innerHTML = "(enable)";
+        }else{
+            document.getElementById("R1_Sch4_pause").innerHTML = "(disable)";
+        }
+    });
+
+        var relay1Period5Ref=firebase.database().ref("farmCode/"+'{{ farmCode }}'+"/Relay1/Schedule/Period5");
+    relay1Period5Ref.on('value',function (snapshot) {
+                var arr = snapshot.val();
+        console.log(arr)
+        console.log(arr['sch_on'])
+        console.log(arr['sch_off'])
+        console.log(arr['sch_duration'])
+        document.getElementById("R1_Sch5_on").innerHTML = arr['sch_on'];
+        document.getElementById("R1_Sch5_off").innerHTML = arr['sch_off'];
+        document.getElementById("R1_Sch5_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause']==false){
+            document.getElementById("R1_Sch5_pause").innerHTML = "(enable)";
+        }else{
+            document.getElementById("R1_Sch5_pause").innerHTML = "(disable)";
+        }
+    });
+
+        var relay1Period6Ref=firebase.database().ref("farmCode/"+'{{ farmCode }}'+"/Relay1/Schedule/Period6");
+    relay1Period6Ref.on('value',function (snapshot) {
+                var arr = snapshot.val();
+        console.log(arr)
+        console.log(arr['sch_on'])
+        console.log(arr['sch_off'])
+        console.log(arr['sch_duration'])
+        document.getElementById("R1_Sch6_on").innerHTML = arr['sch_on'];
+        document.getElementById("R1_Sch6_off").innerHTML = arr['sch_off'];
+        document.getElementById("R1_Sch6_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause']==false){
+            document.getElementById("R1_Sch6_pause").innerHTML = "(enable)";
+        }else{
+            document.getElementById("R1_Sch6_pause").innerHTML = "(disable)";
+        }
+    });
+
+
+
+
     var farmRef = firebase.database().ref("farmCode/" + '{{ farmCode }}');
     farmRef.on('value', function (snapshot) {
         {#console.log(snapshot.val());#}
         var arr = snapshot.val();
+        console.log(arr)
         {#console.log(arr['flow1Status'])#}
+
+
         if (arr['flow1Status'] == true) {
             document.getElementById("flowSensor1").innerHTML = "เปิด";
         } else if (arr['flow1Status'] == false) {
@@ -79,75 +188,156 @@
             document.getElementById("flowSensor1").innerHTML = "N/A";
         }
 
-        if (arr['relay1On'] == true) {
-            document.getElementById("statusRelay1").innerHTML = "เปิด";
-        } else if (arr['relay1On'] == false) {
-            document.getElementById("statusRelay1").innerHTML = "ปิด";
+
+        if (arr['Relay1']['manual'] == true) {
+            document.getElementById("Relay1_mode").innerHTML = "manual";
+        } else if (arr['Relay1']['manual'] == false) {
+            document.getElementById("Relay1_mode").innerHTML = "schedule";
         } else {
-            document.getElementById("statusRelay1").innerHTML = "N/A";
+            document.getElementById("Relay1_mode").innerHTML = "N/A";
         }
 
-        if (arr['relay2On'] == true) {
-            document.getElementById("statusRelay2").innerHTML = "เปิด";
-        } else if (arr['relay2On'] == false) {
-            document.getElementById("statusRelay2").innerHTML = "ปิด";
+        if (arr['Relay2']['manual'] == true) {
+            document.getElementById("Relay2_mode").innerHTML = "manual";
+        } else if (arr['Relay2']['manual'] == false) {
+            document.getElementById("Relay2_mode").innerHTML = "schedule";
         } else {
-            document.getElementById("statusRelay2").innerHTML = "N/A";
+            document.getElementById("Relay2_mode").innerHTML = "N/A";
         }
 
-        if (arr['relay3On'] == true) {
-            document.getElementById("statusRelay3").innerHTML = "เปิด";
-        } else if (arr['relay3On'] == false) {
-            document.getElementById("statusRelay3").innerHTML = "ปิด";
+        if (arr['Relay3']['manual'] == true) {
+            document.getElementById("Relay3_mode").innerHTML = "manual";
+        } else if (arr['Relay3']['manual'] == false) {
+            document.getElementById("Relay3_mode").innerHTML = "schedule";
         } else {
-            document.getElementById("statusRelay3").innerHTML = "N/A";
+            document.getElementById("Relay3_mode").innerHTML = "N/A";
         }
 
-        if (arr['relay4On'] == true) {
-            document.getElementById("statusRelay4").innerHTML = "เปิด";
-        } else if (arr['relay4On'] == false) {
-            document.getElementById("statusRelay4").innerHTML = "ปิด";
+        if (arr['Relay4']['manual'] == true) {
+            document.getElementById("Relay4_mode").innerHTML = "manual";
+        } else if (arr['Relay4']['manual'] == false) {
+            document.getElementById("Relay4_mode").innerHTML = "schedule";
         } else {
-            document.getElementById("statusRelay4").innerHTML = "N/A";
-        }
-        if (arr['relay5On'] == true) {
-            document.getElementById("statusRelay5").innerHTML = "เปิด";
-        } else if (arr['relay5On'] == false) {
-            document.getElementById("statusRelay5").innerHTML = "ปิด";
-        } else {
-            document.getElementById("statusRelay5").innerHTML = "N/A";
+            document.getElementById("Relay4_mode").innerHTML = "N/A";
         }
 
-        if (arr['relay6On'] == true) {
-            document.getElementById("statusRelay6").innerHTML = "เปิด";
-        } else if (arr['relay6On'] == false) {
-            document.getElementById("statusRelay6").innerHTML = "ปิด";
+        if (arr['Relay5']['manual'] == true) {
+            document.getElementById("Relay5_mode").innerHTML = "manual";
+        } else if (arr['Relay5']['manual'] == false) {
+            document.getElementById("Relay5_mode").innerHTML = "schedule";
         } else {
-            document.getElementById("statusRelay6").innerHTML = "N/A";
+            document.getElementById("Relay5_mode").innerHTML = "N/A";
+        }
+        if (arr['Relay6']['manual'] == true) {
+            document.getElementById("Relay6_mode").innerHTML = "manual";
+        } else if (arr['Relay6']['manual'] == false) {
+            document.getElementById("Relay6_mode").innerHTML = "schedule";
+        } else {
+            document.getElementById("Relay6_mode").innerHTML = "N/A";
+        }
+
+        if (arr['Relay1']['sch_status'] == true) {
+            document.getElementById("Relay1_sch_status").innerHTML = "เปิด";
+        } else if (arr['Relay1']['sch_status'] == false) {
+            document.getElementById("Relay1_sch_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay1_sch_status").innerHTML = "N/A";
+        }
+
+        if (arr['Relay2']['sch_status'] == true) {
+            document.getElementById("Relay2_sch_status").innerHTML = "เปิด";
+        } else if (arr['Relay2']['sch_status'] == false) {
+            document.getElementById("Relay2_sch_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay2_sch_status").innerHTML = "N/A";
+        }
+
+        if (arr['Relay3']['sch_status'] == true) {
+            document.getElementById("Relay3_sch_status").innerHTML = "เปิด";
+        } else if (arr['Relay3']['sch_status'] == false) {
+            document.getElementById("Relay3_sch_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay3_sch_status").innerHTML = "N/A";
+        }
+
+        if (arr['Relay4']['sch_status'] == true) {
+            document.getElementById("Relay4_sch_status").innerHTML = "เปิด";
+        } else if (arr['Relay4']['sch_status'] == false) {
+            document.getElementById("Relay4_sch_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay4_sch_status").innerHTML = "N/A";
+        }
+
+        if (arr['Relay5']['sch_status'] == true) {
+            document.getElementById("Relay5_sch_status").innerHTML = "เปิด";
+        } else if (arr['Relay5']['sch_status'] == false) {
+            document.getElementById("Relay5_sch_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay5_sch_status").innerHTML = "N/A";
+        }
+
+        if (arr['Relay6']['sch_status'] == true) {
+            document.getElementById("Relay6_sch_status").innerHTML = "เปิด";
+        } else if (arr['Relay6']['sch_status'] == false) {
+            document.getElementById("Relay6_sch_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay6_sch_status").innerHTML = "N/A";
+        }
+
+
+        if (arr['Relay1']['cur_status'] == true) {
+            document.getElementById("Relay1_cur_status").innerHTML = "เปิด";
+        } else if (arr['Relay1']['cur_status'] == false) {
+            document.getElementById("Relay1_cur_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay1_cur_status").innerHTML = "N/A";
+        }
+
+        if (arr['Relay2']['cur_status'] == true) {
+            document.getElementById("Relay2_cur_status").innerHTML = "เปิด";
+        } else if (arr['Relay2']['cur_status'] == false) {
+            document.getElementById("Relay2_cur_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay2_cur_status").innerHTML = "N/A";
+        }
+
+        if (arr['Relay3']['cur_status'] == true) {
+            document.getElementById("Relay3_cur_status").innerHTML = "เปิด";
+        } else if (arr['Relay3']['cur_status'] == false) {
+            document.getElementById("Relay3_cur_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay3_cur_status").innerHTML = "N/A";
+        }
+        if (arr['Relay4']['cur_status'] == true) {
+            document.getElementById("Relay4_cur_status").innerHTML = "เปิด";
+        } else if (arr['Relay4']['cur_status'] == false) {
+            document.getElementById("Relay4_cur_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay4_cur_status").innerHTML = "N/A";
+        }
+        if (arr['Relay5']['cur_status'] == true) {
+            document.getElementById("Relay5_cur_status").innerHTML = "เปิด";
+        } else if (arr['Relay5']['cur_status'] == false) {
+            document.getElementById("Relay5_cur_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay5_cur_status").innerHTML = "N/A";
+        }
+
+        if (arr['Relay6']['cur_status'] == true) {
+            document.getElementById("Relay6_cur_status").innerHTML = "เปิด";
+        } else if (arr['Relay6']['cur_status'] == true) {
+            document.getElementById("Relay6_cur_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay6_cur_status").innerHTML = "N/A";
         }
     });
-
-    {#firebase.database().ref("farmCode/" + '{{ farmCode }}').set(#}
-    {#    {#}
-    {#        'airHumidSensor':79.6,#}
-    {#        'airTempSensor':30.1,#}
-    {#        'valve1Status': false,#}
-    {#        'valve2Status': false,#}
-    {#        'valve3Status': false,#}
-    {#        'valve4Status': false,#}
-    {#        'relay1Status': false,#}
-    {#        'relay2Status': false,#}
-    {#        'flow1Status': false,#}
-    {#        'flow2Status': false,#}
-    {#        'flow3Status': false,#}
-    {#    }#}
-    {#)#}
 
 </script>
 
 
 <div class="body">
     <div class="container-fluid">
+        {# farm detial#}
         <div class="row">
             <div class="col-xs-12 col-md12 text-title">
                 <p>{{ farmName }}</p>
@@ -163,7 +353,7 @@
             </div>
         </div>
 
-        {# control #}
+        {# LED control #}
         <div class="row">
             <div class="col-xs-12 col-md12 text-title">
                 <form method="POST">
@@ -181,13 +371,12 @@
                 </form>
             </div>
         </div>
-
-
         <div class="row">
             <div class="col-xs-6">-------------------------------------------</div>
             <div class="col-xs-6">###########################################</div>
         </div>
-        {# controller#}
+
+        {# Relay controller#}
         <div class="row">
             <div class="col-xs-12 col-md12 text-title">
                 <div class="row">
@@ -197,29 +386,38 @@
                         <div class="block b">
                             <div class="row">
                                 <div class="col12">
-                                    Relay1
+                                    Relay1 (ปั๊มน้ำ)
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col12">
-                                    Mode: Manual
+                                    Mode: <span id="Relay1_mode"></span>
+                                    <button type="button" class="btn btn-warning" id="setRelay1Manual">Manual</button>
+                                    <button type="button" class="btn btn-primary" id="setRelay1Schedule">Schedule
+                                    </button>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col12">
-                                    Status: <span id="statusRelay1"></span>
+                                    Current status: <span id="Relay1_cur_status"></span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col12">
+                                    Schedual status: <span id="Relay1_sch_status"></span>
                                 </div>
                             </div>
                             <div class="row">
                                 <button type="button" class="btn btn-success" id="controlRelay1On">On</button>
                                 <button type="button" class="btn btn-danger" id="controlRelay1Off">Off</button>
                             </div>
-                            <div class="row">
-                                <div class="col12">
-                                    <button type="button" class="btn btn-primary" id="setRelay1Schedule">Schedule
-                                    </button>
-                                </div>
-                            </div>
+                            {#                            <div class="row">#}
+                            {#                                <div class="col12">#}
+                            {#                                    <button type="button" class="btn btn-primary" id="setRelay1Schedule">Schedule#}
+                            {#                                    </button>#}
+                            {#                                </div>#}
+                            {#                            </div>#}
                         </div>
                     </div>
                     {# relay 2#}
@@ -228,29 +426,32 @@
                         <div class="block b">
                             <div class="row">
                                 <div class="col12">
-                                    Relay2
+                                    Relay2 (ปั๊มปุ๋ย)
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col12">
-                                    Mode: Manual
+                                    Mode: <span id="Relay2_mode"></span>
+                                    <button type="button" class="btn btn-warning" id="setRelay2Manual">Manual</button>
+                                    <button type="button" class="btn btn-primary" id="setRelay2Schedule">Schedule
+                                    </button>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col12">
-                                    Status: <span id="statusRelay2"></span>
+                                    Current status: <span id="Relay2_cur_status"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col12">
+                                    Schedual status: <span id="Relay2_sch_status"></span>
                                 </div>
                             </div>
                             <div class="row">
                                 <button type="button" class="btn btn-success" id="controlRelay2On">On</button>
                                 <button type="button" class="btn btn-danger" id="controlRelay2Off">Off</button>
                             </div>
-                            <div class="row">
-                                <div class="col12">
-                                    <button type="button" class="btn btn-primary" id="setRelay2Schedule">Schedule
-                                    </button>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
 
@@ -260,29 +461,32 @@
                         <div class="block b">
                             <div class="row">
                                 <div class="col12">
-                                    Relay3
+                                    Relay3 (เดรนวาล์ว)
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col12">
-                                    Mode: Manual
+                                    Mode: <span id="Relay3_mode"></span>
+                                    <button type="button" class="btn btn-warning" id="setRelay3Manual">Manual</button>
+                                    <button type="button" class="btn btn-primary" id="setRelay3Schedule">Schedule
+                                    </button>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col12">
-                                    Status: <span id="statusRelay3"></span>
+                                    Current status: <span id="Relay3_cur_status"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col12">
+                                    Schedual status: <span id="Relay3_sch_status"></span>
                                 </div>
                             </div>
                             <div class="row">
                                 <button type="button" class="btn btn-success" id="controlRelay3On">On</button>
                                 <button type="button" class="btn btn-danger" id="controlRelay3Off">Off</button>
                             </div>
-                            <div class="row">
-                                <div class="col12">
-                                    <button type="button" class="btn btn-primary" id="setRelay3Schedule">Schedule
-                                    </button>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -295,29 +499,32 @@
                         <div class="block b">
                             <div class="row">
                                 <div class="col12">
-                                    Relay4
+                                    Relay4 (วาล์วโซน 1)
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col12">
-                                    Mode: Manual
+                                    Mode: <span id="Relay4_mode"></span>
+                                    <button type="button" class="btn btn-warning" id="setRelay4Manual">Manual</button>
+                                    <button type="button" class="btn btn-primary" id="setRelay4Schedule">Schedule
+                                    </button>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col12">
-                                    Status: <span id="statusRelay4"></span>
+                                    Current status: <span id="Relay4_cur_status"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col12">
+                                    Schedual status: <span id="Relay4_sch_status"></span>
                                 </div>
                             </div>
                             <div class="row">
                                 <button type="button" class="btn btn-success" id="controlRelay4On">On</button>
                                 <button type="button" class="btn btn-danger" id="controlRelay4Off">Off</button>
                             </div>
-                            <div class="row">
-                                <div class="col12">
-                                    <button type="button" class="btn btn-primary" id="setRelay4Schedule">Schedule
-                                    </button>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
 
@@ -328,29 +535,33 @@
                         <div class="block b">
                             <div class="row">
                                 <div class="col12">
-                                    Relay5
+                                    Relay5 (วาล์วโซน 2)
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col12">
-                                    Mode: Manual
+                                    Mode: <span id="Relay5_mode"></span>
+                                    <button type="button" class="btn btn-warning" id="setRelay5Manual">Manual</button>
+                                    <button type="button" class="btn btn-primary" id="setRelay5Schedule">Schedule
+                                    </button>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col12">
-                                    Status: <span id="statusRelay5"></span>
+                                    Current status: <span id="Relay5_cur_status"></span>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col12">
+                                    Schedual status: <span id="Relay5_sch_status"></span>
                                 </div>
                             </div>
                             <div class="row">
                                 <button type="button" class="btn btn-success" id="controlRelay5On">On</button>
                                 <button type="button" class="btn btn-danger" id="controlRelay5Off">Off</button>
                             </div>
-                            <div class="row">
-                                <div class="col12">
-                                    <button type="button" class="btn btn-primary" id="setRelay5Schedule">Schedule
-                                    </button>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
 
@@ -360,29 +571,32 @@
                         <div class="block b">
                             <div class="row">
                                 <div class="col12">
-                                    Relay6
+                                    Relay6 (วาล์วโซน 3)
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col12">
-                                    Mode: Manual
+                                    Mode: <span id="Relay6_mode"></span>
+                                    <button type="button" class="btn btn-warning" id="setRelay6Manual">Manual</button>
+                                    <button type="button" class="btn btn-primary" id="setRelay6Schedule">Schedule
+                                    </button>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col12">
-                                    Status: <span id="statusRelay6"></span>
+                                    Current status: <span id="Relay6_cur_status"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col12">
+                                    Schedual status: <span id="Relay6_sch_status"></span>
                                 </div>
                             </div>
                             <div class="row">
                                 <button type="button" class="btn btn-success" id="controlRelay6On">On</button>
                                 <button type="button" class="btn btn-danger" id="controlRelay6Off">Off</button>
                             </div>
-                            <div class="row">
-                                <div class="col12">
-                                    <button type="button" class="btn btn-primary" id="setRelay6Schedule">Schedule
-                                    </button>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
 
@@ -392,75 +606,151 @@
             </div>
         </div>
 
+
+<script>
+
+// Unix time value from server: seconds since 1970-01-01T00:00:00Z
+// Below is a number for 2014-07-02T06:48:24.000Z, set to actual server value
+{#var serverTime = 1404283704;#}
+
+var serverTime = "{{ serverTime }}";
+console.log(serverTime)
+
+var doClock = (function () {
+
+  // Calc offset from server time
+  // Javascript time value is milliseconds since above epoch
+  var serverOffset = serverTime - (new Date() / 1000 | 0);
+
+  // Helper
+  function z(n){return (n<10?'0':'') + n}
+
+  return function() {
+
+    // Create a new Date object each time so
+    // it doesn't matter if a second or more is skipped
+    var now = new Date();
+
+    // Adjust for server offset
+    now.setSeconds(now.getSeconds() + serverOffset);
+
+    // write clock to document, values are local, not UTC
+    document.getElementById('clock').innerHTML = now.getFullYear()   + '-' +
+                                                 z(now.getMonth()+1) + '-' +
+                                                 z(now.getDate())    + ' ' +
+                                                 z(now.getHours())   + ':' +
+                                                 z(now.getMinutes()) + ':' +
+                                                 z(now.getSeconds());
+    // Run again just after next full second
+    setTimeout(doClock, 1020 - now.getMilliseconds());
+  };
+}());
+
+window.onload = doClock;
+
+</script>
+
+<div id="clock"></div>
+
         {# Schedule set #}
+        <p>Relay 1 (ปั๊มน้่ำ)</p>
         <div class="row">
-            <div class="col-xs-6">-------------------------------------------</div>
-            <div class="col-xs-6">###########################################</div>
-        </div>
-        {# Period 1#}
-        <div class="row">
-            <div class="col-12">
-                <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1" value="timePeriod1R1">
-                เริ่มเวลา <input type="time" step="1" id="timePeriod1R1Start">
-                เป็นเวลา <input id="timePeriod1R1Delay"> นาที
-                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod1R1Stop" disable>
-                <button type="button" id="buttonTimeRelay1Submit">บันทึกค่า/ดำเนินการตั้งเวลา</button>
-                {#                <button type="button" id="buttonTimeRelay1">CLICK</button>#}
+            <div class="col-xs-4">
+                <div class="row">
+                    <div class="col-12">
+                        เริ่มเวลา <span id ="R1_Sch1_on"></span> เป็นเวลา <span id="R1_Sch1_duration"></span> นาที สิ้นสุดเวลา <span id="R1_Sch1_off"></span> <span id="R1_Sch1_pause"></span>
+                    </div>
+                    <div class="col-12">
+                        เริ่มเวลา <span id ="R1_Sch2_on"></span> เป็นเวลา <span id="R1_Sch2_duration"></span> นาที สิ้นสุดเวลา <span id="R1_Sch2_off"></span> <span id="R1_Sch2_pause"></span>
+                    </div>
+                                        <div class="col-12">
+                        เริ่มเวลา <span id ="R1_Sch3_on"></span> เป็นเวลา <span id="R1_Sch3_duration"></span> นาที สิ้นสุดเวลา <span id="R1_Sch3_off"></span> <span id="R1_Sch3_pause"></span>
+                    </div>
+                                        <div class="col-12">
+                        เริ่มเวลา <span id ="R1_Sch4_on"></span> เป็นเวลา <span id="R1_Sch4_duration"></span> นาที สิ้นสุดเวลา <span id="R1_Sch4_off"></span> <span id="R1_Sch4_pause"></span>
+                    </div>
+                                        <div class="col-12">
+                        เริ่มเวลา <span id ="R1_Sch5_on"></span> เป็นเวลา <span id="R1_Sch5_duration"></span> นาที สิ้นสุดเวลา <span id="R1_Sch5_off"></span> <span id="R1_Sch5_pause"></span>
+                    </div>
+                    <div class="col-12">
+                        <p>เริ่มเวลา <span id ="R1_Sch6_on"></span> เป็นเวลา <span id="R1_Sch6_duration"></span> นาที สิ้นสุดเวลา <span id="R1_Sch6_off"></span> <span id="R1_Sch6_pause"></span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-8">
+                {# Period 1#}
+                <div class="row">
+                    <div class="col-12">
+                        <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1" value="timePeriod1R1">
+                        เริ่มเวลา <input type="time" step="1" id="timePeriod1R1Start">
+                        เป็นเวลา <input id="timePeriod1R1Delay"> นาที
+                        สิ้นสุดเวลา <input type="time" step="1" id="timePeriod1R1Stop" disable>
+                        <button type="button" id="buttonTimePeriod1R1Submit">บันทึกค่า/ดำเนินการตั้งเวลา</button>
+                    </div>
+                </div>
+                {# Period 2#}
+                <div class="row">
+                    <div class="col-12">
+                        <input type="checkbox" id="timePeriod2R1" name="timePeriod2R1" value="timePeriod2R1">
+                        เริ่มเวลา <input type="time" step="1" id="timePeriod2R1Start">
+                        เป็นเวลา <input id="timePeriod2R1Delay"> นาที
+                        สิ้นสุดเวลา <input type="time" step="1" id="timePeriod2R1Stop" disable>
+                        <button type="button" id="buttonTimePeriod2R1Submit">บันทึกค่า/ดำเนินการตั้งเวลา</button>
+                    </div>
+                </div>
+                {# Period 3#}
+                <div class="row">
+                    <div class="col-12">
+                        <input type="checkbox" id="timePeriod3R1" name="timePeriod3R1" value="timePeriod3R1">
+                        เริ่มเวลา <input type="time" step="1" id="timePeriod3R1Start">
+                        เป็นเวลา <input id="timePeriod3R1Delay"> นาที
+                        สิ้นสุดเวลา <input type="time" step="1" id="timePeriod3R1Stop" disable>
+                        <button type="button" id="buttonTimePeriod3R1Submit">บันทึกค่า/ดำเนินการตั้งเวลา</button>
+                    </div>
+                </div>
+                {# Period 4#}
+                <div class="row">
+                    <div class="col-12">
+                        <input type="checkbox" id="timePeriod4R1" name="timePeriod4R1" value="timePeriod4R1">
+                        เริ่มเวลา <input type="time" step="1" id="timePeriod4R1Start">
+                        เป็นเวลา <input id="timePeriod4R1Delay"> นาที
+                        สิ้นสุดเวลา <input type="time" step="1" id="timePeriod4R1Stop" disable>
+                                                <button type="button" id="buttonTimePeriod4R1Submit">บันทึกค่า/ดำเนินการตั้งเวลา</button>
+
+                    </div>
+                </div>
+                {# Period 5#}
+                <div class="row">
+                    <div class="col-12">
+                        <input type="checkbox" id="timePeriod5R1" name="timePeriod5R1" value="timePeriod5R1">
+                        เริ่มเวลา <input type="time" step="1" id="timePeriod5R1Start">
+                        เป็นเวลา <input id="timePeriod5R1Delay"> นาที
+                        สิ้นสุดเวลา <input type="time" step="1" id="timePeriod5R1Stop" disable>
+                                                <button type="button" id="buttonTimePeriod5R1Submit">บันทึกค่า/ดำเนินการตั้งเวลา</button>
+
+                    </div>
+                </div>
+                {# Period 6#}
+                <div class="row">
+                    <div class="col-12">
+                        <input type="checkbox" id="timePeriod6R1" name="timePeriod6R1" value="timePeriod6R1">
+                        เริ่มเวลา <input type="time" step="1" id="timePeriod6R1Start">
+                        เป็นเวลา <input id="timePeriod6R1Delay"> นาที
+                        สิ้นสุดเวลา <input type="time" step="1" id="timePeriod6R1Stop" disable>
+                        <button type="button" id="buttonTimePeriod6R1Submit">บันทึกค่า/ดำเนินการตั้งเวลา</button>
+
+                    </div>
+                </div>
+                <button type="button" id="buttonTimeRelayAllCal">คำนวนเวลา</button>
             </div>
         </div>
-        {# Period 2#}
-        <div class="row">
-            <div class="col-12">
-                <input type="checkbox" id="timePeriod2R1" name="timePeriod2R1" value="timePeriod2R1">
-                เริ่มเวลา <input type="time" step="1" id="timePeriod2R1Start">
-                เป็นเวลา <input id="timePeriod2R1Delay"> นาที
-                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod2R1Stop" disable>
-                {#                <button type="button" id="buttonTimeRelay2">CLICK</button>#}
-            </div>
-        </div>
-        {# Period 3#}
-        <div class="row">
-            <div class="col-12">
-                <input type="checkbox" id="timePeriod3R1" name="timePeriod3R1" value="timePeriod3R1">
-                เริ่มเวลา <input type="time" id="timePeriod3R1Start">
-                เป็นเวลา <input id="timePeriod3R1Delay"> นาที
-                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod3R1Stop" disable>
-                {#                <button type="button" id="buttonTimeRelay3">CLICK</button>#}
-            </div>
-        </div>
-        {# Period 4#}
-        <div class="row">
-            <div class="col-12">
-                <input type="checkbox" id="timePeriod4R1" name="timePeriod4R1" value="timePeriod4R1">
-                เริ่มเวลา <input type="time" id="timePeriod4R1Start">
-                เป็นเวลา <input id="timePeriod4R1Delay"> นาที
-                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod4R1Stop" disable>
-            </div>
-        </div>
-        {# Period 5#}
-        <div class="row">
-            <div class="col-12">
-                <input type="checkbox" id="timePeriod5R1" name="timePeriod5R1" value="timePeriod5R1">
-                เริ่มเวลา <input type="time" id="timePeriod5R1Start">
-                เป็นเวลา <input id="timePeriod5R1Delay"> นาที
-                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod5R1Stop" disable>
-            </div>
-        </div>
-        {# Period 6#}
-        <div class="row">
-            <div class="col-12">
-                <input type="checkbox" id="timePeriod6R1" name="timePeriod6R1" value="timePeriod6R1">
-                เริ่มเวลา <input type="time" id="timePeriod6R1Start">
-                เป็นเวลา <input id="timePeriod6R1Delay"> นาที
-                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod6R1Stop" disable>
-            </div>
-        </div>
-        <button type="button" id="buttonTimeRelayAllCal">คำนวนเวลา</button>
-        <button type="button" id="buttonTimeRelayAllSubmit">บันทึกค่า/ดำเนินการตั้งเวลา</button>
+
 
     </div>
 </div>
 </div>
+
+
 {# control relay#}
 <script>
     {# control relay 1#}
@@ -516,8 +806,57 @@
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
     }
+    {# set mode relay 1#}
     document.getElementById('setRelay1Schedule').onclick = function () {
         console.log('setRelay1Schedule clicked')
+        var myHeaders = new Headers();
+        var farmID = "{{ farmCode }}";
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            "farmID": farmID,
+            "token": "xxx",
+            "method": "setMode",
+            "detail": {"device": "Relay1", "mode": "schedule"}
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch("http://127.0.0.1:8000/setMode/", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+    }
+    document.getElementById('setRelay1Manual').onclick = function () {
+        console.log('setRelay1Manual clicked')
+        var myHeaders = new Headers();
+        var farmID = "{{ farmCode }}";
+
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            "farmID": farmID,
+            "token": "xxx",
+            "method": "setMode",
+            "detail": {"device": "Relay1", "mode": "manual"}
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch("http://127.0.0.1:8000/setMode/", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
     }
 
     {# control relay 2#}
@@ -572,8 +911,57 @@
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
     }
+    {# set mode relay 1#}
     document.getElementById('setRelay2Schedule').onclick = function () {
         console.log('setRelay2Schedule clicked')
+        var myHeaders = new Headers();
+        var farmID = "{{ farmCode }}";
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            "farmID": farmID,
+            "token": "xxx",
+            "method": "setMode",
+            "detail": {"device": "Relay2", "mode": "schedule"}
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch("http://127.0.0.1:8000/setMode/", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+    }
+    document.getElementById('setRelay2Manual').onclick = function () {
+        console.log('setRelay2Manual clicked')
+        var myHeaders = new Headers();
+        var farmID = "{{ farmCode }}";
+
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            "farmID": farmID,
+            "token": "xxx",
+            "method": "setMode",
+            "detail": {"device": "Relay2", "mode": "manual"}
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch("http://127.0.0.1:8000/setMode/", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
     }
 
     {# control relay 3#}
@@ -628,8 +1016,57 @@
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
     }
+    {# set mode relay 3#}
     document.getElementById('setRelay3Schedule').onclick = function () {
         console.log('setRelay3Schedule clicked')
+        var myHeaders = new Headers();
+        var farmID = "{{ farmCode }}";
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            "farmID": farmID,
+            "token": "xxx",
+            "method": "setMode",
+            "detail": {"device": "Relay3", "mode": "schedule"}
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch("http://127.0.0.1:8000/setMode/", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+    }
+    document.getElementById('setRelay3Manual').onclick = function () {
+        console.log('setRelay3Manual clicked')
+        var myHeaders = new Headers();
+        var farmID = "{{ farmCode }}";
+
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            "farmID": farmID,
+            "token": "xxx",
+            "method": "setMode",
+            "detail": {"device": "Relay3", "mode": "manual"}
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch("http://127.0.0.1:8000/setMode/", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
     }
 
     {# control relay 4#}
@@ -684,9 +1121,59 @@
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
     }
+    {# set mode relay 4#}
     document.getElementById('setRelay4Schedule').onclick = function () {
         console.log('setRelay4Schedule clicked')
+        var myHeaders = new Headers();
+        var farmID = "{{ farmCode }}";
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            "farmID": farmID,
+            "token": "xxx",
+            "method": "setMode",
+            "detail": {"device": "Relay4", "mode": "schedule"}
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch("http://127.0.0.1:8000/setMode/", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
     }
+    document.getElementById('setRelay4Manual').onclick = function () {
+        console.log('setRelay4Manual clicked')
+        var myHeaders = new Headers();
+        var farmID = "{{ farmCode }}";
+
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            "farmID": farmID,
+            "token": "xxx",
+            "method": "setMode",
+            "detail": {"device": "Relay4", "mode": "manual"}
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch("http://127.0.0.1:8000/setMode/", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+    }
+
 
     {# control relay 5#}
     document.getElementById('controlRelay5On').onclick = function () {
@@ -740,9 +1227,59 @@
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
     }
+    {# set mode relay 5#}
     document.getElementById('setRelay5Schedule').onclick = function () {
-        console.log('setRelay1Schedule clicked')
+        console.log('setRelay5Schedule clicked')
+        var myHeaders = new Headers();
+        var farmID = "{{ farmCode }}";
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            "farmID": farmID,
+            "token": "xxx",
+            "method": "setMode",
+            "detail": {"device": "Relay5", "mode": "schedule"}
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch("http://127.0.0.1:8000/setMode/", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
     }
+    document.getElementById('setRelay5Manual').onclick = function () {
+        console.log('setRelay5Manual clicked')
+        var myHeaders = new Headers();
+        var farmID = "{{ farmCode }}";
+
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            "farmID": farmID,
+            "token": "xxx",
+            "method": "setMode",
+            "detail": {"device": "Relay5", "mode": "manual"}
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch("http://127.0.0.1:8000/setMode/", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+    }
+
 
     {# control relay 6#}
     document.getElementById('controlRelay6On').onclick = function () {
@@ -796,8 +1333,57 @@
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
     }
+    {# set mode relay 6#}
     document.getElementById('setRelay6Schedule').onclick = function () {
         console.log('setRelay6Schedule clicked')
+        var myHeaders = new Headers();
+        var farmID = "{{ farmCode }}";
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            "farmID": farmID,
+            "token": "xxx",
+            "method": "setMode",
+            "detail": {"device": "Relay6", "mode": "schedule"}
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch("http://127.0.0.1:8000/setMode/", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+    }
+    document.getElementById('setRelay6Manual').onclick = function () {
+        console.log('setRelay6Manual clicked')
+        var myHeaders = new Headers();
+        var farmID = "{{ farmCode }}";
+
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            "farmID": farmID,
+            "token": "xxx",
+            "method": "setMode",
+            "detail": {"device": "Relay6", "mode": "manual"}
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch("http://127.0.0.1:8000/setMode/", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
     }
 
 </script>
@@ -833,60 +1419,298 @@
         }
 
 
+    }
+
+    {#Relay 1#}
+    document.getElementById('buttonTimePeriod1R1Submit').onclick = function () {
+        if (document.getElementById('timePeriod1R1').checked || true) {
+            pause=document.getElementById('timePeriod1R1').checked
+            console.log('value of pause')
+            console.log(pause)
+            start = document.getElementById('timePeriod1R1Start').value
+            end = document.getElementById('timePeriod1R1Stop').value
+            duration=document.getElementById('timePeriod1R1Delay').value
+            var s = start.split(":")
+            var e = end.split(":")
+
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            var raw = JSON.stringify({
+                "farmID": "{{ farmCode }}",
+                "token": "xxx",
+                "method": "scheduleSet",
+                "detail": {
+                    "device": "relay1",
+                    "period": 1,
+                    "start_hour": s[0],
+                    "start_minute": s[1],
+                    "start_second": s[2],
+                    "end_hour": e[0],
+                    "end_minute": e[1],
+                    "end_second": e[2],
+                    "duration": duration,
+                    "pause": !document.getElementById('timePeriod1R1').checked
+                },
+                "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
+            });
+            console.log(raw)
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+
+            fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)
+            {#fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)#}
+                .then(response => response.text())
+                .then(result => console.log(result))
+                .catch(error => console.log('error', error));
+
+
         }
-        document.getElementById('buttonTimeRelayAllSubmit').onclick = function () {
+    }
+    document.getElementById('buttonTimePeriod2R1Submit').onclick = function () {
+        if (document.getElementById('timePeriod2R1').checked || true) {
+            start = document.getElementById('timePeriod2R1Start').value
+            end = document.getElementById('timePeriod2R1Stop').value
+                        duration=document.getElementById('timePeriod2R1Delay').value
+
+            var s = start.split(":")
+            var e = end.split(":")
+
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            var raw = JSON.stringify({
+                "farmID": "{{ farmCode }}",
+                "token": "xxx",
+                "method": "scheduleSet",
+                "detail": {
+                    "device": "relay1",
+                    "period": 2,
+                    "start_hour": s[0],
+                    "start_minute": s[1],
+                    "start_second": s[2],
+                    "end_hour": e[0],
+                    "end_minute": e[1],
+                    "end_second": e[2],
+                    "duration": duration,
+                    "pause": !document.getElementById('timePeriod2R1').checked
+                },
+                "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
+            });
+            console.log(raw)
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+
+            fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)
+            {#fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)#}
+                .then(response => response.text())
+                .then(result => console.log(result))
+                .catch(error => console.log('error', error));
+
+
         }
+    }
+    document.getElementById('buttonTimePeriod3R1Submit').onclick = function () {
+        if (document.getElementById('timePeriod3R1').checked || true) {
+            start = document.getElementById('timePeriod3R1Start').value
+            end = document.getElementById('timePeriod3R1Stop').value
+                        duration=document.getElementById('timePeriod3R1Delay').value
 
-        document.getElementById('buttonTimeRelay1Submit').onclick = function () {
-            if (document.getElementById('timePeriod1R1').checked || true) {
-                start = document.getElementById('timePeriod1R1Start').value
-                end = document.getElementById('timePeriod1R1Stop').value
-                console.log(start)
-                var s = start.split(":")
-                console.log(s[0])
-                                console.log(start)
+            var s = start.split(":")
+            var e = end.split(":")
 
-                var e = end.split(":")
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            var raw = JSON.stringify({
+                "farmID": "{{ farmCode }}",
+                "token": "xxx",
+                "method": "scheduleSet",
+                "detail": {
+                    "device": "relay1",
+                    "period": 3,
+                    "start_hour": s[0],
+                    "start_minute": s[1],
+                    "start_second": s[2],
+                    "end_hour": e[0],
+                    "end_minute": e[1],
+                    "end_second": e[2],
+                    "duration": duration,
+                    "pause": !document.getElementById('timePeriod3R1').checked
+                },
+                "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
+            });
+            console.log(raw)
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
 
-
-                var myHeaders = new Headers();
-                myHeaders.append("Content-Type", "application/json");
-                var raw = JSON.stringify({
-                    "farmID": "AA0001",
-                    "token": "xxx",
-                    "method": "scheduleSet",
-                    "detail": {
-                        "device": "relay1",
-                        "period": 1,
-                        "start_hour": s[0],
-                        "start_minute": s[1],
-                        "start_second": s[2],
-                        "end_hour": e[0],
-                        "end_minute": e[1],
-                        "end_second": e[2],
-                        "duration": 3,
-                        "pause": false
-                    },
-                    "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
-                });
-                console.log(raw)
-                var requestOptions = {
-                    method: 'POST',
-                    headers: myHeaders,
-                    body: raw,
-                    redirect: 'follow'
-                };
-
-                {#fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)#}
-                fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)
-                    .then(response => response.text())
-                    .then(result => console.log(result))
-                    .catch(error => console.log('error', error));
+            fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)
+            {#fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)#}
+                .then(response => response.text())
+                .then(result => console.log(result))
+                .catch(error => console.log('error', error));
 
 
-            }
         }
+    }
+    document.getElementById('buttonTimePeriod4R1Submit').onclick = function () {
+        if (document.getElementById('timePeriod4R1').checked || true) {
+            start = document.getElementById('timePeriod4R1Start').value
+            end = document.getElementById('timePeriod4R1Stop').value
+                        duration=document.getElementById('timePeriod4R1Delay').value
+
+            var s = start.split(":")
+            var e = end.split(":")
+
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            var raw = JSON.stringify({
+                "farmID": "{{ farmCode }}",
+                "token": "xxx",
+                "method": "scheduleSet",
+                "detail": {
+                    "device": "relay1",
+                    "period": 4,
+                    "start_hour": s[0],
+                    "start_minute": s[1],
+                    "start_second": s[2],
+                    "end_hour": e[0],
+                    "end_minute": e[1],
+                    "end_second": e[2],
+                    "duration": duration,
+                    "pause": !document.getElementById('timePeriod4R1').checked
+                },
+                "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
+            });
+            console.log(raw)
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+
+            fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)
+            {#fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)#}
+                .then(response => response.text())
+                .then(result => console.log(result))
+                .catch(error => console.log('error', error));
+
+
+        }
+    }
+    document.getElementById('buttonTimePeriod5R1Submit').onclick = function () {
+        if (document.getElementById('timePeriod5R1').checked || true) {
+            start = document.getElementById('timePeriod5R1Start').value
+            end = document.getElementById('timePeriod5R1Stop').value
+                        duration=document.getElementById('timePeriod5R1Delay').value
+
+            var s = start.split(":")
+            var e = end.split(":")
+
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            var raw = JSON.stringify({
+                "farmID": "{{ farmCode }}",
+                "token": "xxx",
+                "method": "scheduleSet",
+                "detail": {
+                    "device": "relay1",
+                    "period": 5,
+                    "start_hour": s[0],
+                    "start_minute": s[1],
+                    "start_second": s[2],
+                    "end_hour": e[0],
+                    "end_minute": e[1],
+                    "end_second": e[2],
+                    "duration": duration,
+                    "pause": !document.getElementById('timePeriod5R1').checked
+                },
+                "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
+            });
+            console.log(raw)
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+
+            fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)
+            {#fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)#}
+                .then(response => response.text())
+                .then(result => console.log(result))
+                .catch(error => console.log('error', error));
+
+
+        }
+    }
+    document.getElementById('buttonTimePeriod6R1Submit').onclick = function () {
+        if (document.getElementById('timePeriod6R1').checked || true) {
+            start = document.getElementById('timePeriod6R1Start').value
+            end = document.getElementById('timePeriod6R1Stop').value
+                        duration=document.getElementById('timePeriod6R1Delay').value
+
+            var s = start.split(":")
+            var e = end.split(":")
+
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            var raw = JSON.stringify({
+                "farmID": "{{ farmCode }}",
+                "token": "xxx",
+                "method": "scheduleSet",
+                "detail": {
+                    "device": "relay1",
+                    "period": 6,
+                    "start_hour": s[0],
+                    "start_minute": s[1],
+                    "start_second": s[2],
+                    "end_hour": e[0],
+                    "end_minute": e[1],
+                    "end_second": e[2],
+                    "duration": duration,
+                    "pause": !document.getElementById('timePeriod6R1').checked
+                },
+                "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
+            });
+            console.log(raw)
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+
+            fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)
+            {#fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)#}
+                .then(response => response.text())
+                .then(result => console.log(result))
+                .catch(error => console.log('error', error));
+
+
+        }
+    }
+
+        {#Relay 2#}
+        {#Relay 3#}
+        {#Relay 4#}
+        {#Relay 5#}
+        {#Relay 6#}
+
+
 </script>
+
+
 
 {#  <script src="../../static/js/vendor/modernizr-3.8.0.min.js"></script>#}
 {#  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>#}
