@@ -8,4 +8,7 @@ urlpatterns = [
     path('createSchedule/', views.createSchedule, name='createSchedule'),
     path('printSchedule/', views.printSchedule, name='printSchedule'),
     path('removeSchedule/', views.removeSchedule, name='removeSchedule'),
+    path('wakeUp/', views.wakeUp, name='wakeUp'),
+    path('setMode/', views.setMode, name='setMode'),
+
 ]

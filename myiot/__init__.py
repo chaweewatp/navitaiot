@@ -1,10 +1,11 @@
+
+
 # from . import mqtt
 import paho.mqtt.client as mqtt
 import json
 import time
 import requests
 import pyrebase
-
 
 ## firebase configuration
 config = {
@@ -17,11 +18,15 @@ config = {
 firebase = pyrebase.initialize_app(config)
 
 
+
+
+
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
     client.subscribe("TEST/MQTT")
     client.subscribe("reportLED")
     client.subscribe("reportRelay")
+    client.subscribe("wakeUp")
 
 
 
@@ -30,6 +35,29 @@ def on_message(client, userdata, msg):
     # print(msg.topic)
     # print(str(msg.payload.decode("utf-8")))
     data=str(msg.payload.decode("utf-8"))
+
+    if msg.topic == "wakeUp":
+        farmID=data.split('/')[0]
+        content=data.split('/')[1]
+        print("farm id is ", farmID, ' content is ', content)
+        urlServer =  "http://127.0.0.1:8000/wakeUp/"
+
+        # urlServer =  "https://navitaiot.herokuapp.com/"
+
+        url = urlServer
+
+        payload = {
+            'farmID': farmID,
+        }
+
+        headers = {
+            'content-type': "application/json"
+        }
+
+        response = requests.request("POST", url, data=json.dumps(payload), headers=headers)
+
+
+
     if msg.topic == "reportLED":
         farmID=data.split('/')[0]
         content=data.split('/')[1]

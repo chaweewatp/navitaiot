@@ -140,6 +140,7 @@ class relayDevice(models.Model):
     relayNumber = models.CharField(max_length=10)
     scheduleStatus=models.BooleanField(blank=True, null=True)
     currentStatus=models.BooleanField(blank=True, null=True)
+    manualMode=models.BooleanField(blank=True, null=True, default=False)
 
     class Meta:
         ordering = ['farm', 'relayNumber']
