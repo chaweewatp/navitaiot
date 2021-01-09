@@ -7,9 +7,12 @@
     {#    <link rel="stylesheet" href="{% static  'css/landingPage.css' %}">#}
     {#    <link rel="stylesheet" href="{% static 'css/landingPageFonts.css' %}">#}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    {#    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>#}
-    {#    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>#}
-    {#    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>#}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
 
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-clockpicker.min.css' %}">
 
@@ -40,6 +43,68 @@
     </style>
 
 
+    <style>
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+</style>
+
 </head>
 <body>
 
@@ -49,6 +114,10 @@
 <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
 <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-analytics.js"></script>
+
+
+
+
 
 <script>
     // Your web app's Firebase configuration
@@ -66,9 +135,9 @@
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     firebase.analytics();
-    var relay1Period1Ref=firebase.database().ref("farmCode/"+'{{ farmCode }}'+"/Relay1/Schedule/Period1");
-    relay1Period1Ref.on('value',function (snapshot) {
-                var arr = snapshot.val();
+    var relay1Period1Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay1/Schedule/Period1");
+    relay1Period1Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
         console.log(arr)
         console.log(arr['sch_on'])
         console.log(arr['sch_off'])
@@ -76,17 +145,21 @@
         document.getElementById("R1_Sch1_on").innerHTML = arr['sch_on'];
         document.getElementById("R1_Sch1_off").innerHTML = arr['sch_off'];
         document.getElementById("R1_Sch1_duration").innerHTML = arr['sch_duration'];
-        if (arr['pause']==false){
+        if (arr['pause'] == false) {
             document.getElementById("R1_Sch1_pause").innerHTML = "(enable)";
-        }else{
+                document.getElementById("chk1").checked = true;
+
+        } else {
             document.getElementById("R1_Sch1_pause").innerHTML = "(disable)";
+                            document.getElementById("chk1").checked = false;
+
         }
     });
 
 
-        var relay1Period2Ref=firebase.database().ref("farmCode/"+'{{ farmCode }}'+"/Relay1/Schedule/Period2");
-    relay1Period2Ref.on('value',function (snapshot) {
-                var arr = snapshot.val();
+    var relay1Period2Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay1/Schedule/Period2");
+    relay1Period2Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
         console.log(arr)
         console.log(arr['sch_on'])
         console.log(arr['sch_off'])
@@ -94,16 +167,16 @@
         document.getElementById("R1_Sch2_on").innerHTML = arr['sch_on'];
         document.getElementById("R1_Sch2_off").innerHTML = arr['sch_off'];
         document.getElementById("R1_Sch2_duration").innerHTML = arr['sch_duration'];
-        if (arr['pause']==false){
+        if (arr['pause'] == false) {
             document.getElementById("R1_Sch2_pause").innerHTML = "(enable)";
-        }else{
+        } else {
             document.getElementById("R1_Sch2_pause").innerHTML = "(disable)";
         }
     });
 
-        var relay1Period3Ref=firebase.database().ref("farmCode/"+'{{ farmCode }}'+"/Relay1/Schedule/Period3");
-    relay1Period3Ref.on('value',function (snapshot) {
-                var arr = snapshot.val();
+    var relay1Period3Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay1/Schedule/Period3");
+    relay1Period3Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
         console.log(arr)
         console.log(arr['sch_on'])
         console.log(arr['sch_off'])
@@ -111,16 +184,16 @@
         document.getElementById("R1_Sch3_on").innerHTML = arr['sch_on'];
         document.getElementById("R1_Sch3_off").innerHTML = arr['sch_off'];
         document.getElementById("R1_Sch3_duration").innerHTML = arr['sch_duration'];
-        if (arr['pause']==false){
+        if (arr['pause'] == false) {
             document.getElementById("R1_Sch3_pause").innerHTML = "(enable)";
-        }else{
+        } else {
             document.getElementById("R1_Sch3_pause").innerHTML = "(disable)";
         }
     });
 
-        var relay1Period4Ref=firebase.database().ref("farmCode/"+'{{ farmCode }}'+"/Relay1/Schedule/Period4");
-    relay1Period4Ref.on('value',function (snapshot) {
-                var arr = snapshot.val();
+    var relay1Period4Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay1/Schedule/Period4");
+    relay1Period4Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
         console.log(arr)
         console.log(arr['sch_on'])
         console.log(arr['sch_off'])
@@ -128,16 +201,16 @@
         document.getElementById("R1_Sch4_on").innerHTML = arr['sch_on'];
         document.getElementById("R1_Sch4_off").innerHTML = arr['sch_off'];
         document.getElementById("R1_Sch4_duration").innerHTML = arr['sch_duration'];
-        if (arr['pause']==false){
+        if (arr['pause'] == false) {
             document.getElementById("R1_Sch4_pause").innerHTML = "(enable)";
-        }else{
+        } else {
             document.getElementById("R1_Sch4_pause").innerHTML = "(disable)";
         }
     });
 
-        var relay1Period5Ref=firebase.database().ref("farmCode/"+'{{ farmCode }}'+"/Relay1/Schedule/Period5");
-    relay1Period5Ref.on('value',function (snapshot) {
-                var arr = snapshot.val();
+    var relay1Period5Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay1/Schedule/Period5");
+    relay1Period5Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
         console.log(arr)
         console.log(arr['sch_on'])
         console.log(arr['sch_off'])
@@ -145,16 +218,16 @@
         document.getElementById("R1_Sch5_on").innerHTML = arr['sch_on'];
         document.getElementById("R1_Sch5_off").innerHTML = arr['sch_off'];
         document.getElementById("R1_Sch5_duration").innerHTML = arr['sch_duration'];
-        if (arr['pause']==false){
+        if (arr['pause'] == false) {
             document.getElementById("R1_Sch5_pause").innerHTML = "(enable)";
-        }else{
+        } else {
             document.getElementById("R1_Sch5_pause").innerHTML = "(disable)";
         }
     });
 
-        var relay1Period6Ref=firebase.database().ref("farmCode/"+'{{ farmCode }}'+"/Relay1/Schedule/Period6");
-    relay1Period6Ref.on('value',function (snapshot) {
-                var arr = snapshot.val();
+    var relay1Period6Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay1/Schedule/Period6");
+    relay1Period6Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
         console.log(arr)
         console.log(arr['sch_on'])
         console.log(arr['sch_off'])
@@ -162,22 +235,20 @@
         document.getElementById("R1_Sch6_on").innerHTML = arr['sch_on'];
         document.getElementById("R1_Sch6_off").innerHTML = arr['sch_off'];
         document.getElementById("R1_Sch6_duration").innerHTML = arr['sch_duration'];
-        if (arr['pause']==false){
+        if (arr['pause'] == false) {
             document.getElementById("R1_Sch6_pause").innerHTML = "(enable)";
-        }else{
+        } else {
             document.getElementById("R1_Sch6_pause").innerHTML = "(disable)";
         }
     });
 
 
-
-
     var farmRef = firebase.database().ref("farmCode/" + '{{ farmCode }}');
     farmRef.on('value', function (snapshot) {
-        {#console.log(snapshot.val());#}
+        console.log(snapshot.val());
         var arr = snapshot.val();
         console.log(arr)
-        {#console.log(arr['flow1Status'])#}
+        console.log(arr['flow1Status'])
 
 
         if (arr['flow1Status'] == true) {
@@ -325,7 +396,7 @@
 
         if (arr['Relay6']['cur_status'] == true) {
             document.getElementById("Relay6_cur_status").innerHTML = "เปิด";
-        } else if (arr['Relay6']['cur_status'] == true) {
+        } else if (arr['Relay6']['cur_status'] == false) {
             document.getElementById("Relay6_cur_status").innerHTML = "ปิด";
         } else {
             document.getElementById("Relay6_cur_status").innerHTML = "N/A";
@@ -412,12 +483,7 @@
                                 <button type="button" class="btn btn-success" id="controlRelay1On">On</button>
                                 <button type="button" class="btn btn-danger" id="controlRelay1Off">Off</button>
                             </div>
-                            {#                            <div class="row">#}
-                            {#                                <div class="col12">#}
-                            {#                                    <button type="button" class="btn btn-primary" id="setRelay1Schedule">Schedule#}
-                            {#                                    </button>#}
-                            {#                                </div>#}
-                            {#                            </div>#}
+
                         </div>
                     </div>
                     {# relay 2#}
@@ -607,50 +673,52 @@
         </div>
 
 
-<script>
+        <script>
 
-// Unix time value from server: seconds since 1970-01-01T00:00:00Z
-// Below is a number for 2014-07-02T06:48:24.000Z, set to actual server value
-{#var serverTime = 1404283704;#}
+            // Unix time value from server: seconds since 1970-01-01T00:00:00Z
+            // Below is a number for 2014-07-02T06:48:24.000Z, set to actual server value
+            {#var serverTime = 1404283704;#}
 
-var serverTime = "{{ serverTime }}";
-console.log(serverTime)
+            var serverTime = "{{ serverTime }}";
+            console.log(serverTime)
 
-var doClock = (function () {
+            var doClock = (function () {
 
-  // Calc offset from server time
-  // Javascript time value is milliseconds since above epoch
-  var serverOffset = serverTime - (new Date() / 1000 | 0);
+                // Calc offset from server time
+                // Javascript time value is milliseconds since above epoch
+                var serverOffset = serverTime - (new Date() / 1000 | 0);
 
-  // Helper
-  function z(n){return (n<10?'0':'') + n}
+                // Helper
+                function z(n) {
+                    return (n < 10 ? '0' : '') + n
+                }
 
-  return function() {
+                return function () {
 
-    // Create a new Date object each time so
-    // it doesn't matter if a second or more is skipped
-    var now = new Date();
+                    // Create a new Date object each time so
+                    // it doesn't matter if a second or more is skipped
+                    var now = new Date();
 
-    // Adjust for server offset
-    now.setSeconds(now.getSeconds() + serverOffset);
+                    // Adjust for server offset
+                    now.setSeconds(now.getSeconds() + serverOffset);
 
-    // write clock to document, values are local, not UTC
-    document.getElementById('clock').innerHTML = now.getFullYear()   + '-' +
-                                                 z(now.getMonth()+1) + '-' +
-                                                 z(now.getDate())    + ' ' +
-                                                 z(now.getHours())   + ':' +
-                                                 z(now.getMinutes()) + ':' +
-                                                 z(now.getSeconds());
-    // Run again just after next full second
-    setTimeout(doClock, 1020 - now.getMilliseconds());
-  };
-}());
+                    // write clock to document, values are local, not UTC
+                    document.getElementById('clock').innerHTML = now.getFullYear() + '-' +
+                        z(now.getMonth() + 1) + '-' +
+                        z(now.getDate()) + ' ' +
+                        z(now.getHours()) + ':' +
+                        z(now.getMinutes()) + ':' +
+                        z(now.getSeconds());
+                    // Run again just after next full second
+                    setTimeout(doClock, 1020 - now.getMilliseconds());
+                };
+            }());
 
-window.onload = doClock;
+            window.onload = doClock;
 
-</script>
+        </script>
 
-<div id="clock"></div>
+        <div id="clock"></div>
 
         {# Schedule set #}
         <p>Relay 1 (ปั๊มน้่ำ)</p>
@@ -658,22 +726,125 @@ window.onload = doClock;
             <div class="col-xs-4">
                 <div class="row">
                     <div class="col-12">
-                        เริ่มเวลา <span id ="R1_Sch1_on"></span> เป็นเวลา <span id="R1_Sch1_duration"></span> นาที สิ้นสุดเวลา <span id="R1_Sch1_off"></span> <span id="R1_Sch1_pause"></span>
+                        เริ่มเวลา <span id="R1_Sch1_on"></span>
+                        เป็นเวลา <span id="R1_Sch1_duration"></span> นาที
+                        สิ้นสุดเวลา <span id="R1_Sch1_off"></span> <span id="R1_Sch1_pause"></span>
+
+                        <input id="chk1" type="checkbox"  data-toggle="toggle" onchange="toggleScheduleRelay1()" data-onstyle="success">
+
+                        <script>
+                            function toggleScheduleRelay1(){
+                                start=$('#R1_Sch1_on').text();
+                                  end=$('#R1_Sch1_off').text();
+                                  duration=$('#R1_Sch1_duration').text();
+                                    console.log(start)
+                                    var s = start.split(":")
+                                    var e = end.split(":")
+
+
+                                if (document.getElementById('chk1').checked)
+                              {
+                                  console.log("button 1 Checked")
+
+                                    var myHeaders = new Headers();
+                                    myHeaders.append("Content-Type", "application/json");
+                                    var raw = JSON.stringify({
+                                        "farmID": "{{ farmCode }}",
+                                        "token": "xxx",
+                                        "method": "scheduleSet",
+                                        "detail": {
+                                            "device": "relay1",
+                                            "period": 1,
+                                            "start_hour": s[0],
+                                            "start_minute": s[1],
+                                            "start_second": s[2],
+                                            "end_hour": e[0],
+                                            "end_minute": e[1],
+                                            "end_second": e[2],
+                                            "duration": duration,
+                                            "pause": false
+                                        },
+                                        "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
+                                    });
+                                    console.log(raw)
+                                    var requestOptions = {
+                                        method: 'POST',
+                                        headers: myHeaders,
+                                        body: raw,
+                                        redirect: 'follow'
+                                    };
+
+                                    {#fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)#}
+                                    fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)
+                                        .then(response => response.text())
+                                        .then(result => console.log(result))
+                                        .catch(error => console.log('error', error));
+
+
+
+
+                              } else
+                              {
+                                  console.log("button 1 Not Checked")
+
+                                    var myHeaders = new Headers();
+                                    myHeaders.append("Content-Type", "application/json");
+                                    var raw = JSON.stringify({
+                                        "farmID": "{{ farmCode }}",
+                                        "token": "xxx",
+                                        "method": "scheduleSet",
+                                        "detail": {
+                                            "device": "relay1",
+                                            "period": 1,
+                                            "start_hour": s[0],
+                                            "start_minute": s[1],
+                                            "start_second": s[2],
+                                            "end_hour": e[0],
+                                            "end_minute": e[1],
+                                            "end_second": e[2],
+                                            "duration": duration,
+                                            "pause": true
+                                        },
+                                        "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
+                                    });
+                                    console.log(raw)
+                                    var requestOptions = {
+                                        method: 'POST',
+                                        headers: myHeaders,
+                                        body: raw,
+                                        redirect: 'follow'
+                                    };
+
+                                    {#fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)#}
+                                    fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)
+                                        .then(response => response.text())
+                                        .then(result => console.log(result))
+                                        .catch(error => console.log('error', error));
+                              }}
+
+
+                        </script>
+
                     </div>
                     <div class="col-12">
-                        เริ่มเวลา <span id ="R1_Sch2_on"></span> เป็นเวลา <span id="R1_Sch2_duration"></span> นาที สิ้นสุดเวลา <span id="R1_Sch2_off"></span> <span id="R1_Sch2_pause"></span>
-                    </div>
-                                        <div class="col-12">
-                        เริ่มเวลา <span id ="R1_Sch3_on"></span> เป็นเวลา <span id="R1_Sch3_duration"></span> นาที สิ้นสุดเวลา <span id="R1_Sch3_off"></span> <span id="R1_Sch3_pause"></span>
-                    </div>
-                                        <div class="col-12">
-                        เริ่มเวลา <span id ="R1_Sch4_on"></span> เป็นเวลา <span id="R1_Sch4_duration"></span> นาที สิ้นสุดเวลา <span id="R1_Sch4_off"></span> <span id="R1_Sch4_pause"></span>
-                    </div>
-                                        <div class="col-12">
-                        เริ่มเวลา <span id ="R1_Sch5_on"></span> เป็นเวลา <span id="R1_Sch5_duration"></span> นาที สิ้นสุดเวลา <span id="R1_Sch5_off"></span> <span id="R1_Sch5_pause"></span>
+                        เริ่มเวลา <span id="R1_Sch2_on"></span> เป็นเวลา <span id="R1_Sch2_duration"></span> นาที
+                        สิ้นสุดเวลา <span id="R1_Sch2_off"></span> <span id="R1_Sch2_pause"></span>
                     </div>
                     <div class="col-12">
-                        <p>เริ่มเวลา <span id ="R1_Sch6_on"></span> เป็นเวลา <span id="R1_Sch6_duration"></span> นาที สิ้นสุดเวลา <span id="R1_Sch6_off"></span> <span id="R1_Sch6_pause"></span></p>
+                        เริ่มเวลา <span id="R1_Sch3_on"></span> เป็นเวลา <span id="R1_Sch3_duration"></span> นาที
+                        สิ้นสุดเวลา <span id="R1_Sch3_off"></span> <span id="R1_Sch3_pause"></span>
+                    </div>
+                    <div class="col-12">
+                        เริ่มเวลา <span id="R1_Sch4_on"></span> เป็นเวลา <span id="R1_Sch4_duration"></span> นาที
+                        สิ้นสุดเวลา <span id="R1_Sch4_off"></span> <span id="R1_Sch4_pause"></span>
+                    </div>
+                    <div class="col-12">
+                        เริ่มเวลา <span id="R1_Sch5_on"></span> เป็นเวลา <span id="R1_Sch5_duration"></span> นาที
+                        สิ้นสุดเวลา <span id="R1_Sch5_off"></span> <span id="R1_Sch5_pause"></span>
+                    </div>
+                    <div class="col-12">
+                        <p>เริ่มเวลา <span id="R1_Sch6_on"></span> เป็นเวลา <span id="R1_Sch6_duration"></span> นาที
+                            สิ้นสุดเวลา <span id="R1_Sch6_off"></span> <span id="R1_Sch6_pause"></span></p>
                     </div>
                 </div>
             </div>
@@ -715,7 +886,7 @@ window.onload = doClock;
                         เริ่มเวลา <input type="time" step="1" id="timePeriod4R1Start">
                         เป็นเวลา <input id="timePeriod4R1Delay"> นาที
                         สิ้นสุดเวลา <input type="time" step="1" id="timePeriod4R1Stop" disable>
-                                                <button type="button" id="buttonTimePeriod4R1Submit">บันทึกค่า/ดำเนินการตั้งเวลา</button>
+                        <button type="button" id="buttonTimePeriod4R1Submit">บันทึกค่า/ดำเนินการตั้งเวลา</button>
 
                     </div>
                 </div>
@@ -726,7 +897,7 @@ window.onload = doClock;
                         เริ่มเวลา <input type="time" step="1" id="timePeriod5R1Start">
                         เป็นเวลา <input id="timePeriod5R1Delay"> นาที
                         สิ้นสุดเวลา <input type="time" step="1" id="timePeriod5R1Stop" disable>
-                                                <button type="button" id="buttonTimePeriod5R1Submit">บันทึกค่า/ดำเนินการตั้งเวลา</button>
+                        <button type="button" id="buttonTimePeriod5R1Submit">บันทึกค่า/ดำเนินการตั้งเวลา</button>
 
                     </div>
                 </div>
@@ -754,7 +925,9 @@ window.onload = doClock;
 {# control relay#}
 <script>
     {# control relay 1#}
-    var url = "https://navitaiot.herokuapp.com/testAPI2/"
+    {#var url = "https://navitaiot.herokuapp.com/testAPI2/"#}
+    var url = "http://127.0.0.1:8000/testAPI2/"
+
     document.getElementById('controlRelay1On').onclick = function () {
         console.log('controlRelay1On clicked')
         var myHeaders = new Headers();
@@ -765,7 +938,7 @@ window.onload = doClock;
             "farmID": "AA0001",
             "token": "xxx",
             "method": "control",
-            "detail": {"device": "relay1", "control": "on"}
+            "detail": {"device": "Relay1", "control": "on"}
         });
 
         var requestOptions = {
@@ -791,7 +964,7 @@ window.onload = doClock;
             "farmID": "AA0001",
             "token": "xxx",
             "method": "control",
-            "detail": {"device": "relay1", "control": "off"}
+            "detail": {"device": "Relay1", "control": "off"}
         });
 
         var requestOptions = {
@@ -828,7 +1001,7 @@ window.onload = doClock;
         };
 
         {#fetch("http://127.0.0.1:8000/setMode/", requestOptions)#}
-                        fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
+        fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
 
             .then(response => response.text())
             .then(result => console.log(result))
@@ -856,7 +1029,7 @@ window.onload = doClock;
         };
 
         {#fetch("http://127.0.0.1:8000/setMode/", requestOptions)#}
-                                    fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
+        fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
 
             .then(response => response.text())
             .then(result => console.log(result))
@@ -874,7 +1047,7 @@ window.onload = doClock;
             "farmID": "AA0001",
             "token": "xxx",
             "method": "control",
-            "detail": {"device": "relay2", "control": "on"}
+            "detail": {"device": "Relay2", "control": "on"}
         });
 
         var requestOptions = {
@@ -900,7 +1073,7 @@ window.onload = doClock;
             "farmID": "AA0001",
             "token": "xxx",
             "method": "control",
-            "detail": {"device": "relay2", "control": "off"}
+            "detail": {"device": "Relay2", "control": "off"}
         });
 
         var requestOptions = {
@@ -937,7 +1110,7 @@ window.onload = doClock;
         };
 
         {#fetch("http://127.0.0.1:8000/setMode/", requestOptions)#}
-                                    fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
+        fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
 
             .then(response => response.text())
             .then(result => console.log(result))
@@ -965,7 +1138,7 @@ window.onload = doClock;
         };
 
         {#fetch("http://127.0.0.1:8000/setMode/", requestOptions)#}
-                                    fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
+        fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
 
             .then(response => response.text())
             .then(result => console.log(result))
@@ -983,7 +1156,7 @@ window.onload = doClock;
             "farmID": "AA0001",
             "token": "xxx",
             "method": "control",
-            "detail": {"device": "relay3", "control": "on"}
+            "detail": {"device": "Relay3", "control": "on"}
         });
 
         var requestOptions = {
@@ -1009,7 +1182,7 @@ window.onload = doClock;
             "farmID": "AA0001",
             "token": "xxx",
             "method": "control",
-            "detail": {"device": "relay3", "control": "off"}
+            "detail": {"device": "Relay3", "control": "off"}
         });
 
         var requestOptions = {
@@ -1046,7 +1219,7 @@ window.onload = doClock;
         };
 
         {#fetch("http://127.0.0.1:8000/setMode/", requestOptions)#}
-                                    fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
+        fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
 
             .then(response => response.text())
             .then(result => console.log(result))
@@ -1074,7 +1247,7 @@ window.onload = doClock;
         };
 
         {#fetch("http://127.0.0.1:8000/setMode/", requestOptions)#}
-                                    fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
+        fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
 
             .then(response => response.text())
             .then(result => console.log(result))
@@ -1092,7 +1265,7 @@ window.onload = doClock;
             "farmID": "AA0001",
             "token": "xxx",
             "method": "control",
-            "detail": {"device": "relay4", "control": "on"}
+            "detail": {"device": "Relay4", "control": "on"}
         });
 
         var requestOptions = {
@@ -1118,7 +1291,7 @@ window.onload = doClock;
             "farmID": "AA0001",
             "token": "xxx",
             "method": "control",
-            "detail": {"device": "relay4", "control": "off"}
+            "detail": {"device": "Relay4", "control": "off"}
         });
 
         var requestOptions = {
@@ -1155,7 +1328,7 @@ window.onload = doClock;
         };
 
         {#fetch("http://127.0.0.1:8000/setMode/", requestOptions)#}
-                                    fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
+        fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
 
             .then(response => response.text())
             .then(result => console.log(result))
@@ -1183,7 +1356,7 @@ window.onload = doClock;
         };
 
         {#fetch("http://127.0.0.1:8000/setMode/", requestOptions)#}
-                                    fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
+        fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
 
             .then(response => response.text())
             .then(result => console.log(result))
@@ -1202,7 +1375,7 @@ window.onload = doClock;
             "farmID": "AA0001",
             "token": "xxx",
             "method": "control",
-            "detail": {"device": "relay5", "control": "on"}
+            "detail": {"device": "Relay5", "control": "on"}
         });
 
         var requestOptions = {
@@ -1228,7 +1401,7 @@ window.onload = doClock;
             "farmID": "AA0001",
             "token": "xxx",
             "method": "control",
-            "detail": {"device": "relay5", "control": "off"}
+            "detail": {"device": "Relay5", "control": "off"}
         });
 
         var requestOptions = {
@@ -1265,7 +1438,7 @@ window.onload = doClock;
         };
 
         {#fetch("http://127.0.0.1:8000/setMode/", requestOptions)#}
-                                    fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
+        fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
 
             .then(response => response.text())
             .then(result => console.log(result))
@@ -1293,7 +1466,7 @@ window.onload = doClock;
         };
 
         {#fetch("http://127.0.0.1:8000/setMode/", requestOptions)#}
-                                    fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
+        fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
 
             .then(response => response.text())
             .then(result => console.log(result))
@@ -1311,7 +1484,7 @@ window.onload = doClock;
             "farmID": "AA0001",
             "token": "xxx",
             "method": "control",
-            "detail": {"device": "relay6", "control": "on"}
+            "detail": {"device": "Relay6", "control": "on"}
         });
 
         var requestOptions = {
@@ -1337,7 +1510,7 @@ window.onload = doClock;
             "farmID": "AA0001",
             "token": "xxx",
             "method": "control",
-            "detail": {"device": "relay6", "control": "off"}
+            "detail": {"device": "Relay6", "control": "off"}
         });
 
         var requestOptions = {
@@ -1374,7 +1547,7 @@ window.onload = doClock;
         };
 
         {#fetch("http://127.0.0.1:8000/setMode/", requestOptions)#}
-                                    fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
+        fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
 
             .then(response => response.text())
             .then(result => console.log(result))
@@ -1402,7 +1575,7 @@ window.onload = doClock;
         };
 
         {#fetch("http://127.0.0.1:8000/setMode/", requestOptions)#}
-                                    fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
+        fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
 
             .then(response => response.text())
             .then(result => console.log(result))
@@ -1447,12 +1620,12 @@ window.onload = doClock;
     {#Relay 1#}
     document.getElementById('buttonTimePeriod1R1Submit').onclick = function () {
         if (document.getElementById('timePeriod1R1').checked || true) {
-            pause=document.getElementById('timePeriod1R1').checked
+            pause = document.getElementById('timePeriod1R1').checked
             console.log('value of pause')
             console.log(pause)
             start = document.getElementById('timePeriod1R1Start').value
             end = document.getElementById('timePeriod1R1Stop').value
-            duration=document.getElementById('timePeriod1R1Delay').value
+            duration = document.getElementById('timePeriod1R1Delay').value
             var s = start.split(":")
             var e = end.split(":")
 
@@ -1497,7 +1670,7 @@ window.onload = doClock;
         if (document.getElementById('timePeriod2R1').checked || true) {
             start = document.getElementById('timePeriod2R1Start').value
             end = document.getElementById('timePeriod2R1Stop').value
-                        duration=document.getElementById('timePeriod2R1Delay').value
+            duration = document.getElementById('timePeriod2R1Delay').value
 
             var s = start.split(":")
             var e = end.split(":")
@@ -1543,7 +1716,7 @@ window.onload = doClock;
         if (document.getElementById('timePeriod3R1').checked || true) {
             start = document.getElementById('timePeriod3R1Start').value
             end = document.getElementById('timePeriod3R1Stop').value
-                        duration=document.getElementById('timePeriod3R1Delay').value
+            duration = document.getElementById('timePeriod3R1Delay').value
 
             var s = start.split(":")
             var e = end.split(":")
@@ -1589,7 +1762,7 @@ window.onload = doClock;
         if (document.getElementById('timePeriod4R1').checked || true) {
             start = document.getElementById('timePeriod4R1Start').value
             end = document.getElementById('timePeriod4R1Stop').value
-                        duration=document.getElementById('timePeriod4R1Delay').value
+            duration = document.getElementById('timePeriod4R1Delay').value
 
             var s = start.split(":")
             var e = end.split(":")
@@ -1635,7 +1808,7 @@ window.onload = doClock;
         if (document.getElementById('timePeriod5R1').checked || true) {
             start = document.getElementById('timePeriod5R1Start').value
             end = document.getElementById('timePeriod5R1Stop').value
-                        duration=document.getElementById('timePeriod5R1Delay').value
+            duration = document.getElementById('timePeriod5R1Delay').value
 
             var s = start.split(":")
             var e = end.split(":")
@@ -1681,7 +1854,7 @@ window.onload = doClock;
         if (document.getElementById('timePeriod6R1').checked || true) {
             start = document.getElementById('timePeriod6R1Start').value
             end = document.getElementById('timePeriod6R1Stop').value
-                        duration=document.getElementById('timePeriod6R1Delay').value
+            duration = document.getElementById('timePeriod6R1Delay').value
 
             var s = start.split(":")
             var e = end.split(":")
@@ -1724,23 +1897,23 @@ window.onload = doClock;
         }
     }
 
-        {#Relay 2#}
-        {#Relay 3#}
-        {#Relay 4#}
-        {#Relay 5#}
-        {#Relay 6#}
+    {#Relay 2#}
+    {#Relay 3#}
+    {#Relay 4#}
+    {#Relay 5#}
+    {#Relay 6#}
 
 
 </script>
 
 
-
 {#  <script src="../../static/js/vendor/modernizr-3.8.0.min.js"></script>#}
-{#  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>#}
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 {#  <script>window.jQuery || document.write('<script src="./js/vendor/jquery-3.4.1.min.js"><\/script>')</script>#}
 {#  <script src="../../static/js/plugins.js"></script>#}
 {#<script src="{% static 'js/main.js' %}"></script>#}
 {#  <script src="../../static/js/main.js"></script>#}
+
 
 
 </body>

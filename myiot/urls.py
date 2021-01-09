@@ -11,4 +11,6 @@ urlpatterns = [
     path('wakeUp/', views.wakeUp, name='wakeUp'),
     path('setMode/', views.setMode, name='setMode'),
 
+
+
 ]

@@ -19,6 +19,7 @@ import paho.mqtt.client as mqtt
 from .__init__ import client
 
 from apscheduler.schedulers.background import BackgroundScheduler
+
 from apscheduler.triggers.cron import CronTrigger
 from django.core.management.base import BaseCommand
 from django_apscheduler.jobstores import DjangoJobStore
@@ -53,6 +54,35 @@ def testAPI(request):
     return Response("OK")
 
 
+def firebaseModeSet(mode, farmID, relay):
+    print(relay)
+    text = {'manual': mode}
+    db = firebase.database()
+    db.child("farmCode").child(farmID).child(relay).update(text)
+
+def modeManualSet(farmID, relay):
+    f1 = farm.objects.get(farmCode=farmID)
+    r1 = relayDevice.objects.get(farm=f1, relayNumber=relay[-1])
+    r1.manualMode = True
+    r1.save()
+    #pause schedule
+
+    # update firebase
+    firebaseModeSet(mode=True, farmID=farmID, relay=relay)
+    print('farmID :{} - relay number : {} set as Manual mode'.format(farmID, relay))
+
+def modeScheduleSet(farmID, relay):
+    f1 = farm.objects.get(farmCode=farmID)
+    r1 = relayDevice.objects.get(farm=f1, relayNumber=relay[-1])
+    r1.manualMode = False
+    r1.save()
+    #resume schedule
+
+    # update firebase
+    firebaseModeSet(mode=False, farmID=farmID, relay=relay)
+    print('farmID :{} - relay number : {} set as Schedule mode'.format(farmID, relay))
+
+
 @api_view(['POST'])
 @permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
 def setMode(request):
@@ -64,26 +94,11 @@ def setMode(request):
         relay=data['detail']['device']
         if data['detail']['mode']=="schedule":
             # set manual mode "False" in relay model
-            f1 = farm.objects.get(farmCode=farmID)
-            r1 =relayDevice.objects.get(farm=f1, relayNumber=relay[-1])
-            r1.manualMode=False
-            r1.save()
-            #update firebase
-
-            text={'manual':False}
-            db = firebase.database()
-            db.child("farmCode").child(farmID).child(relay).update(text)
+            modeScheduleSet(farmID, relay)
         elif data['detail']['mode']=="manual":
             # set manual mode "True" in relay model
-            f1 = farm.objects.get(farmCode=farmID)
-            r1 = relayDevice.objects.get(farm=f1, relayNumber=relay[-1])
-            r1.manualMode = True
-            r1.save()
+            modeManualSet(farmID, relay)
 
-            # update firebase
-            text={'manual':True}
-            db = firebase.database()
-            db.child("farmCode").child(farmID).child(relay).update(text)
         else:
             pass
     return Response("OK")
@@ -95,9 +110,6 @@ def updateFirebase(request, farmID, text):
     # db.child("farmCode").child("AA0001").update({"flow1Status": False})
     db.child("farmCode").child(farmID).update(text)
     return HttpResponse("OK")
-
-
-
 
 #
 # @csrf_exempt
@@ -158,6 +170,9 @@ def sendCommandOn(chipID, device):
     print('Message publish to ' + chipID + ", msg :" + msg)
 
 
+
+
+
 @api_view(['POST'])
 @permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
 def testAPI2(request):
@@ -168,22 +183,28 @@ def testAPI2(request):
     # print(data["method"])
 
     chipID = data["farmID"]
-    device = data["detail"]["device"]
+    relay = data["detail"]["device"]
     if data["method"] == "control":
         if data["detail"]["control"] == "on":
-            sendCommandOn(chipID=chipID, device=device)
+            sendCommandOn(chipID=chipID, device=relay)
+            # set mode --> manual
+            modeManualSet(farmID=chipID, relay=relay)
+
         elif data["detail"]["control"] == "off":
-            sendCommandOff(chipID=chipID, device=device)
+            sendCommandOff(chipID=chipID, device=relay)
+            # set mode --> manual
+            modeManualSet(farmID=chipID, relay=relay)
+
         else:
             pass
     return Response("OK2")
 
 
-def sendCommandOnDuration(chipID, device, duration):
-    topic = chipID + "/turnOnDuration/"
-    msg = device + str(duration)
-    client.publish(topic, msg)
-    print('Message publish to ' + chipID + ", msg :" + msg)
+# def sendCommandOnDuration(chipID, device, duration):
+#     topic = chipID + "/turnOnDuration/"
+#     msg = device + str(duration)
+#     client.publish(topic, msg)
+#     print('Message publish to ' + chipID + ", msg :" + msg)
 
 
 def sendScheduleToIoT(text):
@@ -197,8 +218,7 @@ def sendScheduleToIoT(text):
     r1 = relayDevice.objects.get(farm=f1, relayNumber=device[-1])
     print(r1.__dict__)
     if res["command"] == "On":
-        # sendCommandOnDuration(chipID=chipId, device=device, duration=duration)
-        if r1.manualMode == False:
+        if r1.manualMode == False: #check if manual mode is disable
             sendCommandOn(chipID=chipId, device=device)
             print('Send command to IoT')
         r1.scheduleStatus=True
@@ -208,7 +228,7 @@ def sendScheduleToIoT(text):
         db.child("farmCode").child(chipId).child('Relay' + str(device[-1])).update(text)
 
     elif res["command"] == "Off":
-        if r1.manualMode == False:
+        if r1.manualMode == False:  #check if manual mode is disable
             sendCommandOff(chipID=chipId, device=device)
             print('Send command to IoT')
         r1.scheduleStatus=False
@@ -286,11 +306,9 @@ def createSchedule(request):
                       id=jobId, replace_existing=True, args=[text], misfire_grace_time=3600)
     scheduler.start()
     print("Schedule created {}".format(text))
-
     if pause == False:
-        # scheduler.resume_job(jobId)
+        scheduler.resume_job(jobId)
         print("Schedule resume {}".format(text))
-        # pass
     else:
         scheduler.pause_job(jobId)
         print("Schedule pause {}".format(text))
@@ -334,21 +352,20 @@ def createSchedule(request):
     scheduler.start()
     print("Schedule created {}".format(text))
     if pause == False:
-        # scheduler.resume_job(jobId)
+        scheduler.resume_job(jobId)
         print("Schedule resume {}".format(text))
-        # pass
-
     else:
         scheduler.pause_job(jobId)
         print("Schedule pause {}".format(text))
-    #update to firebase
 
+    #update to firebase
     text = {"sch_off": "{:02d}:{:02d}:{:02d}".format(int(end_hour), int(end_minute), int(end_second)), "pause":pause}
     db = firebase.database()
     db.child("farmCode").child(farmID).child('Relay'+str(device[-1])).child('Schedule').child('Period'+str(period)).update(text)
     close_old_connections()
 
     return Response("OK")
+
 
 
 @api_view(['POST'])
