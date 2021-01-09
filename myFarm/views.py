@@ -30,10 +30,19 @@ def pageFarm(request, id):
     print('User access to myFarm page')
     serverTime=datetime.timestamp(datetime.now())
     print(serverTime)
+
+    db = firebase.database()
+
+    relay1Period1Ref= db.child("farmCode/" + id + "/Relay1/Schedule/Period1").get()
+    relay1Ref=db.child("farmCode/" + id + "/Relay1").get()
+    print(relay1Ref.val())
+
     context={
         'farmName' : farm.objects.get(farmCode=id).farmName,
         'farmCode' : farm.objects.get(farmCode=id).farmCode,
-        'serverTime': serverTime
+        'serverTime': serverTime,
+        'initialchk1':relay1Ref.val()['Schedule']['Period1']['pause'],
+
     }
 
     if (request.method == "POST"):

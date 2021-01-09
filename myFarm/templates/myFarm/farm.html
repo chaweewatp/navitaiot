@@ -7,11 +7,14 @@
     {#    <link rel="stylesheet" href="{% static  'css/landingPage.css' %}">#}
     {#    <link rel="stylesheet" href="{% static 'css/landingPageFonts.css' %}">#}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<script src="http://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.js"></script>
+<link href="http://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.css" rel="stylesheet"/>
+
 
 
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-clockpicker.min.css' %}">
@@ -44,66 +47,66 @@
 
 
     <style>
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-}
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
 
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
 
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
 
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
 
-input:checked + .slider {
-  background-color: #2196F3;
-}
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
 
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
-}
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
 
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
 
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
-}
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
 
-.slider.round:before {
-  border-radius: 50%;
-}
-</style>
+        .slider.round:before {
+            border-radius: 50%;
+        }
+    </style>
 
 </head>
 <body>
@@ -114,296 +117,6 @@ input:checked + .slider:before {
 <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
 <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-analytics.js"></script>
-
-
-
-
-
-<script>
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    var firebaseConfig = {
-        apiKey: "AIzaSyCs9xyouIlR_7SBQwCpL_Bde22ZDC4vpWM",
-        authDomain: "navitaiot.firebaseapp.com",
-        databaseURL: "https://navitaiot.firebaseio.com",
-        projectId: "navitaiot",
-        storageBucket: "navitaiot.appspot.com",
-        messagingSenderId: "840926440731",
-        appId: "1:840926440731:web:9e7d0a635d9e89ff0db7be",
-        measurementId: "G-5FY5JL3YN1"
-    };
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
-    var relay1Period1Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay1/Schedule/Period1");
-    relay1Period1Ref.on('value', function (snapshot) {
-        var arr = snapshot.val();
-        console.log(arr)
-        console.log(arr['sch_on'])
-        console.log(arr['sch_off'])
-        console.log(arr['sch_duration'])
-        document.getElementById("R1_Sch1_on").innerHTML = arr['sch_on'];
-        document.getElementById("R1_Sch1_off").innerHTML = arr['sch_off'];
-        document.getElementById("R1_Sch1_duration").innerHTML = arr['sch_duration'];
-        if (arr['pause'] == false) {
-            document.getElementById("R1_Sch1_pause").innerHTML = "(enable)";
-                document.getElementById("chk1").checked = true;
-
-        } else {
-            document.getElementById("R1_Sch1_pause").innerHTML = "(disable)";
-                            document.getElementById("chk1").checked = false;
-
-        }
-    });
-
-
-    var relay1Period2Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay1/Schedule/Period2");
-    relay1Period2Ref.on('value', function (snapshot) {
-        var arr = snapshot.val();
-        console.log(arr)
-        console.log(arr['sch_on'])
-        console.log(arr['sch_off'])
-        console.log(arr['sch_duration'])
-        document.getElementById("R1_Sch2_on").innerHTML = arr['sch_on'];
-        document.getElementById("R1_Sch2_off").innerHTML = arr['sch_off'];
-        document.getElementById("R1_Sch2_duration").innerHTML = arr['sch_duration'];
-        if (arr['pause'] == false) {
-            document.getElementById("R1_Sch2_pause").innerHTML = "(enable)";
-        } else {
-            document.getElementById("R1_Sch2_pause").innerHTML = "(disable)";
-        }
-    });
-
-    var relay1Period3Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay1/Schedule/Period3");
-    relay1Period3Ref.on('value', function (snapshot) {
-        var arr = snapshot.val();
-        console.log(arr)
-        console.log(arr['sch_on'])
-        console.log(arr['sch_off'])
-        console.log(arr['sch_duration'])
-        document.getElementById("R1_Sch3_on").innerHTML = arr['sch_on'];
-        document.getElementById("R1_Sch3_off").innerHTML = arr['sch_off'];
-        document.getElementById("R1_Sch3_duration").innerHTML = arr['sch_duration'];
-        if (arr['pause'] == false) {
-            document.getElementById("R1_Sch3_pause").innerHTML = "(enable)";
-        } else {
-            document.getElementById("R1_Sch3_pause").innerHTML = "(disable)";
-        }
-    });
-
-    var relay1Period4Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay1/Schedule/Period4");
-    relay1Period4Ref.on('value', function (snapshot) {
-        var arr = snapshot.val();
-        console.log(arr)
-        console.log(arr['sch_on'])
-        console.log(arr['sch_off'])
-        console.log(arr['sch_duration'])
-        document.getElementById("R1_Sch4_on").innerHTML = arr['sch_on'];
-        document.getElementById("R1_Sch4_off").innerHTML = arr['sch_off'];
-        document.getElementById("R1_Sch4_duration").innerHTML = arr['sch_duration'];
-        if (arr['pause'] == false) {
-            document.getElementById("R1_Sch4_pause").innerHTML = "(enable)";
-        } else {
-            document.getElementById("R1_Sch4_pause").innerHTML = "(disable)";
-        }
-    });
-
-    var relay1Period5Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay1/Schedule/Period5");
-    relay1Period5Ref.on('value', function (snapshot) {
-        var arr = snapshot.val();
-        console.log(arr)
-        console.log(arr['sch_on'])
-        console.log(arr['sch_off'])
-        console.log(arr['sch_duration'])
-        document.getElementById("R1_Sch5_on").innerHTML = arr['sch_on'];
-        document.getElementById("R1_Sch5_off").innerHTML = arr['sch_off'];
-        document.getElementById("R1_Sch5_duration").innerHTML = arr['sch_duration'];
-        if (arr['pause'] == false) {
-            document.getElementById("R1_Sch5_pause").innerHTML = "(enable)";
-        } else {
-            document.getElementById("R1_Sch5_pause").innerHTML = "(disable)";
-        }
-    });
-
-    var relay1Period6Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay1/Schedule/Period6");
-    relay1Period6Ref.on('value', function (snapshot) {
-        var arr = snapshot.val();
-        console.log(arr)
-        console.log(arr['sch_on'])
-        console.log(arr['sch_off'])
-        console.log(arr['sch_duration'])
-        document.getElementById("R1_Sch6_on").innerHTML = arr['sch_on'];
-        document.getElementById("R1_Sch6_off").innerHTML = arr['sch_off'];
-        document.getElementById("R1_Sch6_duration").innerHTML = arr['sch_duration'];
-        if (arr['pause'] == false) {
-            document.getElementById("R1_Sch6_pause").innerHTML = "(enable)";
-        } else {
-            document.getElementById("R1_Sch6_pause").innerHTML = "(disable)";
-        }
-    });
-
-
-    var farmRef = firebase.database().ref("farmCode/" + '{{ farmCode }}');
-    farmRef.on('value', function (snapshot) {
-        console.log(snapshot.val());
-        var arr = snapshot.val();
-        console.log(arr)
-        console.log(arr['flow1Status'])
-
-
-        if (arr['flow1Status'] == true) {
-            document.getElementById("flowSensor1").innerHTML = "เปิด";
-        } else if (arr['flow1Status'] == false) {
-            document.getElementById("flowSensor1").innerHTML = "ปิด";
-        } else {
-            document.getElementById("flowSensor1").innerHTML = "N/A";
-        }
-
-
-        if (arr['Relay1']['manual'] == true) {
-            document.getElementById("Relay1_mode").innerHTML = "manual";
-        } else if (arr['Relay1']['manual'] == false) {
-            document.getElementById("Relay1_mode").innerHTML = "schedule";
-        } else {
-            document.getElementById("Relay1_mode").innerHTML = "N/A";
-        }
-
-        if (arr['Relay2']['manual'] == true) {
-            document.getElementById("Relay2_mode").innerHTML = "manual";
-        } else if (arr['Relay2']['manual'] == false) {
-            document.getElementById("Relay2_mode").innerHTML = "schedule";
-        } else {
-            document.getElementById("Relay2_mode").innerHTML = "N/A";
-        }
-
-        if (arr['Relay3']['manual'] == true) {
-            document.getElementById("Relay3_mode").innerHTML = "manual";
-        } else if (arr['Relay3']['manual'] == false) {
-            document.getElementById("Relay3_mode").innerHTML = "schedule";
-        } else {
-            document.getElementById("Relay3_mode").innerHTML = "N/A";
-        }
-
-        if (arr['Relay4']['manual'] == true) {
-            document.getElementById("Relay4_mode").innerHTML = "manual";
-        } else if (arr['Relay4']['manual'] == false) {
-            document.getElementById("Relay4_mode").innerHTML = "schedule";
-        } else {
-            document.getElementById("Relay4_mode").innerHTML = "N/A";
-        }
-
-        if (arr['Relay5']['manual'] == true) {
-            document.getElementById("Relay5_mode").innerHTML = "manual";
-        } else if (arr['Relay5']['manual'] == false) {
-            document.getElementById("Relay5_mode").innerHTML = "schedule";
-        } else {
-            document.getElementById("Relay5_mode").innerHTML = "N/A";
-        }
-        if (arr['Relay6']['manual'] == true) {
-            document.getElementById("Relay6_mode").innerHTML = "manual";
-        } else if (arr['Relay6']['manual'] == false) {
-            document.getElementById("Relay6_mode").innerHTML = "schedule";
-        } else {
-            document.getElementById("Relay6_mode").innerHTML = "N/A";
-        }
-
-        if (arr['Relay1']['sch_status'] == true) {
-            document.getElementById("Relay1_sch_status").innerHTML = "เปิด";
-        } else if (arr['Relay1']['sch_status'] == false) {
-            document.getElementById("Relay1_sch_status").innerHTML = "ปิด";
-        } else {
-            document.getElementById("Relay1_sch_status").innerHTML = "N/A";
-        }
-
-        if (arr['Relay2']['sch_status'] == true) {
-            document.getElementById("Relay2_sch_status").innerHTML = "เปิด";
-        } else if (arr['Relay2']['sch_status'] == false) {
-            document.getElementById("Relay2_sch_status").innerHTML = "ปิด";
-        } else {
-            document.getElementById("Relay2_sch_status").innerHTML = "N/A";
-        }
-
-        if (arr['Relay3']['sch_status'] == true) {
-            document.getElementById("Relay3_sch_status").innerHTML = "เปิด";
-        } else if (arr['Relay3']['sch_status'] == false) {
-            document.getElementById("Relay3_sch_status").innerHTML = "ปิด";
-        } else {
-            document.getElementById("Relay3_sch_status").innerHTML = "N/A";
-        }
-
-        if (arr['Relay4']['sch_status'] == true) {
-            document.getElementById("Relay4_sch_status").innerHTML = "เปิด";
-        } else if (arr['Relay4']['sch_status'] == false) {
-            document.getElementById("Relay4_sch_status").innerHTML = "ปิด";
-        } else {
-            document.getElementById("Relay4_sch_status").innerHTML = "N/A";
-        }
-
-        if (arr['Relay5']['sch_status'] == true) {
-            document.getElementById("Relay5_sch_status").innerHTML = "เปิด";
-        } else if (arr['Relay5']['sch_status'] == false) {
-            document.getElementById("Relay5_sch_status").innerHTML = "ปิด";
-        } else {
-            document.getElementById("Relay5_sch_status").innerHTML = "N/A";
-        }
-
-        if (arr['Relay6']['sch_status'] == true) {
-            document.getElementById("Relay6_sch_status").innerHTML = "เปิด";
-        } else if (arr['Relay6']['sch_status'] == false) {
-            document.getElementById("Relay6_sch_status").innerHTML = "ปิด";
-        } else {
-            document.getElementById("Relay6_sch_status").innerHTML = "N/A";
-        }
-
-
-        if (arr['Relay1']['cur_status'] == true) {
-            document.getElementById("Relay1_cur_status").innerHTML = "เปิด";
-        } else if (arr['Relay1']['cur_status'] == false) {
-            document.getElementById("Relay1_cur_status").innerHTML = "ปิด";
-        } else {
-            document.getElementById("Relay1_cur_status").innerHTML = "N/A";
-        }
-
-        if (arr['Relay2']['cur_status'] == true) {
-            document.getElementById("Relay2_cur_status").innerHTML = "เปิด";
-        } else if (arr['Relay2']['cur_status'] == false) {
-            document.getElementById("Relay2_cur_status").innerHTML = "ปิด";
-        } else {
-            document.getElementById("Relay2_cur_status").innerHTML = "N/A";
-        }
-
-        if (arr['Relay3']['cur_status'] == true) {
-            document.getElementById("Relay3_cur_status").innerHTML = "เปิด";
-        } else if (arr['Relay3']['cur_status'] == false) {
-            document.getElementById("Relay3_cur_status").innerHTML = "ปิด";
-        } else {
-            document.getElementById("Relay3_cur_status").innerHTML = "N/A";
-        }
-        if (arr['Relay4']['cur_status'] == true) {
-            document.getElementById("Relay4_cur_status").innerHTML = "เปิด";
-        } else if (arr['Relay4']['cur_status'] == false) {
-            document.getElementById("Relay4_cur_status").innerHTML = "ปิด";
-        } else {
-            document.getElementById("Relay4_cur_status").innerHTML = "N/A";
-        }
-        if (arr['Relay5']['cur_status'] == true) {
-            document.getElementById("Relay5_cur_status").innerHTML = "เปิด";
-        } else if (arr['Relay5']['cur_status'] == false) {
-            document.getElementById("Relay5_cur_status").innerHTML = "ปิด";
-        } else {
-            document.getElementById("Relay5_cur_status").innerHTML = "N/A";
-        }
-
-        if (arr['Relay6']['cur_status'] == true) {
-            document.getElementById("Relay6_cur_status").innerHTML = "เปิด";
-        } else if (arr['Relay6']['cur_status'] == false) {
-            document.getElementById("Relay6_cur_status").innerHTML = "ปิด";
-        } else {
-            document.getElementById("Relay6_cur_status").innerHTML = "N/A";
-        }
-    });
-
-</script>
 
 
 <div class="body">
@@ -680,7 +393,7 @@ input:checked + .slider:before {
             {#var serverTime = 1404283704;#}
 
             var serverTime = "{{ serverTime }}";
-            console.log(serverTime)
+            {#console.log(serverTime)#}
 
             var doClock = (function () {
 
@@ -717,202 +430,997 @@ input:checked + .slider:before {
             window.onload = doClock;
 
         </script>
-
-        <div id="clock"></div>
-
-        {# Schedule set #}
-        <p>Relay 1 (ปั๊มน้่ำ)</p>
         <div class="row">
-            <div class="col-xs-4">
-                <div class="row">
-                    <div class="col-12">
-                        เริ่มเวลา <span id="R1_Sch1_on"></span>
-                        เป็นเวลา <span id="R1_Sch1_duration"></span> นาที
-                        สิ้นสุดเวลา <span id="R1_Sch1_off"></span> <span id="R1_Sch1_pause"></span>
+            <div class="col">
+                <div id="clock"></div>
 
-                        <input id="chk1" type="checkbox"  data-toggle="toggle" onchange="toggleScheduleRelay1()" data-onstyle="success">
+            </div>
+        </div>
 
-                        <script>
-                            function toggleScheduleRelay1(){
-                                start=$('#R1_Sch1_on').text();
-                                  end=$('#R1_Sch1_off').text();
-                                  duration=$('#R1_Sch1_duration').text();
-                                    console.log(start)
-                                    var s = start.split(":")
-                                    var e = end.split(":")
+        <div class="row">
+            <div class="col">
 
+                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Relay1">ปั๊มน้ำ 1
+                    (Relay-1)
+                </button>
+                <div id="Relay1" class="collapse">
+                    {# Schedule set #}
+                    <div class="row">
 
-                                if (document.getElementById('chk1').checked)
-                              {
-                                  console.log("button 1 Checked")
+                        <div class="col-xs-4">
+                            <div class="row">
+                                <div class="col-12">
+                                    เริ่มเวลา <span id="R1_Sch1_on"></span>
+                                    เป็นเวลา <span id="R1_Sch1_duration"></span> นาที
+                                    สิ้นสุดเวลา <span id="R1_Sch1_off"></span> <span id="R1_Sch1_pause"></span>
+                                    {% if initialchk1 == False %}
+                                        <input id="chk1" type="checkbox" checked data-toggle="toggle"
+                                               onchange="toggleScheduleRelay1()" data-onstyle="success">
+                                    {% else %}
+                                        <input id="chk1" type="checkbox" data-toggle="toggle"
+                                               onchange="toggleScheduleRelay1()"
+                                               data-onstyle="success">
+                                    {% endif %}
+                                    <script>
+                                        function toggleScheduleRelay1() {
+                                            start = $('#R1_Sch1_on').text();
+                                            end = $('#R1_Sch1_off').text();
+                                            duration = $('#R1_Sch1_duration').text();
+                                            console.log(start)
+                                            var s = start.split(":")
+                                            var e = end.split(":")
 
-                                    var myHeaders = new Headers();
-                                    myHeaders.append("Content-Type", "application/json");
-                                    var raw = JSON.stringify({
-                                        "farmID": "{{ farmCode }}",
-                                        "token": "xxx",
-                                        "method": "scheduleSet",
-                                        "detail": {
-                                            "device": "relay1",
-                                            "period": 1,
-                                            "start_hour": s[0],
-                                            "start_minute": s[1],
-                                            "start_second": s[2],
-                                            "end_hour": e[0],
-                                            "end_minute": e[1],
-                                            "end_second": e[2],
-                                            "duration": duration,
-                                            "pause": false
-                                        },
-                                        "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
-                                    });
-                                    console.log(raw)
-                                    var requestOptions = {
-                                        method: 'POST',
-                                        headers: myHeaders,
-                                        body: raw,
-                                        redirect: 'follow'
-                                    };
+                                            if (document.getElementById('chk1').checked) {
+                                                console.log("button 1 Checked")
+                                                var myHeaders = new Headers();
+                                                myHeaders.append("Content-Type", "application/json");
+                                                var raw = JSON.stringify({
+                                                    "farmID": "{{ farmCode }}",
+                                                    "token": "xxx",
+                                                    "method": "scheduleSet",
+                                                    "detail": {
+                                                        "device": "relay1",
+                                                        "period": 1,
+                                                        "start_hour": s[0],
+                                                        "start_minute": s[1],
+                                                        "start_second": s[2],
+                                                        "end_hour": e[0],
+                                                        "end_minute": e[1],
+                                                        "end_second": e[2],
+                                                        "duration": duration,
+                                                        "pause": false
+                                                    },
+                                                    "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
+                                                });
+                                                {#console.log(raw)#}
+                                                var requestOptions = {
+                                                    method: 'POST',
+                                                    headers: myHeaders,
+                                                    body: raw,
+                                                    redirect: 'follow'
+                                                };
 
-                                    {#fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)#}
-                                    fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)
-                                        .then(response => response.text())
-                                        .then(result => console.log(result))
-                                        .catch(error => console.log('error', error));
-
-
-
-
-                              } else
-                              {
-                                  console.log("button 1 Not Checked")
-
-                                    var myHeaders = new Headers();
-                                    myHeaders.append("Content-Type", "application/json");
-                                    var raw = JSON.stringify({
-                                        "farmID": "{{ farmCode }}",
-                                        "token": "xxx",
-                                        "method": "scheduleSet",
-                                        "detail": {
-                                            "device": "relay1",
-                                            "period": 1,
-                                            "start_hour": s[0],
-                                            "start_minute": s[1],
-                                            "start_second": s[2],
-                                            "end_hour": e[0],
-                                            "end_minute": e[1],
-                                            "end_second": e[2],
-                                            "duration": duration,
-                                            "pause": true
-                                        },
-                                        "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
-                                    });
-                                    console.log(raw)
-                                    var requestOptions = {
-                                        method: 'POST',
-                                        headers: myHeaders,
-                                        body: raw,
-                                        redirect: 'follow'
-                                    };
-
-                                    {#fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)#}
-                                    fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)
-                                        .then(response => response.text())
-                                        .then(result => console.log(result))
-                                        .catch(error => console.log('error', error));
-                              }}
+                                                {#fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)#}
+                                                fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)
+                                                    .then(response => response.text())
+                                                    .then(result => console.log(result))
+                                                    .catch(error => console.log('error', error));
 
 
-                        </script>
+                                            } else {
+                                                console.log("button 1 Not Checked")
 
-                    </div>
-                    <div class="col-12">
-                        เริ่มเวลา <span id="R1_Sch2_on"></span> เป็นเวลา <span id="R1_Sch2_duration"></span> นาที
-                        สิ้นสุดเวลา <span id="R1_Sch2_off"></span> <span id="R1_Sch2_pause"></span>
-                    </div>
-                    <div class="col-12">
-                        เริ่มเวลา <span id="R1_Sch3_on"></span> เป็นเวลา <span id="R1_Sch3_duration"></span> นาที
-                        สิ้นสุดเวลา <span id="R1_Sch3_off"></span> <span id="R1_Sch3_pause"></span>
-                    </div>
-                    <div class="col-12">
-                        เริ่มเวลา <span id="R1_Sch4_on"></span> เป็นเวลา <span id="R1_Sch4_duration"></span> นาที
-                        สิ้นสุดเวลา <span id="R1_Sch4_off"></span> <span id="R1_Sch4_pause"></span>
-                    </div>
-                    <div class="col-12">
-                        เริ่มเวลา <span id="R1_Sch5_on"></span> เป็นเวลา <span id="R1_Sch5_duration"></span> นาที
-                        สิ้นสุดเวลา <span id="R1_Sch5_off"></span> <span id="R1_Sch5_pause"></span>
-                    </div>
-                    <div class="col-12">
-                        <p>เริ่มเวลา <span id="R1_Sch6_on"></span> เป็นเวลา <span id="R1_Sch6_duration"></span> นาที
-                            สิ้นสุดเวลา <span id="R1_Sch6_off"></span> <span id="R1_Sch6_pause"></span></p>
+                                                var myHeaders = new Headers();
+                                                myHeaders.append("Content-Type", "application/json");
+                                                var raw = JSON.stringify({
+                                                    "farmID": "{{ farmCode }}",
+                                                    "token": "xxx",
+                                                    "method": "scheduleSet",
+                                                    "detail": {
+                                                        "device": "relay1",
+                                                        "period": 1,
+                                                        "start_hour": s[0],
+                                                        "start_minute": s[1],
+                                                        "start_second": s[2],
+                                                        "end_hour": e[0],
+                                                        "end_minute": e[1],
+                                                        "end_second": e[2],
+                                                        "duration": duration,
+                                                        "pause": true
+                                                    },
+                                                    "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
+                                                });
+                                                {#console.log(raw)#}
+                                                var requestOptions = {
+                                                    method: 'POST',
+                                                    headers: myHeaders,
+                                                    body: raw,
+                                                    redirect: 'follow'
+                                                };
+
+                                                {#fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)#}
+                                                fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)
+                                                    .then(response => response.text())
+                                                    .then(result => console.log(result))
+                                                    .catch(error => console.log('error', error));
+                                            }
+                                        }
+
+
+                                    </script>
+
+                                </div>
+                                <div class="col-12">
+                                    เริ่มเวลา <span id="R1_Sch2_on"></span> เป็นเวลา <span id="R1_Sch2_duration"></span>
+                                    นาที
+                                    สิ้นสุดเวลา <span id="R1_Sch2_off"></span> <span id="R1_Sch2_pause"></span>
+                                </div>
+                                <div class="col-12">
+                                    เริ่มเวลา <span id="R1_Sch3_on"></span> เป็นเวลา <span id="R1_Sch3_duration"></span>
+                                    นาที
+                                    สิ้นสุดเวลา <span id="R1_Sch3_off"></span> <span id="R1_Sch3_pause"></span>
+                                </div>
+                                <div class="col-12">
+                                    เริ่มเวลา <span id="R1_Sch4_on"></span> เป็นเวลา <span id="R1_Sch4_duration"></span>
+                                    นาที
+                                    สิ้นสุดเวลา <span id="R1_Sch4_off"></span> <span id="R1_Sch4_pause"></span>
+                                </div>
+                                <div class="col-12">
+                                    เริ่มเวลา <span id="R1_Sch5_on"></span> เป็นเวลา <span id="R1_Sch5_duration"></span>
+                                    นาที
+                                    สิ้นสุดเวลา <span id="R1_Sch5_off"></span> <span id="R1_Sch5_pause"></span>
+                                </div>
+                                <div class="col-12">
+                                    <p>เริ่มเวลา <span id="R1_Sch6_on"></span> เป็นเวลา <span
+                                            id="R1_Sch6_duration"></span> นาที
+                                        สิ้นสุดเวลา <span id="R1_Sch6_off"></span> <span id="R1_Sch6_pause"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-8">
+                            {# Period 1#}
+                            <div class="row">
+                                <div class="col-12">
+                                    <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1"
+                                           value="timePeriod1R1">
+                                    เริ่มเวลา <input type="time" step="1" id="timePeriod1R1Start">
+                                    เป็นเวลา <input id="timePeriod1R1Delay"> นาที
+                                    สิ้นสุดเวลา <input type="time" step="1" id="timePeriod1R1Stop" disabled>
+                                    <button type="button" id="buttonTimePeriod1R1Submit">บันทึกค่า/ดำเนินการตั้งเวลา
+                                    </button>
+                                </div>
+                            </div>
+                            {# Period 2#}
+                            <div class="row">
+                                <div class="col-12">
+                                    <input type="checkbox" id="timePeriod2R1" name="timePeriod2R1"
+                                           value="timePeriod2R1">
+                                    เริ่มเวลา <input type="time" step="1" id="timePeriod2R1Start">
+                                    เป็นเวลา <input id="timePeriod2R1Delay"> นาที
+                                    สิ้นสุดเวลา <input type="texts" step="1" id="timePeriod2R1Stop" disabled>
+                                    <button type="button" id="buttonTimePeriod2R1Submit">บันทึกค่า/ดำเนินการตั้งเวลา
+                                    </button>
+
+
+
+
+                                </div>
+                            </div>
+                            {# Period 3#}
+                            <div class="row">
+                                <div class="col-12">
+                                    <input type="checkbox" id="timePeriod3R1" name="timePeriod3R1"
+                                           value="timePeriod3R1">
+                                    เริ่มเวลา <input type="time" step="1" id="timePeriod3R1Start">
+                                    เป็นเวลา <input id="timePeriod3R1Delay"> นาที
+                                    สิ้นสุดเวลา <input type="time" step="1" id="timePeriod3R1Stop" disabled>
+                                    <button type="button" id="buttonTimePeriod3R1Submit">บันทึกค่า/ดำเนินการตั้งเวลา
+                                    </button>
+                                </div>
+                            </div>
+                            {# Period 4#}
+                            <div class="row">
+                                <div class="col-12">
+                                    <input type="checkbox" id="timePeriod4R1" name="timePeriod4R1"
+                                           value="timePeriod4R1">
+                                    เริ่มเวลา <input type="time" step="1" id="timePeriod4R1Start">
+                                    เป็นเวลา <input id="timePeriod4R1Delay"> นาที
+                                    สิ้นสุดเวลา <input type="time" step="1" id="timePeriod4R1Stop" disabled>
+                                    <button type="button" id="buttonTimePeriod4R1Submit">บันทึกค่า/ดำเนินการตั้งเวลา
+                                    </button>
+
+                                </div>
+                            </div>
+                            {# Period 5#}
+                            <div class="row">
+                                <div class="col-12">
+                                    <input type="checkbox" id="timePeriod5R1" name="timePeriod5R1"
+                                           value="timePeriod5R1">
+                                    เริ่มเวลา <input type="time" step="1" id="timePeriod5R1Start">
+                                    เป็นเวลา <input id="timePeriod5R1Delay"> นาที
+                                    สิ้นสุดเวลา <input type="time" step="1" id="timePeriod5R1Stop" disabled>
+                                    <button type="button" id="buttonTimePeriod5R1Submit">บันทึกค่า/ดำเนินการตั้งเวลา
+                                    </button>
+
+                                </div>
+                            </div>
+                            {# Period 6#}
+                            <div class="row">
+                                <div class="col-12">
+                                    <input type="checkbox" id="timePeriod6R1" name="timePeriod6R1"
+                                           value="timePeriod6R1">
+                                    เริ่มเวลา <input type="text"  id="timePeriod6R1Start">
+                                    เป็นเวลา <input id="timePeriod6R1Delay"> นาที
+                                    สิ้นสุดเวลา <input type="time" step="1" id="timePeriod6R1Stop" disabled>
+                                    <button type="button" id="buttonTimePeriod6R1Submit">บันทึกค่า/ดำเนินการตั้งเวลา
+                                    </button>
+
+                                                                        <script>
+                                        var timepicker = new TimePicker('timePeriod6R1Start', {
+  lang: 'en',
+  theme: 'dark'
+});
+timepicker.on('change', function(evt) {
+
+  var value = (evt.hour || '00') + ':' + (evt.minute || '00') + ':' + (evt.second || '00');
+  evt.element.value = value;
+  console.log(value)
+
+});
+
+                                    </script>
+
+                                </div>
+                            </div>
+                            <button type="button" id="buttonTimeRelayAllCal">คำนวนเวลา</button>
+                        </div>
+
                     </div>
                 </div>
             </div>
-            <div class="col-xs-8">
-                {# Period 1#}
-                <div class="row">
-                    <div class="col-12">
-                        <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1" value="timePeriod1R1">
-                        เริ่มเวลา <input type="time" step="1" id="timePeriod1R1Start">
-                        เป็นเวลา <input id="timePeriod1R1Delay"> นาที
-                        สิ้นสุดเวลา <input type="time" step="1" id="timePeriod1R1Stop" disable>
-                        <button type="button" id="buttonTimePeriod1R1Submit">บันทึกค่า/ดำเนินการตั้งเวลา</button>
-                    </div>
-                </div>
-                {# Period 2#}
-                <div class="row">
-                    <div class="col-12">
-                        <input type="checkbox" id="timePeriod2R1" name="timePeriod2R1" value="timePeriod2R1">
-                        เริ่มเวลา <input type="time" step="1" id="timePeriod2R1Start">
-                        เป็นเวลา <input id="timePeriod2R1Delay"> นาที
-                        สิ้นสุดเวลา <input type="time" step="1" id="timePeriod2R1Stop" disable>
-                        <button type="button" id="buttonTimePeriod2R1Submit">บันทึกค่า/ดำเนินการตั้งเวลา</button>
-                    </div>
-                </div>
-                {# Period 3#}
-                <div class="row">
-                    <div class="col-12">
-                        <input type="checkbox" id="timePeriod3R1" name="timePeriod3R1" value="timePeriod3R1">
-                        เริ่มเวลา <input type="time" step="1" id="timePeriod3R1Start">
-                        เป็นเวลา <input id="timePeriod3R1Delay"> นาที
-                        สิ้นสุดเวลา <input type="time" step="1" id="timePeriod3R1Stop" disable>
-                        <button type="button" id="buttonTimePeriod3R1Submit">บันทึกค่า/ดำเนินการตั้งเวลา</button>
-                    </div>
-                </div>
-                {# Period 4#}
-                <div class="row">
-                    <div class="col-12">
-                        <input type="checkbox" id="timePeriod4R1" name="timePeriod4R1" value="timePeriod4R1">
-                        เริ่มเวลา <input type="time" step="1" id="timePeriod4R1Start">
-                        เป็นเวลา <input id="timePeriod4R1Delay"> นาที
-                        สิ้นสุดเวลา <input type="time" step="1" id="timePeriod4R1Stop" disable>
-                        <button type="button" id="buttonTimePeriod4R1Submit">บันทึกค่า/ดำเนินการตั้งเวลา</button>
+        </div>
+<p>-</p>
+        <div class="row">
+            <div class="col">
+                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Relay2">ปั๊มปุ๋ย
+                    (Relay-2)
+                </button>
+                <div id="Relay2" class="collapse">
+                    <p>ปั๊มปุ๋ย  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Relay2Edit">ตั้งเวลา</button></p>
+                    <div class="col-xs-4">
+                        <div class="row">
+                            <div class="col-12">
+                                เริ่ม <span>00:00:00</span>
+                                จำนวน <span>00</span> นาที
+                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
+                                <input type="checkbox" checked data-toggle="toggle"
+                                       data-onstyle="success">
+                            </div>
+                        </div>
+                        <div class="row">
 
-                    </div>
-                </div>
-                {# Period 5#}
-                <div class="row">
-                    <div class="col-12">
-                        <input type="checkbox" id="timePeriod5R1" name="timePeriod5R1" value="timePeriod5R1">
-                        เริ่มเวลา <input type="time" step="1" id="timePeriod5R1Start">
-                        เป็นเวลา <input id="timePeriod5R1Delay"> นาที
-                        สิ้นสุดเวลา <input type="time" step="1" id="timePeriod5R1Stop" disable>
-                        <button type="button" id="buttonTimePeriod5R1Submit">บันทึกค่า/ดำเนินการตั้งเวลา</button>
+                            <div class="col-12">
+                                เริ่ม <span>00:00:00</span>
+                                จำนวน <span>00</span> นาที
+                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
+                                <input type="checkbox" checked data-toggle="toggle"
+                                       data-onstyle="success">
+                            </div>
+                        </div>
+                        <div class="row">
 
-                    </div>
-                </div>
-                {# Period 6#}
-                <div class="row">
-                    <div class="col-12">
-                        <input type="checkbox" id="timePeriod6R1" name="timePeriod6R1" value="timePeriod6R1">
-                        เริ่มเวลา <input type="time" step="1" id="timePeriod6R1Start">
-                        เป็นเวลา <input id="timePeriod6R1Delay"> นาที
-                        สิ้นสุดเวลา <input type="time" step="1" id="timePeriod6R1Stop" disable>
-                        <button type="button" id="buttonTimePeriod6R1Submit">บันทึกค่า/ดำเนินการตั้งเวลา</button>
+                            <div class="col-12">
+                                เริ่ม <span>00:00:00</span>
+                                จำนวน <span>00</span> นาที
+                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
+                                <input type="checkbox" checked data-toggle="toggle"
+                                       data-onstyle="success">
+                            </div>
+                        </div>
+                        <div class="row">
 
+                            <div class="col-12">
+                                เริ่ม <span>00:00:00</span>
+                                จำนวน <span>00</span> นาที
+                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
+                                <input type="checkbox" checked data-toggle="toggle"
+                                       data-onstyle="success">
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่ม <span>00:00:00</span>
+                                จำนวน <span>00</span> นาที
+                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
+                                <input type="checkbox" checked data-toggle="toggle"
+                                       data-onstyle="success">
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่ม <span>00:00:00</span>
+                                จำนวน <span>00</span> นาที
+                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
+                                <input type="checkbox" checked data-toggle="toggle"
+                                       data-onstyle="success">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="Relay2Edit" class="col-xs-8 collapse">
+                        {# Period 1#}
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1"
+                                       value="timePeriod1R1">
+                                เริ่มเวลา <input type="time" step="1">
+                                เป็นเวลา <input> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" disabled>
+                                <button type="button">บันทึกค่า/ดำเนินการตั้งเวลา
+                                </button>
+                            </div>
+                        </div>
+                        {# Period 2#}
+                        <div class="row">
+
+                            <div class="col-12">
+                                <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1"
+                                       value="timePeriod1R1">
+                                เริ่มเวลา <input type="time" step="1">
+                                เป็นเวลา <input> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" disabled>
+                                <button type="button">บันทึกค่า/ดำเนินการตั้งเวลา
+                                </button>
+                            </div>
+                        </div>
+                        {# Period 3#}
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1"
+                                       value="timePeriod1R1">
+                                เริ่มเวลา <input type="time" step="1">
+                                เป็นเวลา <input> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" disabled>
+                                <button type="button">บันทึกค่า/ดำเนินการตั้งเวลา
+                                </button>
+                            </div>
+                        </div>
+                        {# Period 4#}
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1"
+                                       value="timePeriod1R1">
+                                เริ่มเวลา <input type="time" step="1">
+                                เป็นเวลา <input> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" disabled>
+                                <button type="button">บันทึกค่า/ดำเนินการตั้งเวลา
+                                </button>
+                            </div>
+                        </div>
+                        {# Period 5#}
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1"
+                                       value="timePeriod1R1">
+                                เริ่มเวลา <input type="time" step="1">
+                                เป็นเวลา <input> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" disabled>
+                                <button type="button">บันทึกค่า/ดำเนินการตั้งเวลา
+                                </button>
+                            </div>
+                        </div>
+                        {# Period 6#}
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1"
+                                       value="timePeriod1R1">
+                                เริ่มเวลา <input type="time" step="1">
+                                เป็นเวลา <input> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" disabled>
+                                <button type="button">บันทึกค่า/ดำเนินการตั้งเวลา
+                                </button>
+                            </div>
+                        </div>
+                        <button type="button">คำนวนเวลา</button>
                     </div>
                 </div>
-                <button type="button" id="buttonTimeRelayAllCal">คำนวนเวลา</button>
+            </div>
+        </div>
+<p>-</p>
+
+        <div class="row">
+            <div class="col">
+                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Relay3">Drain valve
+                    (Relay-3)
+                </button>
+                <div id="Relay3" class="collapse">
+                    <p>เดรนวาว์ล</p>
+                                        <div class="col-xs-4">
+                        <div class="row">
+                            <div class="col-12">
+                                เริ่ม <span>00:00:00</span>
+                                จำนวน <span>00</span> นาที
+                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
+                                <input type="checkbox" checked data-toggle="toggle"
+                                       data-onstyle="success">
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่ม <span>00:00:00</span>
+                                จำนวน <span>00</span> นาที
+                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
+                                <input type="checkbox" checked data-toggle="toggle"
+                                       data-onstyle="success">
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่ม <span>00:00:00</span>
+                                จำนวน <span>00</span> นาที
+                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
+                                <input type="checkbox" checked data-toggle="toggle"
+                                       data-onstyle="success">
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่ม <span>00:00:00</span>
+                                จำนวน <span>00</span> นาที
+                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
+                                <input type="checkbox" checked data-toggle="toggle"
+                                       data-onstyle="success">
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่ม <span>00:00:00</span>
+                                จำนวน <span>00</span> นาที
+                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
+                                <input type="checkbox" checked data-toggle="toggle"
+                                       data-onstyle="success">
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่ม <span>00:00:00</span>
+                                จำนวน <span>00</span> นาที
+                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
+                                <input type="checkbox" checked data-toggle="toggle"
+                                       data-onstyle="success">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-8">
+                        {# Period 1#}
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1"
+                                       value="timePeriod1R1">
+                                เริ่มเวลา <input type="time" step="1">
+                                เป็นเวลา <input> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" disabled>
+                                <button type="button">บันทึกค่า/ดำเนินการตั้งเวลา
+                                </button>
+                            </div>
+                        </div>
+                        {# Period 2#}
+                        <div class="row">
+
+                            <div class="col-12">
+                                <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1"
+                                       value="timePeriod1R1">
+                                เริ่มเวลา <input type="time" step="1">
+                                เป็นเวลา <input> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" disabled>
+                                <button type="button">บันทึกค่า/ดำเนินการตั้งเวลา
+                                </button>
+                            </div>
+                        </div>
+                        {# Period 3#}
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1"
+                                       value="timePeriod1R1">
+                                เริ่มเวลา <input type="time" step="1">
+                                เป็นเวลา <input> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" disabled>
+                                <button type="button">บันทึกค่า/ดำเนินการตั้งเวลา
+                                </button>
+                            </div>
+                        </div>
+                        {# Period 4#}
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1"
+                                       value="timePeriod1R1">
+                                เริ่มเวลา <input type="time" step="1">
+                                เป็นเวลา <input> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" disabled>
+                                <button type="button">บันทึกค่า/ดำเนินการตั้งเวลา
+                                </button>
+                            </div>
+                        </div>
+                        {# Period 5#}
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1"
+                                       value="timePeriod1R1">
+                                เริ่มเวลา <input type="time" step="1">
+                                เป็นเวลา <input> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" disabled>
+                                <button type="button">บันทึกค่า/ดำเนินการตั้งเวลา
+                                </button>
+                            </div>
+                        </div>
+                        {# Period 6#}
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1"
+                                       value="timePeriod1R1">
+                                เริ่มเวลา <input type="time" step="1">
+                                เป็นเวลา <input> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" disabled>
+                                <button type="button">บันทึกค่า/ดำเนินการตั้งเวลา
+                                </button>
+                            </div>
+                        </div>
+                        <button type="button">คำนวนเวลา</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+<p>-</p>
+
+        <div class="row">
+            <div class="col">
+                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Relay4">วาร์ลโซน 1
+                    (Relay-4)
+                </button>
+                <div id="Relay4" class="collapse">
+                    <p>วาร์ลโซน 1</p>
+                                        <div class="col-xs-4">
+                        <div class="row">
+                            <div class="col-12">
+                                เริ่ม <span>00:00:00</span>
+                                จำนวน <span>00</span> นาที
+                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
+                                <input type="checkbox" checked data-toggle="toggle"
+                                       data-onstyle="success">
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่ม <span>00:00:00</span>
+                                จำนวน <span>00</span> นาที
+                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
+                                <input type="checkbox" checked data-toggle="toggle"
+                                       data-onstyle="success">
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่ม <span>00:00:00</span>
+                                จำนวน <span>00</span> นาที
+                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
+                                <input type="checkbox" checked data-toggle="toggle"
+                                       data-onstyle="success">
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่ม <span>00:00:00</span>
+                                จำนวน <span>00</span> นาที
+                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
+                                <input type="checkbox" checked data-toggle="toggle"
+                                       data-onstyle="success">
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่ม <span>00:00:00</span>
+                                จำนวน <span>00</span> นาที
+                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
+                                <input type="checkbox" checked data-toggle="toggle"
+                                       data-onstyle="success">
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่ม <span>00:00:00</span>
+                                จำนวน <span>00</span> นาที
+                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
+                                <input type="checkbox" checked data-toggle="toggle"
+                                       data-onstyle="success">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-8">
+                        {# Period 1#}
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1"
+                                       value="timePeriod1R1">
+                                เริ่มเวลา <input type="time" step="1">
+                                เป็นเวลา <input> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" disabled>
+                                <button type="button">บันทึกค่า/ดำเนินการตั้งเวลา
+                                </button>
+                            </div>
+                        </div>
+                        {# Period 2#}
+                        <div class="row">
+
+                            <div class="col-12">
+                                <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1"
+                                       value="timePeriod1R1">
+                                เริ่มเวลา <input type="time" step="1">
+                                เป็นเวลา <input> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" disabled>
+                                <button type="button">บันทึกค่า/ดำเนินการตั้งเวลา
+                                </button>
+                            </div>
+                        </div>
+                        {# Period 3#}
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1"
+                                       value="timePeriod1R1">
+                                เริ่มเวลา <input type="time" step="1">
+                                เป็นเวลา <input> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" disabled>
+                                <button type="button">บันทึกค่า/ดำเนินการตั้งเวลา
+                                </button>
+                            </div>
+                        </div>
+                        {# Period 4#}
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1"
+                                       value="timePeriod1R1">
+                                เริ่มเวลา <input type="time" step="1">
+                                เป็นเวลา <input> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" disabled>
+                                <button type="button">บันทึกค่า/ดำเนินการตั้งเวลา
+                                </button>
+                            </div>
+                        </div>
+                        {# Period 5#}
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1"
+                                       value="timePeriod1R1">
+                                เริ่มเวลา <input type="time" step="1">
+                                เป็นเวลา <input> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" disabled>
+                                <button type="button">บันทึกค่า/ดำเนินการตั้งเวลา
+                                </button>
+                            </div>
+                        </div>
+                        {# Period 6#}
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1"
+                                       value="timePeriod1R1">
+                                เริ่มเวลา <input type="time" step="1">
+                                เป็นเวลา <input> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" disabled>
+                                <button type="button">บันทึกค่า/ดำเนินการตั้งเวลา
+                                </button>
+                            </div>
+                        </div>
+                        <button type="button">คำนวนเวลา</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+<p>-</p>
+
+        <div class="row">
+            <div class="col">
+                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Relay5">วาร์ลโซน 2
+                    (Relay-5)
+                </button>
+                <div id="Relay5" class="collapse">
+                    <p>วาร์ลโซน 2</p>
+                                        <div class="col-xs-4">
+                        <div class="row">
+                            <div class="col-12">
+                                เริ่ม <span>00:00:00</span>
+                                จำนวน <span>00</span> นาที
+                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
+                                <input type="checkbox" checked data-toggle="toggle"
+                                       data-onstyle="success">
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่ม <span>00:00:00</span>
+                                จำนวน <span>00</span> นาที
+                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
+                                <input type="checkbox" checked data-toggle="toggle"
+                                       data-onstyle="success">
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่ม <span>00:00:00</span>
+                                จำนวน <span>00</span> นาที
+                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
+                                <input type="checkbox" checked data-toggle="toggle"
+                                       data-onstyle="success">
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่ม <span>00:00:00</span>
+                                จำนวน <span>00</span> นาที
+                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
+                                <input type="checkbox" checked data-toggle="toggle"
+                                       data-onstyle="success">
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่ม <span>00:00:00</span>
+                                จำนวน <span>00</span> นาที
+                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
+                                <input type="checkbox" checked data-toggle="toggle"
+                                       data-onstyle="success">
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่ม <span>00:00:00</span>
+                                จำนวน <span>00</span> นาที
+                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
+                                <input type="checkbox" checked data-toggle="toggle"
+                                       data-onstyle="success">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-8">
+                        {# Period 1#}
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1"
+                                       value="timePeriod1R1">
+                                เริ่มเวลา <input type="time" step="1">
+                                เป็นเวลา <input> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" disabled>
+                                <button type="button">บันทึกค่า/ดำเนินการตั้งเวลา
+                                </button>
+                            </div>
+                        </div>
+                        {# Period 2#}
+                        <div class="row">
+
+                            <div class="col-12">
+                                <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1"
+                                       value="timePeriod1R1">
+                                เริ่มเวลา <input type="time" step="1">
+                                เป็นเวลา <input> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" disabled>
+                                <button type="button">บันทึกค่า/ดำเนินการตั้งเวลา
+                                </button>
+                            </div>
+                        </div>
+                        {# Period 3#}
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1"
+                                       value="timePeriod1R1">
+                                เริ่มเวลา <input type="time" step="1">
+                                เป็นเวลา <input> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" disabled>
+                                <button type="button">บันทึกค่า/ดำเนินการตั้งเวลา
+                                </button>
+                            </div>
+                        </div>
+                        {# Period 4#}
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1"
+                                       value="timePeriod1R1">
+                                เริ่มเวลา <input type="time" step="1">
+                                เป็นเวลา <input> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" disabled>
+                                <button type="button">บันทึกค่า/ดำเนินการตั้งเวลา
+                                </button>
+                            </div>
+                        </div>
+                        {# Period 5#}
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1"
+                                       value="timePeriod1R1">
+                                เริ่มเวลา <input type="time" step="1">
+                                เป็นเวลา <input> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" disabled>
+                                <button type="button">บันทึกค่า/ดำเนินการตั้งเวลา
+                                </button>
+                            </div>
+                        </div>
+                        {# Period 6#}
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1"
+                                       value="timePeriod1R1">
+                                เริ่มเวลา <input type="time" step="1">
+                                เป็นเวลา <input> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" disabled>
+                                <button type="button">บันทึกค่า/ดำเนินการตั้งเวลา
+                                </button>
+                            </div>
+                        </div>
+                        <button type="button">คำนวนเวลา</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+<p>-</p>
+
+        <div class="row">
+            <div class="col">
+                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Relay6">วาร์ลโซน 3
+                    (Relay-6)
+                </button>
+                <div id="Relay6" class="collapse">
+                    <p>วาร์ลโซน 3</p>
+                                        <div class="col-xs-4">
+                        <div class="row">
+                            <div class="col-12">
+                                เริ่ม <span>00:00:00</span>
+                                จำนวน <span>00</span> นาที
+                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
+                                <input type="checkbox" checked data-toggle="toggle"
+                                       data-onstyle="success">
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่ม <span>00:00:00</span>
+                                จำนวน <span>00</span> นาที
+                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
+                                <input type="checkbox" checked data-toggle="toggle"
+                                       data-onstyle="success">
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่ม <span>00:00:00</span>
+                                จำนวน <span>00</span> นาที
+                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
+                                <input type="checkbox" checked data-toggle="toggle"
+                                       data-onstyle="success">
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่ม <span>00:00:00</span>
+                                จำนวน <span>00</span> นาที
+                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
+                                <input type="checkbox" checked data-toggle="toggle"
+                                       data-onstyle="success">
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่ม <span>00:00:00</span>
+                                จำนวน <span>00</span> นาที
+                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
+                                <input type="checkbox" checked data-toggle="toggle"
+                                       data-onstyle="success">
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่ม <span>00:00:00</span>
+                                จำนวน <span>00</span> นาที
+                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
+                                <input type="checkbox" checked data-toggle="toggle"
+                                       data-onstyle="success">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-8">
+                        {# Period 1#}
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1"
+                                       value="timePeriod1R1">
+                                เริ่มเวลา <input type="time" step="1">
+                                เป็นเวลา <input> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" disabled>
+                                <button type="button">บันทึกค่า/ดำเนินการตั้งเวลา
+                                </button>
+                            </div>
+                        </div>
+                        {# Period 2#}
+                        <div class="row">
+
+                            <div class="col-12">
+                                <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1"
+                                       value="timePeriod1R1">
+                                เริ่มเวลา <input type="time" step="1">
+                                เป็นเวลา <input> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" disabled>
+                                <button type="button">บันทึกค่า/ดำเนินการตั้งเวลา
+                                </button>
+                            </div>
+                        </div>
+                        {# Period 3#}
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1"
+                                       value="timePeriod1R1">
+                                เริ่มเวลา <input type="time" step="1">
+                                เป็นเวลา <input> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" disabled>
+                                <button type="button">บันทึกค่า/ดำเนินการตั้งเวลา
+                                </button>
+                            </div>
+                        </div>
+                        {# Period 4#}
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1"
+                                       value="timePeriod1R1">
+                                เริ่มเวลา <input type="time" step="1">
+                                เป็นเวลา <input> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" disabled>
+                                <button type="button">บันทึกค่า/ดำเนินการตั้งเวลา
+                                </button>
+                            </div>
+                        </div>
+                        {# Period 5#}
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1"
+                                       value="timePeriod1R1">
+                                เริ่มเวลา <input type="time" step="1">
+                                เป็นเวลา <input> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" disabled>
+                                <button type="button">บันทึกค่า/ดำเนินการตั้งเวลา
+                                </button>
+                            </div>
+                        </div>
+                        {# Period 6#}
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1"
+                                       value="timePeriod1R1">
+                                เริ่มเวลา <input type="time" step="1">
+                                เป็นเวลา <input> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" disabled>
+                                <button type="button">บันทึกค่า/ดำเนินการตั้งเวลา
+                                </button>
+                            </div>
+                        </div>
+                        <button type="button">คำนวนเวลา</button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -929,7 +1437,7 @@ input:checked + .slider:before {
     var url = "http://127.0.0.1:8000/testAPI2/"
 
     document.getElementById('controlRelay1On').onclick = function () {
-        console.log('controlRelay1On clicked')
+        {#console.log('controlRelay1On clicked')#}
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Cookie", "csrftoken=rEjFtI8SYft2HZ0JZJe02HuyzYjPv7VTqbsNnfbl1V0zHQVt7VsdwAhzhjVdVRsH");
@@ -955,7 +1463,7 @@ input:checked + .slider:before {
 
     }
     document.getElementById('controlRelay1Off').onclick = function () {
-        console.log('controlRelay1Off clicked')
+        {#console.log('controlRelay1Off clicked')#}
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Cookie", "csrftoken=rEjFtI8SYft2HZ0JZJe02HuyzYjPv7VTqbsNnfbl1V0zHQVt7VsdwAhzhjVdVRsH");
@@ -1908,12 +2416,294 @@ input:checked + .slider:before {
 
 
 {#  <script src="../../static/js/vendor/modernizr-3.8.0.min.js"></script>#}
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 {#  <script>window.jQuery || document.write('<script src="./js/vendor/jquery-3.4.1.min.js"><\/script>')</script>#}
 {#  <script src="../../static/js/plugins.js"></script>#}
 {#<script src="{% static 'js/main.js' %}"></script>#}
 {#  <script src="../../static/js/main.js"></script>#}
 
+<script>
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+        apiKey: "AIzaSyCs9xyouIlR_7SBQwCpL_Bde22ZDC4vpWM",
+        authDomain: "navitaiot.firebaseapp.com",
+        databaseURL: "https://navitaiot.firebaseio.com",
+        projectId: "navitaiot",
+        storageBucket: "navitaiot.appspot.com",
+        messagingSenderId: "840926440731",
+        appId: "1:840926440731:web:9e7d0a635d9e89ff0db7be",
+        measurementId: "G-5FY5JL3YN1"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+    var relay1Period1Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay1/Schedule/Period1");
+    relay1Period1Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        {#console.log(arr)#}
+        {#console.log(arr['sch_on'])#}
+        {#console.log(arr['sch_off'])#}
+        {#console.log(arr['sch_duration'])#}
+        document.getElementById("R1_Sch1_on").innerHTML = arr['sch_on'];
+        document.getElementById("R1_Sch1_off").innerHTML = arr['sch_off'];
+        document.getElementById("R1_Sch1_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R1_Sch1_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R1_Sch1_pause").innerHTML = "(disable)";
+        }
+    });
+
+
+    var relay1Period2Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay1/Schedule/Period2");
+    relay1Period2Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        {#console.log(arr)#}
+        {#console.log(arr['sch_on'])#}
+        {#console.log(arr['sch_off'])#}
+        {#console.log(arr['sch_duration'])#}
+        document.getElementById("R1_Sch2_on").innerHTML = arr['sch_on'];
+        document.getElementById("R1_Sch2_off").innerHTML = arr['sch_off'];
+        document.getElementById("R1_Sch2_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R1_Sch2_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R1_Sch2_pause").innerHTML = "(disable)";
+        }
+    });
+
+    var relay1Period3Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay1/Schedule/Period3");
+    relay1Period3Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        {#console.log(arr)#}
+        {#console.log(arr['sch_on'])#}
+        {#console.log(arr['sch_off'])#}
+        {#console.log(arr['sch_duration'])#}
+        document.getElementById("R1_Sch3_on").innerHTML = arr['sch_on'];
+        document.getElementById("R1_Sch3_off").innerHTML = arr['sch_off'];
+        document.getElementById("R1_Sch3_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R1_Sch3_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R1_Sch3_pause").innerHTML = "(disable)";
+        }
+    });
+
+    var relay1Period4Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay1/Schedule/Period4");
+    relay1Period4Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        {#console.log(arr)#}
+        {#console.log(arr['sch_on'])#}
+        {#console.log(arr['sch_off'])#}
+        {#console.log(arr['sch_duration'])#}
+        document.getElementById("R1_Sch4_on").innerHTML = arr['sch_on'];
+        document.getElementById("R1_Sch4_off").innerHTML = arr['sch_off'];
+        document.getElementById("R1_Sch4_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R1_Sch4_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R1_Sch4_pause").innerHTML = "(disable)";
+        }
+    });
+
+    var relay1Period5Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay1/Schedule/Period5");
+    relay1Period5Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        {#console.log(arr)#}
+        {#console.log(arr['sch_on'])#}
+        {#console.log(arr['sch_off'])#}
+        {#console.log(arr['sch_duration'])#}
+        document.getElementById("R1_Sch5_on").innerHTML = arr['sch_on'];
+        document.getElementById("R1_Sch5_off").innerHTML = arr['sch_off'];
+        document.getElementById("R1_Sch5_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R1_Sch5_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R1_Sch5_pause").innerHTML = "(disable)";
+        }
+    });
+
+    var relay1Period6Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay1/Schedule/Period6");
+    relay1Period6Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        {#console.log(arr)#}
+        {#console.log(arr['sch_on'])#}
+        {#console.log(arr['sch_off'])#}
+        {#console.log(arr['sch_duration'])#}
+        document.getElementById("R1_Sch6_on").innerHTML = arr['sch_on'];
+        document.getElementById("R1_Sch6_off").innerHTML = arr['sch_off'];
+        document.getElementById("R1_Sch6_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R1_Sch6_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R1_Sch6_pause").innerHTML = "(disable)";
+        }
+    });
+
+
+    var farmRef = firebase.database().ref("farmCode/" + '{{ farmCode }}');
+    farmRef.on('value', function (snapshot) {
+        {#console.log(snapshot.val());#}
+        var arr = snapshot.val();
+        {#console.log(arr)#}
+        {#console.log(arr['flow1Status'])#}
+
+
+        if (arr['flow1Status'] == true) {
+            document.getElementById("flowSensor1").innerHTML = "เปิด";
+        } else if (arr['flow1Status'] == false) {
+            document.getElementById("flowSensor1").innerHTML = "ปิด";
+        } else {
+            document.getElementById("flowSensor1").innerHTML = "N/A";
+        }
+
+
+        if (arr['Relay1']['manual'] == true) {
+            document.getElementById("Relay1_mode").innerHTML = "manual";
+        } else if (arr['Relay1']['manual'] == false) {
+            document.getElementById("Relay1_mode").innerHTML = "schedule";
+        } else {
+            document.getElementById("Relay1_mode").innerHTML = "N/A";
+        }
+
+        if (arr['Relay2']['manual'] == true) {
+            document.getElementById("Relay2_mode").innerHTML = "manual";
+        } else if (arr['Relay2']['manual'] == false) {
+            document.getElementById("Relay2_mode").innerHTML = "schedule";
+        } else {
+            document.getElementById("Relay2_mode").innerHTML = "N/A";
+        }
+
+        if (arr['Relay3']['manual'] == true) {
+            document.getElementById("Relay3_mode").innerHTML = "manual";
+        } else if (arr['Relay3']['manual'] == false) {
+            document.getElementById("Relay3_mode").innerHTML = "schedule";
+        } else {
+            document.getElementById("Relay3_mode").innerHTML = "N/A";
+        }
+
+        if (arr['Relay4']['manual'] == true) {
+            document.getElementById("Relay4_mode").innerHTML = "manual";
+        } else if (arr['Relay4']['manual'] == false) {
+            document.getElementById("Relay4_mode").innerHTML = "schedule";
+        } else {
+            document.getElementById("Relay4_mode").innerHTML = "N/A";
+        }
+
+        if (arr['Relay5']['manual'] == true) {
+            document.getElementById("Relay5_mode").innerHTML = "manual";
+        } else if (arr['Relay5']['manual'] == false) {
+            document.getElementById("Relay5_mode").innerHTML = "schedule";
+        } else {
+            document.getElementById("Relay5_mode").innerHTML = "N/A";
+        }
+        if (arr['Relay6']['manual'] == true) {
+            document.getElementById("Relay6_mode").innerHTML = "manual";
+        } else if (arr['Relay6']['manual'] == false) {
+            document.getElementById("Relay6_mode").innerHTML = "schedule";
+        } else {
+            document.getElementById("Relay6_mode").innerHTML = "N/A";
+        }
+
+        if (arr['Relay1']['sch_status'] == true) {
+            document.getElementById("Relay1_sch_status").innerHTML = "เปิด";
+        } else if (arr['Relay1']['sch_status'] == false) {
+            document.getElementById("Relay1_sch_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay1_sch_status").innerHTML = "N/A";
+        }
+
+        if (arr['Relay2']['sch_status'] == true) {
+            document.getElementById("Relay2_sch_status").innerHTML = "เปิด";
+        } else if (arr['Relay2']['sch_status'] == false) {
+            document.getElementById("Relay2_sch_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay2_sch_status").innerHTML = "N/A";
+        }
+
+        if (arr['Relay3']['sch_status'] == true) {
+            document.getElementById("Relay3_sch_status").innerHTML = "เปิด";
+        } else if (arr['Relay3']['sch_status'] == false) {
+            document.getElementById("Relay3_sch_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay3_sch_status").innerHTML = "N/A";
+        }
+
+        if (arr['Relay4']['sch_status'] == true) {
+            document.getElementById("Relay4_sch_status").innerHTML = "เปิด";
+        } else if (arr['Relay4']['sch_status'] == false) {
+            document.getElementById("Relay4_sch_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay4_sch_status").innerHTML = "N/A";
+        }
+
+        if (arr['Relay5']['sch_status'] == true) {
+            document.getElementById("Relay5_sch_status").innerHTML = "เปิด";
+        } else if (arr['Relay5']['sch_status'] == false) {
+            document.getElementById("Relay5_sch_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay5_sch_status").innerHTML = "N/A";
+        }
+
+        if (arr['Relay6']['sch_status'] == true) {
+            document.getElementById("Relay6_sch_status").innerHTML = "เปิด";
+        } else if (arr['Relay6']['sch_status'] == false) {
+            document.getElementById("Relay6_sch_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay6_sch_status").innerHTML = "N/A";
+        }
+
+
+        if (arr['Relay1']['cur_status'] == true) {
+            document.getElementById("Relay1_cur_status").innerHTML = "เปิด";
+        } else if (arr['Relay1']['cur_status'] == false) {
+            document.getElementById("Relay1_cur_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay1_cur_status").innerHTML = "N/A";
+        }
+
+        if (arr['Relay2']['cur_status'] == true) {
+            document.getElementById("Relay2_cur_status").innerHTML = "เปิด";
+        } else if (arr['Relay2']['cur_status'] == false) {
+            document.getElementById("Relay2_cur_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay2_cur_status").innerHTML = "N/A";
+        }
+
+        if (arr['Relay3']['cur_status'] == true) {
+            document.getElementById("Relay3_cur_status").innerHTML = "เปิด";
+        } else if (arr['Relay3']['cur_status'] == false) {
+            document.getElementById("Relay3_cur_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay3_cur_status").innerHTML = "N/A";
+        }
+        if (arr['Relay4']['cur_status'] == true) {
+            document.getElementById("Relay4_cur_status").innerHTML = "เปิด";
+        } else if (arr['Relay4']['cur_status'] == false) {
+            document.getElementById("Relay4_cur_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay4_cur_status").innerHTML = "N/A";
+        }
+        if (arr['Relay5']['cur_status'] == true) {
+            document.getElementById("Relay5_cur_status").innerHTML = "เปิด";
+        } else if (arr['Relay5']['cur_status'] == false) {
+            document.getElementById("Relay5_cur_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay5_cur_status").innerHTML = "N/A";
+        }
+
+        if (arr['Relay6']['cur_status'] == true) {
+            document.getElementById("Relay6_cur_status").innerHTML = "เปิด";
+        } else if (arr['Relay6']['cur_status'] == false) {
+            document.getElementById("Relay6_cur_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay6_cur_status").innerHTML = "N/A";
+        }
+    });
+
+</script>
 
 
 </body>
