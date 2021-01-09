@@ -317,7 +317,7 @@ def createSchedule(request):
 
     text = {'sch_duration':duration, "sch_on": "{:02d}:{:02d}:{:02d}".format(int(start_hour), int(start_minute), int(start_second)),  "pause":pause}
 
-    print(text+ " update to firebase")
+    print(str(text)+ " update to firebase")
     db = firebase.database()
     db.child("farmCode").child(farmID).child('Relay'+str(device[-1])).child('Schedule').child('Period'+str(period)).update(text)
 
@@ -363,7 +363,7 @@ def createSchedule(request):
 
     #update to firebase
     text = {"sch_off": "{:02d}:{:02d}:{:02d}".format(int(end_hour), int(end_minute), int(end_second)), "pause":pause}
-    print(text+ " update to firebase")
+    print(str(text)+ " update to firebase")
     db = firebase.database()
     db.child("farmCode").child(farmID).child('Relay'+str(device[-1])).child('Schedule').child('Period'+str(period)).update(text)
 
