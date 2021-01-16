@@ -708,7 +708,7 @@
                         <div class="row">
 
                             <div class="col-12">
-                                เริ่ม <span id="R2_Sch1_on"></span>
+                                เริ่ม <span id="R2_Sch4_on"></span>
                                 เป็นเวลา <span id="R2_Sch4_duration"></span> นาที
                                 สิ้นสุด <span id="R2_Sch4_off"></span> <span id="R2_Sch4_pause"></span>
                                 {% if initialchk24 == False %}
@@ -831,6 +831,7 @@
             </div>
         </div>
         <p>-</p>
+        {# set relay 3#}
 
         <div class="row">
             <div class="col">
@@ -899,7 +900,7 @@
                             <div class="col-12">
                                 เริ่ม <span id="R3_Sch4_on"></span>
                                 เป็นเวลา <span id="R3_Sch4_duration"></span> นาที
-                                สิ้นสุด <span id="R3_Sch4_off"></span> <span id="R2_Sch4_pause"></span>
+                                สิ้นสุด <span id="R3_Sch4_off"></span> <span id="R3_Sch4_pause"></span>
                                 {% if initialchk34 == False %}
                                     <input id="chk34" type="checkbox" checked data-toggle="toggle"
                                            onchange="toggleScheduleRelay(relay_num=3, period=4)"
@@ -1012,6 +1013,7 @@
             </div>
         </div>
         <p>-</p>
+        {# set relay 4#}
 
         <div class="row">
             <div class="col">
@@ -1025,61 +1027,90 @@
                     <div class="col-xs-4">
                         <div class="row">
                             <div class="col-12">
-                                เริ่ม <span>00:00:00</span>
-                                จำนวน <span>00</span> นาที
-                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
-                                <input type="checkbox" checked data-toggle="toggle"
-                                       data-onstyle="success">
-                            </div>
-                        </div>
-                        <div class="row">
+                                เริ่ม <span id="R4_Sch1_on"></span>
+                                เป็นเวลา <span id="R4_Sch1_duration"></span> นาที
+                                สิ้นสุด <span id="R4_Sch1_off"></span> <span id="R4_Sch1_pause"></span>
+                                {% if initialchk41 == False %}
+                                    <input id="chk41" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=4, period=1)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk41" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=4, period=1)"
+                                           data-onstyle="success">
+                                {% endif %}
 
-                            <div class="col-12">
-                                เริ่ม <span>00:00:00</span>
-                                จำนวน <span>00</span> นาที
-                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
-                                <input type="checkbox" checked data-toggle="toggle"
-                                       data-onstyle="success">
                             </div>
-                        </div>
-                        <div class="row">
-
                             <div class="col-12">
-                                เริ่ม <span>00:00:00</span>
-                                จำนวน <span>00</span> นาที
-                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
-                                <input type="checkbox" checked data-toggle="toggle"
-                                       data-onstyle="success">
+                                เริ่ม <span id="R4_Sch2_on"></span> เป็นเวลา <span id="R4_Sch2_duration"></span>
+                                นาที
+                                สิ้นสุด <span id="R4_Sch2_off"></span> <span id="R4_Sch2_pause"></span>
+                                {% if initialchk42 == False %}
+                                    <input id="chk42" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=4, period=2)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk42" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=4, period=2)"
+                                           data-onstyle="success">
+                                {% endif %}
                             </div>
-                        </div>
-                        <div class="row">
-
                             <div class="col-12">
-                                เริ่ม <span>00:00:00</span>
-                                จำนวน <span>00</span> นาที
-                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
-                                <input type="checkbox" checked data-toggle="toggle"
-                                       data-onstyle="success">
+                                เริ่ม <span id="R4_Sch3_on"></span> เป็นเวลา <span id="R4_Sch3_duration"></span>
+                                นาที
+                                สิ้นสุด <span id="R4_Sch3_off"></span> <span id="R4_Sch3_pause"></span>
+                                {% if initialchk43 == False %}
+                                    <input id="chk43" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=4, period=3)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk43" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=4, period=3)"
+                                           data-onstyle="success">
+                                {% endif %}
                             </div>
-                        </div>
-                        <div class="row">
-
                             <div class="col-12">
-                                เริ่ม <span>00:00:00</span>
-                                จำนวน <span>00</span> นาที
-                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
-                                <input type="checkbox" checked data-toggle="toggle"
-                                       data-onstyle="success">
+                                เริ่ม <span id="R4_Sch4_on"></span> เป็นเวลา <span id="R4_Sch4_duration"></span>
+                                นาที
+                                สิ้นสุด <span id="R4_Sch4_off"></span> <span id="R4_Sch4_pause"></span>
+
+                                {% if initialchk44 == False %}
+                                    <input id="chk44" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=4, period=4)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk44" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=4, period=4)"
+                                           data-onstyle="success">
+                                {% endif %}
                             </div>
-                        </div>
-                        <div class="row">
-
                             <div class="col-12">
-                                เริ่ม <span>00:00:00</span>
-                                จำนวน <span>00</span> นาที
-                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
-                                <input type="checkbox" checked data-toggle="toggle"
-                                       data-onstyle="success">
+                                เริ่ม <span id="R4_Sch5_on"></span> เป็นเวลา <span id="R4_Sch5_duration"></span>
+                                นาที
+                                สิ้นสุด <span id="R4_Sch5_off"></span> <span id="R4_Sch5_pause"></span>
+                                {% if initialchk45 == False %}
+                                    <input id="chk45" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=4, period=5)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk45" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=4, period=5)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                            <div class="col-124">
+                                เริ่ม <span id="R4_Sch6_on"></span> เป็นเวลา <span
+                                        id="R4_Sch6_duration"></span> นาที
+                                    สิ้นสุด <span id="R4_Sch6_off"></span> <span id="R4_Sch6_pause"></span>
+                                    {% if initialchk46 == False %}
+                                        <input id="chk46" type="checkbox" checked data-toggle="toggle"
+                                               onchange="toggleScheduleRelay(relay_num=4, period=6)"
+                                               data-onstyle="success">
+                                    {% else %}
+                                        <input id="chk46" type="checkbox" data-toggle="toggle"
+                                               onchange="toggleScheduleRelay(relay_num=4, period=6)"
+                                               data-onstyle="success">
+                                    {% endif %}
                             </div>
                         </div>
                     </div>
@@ -1148,6 +1179,7 @@
             </div>
         </div>
         <p>-</p>
+        {# set relay 5#}
 
         <div class="row">
             <div class="col">
@@ -1161,61 +1193,90 @@
                     <div class="col-xs-4">
                         <div class="row">
                             <div class="col-12">
-                                เริ่ม <span>00:00:00</span>
-                                จำนวน <span>00</span> นาที
-                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
-                                <input type="checkbox" checked data-toggle="toggle"
-                                       data-onstyle="success">
-                            </div>
-                        </div>
-                        <div class="row">
+                                เริ่ม <span id="R5_Sch1_on"></span>
+                                เป็นเวลา <span id="R5_Sch1_duration"></span> นาที
+                                สิ้นสุด <span id="R5_Sch1_off"></span> <span id="R5_Sch1_pause"></span>
+                                {% if initialchk51 == False %}
+                                    <input id="chk51" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=5, period=1)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk51" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=5, period=1)"
+                                           data-onstyle="success">
+                                {% endif %}
 
-                            <div class="col-12">
-                                เริ่ม <span>00:00:00</span>
-                                จำนวน <span>00</span> นาที
-                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
-                                <input type="checkbox" checked data-toggle="toggle"
-                                       data-onstyle="success">
                             </div>
-                        </div>
-                        <div class="row">
-
                             <div class="col-12">
-                                เริ่ม <span>00:00:00</span>
-                                จำนวน <span>00</span> นาที
-                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
-                                <input type="checkbox" checked data-toggle="toggle"
-                                       data-onstyle="success">
+                                เริ่ม <span id="R5_Sch2_on"></span> เป็นเวลา <span id="R5_Sch2_duration"></span>
+                                นาที
+                                สิ้นสุด <span id="R5_Sch2_off"></span> <span id="R5_Sch2_pause"></span>
+                                {% if initialchk52 == False %}
+                                    <input id="chk52" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=5, period=2)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk52" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=5, period=2)"
+                                           data-onstyle="success">
+                                {% endif %}
                             </div>
-                        </div>
-                        <div class="row">
-
                             <div class="col-12">
-                                เริ่ม <span>00:00:00</span>
-                                จำนวน <span>00</span> นาที
-                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
-                                <input type="checkbox" checked data-toggle="toggle"
-                                       data-onstyle="success">
+                                เริ่ม <span id="R5_Sch3_on"></span> เป็นเวลา <span id="R5_Sch3_duration"></span>
+                                นาที
+                                สิ้นสุด <span id="R5_Sch3_off"></span> <span id="R5_Sch3_pause"></span>
+                                {% if initialchk53 == False %}
+                                    <input id="chk53" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=5, period=3)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk53" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=5, period=3)"
+                                           data-onstyle="success">
+                                {% endif %}
                             </div>
-                        </div>
-                        <div class="row">
-
                             <div class="col-12">
-                                เริ่ม <span>00:00:00</span>
-                                จำนวน <span>00</span> นาที
-                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
-                                <input type="checkbox" checked data-toggle="toggle"
-                                       data-onstyle="success">
+                                เริ่ม <span id="R5_Sch4_on"></span> เป็นเวลา <span id="R5_Sch4_duration"></span>
+                                นาที
+                                สิ้นสุด <span id="R5_Sch4_off"></span> <span id="R5_Sch4_pause"></span>
+
+                                {% if initialchk54 == False %}
+                                    <input id="chk54" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=5, period=4)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk54" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=5, period=4)"
+                                           data-onstyle="success">
+                                {% endif %}
                             </div>
-                        </div>
-                        <div class="row">
-
                             <div class="col-12">
-                                เริ่ม <span>00:00:00</span>
-                                จำนวน <span>00</span> นาที
-                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
-                                <input type="checkbox" checked data-toggle="toggle"
-                                       data-onstyle="success">
+                                เริ่ม <span id="R5_Sch5_on"></span> เป็นเวลา <span id="R5_Sch5_duration"></span>
+                                นาที
+                                สิ้นสุด <span id="R5_Sch5_off"></span> <span id="R5_Sch5_pause"></span>
+                                {% if initialchk55 == False %}
+                                    <input id="chk55" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=5, period=5)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk55" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=5, period=5)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                            <div class="col-124">
+                                เริ่ม <span id="R5_Sch6_on"></span> เป็นเวลา <span
+                                        id="R5_Sch6_duration"></span> นาที
+                                    สิ้นสุด <span id="R5_Sch6_off"></span> <span id="R5_Sch6_pause"></span>
+                                    {% if initialchk56 == False %}
+                                        <input id="chk56" type="checkbox" checked data-toggle="toggle"
+                                               onchange="toggleScheduleRelay(relay_num=5, period=6)"
+                                               data-onstyle="success">
+                                    {% else %}
+                                        <input id="chk56" type="checkbox" data-toggle="toggle"
+                                               onchange="toggleScheduleRelay(relay_num=5, period=6)"
+                                               data-onstyle="success">
+                                    {% endif %}
                             </div>
                         </div>
                     </div>
@@ -1284,6 +1345,7 @@
             </div>
         </div>
         <p>-</p>
+        {# set relay 6#}
 
         <div class="row">
             <div class="col">
@@ -1297,64 +1359,93 @@
                     <div class="col-xs-4">
                         <div class="row">
                             <div class="col-12">
-                                เริ่ม <span>00:00:00</span>
-                                จำนวน <span>00</span> นาที
-                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
-                                <input type="checkbox" checked data-toggle="toggle"
-                                       data-onstyle="success">
-                            </div>
-                        </div>
-                        <div class="row">
+                                เริ่ม <span id="R6_Sch1_on"></span>
+                                เป็นเวลา <span id="R6_Sch1_duration"></span> นาที
+                                สิ้นสุด <span id="R6_Sch1_off"></span> <span id="R6_Sch1_pause"></span>
+                                {% if initialchk61 == False %}
+                                    <input id="chk61" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=6, period=1)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk61" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=6, period=1)"
+                                           data-onstyle="success">
+                                {% endif %}
 
-                            <div class="col-12">
-                                เริ่ม <span>00:00:00</span>
-                                จำนวน <span>00</span> นาที
-                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
-                                <input type="checkbox" checked data-toggle="toggle"
-                                       data-onstyle="success">
                             </div>
-                        </div>
-                        <div class="row">
+                            <div class="col-12">
+                                เริ่ม <span id="R6_Sch2_on"></span> เป็นเวลา <span id="R6_Sch2_duration"></span>
+                                นาที
+                                สิ้นสุด <span id="R6_Sch2_off"></span> <span id="R6_Sch2_pause"></span>
+                                {% if initialchk62 == False %}
+                                    <input id="chk62" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=6, period=2)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk62" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=6, period=2)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                            <div class="col-12">
+                                เริ่ม <span id="R6_Sch3_on"></span> เป็นเวลา <span id="R6_Sch3_duration"></span>
+                                นาที
+                                สิ้นสุด <span id="R6_Sch3_off"></span> <span id="R6_Sch3_pause"></span>
+                                {% if initialchk63 == False %}
+                                    <input id="chk63" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=4, period=3)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk63" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=6, period=3)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                            <div class="col-12">
+                                เริ่ม <span id="R6_Sch4_on"></span> เป็นเวลา <span id="R6_Sch4_duration"></span>
+                                นาที
+                                สิ้นสุด <span id="R6_Sch4_off"></span> <span id="R6_Sch4_pause"></span>
 
+                                {% if initialchk64 == False %}
+                                    <input id="chk64" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=6, period=4)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk64" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=6, period=4)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
                             <div class="col-12">
-                                เริ่ม <span>00:00:00</span>
-                                จำนวน <span>00</span> นาที
-                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
-                                <input type="checkbox" checked data-toggle="toggle"
-                                       data-onstyle="success">
+                                เริ่ม <span id="R6_Sch5_on"></span> เป็นเวลา <span id="R6_Sch5_duration"></span>
+                                นาที
+                                สิ้นสุด <span id="R6_Sch5_off"></span> <span id="R6_Sch5_pause"></span>
+                                {% if initialchk65 == False %}
+                                    <input id="chk65" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=6, period=5)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk65" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=6, period=5)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                            <div class="col-124">
+                                เริ่ม <span id="R6_Sch6_on"></span> เป็นเวลา <span
+                                        id="R6_Sch6_duration"></span> นาที
+                                    สิ้นสุด <span id="R6_Sch6_off"></span> <span id="R6_Sch6_pause"></span>
+                                    {% if initialchk66 == False %}
+                                        <input id="chk66" type="checkbox" checked data-toggle="toggle"
+                                               onchange="toggleScheduleRelay(relay_num=6, period=6)"
+                                               data-onstyle="success">
+                                    {% else %}
+                                        <input id="chk66" type="checkbox" data-toggle="toggle"
+                                               onchange="toggleScheduleRelay(relay_num=6, period=6)"
+                                               data-onstyle="success">
+                                    {% endif %}
                             </div>
                         </div>
-                        <div class="row">
-
-                            <div class="col-12">
-                                เริ่ม <span>00:00:00</span>
-                                จำนวน <span>00</span> นาที
-                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
-                                <input type="checkbox" checked data-toggle="toggle"
-                                       data-onstyle="success">
-                            </div>
-                        </div>
-                        <div class="row">
-
-                            <div class="col-12">
-                                เริ่ม <span>00:00:00</span>
-                                จำนวน <span>00</span> นาที
-                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
-                                <input type="checkbox" checked data-toggle="toggle"
-                                       data-onstyle="success">
-                            </div>
-                        </div>
-                        <div class="row">
-
-                            <div class="col-12">
-                                เริ่ม <span>00:00:00</span>
-                                จำนวน <span>00</span> นาที
-                                สิ้นสุด <span></span> 00:00:00<span> (disable)</span>
-                                <input type="checkbox" checked data-toggle="toggle"
-                                       data-onstyle="success">
-                            </div>
-                        </div>
-                    </div>s
+                    </div>
                     <div id="Relay6Edit" class="col-xs-8 collapse">
                         {# Period 1#}
                         <div class="row">
@@ -2276,10 +2367,6 @@
     var relay1Period1Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay1/Schedule/Period1");
     relay1Period1Ref.on('value', function (snapshot) {
         var arr = snapshot.val();
-        {#console.log(arr)#}
-        {#console.log(arr['sch_on'])#}
-        {#console.log(arr['sch_off'])#}
-        {#console.log(arr['sch_duration'])#}
         document.getElementById("R1_Sch1_on").innerHTML = arr['sch_on'];
         document.getElementById("R1_Sch1_off").innerHTML = arr['sch_off'];
         document.getElementById("R1_Sch1_duration").innerHTML = arr['sch_duration'];
@@ -2294,10 +2381,6 @@
     var relay1Period2Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay1/Schedule/Period2");
     relay1Period2Ref.on('value', function (snapshot) {
         var arr = snapshot.val();
-        {#console.log(arr)#}
-        {#console.log(arr['sch_on'])#}
-        {#console.log(arr['sch_off'])#}
-        {#console.log(arr['sch_duration'])#}
         document.getElementById("R1_Sch2_on").innerHTML = arr['sch_on'];
         document.getElementById("R1_Sch2_off").innerHTML = arr['sch_off'];
         document.getElementById("R1_Sch2_duration").innerHTML = arr['sch_duration'];
@@ -2311,10 +2394,6 @@
     var relay1Period3Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay1/Schedule/Period3");
     relay1Period3Ref.on('value', function (snapshot) {
         var arr = snapshot.val();
-        {#console.log(arr)#}
-        {#console.log(arr['sch_on'])#}
-        {#console.log(arr['sch_off'])#}
-        {#console.log(arr['sch_duration'])#}
         document.getElementById("R1_Sch3_on").innerHTML = arr['sch_on'];
         document.getElementById("R1_Sch3_off").innerHTML = arr['sch_off'];
         document.getElementById("R1_Sch3_duration").innerHTML = arr['sch_duration'];
@@ -2328,10 +2407,6 @@
     var relay1Period4Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay1/Schedule/Period4");
     relay1Period4Ref.on('value', function (snapshot) {
         var arr = snapshot.val();
-        {#console.log(arr)#}
-        {#console.log(arr['sch_on'])#}
-        {#console.log(arr['sch_off'])#}
-        {#console.log(arr['sch_duration'])#}
         document.getElementById("R1_Sch4_on").innerHTML = arr['sch_on'];
         document.getElementById("R1_Sch4_off").innerHTML = arr['sch_off'];
         document.getElementById("R1_Sch4_duration").innerHTML = arr['sch_duration'];
@@ -2345,10 +2420,6 @@
     var relay1Period5Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay1/Schedule/Period5");
     relay1Period5Ref.on('value', function (snapshot) {
         var arr = snapshot.val();
-        {#console.log(arr)#}
-        {#console.log(arr['sch_on'])#}
-        {#console.log(arr['sch_off'])#}
-        {#console.log(arr['sch_duration'])#}
         document.getElementById("R1_Sch5_on").innerHTML = arr['sch_on'];
         document.getElementById("R1_Sch5_off").innerHTML = arr['sch_off'];
         document.getElementById("R1_Sch5_duration").innerHTML = arr['sch_duration'];
@@ -2362,10 +2433,6 @@
     var relay1Period6Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay1/Schedule/Period6");
     relay1Period6Ref.on('value', function (snapshot) {
         var arr = snapshot.val();
-        {#console.log(arr)#}
-        {#console.log(arr['sch_on'])#}
-        {#console.log(arr['sch_off'])#}
-        {#console.log(arr['sch_duration'])#}
         document.getElementById("R1_Sch6_on").innerHTML = arr['sch_on'];
         document.getElementById("R1_Sch6_off").innerHTML = arr['sch_off'];
         document.getElementById("R1_Sch6_duration").innerHTML = arr['sch_duration'];
@@ -2375,6 +2442,375 @@
             document.getElementById("R1_Sch6_pause").innerHTML = "(disable)";
         }
     });
+
+
+    var relay2Period1Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay2/Schedule/Period1");
+    relay2Period1Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R2_Sch1_on").innerHTML = arr['sch_on'];
+        document.getElementById("R2_Sch1_off").innerHTML = arr['sch_off'];
+        document.getElementById("R2_Sch1_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R2_Sch1_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R2_Sch1_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay2Period2Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay2/Schedule/Period2");
+    relay2Period2Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R2_Sch2_on").innerHTML = arr['sch_on'];
+        document.getElementById("R2_Sch2_off").innerHTML = arr['sch_off'];
+        document.getElementById("R2_Sch2_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R2_Sch2_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R2_Sch2_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay2Period3Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay2/Schedule/Period3");
+    relay2Period3Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R2_Sch3_on").innerHTML = arr['sch_on'];
+        document.getElementById("R2_Sch3_off").innerHTML = arr['sch_off'];
+        document.getElementById("R2_Sch3_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R2_Sch3_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R2_Sch3_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay2Period4Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay2/Schedule/Period4");
+    relay2Period4Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R2_Sch4_on").innerHTML = arr['sch_on'];
+        document.getElementById("R2_Sch4_off").innerHTML = arr['sch_off'];
+        document.getElementById("R2_Sch4_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R2_Sch4_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R2_Sch4_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay2Period5Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay2/Schedule/Period5");
+    relay2Period5Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R2_Sch5_on").innerHTML = arr['sch_on'];
+        document.getElementById("R2_Sch5_off").innerHTML = arr['sch_off'];
+        document.getElementById("R2_Sch5_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R2_Sch5_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R2_Sch5_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay2Period6Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay2/Schedule/Period6");
+    relay2Period6Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R2_Sch6_on").innerHTML = arr['sch_on'];
+        document.getElementById("R2_Sch6_off").innerHTML = arr['sch_off'];
+        document.getElementById("R2_Sch6_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R2_Sch6_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R2_Sch6_pause").innerHTML = "(disable)";
+        }
+    });
+
+    var relay3Period1Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay3/Schedule/Period1");
+    relay3Period1Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R3_Sch1_on").innerHTML = arr['sch_on'];
+        document.getElementById("R3_Sch1_off").innerHTML = arr['sch_off'];
+        document.getElementById("R3_Sch1_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R3_Sch1_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R3_Sch1_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay3Period2Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay3/Schedule/Period2");
+    relay3Period2Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R3_Sch2_on").innerHTML = arr['sch_on'];
+        document.getElementById("R3_Sch2_off").innerHTML = arr['sch_off'];
+        document.getElementById("R3_Sch2_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R3_Sch2_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R3_Sch2_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay3Period3Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay3/Schedule/Period3");
+    relay3Period3Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R3_Sch3_on").innerHTML = arr['sch_on'];
+        document.getElementById("R3_Sch3_off").innerHTML = arr['sch_off'];
+        document.getElementById("R3_Sch3_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R3_Sch3_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R3_Sch3_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay3Period4Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay3/Schedule/Period4");
+    relay3Period4Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R3_Sch4_on").innerHTML = arr['sch_on'];
+        document.getElementById("R3_Sch4_off").innerHTML = arr['sch_off'];
+        document.getElementById("R3_Sch4_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R3_Sch4_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R3_Sch4_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay3Period5Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay3/Schedule/Period5");
+    relay3Period5Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R3_Sch5_on").innerHTML = arr['sch_on'];
+        document.getElementById("R3_Sch5_off").innerHTML = arr['sch_off'];
+        document.getElementById("R3_Sch5_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R3_Sch5_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R3_Sch5_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay3Period6Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay3/Schedule/Period6");
+    relay3Period6Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R3_Sch6_on").innerHTML = arr['sch_on'];
+        document.getElementById("R3_Sch6_off").innerHTML = arr['sch_off'];
+        document.getElementById("R3_Sch6_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R3_Sch6_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R3_Sch6_pause").innerHTML = "(disable)";
+        }
+    });
+
+    var relay4Period1Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay4/Schedule/Period1");
+    relay4Period1Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R4_Sch1_on").innerHTML = arr['sch_on'];
+        document.getElementById("R4_Sch1_off").innerHTML = arr['sch_off'];
+        document.getElementById("R4_Sch1_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R4_Sch1_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R4_Sch1_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay4Period2Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay4/Schedule/Period2");
+    relay4Period2Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R4_Sch2_on").innerHTML = arr['sch_on'];
+        document.getElementById("R4_Sch2_off").innerHTML = arr['sch_off'];
+        document.getElementById("R4_Sch2_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R4_Sch2_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R4_Sch2_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay4Period3Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay4/Schedule/Period3");
+    relay4Period3Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R4_Sch3_on").innerHTML = arr['sch_on'];
+        document.getElementById("R4_Sch3_off").innerHTML = arr['sch_off'];
+        document.getElementById("R4_Sch3_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R4_Sch3_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R4_Sch3_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay4Period4Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay4/Schedule/Period4");
+    relay4Period4Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R4_Sch4_on").innerHTML = arr['sch_on'];
+        document.getElementById("R4_Sch4_off").innerHTML = arr['sch_off'];
+        document.getElementById("R4_Sch4_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R4_Sch4_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R4_Sch4_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay4Period5Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay4/Schedule/Period5");
+    relay4Period5Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R4_Sch5_on").innerHTML = arr['sch_on'];
+        document.getElementById("R4_Sch5_off").innerHTML = arr['sch_off'];
+        document.getElementById("R4_Sch5_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R4_Sch5_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R4_Sch5_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay4Period6Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay4/Schedule/Period6");
+    relay4Period6Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R4_Sch6_on").innerHTML = arr['sch_on'];
+        document.getElementById("R4_Sch6_off").innerHTML = arr['sch_off'];
+        document.getElementById("R4_Sch6_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R4_Sch6_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R4_Sch6_pause").innerHTML = "(disable)";
+        }
+    });
+
+
+    var relay5Period1Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay5/Schedule/Period1");
+    relay5Period1Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R5_Sch1_on").innerHTML = arr['sch_on'];
+        document.getElementById("R5_Sch1_off").innerHTML = arr['sch_off'];
+        document.getElementById("R5_Sch1_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R5_Sch1_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R5_Sch1_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay5Period2Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay5/Schedule/Period2");
+    relay5Period2Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R5_Sch2_on").innerHTML = arr['sch_on'];
+        document.getElementById("R5_Sch2_off").innerHTML = arr['sch_off'];
+        document.getElementById("R5_Sch2_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R5_Sch2_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R5_Sch2_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay5Period3Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay5/Schedule/Period3");
+    relay5Period3Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R5_Sch3_on").innerHTML = arr['sch_on'];
+        document.getElementById("R5_Sch3_off").innerHTML = arr['sch_off'];
+        document.getElementById("R5_Sch3_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R5_Sch3_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R5_Sch3_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay5Period4Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay5/Schedule/Period4");
+    relay5Period4Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R5_Sch4_on").innerHTML = arr['sch_on'];
+        document.getElementById("R5_Sch4_off").innerHTML = arr['sch_off'];
+        document.getElementById("R5_Sch4_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R5_Sch4_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R5_Sch4_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay5Period5Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay5/Schedule/Period5");
+    relay5Period5Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R5_Sch5_on").innerHTML = arr['sch_on'];
+        document.getElementById("R5_Sch5_off").innerHTML = arr['sch_off'];
+        document.getElementById("R5_Sch5_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R5_Sch5_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R5_Sch5_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay5Period6Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay5/Schedule/Period6");
+    relay5Period6Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R5_Sch6_on").innerHTML = arr['sch_on'];
+        document.getElementById("R5_Sch6_off").innerHTML = arr['sch_off'];
+        document.getElementById("R5_Sch6_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R5_Sch6_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R5_Sch6_pause").innerHTML = "(disable)";
+        }
+    });
+
+
+    var relay6Period1Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay6/Schedule/Period1");
+    relay6Period1Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R6_Sch1_on").innerHTML = arr['sch_on'];
+        document.getElementById("R6_Sch1_off").innerHTML = arr['sch_off'];
+        document.getElementById("R6_Sch1_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R6_Sch1_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R6_Sch1_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay6Period2Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay6/Schedule/Period2");
+    relay6Period2Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R6_Sch2_on").innerHTML = arr['sch_on'];
+        document.getElementById("R6_Sch2_off").innerHTML = arr['sch_off'];
+        document.getElementById("R6_Sch2_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R6_Sch2_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R6_Sch2_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay6Period3Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay6/Schedule/Period3");
+    relay6Period3Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R6_Sch3_on").innerHTML = arr['sch_on'];
+        document.getElementById("R6_Sch3_off").innerHTML = arr['sch_off'];
+        document.getElementById("R6_Sch3_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R6_Sch3_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R6_Sch3_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay6Period4Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay6/Schedule/Period4");
+    relay6Period4Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R6_Sch4_on").innerHTML = arr['sch_on'];
+        document.getElementById("R6_Sch4_off").innerHTML = arr['sch_off'];
+        document.getElementById("R6_Sch4_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R6_Sch4_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R6_Sch4_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay6Period5Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay6/Schedule/Period5");
+    relay6Period5Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R6_Sch5_on").innerHTML = arr['sch_on'];
+        document.getElementById("R6_Sch5_off").innerHTML = arr['sch_off'];
+        document.getElementById("R6_Sch5_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R6_Sch5_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R6_Sch5_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay6Period6Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay6/Schedule/Period6");
+    relay6Period6Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R6_Sch6_on").innerHTML = arr['sch_on'];
+        document.getElementById("R6_Sch6_off").innerHTML = arr['sch_off'];
+        document.getElementById("R6_Sch6_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R6_Sch6_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R6_Sch6_pause").innerHTML = "(disable)";
+        }
+    });
+
 
 
     var farmRef = firebase.database().ref("farmCode/" + '{{ farmCode }}');
