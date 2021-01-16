@@ -1439,7 +1439,7 @@
                                                onchange="toggleScheduleRelay(relay_num=6, period=6)"
                                                data-onstyle="success">
                                     {% else %}
-                                        <input id="c" type="checkbox" data-toggle="toggle"
+                                        <input id="chk66" type="checkbox" data-toggle="toggle"
                                                onchange="toggleScheduleRelay(relay_num=6, period=6)"
                                                data-onstyle="success">
                                     {% endif %}
@@ -2475,12 +2475,12 @@
             body: raw,
             redirect: 'follow'
         };
-        console.log(raw)
-        {#fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)#}
-        {#fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)#}
-        {#    .then(response => response.text())#}
-        {#    .then(result => console.log(result))#}
-        {#    .catch(error => console.log('error', error));#}
+        {#console.log(raw)#}
+        fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)
+        fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
     }
 </script>
 
