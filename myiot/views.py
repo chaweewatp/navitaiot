@@ -284,6 +284,7 @@ def createSchedule(request):
         newSch.enable = True
         newSch.save()
 
+
     except:
         print('create new schedule')
         f1 = farm.objects.get(farmCode=farmID)
@@ -301,6 +302,14 @@ def createSchedule(request):
                                                              minute=start_minute), second=start_second,
                       id=jobId, replace_existing=True, args=[text], misfire_grace_time=3600)
     scheduler.start()
+
+    # delete previous jobExecutions
+    jobs = DjangoJobExecution.objects.filter(job_id=jobId)
+    if len(jobs) > 1:
+        for item in jobs[1:len(jobs)]:
+            item.delete()
+
+
     print("Schedule created {}".format(text))
     if pause == False:
         scheduler.resume_job(jobId)
@@ -345,6 +354,7 @@ def createSchedule(request):
                                           second=end_second, ),
                       id=jobId, replace_existing=True, args=[text], misfire_grace_time=3600)
     scheduler.start()
+
     print("Schedule created {}".format(text))
     if pause == False:
         scheduler.resume_job(jobId)
@@ -352,6 +362,12 @@ def createSchedule(request):
     else:
         scheduler.pause_job(jobId)
         print("Schedule pause {}".format(text))
+
+    #delete previous jobExecutions
+    jobs=DjangoJobExecution.objects.filter(job_id=jobId)
+    if len(jobs)>1:
+        for item in jobs[1:len(jobs)]:
+            item.delete()
 
     #update to firebase
     text = {"sch_off": "{:02d}:{:02d}:{:02d}".format(int(end_hour), int(end_minute), int(end_second)), "pause":pause}
