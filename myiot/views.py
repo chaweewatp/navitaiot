@@ -297,10 +297,6 @@ def createSchedule(request):
     scheduler = BackgroundScheduler()
     scheduler.add_jobstore(DjangoJobStore(), "default")
     text = '{' + '"command":"On","farmID":"{}","device":"{}", "duration":"{}"'.format(farmID, device, duration) + '}'
-    # scheduler.add_job(updateSchedule, 'interval', minutes=1)
-    # scheduler.add_job(sendCommandOnTest, 'cron', id=jobId, replace_existing=True, day_of_week='mon, tue, wed, thu, fri, sat, sun', hour=hour, minute=minute, args=["{'farmID':'AA0001','device':'relay1'}"])
-    # scheduler.add_job(sendCommandOnTest, trigger=CronTrigger(day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=hour, minute=minute),
-    #                   id=jobId, replace_existing=True, args=[text])
     scheduler.add_job(sendScheduleToIoT, trigger=CronTrigger(day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=start_hour,
                                                              minute=start_minute), second=start_second,
                       id=jobId, replace_existing=True, args=[text], misfire_grace_time=3600)
@@ -344,10 +340,6 @@ def createSchedule(request):
     scheduler = BackgroundScheduler()
     scheduler.add_jobstore(DjangoJobStore(), "default")
     text = '{' + '"command":"Off","farmID":"{}","device":"{}"'.format(farmID, device) + '}'
-    # scheduler.add_job(updateSchedule, 'interval', minutes=1)
-    # scheduler.add_job(sendCommandOnTest, 'cron', id=jobId, replace_existing=True, day_of_week='mon, tue, wed, thu, fri, sat, sun', hour=hour, minute=minute, args=["{'farmID':'AA0001','device':'relay1'}"])
-    # scheduler.add_job(sendCommandOnTest, trigger=CronTrigger(day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=hour, minute=minute),
-    #                   id=jobId, replace_existing=True, args=[text])
     scheduler.add_job(sendScheduleToIoT,
                       trigger=CronTrigger(day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=end_hour, minute=end_minute,
                                           second=end_second, ),
