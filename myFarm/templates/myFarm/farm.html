@@ -561,8 +561,8 @@
                                             body: raw,
                                             redirect: 'follow'
                                         };
-                                        fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)
-                                        {#fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)#}
+                                        {#fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)#}
+                                        fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)
                                             .then(response => response.text())
                                             .then(result => console.log(result))
                                             .catch(error => console.log('error', error));
@@ -1490,8 +1490,8 @@
 {# control relay#}
 <script>
     {# control relay 1#}
-    {#var url = "https://navitaiot.herokuapp.com/testAPI2/"#}
-    var url = "http://127.0.0.1:8000/testAPI2/"
+    var url = "https://navitaiot.herokuapp.com/testAPI2/"
+    {#var url = "http://127.0.0.1:8000/testAPI2/"#}
 
     document.getElementById('controlRelay1On').onclick = function () {
         {#console.log('controlRelay1On clicked')#}
@@ -2236,8 +2236,8 @@
             body: raw,
             redirect: 'follow'
         };
-        fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)
-        {#fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)#}
+        {#fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)#}
+        fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
@@ -2300,8 +2300,8 @@
             redirect: 'follow'
         };
 
-        fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)
-        {#fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)#}
+        {#fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)#}
+        fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
