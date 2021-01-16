@@ -12,9 +12,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-<script src="http://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.js"></script>
-<link href="http://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.css" rel="stylesheet"/>
-
+    <script src="http://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.js"></script>
+    <link href="http://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.css" rel="stylesheet"/>
 
 
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-clockpicker.min.css' %}">
@@ -23,7 +22,7 @@
 
     <style>
         .block {
-            padding: 40px;
+            padding: 30px;
             text-align: center;
         }
 
@@ -121,6 +120,7 @@
 
 <div class="body">
     <div class="container-fluid">
+
         {# farm detial#}
         <div class="row">
             <div class="col-xs-12 col-md12 text-title">
@@ -155,10 +155,7 @@
                 </form>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-6">-------------------------------------------</div>
-            <div class="col-xs-6">###########################################</div>
-        </div>
+
 
         {# Relay controller#}
         <div class="row">
@@ -168,33 +165,44 @@
                     <div class="col-xs-4 ">
                         {# block css#}
                         <div class="block b">
+
                             <div class="row">
                                 <div class="col12">
                                     Relay1 (ปั๊มน้ำ)
                                 </div>
                             </div>
+                            <p></p>
                             <div class="row">
                                 <div class="col12">
-                                    Mode: <span id="Relay1_mode"></span>
+                                    โหมดปัจจุบัน: <span id="Relay1_mode"></span>
                                     <button type="button" class="btn btn-warning" id="setRelay1Manual">Manual</button>
                                     <button type="button" class="btn btn-primary" id="setRelay1Schedule">Schedule
                                     </button>
                                 </div>
                             </div>
+                            <p></p>
                             <div class="row">
-                                <div class="col12">
-                                    Current status: <span id="Relay1_cur_status"></span>
+                                <div class="col-xs-6">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            สถานะปัจจุบัน : <span id="Relay1_cur_status"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            สถานะตามตาราง : <span id="Relay1_sch_status"></span>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col12">
-                                    Schedual status: <span id="Relay1_sch_status"></span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <button type="button" class="btn btn-success" id="controlRelay1On">On</button>
+                                <div class="col-xs-6">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <button type="button" class="btn btn-success" id="controlRelay1On">On</button>
                                 <button type="button" class="btn btn-danger" id="controlRelay1Off">Off</button>
+                                        </div>
+
+                                    </div>
+                                </div>
                             </div>
 
                         </div>
@@ -430,263 +438,312 @@
             window.onload = doClock;
 
         </script>
+
+        {# Clock #}
         <div class="row">
             <div class="col">
                 <div id="clock"></div>
 
             </div>
         </div>
-
+        {# set schedule #}
+        {# set relay 1#}
         <div class="row">
             <div class="col">
-
-                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Relay1">ปั๊มน้ำ 1
-                    (Relay-1)
+                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Relay1">
+                    ปั๊มน้ำ 1(Relay-1)
                 </button>
                 <div id="Relay1" class="collapse">
+                    <p>ปั๊มปุ๋ย
+                        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Relay1Edit">
+                            ตั้งเวลา
+                        </button>
+                    </p>
                     {# Schedule set #}
-                    <div class="row">
-
-                        <div class="col-xs-4">
-                            <div class="row">
-                                <div class="col-12">
-                                    เริ่มเวลา <span id="R1_Sch1_on"></span>
-                                    เป็นเวลา <span id="R1_Sch1_duration"></span> นาที
-                                    สิ้นสุดเวลา <span id="R1_Sch1_off"></span> <span id="R1_Sch1_pause"></span>
-                                    {% if initialchk1 == False %}
-                                        <input id="chk1" type="checkbox" checked data-toggle="toggle"
-                                               onchange="toggleScheduleRelay1()" data-onstyle="success">
-                                    {% else %}
-                                        <input id="chk1" type="checkbox" data-toggle="toggle"
-                                               onchange="toggleScheduleRelay1()"
-                                               data-onstyle="success">
-                                    {% endif %}
-                                    <script>
-                                        function toggleScheduleRelay1() {
-                                            start = $('#R1_Sch1_on').text();
-                                            end = $('#R1_Sch1_off').text();
-                                            duration = $('#R1_Sch1_duration').text();
-                                            console.log(start)
-                                            var s = start.split(":")
-                                            var e = end.split(":")
-
-                                            if (document.getElementById('chk1').checked) {
-                                                console.log("button 1 Checked")
-                                                var myHeaders = new Headers();
-                                                myHeaders.append("Content-Type", "application/json");
-                                                var raw = JSON.stringify({
-                                                    "farmID": "{{ farmCode }}",
-                                                    "token": "xxx",
-                                                    "method": "scheduleSet",
-                                                    "detail": {
-                                                        "device": "relay1",
-                                                        "period": 1,
-                                                        "start_hour": s[0],
-                                                        "start_minute": s[1],
-                                                        "start_second": s[2],
-                                                        "end_hour": e[0],
-                                                        "end_minute": e[1],
-                                                        "end_second": e[2],
-                                                        "duration": duration,
-                                                        "pause": false
-                                                    },
-                                                    "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
-                                                });
-                                                {#console.log(raw)#}
-                                                var requestOptions = {
-                                                    method: 'POST',
-                                                    headers: myHeaders,
-                                                    body: raw,
-                                                    redirect: 'follow'
-                                                };
-
-                                                {#fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)#}
-                                                fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)
-                                                    .then(response => response.text())
-                                                    .then(result => console.log(result))
-                                                    .catch(error => console.log('error', error));
+                    <div class="col-xs-4">
+                        <div class="row">
+                            <div class="col-12">
+                                เริ่ม <span id="R1_Sch1_on"></span>
+                                เป็นเวลา <span id="R1_Sch1_duration"></span> นาที
+                                สิ้นสุด <span id="R1_Sch1_off"></span> <span id="R1_Sch1_pause"></span>
+                                {% if initialchk11 == False %}
+                                    <input id="chk11" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=1, period=1)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk11" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=1, period=1)"
+                                           data-onstyle="success">
+                                {% endif %}
+                                <script>
+                                    function toggleScheduleRelay(relay_num, period) {
+                                        console.log(relay_num)
+                                        console.log(period)
+                                        start = $('#R' + relay_num + '_Sch' + period + '_on').text();
+                                        end = $('#R' + relay_num + '_Sch' + period + '_off').text();
+                                        duration = $('#R' + relay_num + '_Sch' + period + '_duration').text();
+                                        var s = start.split(":")
+                                        var e = end.split(":")
 
 
+                                        var myHeaders = new Headers();
+                                        myHeaders.append("Content-Type", "application/json");
+
+                                        if (relay_num == 1 && period == 1) {
+                                            if (document.getElementById('chk11').checked) {
+                                                var p = false
                                             } else {
                                                 console.log("button 1 Not Checked")
-
-                                                var myHeaders = new Headers();
-                                                myHeaders.append("Content-Type", "application/json");
-                                                var raw = JSON.stringify({
-                                                    "farmID": "{{ farmCode }}",
-                                                    "token": "xxx",
-                                                    "method": "scheduleSet",
-                                                    "detail": {
-                                                        "device": "relay1",
-                                                        "period": 1,
-                                                        "start_hour": s[0],
-                                                        "start_minute": s[1],
-                                                        "start_second": s[2],
-                                                        "end_hour": e[0],
-                                                        "end_minute": e[1],
-                                                        "end_second": e[2],
-                                                        "duration": duration,
-                                                        "pause": true
-                                                    },
-                                                    "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
-                                                });
-                                                {#console.log(raw)#}
-                                                var requestOptions = {
-                                                    method: 'POST',
-                                                    headers: myHeaders,
-                                                    body: raw,
-                                                    redirect: 'follow'
-                                                };
-
-                                                {#fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)#}
-                                                fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)
-                                                    .then(response => response.text())
-                                                    .then(result => console.log(result))
-                                                    .catch(error => console.log('error', error));
+                                                var p = true
+                                            }
+                                            ;
+                                        } else if (relay_num == 1 && period == 2) {
+                                            if (document.getElementById('chk12').checked) {
+                                                var p = false
+                                            } else {
+                                                console.log("button 1 Not Checked")
+                                                var p = true
+                                            }
+                                        } else if (relay_num == 1 && period == 3) {
+                                            if (document.getElementById('chk13').checked) {
+                                                var p = false
+                                            } else {
+                                                console.log("button 1 Not Checked")
+                                                var p = true
+                                            }
+                                        } else if (relay_num == 1 && period == 4) {
+                                            if (document.getElementById('chk14').checked) {
+                                                var p = false
+                                            } else {
+                                                console.log("button 1 Not Checked")
+                                                var p = true
+                                            }
+                                        } else if (relay_num == 1 && period == 5) {
+                                            if (document.getElementById('chk15').checked) {
+                                                var p = false
+                                            } else {
+                                                console.log("button 1 Not Checked")
+                                                var p = true
+                                            }
+                                        } else if (relay_num == 1 && period == 6) {
+                                            if (document.getElementById('chk16').checked) {
+                                                var p = false
+                                            } else {
+                                                console.log("button 1 Not Checked")
+                                                var p = true
                                             }
                                         }
+                                        ;
 
 
-                                    </script>
+                                        var raw = JSON.stringify({
+                                            "farmID": "{{ farmCode }}",
+                                            "token": "xxx",
+                                            "method": "scheduleSet",
+                                            "detail": {
+                                                "device": "relay" + relay_num,
+                                                "period": period,
+                                                "start_hour": s[0],
+                                                "start_minute": s[1],
+                                                "start_second": s[2],
+                                                "end_hour": e[0],
+                                                "end_minute": e[1],
+                                                "end_second": e[2],
+                                                "duration": duration,
+                                                "pause": p
+                                            },
+                                            "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
+                                        });
 
-                                </div>
-                                <div class="col-12">
-                                    เริ่มเวลา <span id="R1_Sch2_on"></span> เป็นเวลา <span id="R1_Sch2_duration"></span>
-                                    นาที
-                                    สิ้นสุดเวลา <span id="R1_Sch2_off"></span> <span id="R1_Sch2_pause"></span>
-                                </div>
-                                <div class="col-12">
-                                    เริ่มเวลา <span id="R1_Sch3_on"></span> เป็นเวลา <span id="R1_Sch3_duration"></span>
-                                    นาที
-                                    สิ้นสุดเวลา <span id="R1_Sch3_off"></span> <span id="R1_Sch3_pause"></span>
-                                </div>
-                                <div class="col-12">
-                                    เริ่มเวลา <span id="R1_Sch4_on"></span> เป็นเวลา <span id="R1_Sch4_duration"></span>
-                                    นาที
-                                    สิ้นสุดเวลา <span id="R1_Sch4_off"></span> <span id="R1_Sch4_pause"></span>
-                                </div>
-                                <div class="col-12">
-                                    เริ่มเวลา <span id="R1_Sch5_on"></span> เป็นเวลา <span id="R1_Sch5_duration"></span>
-                                    นาที
-                                    สิ้นสุดเวลา <span id="R1_Sch5_off"></span> <span id="R1_Sch5_pause"></span>
-                                </div>
-                                <div class="col-12">
-                                    <p>เริ่มเวลา <span id="R1_Sch6_on"></span> เป็นเวลา <span
-                                            id="R1_Sch6_duration"></span> นาที
-                                        สิ้นสุดเวลา <span id="R1_Sch6_off"></span> <span id="R1_Sch6_pause"></span></p>
-                                </div>
+                                        var requestOptions = {
+                                            method: 'POST',
+                                            headers: myHeaders,
+                                            body: raw,
+                                            redirect: 'follow'
+                                        };
+                                        fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)
+                                        {#fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)#}
+                                            .then(response => response.text())
+                                            .then(result => console.log(result))
+                                            .catch(error => console.log('error', error));
+                                    }
+                                </script>
+
+                            </div>
+                            <div class="col-12">
+                                เริ่ม <span id="R1_Sch2_on"></span> เป็นเวลา <span id="R1_Sch2_duration"></span>
+                                นาที
+                                สิ้นสุด <span id="R1_Sch2_off"></span> <span id="R1_Sch2_pause"></span>
+                                {% if initialchk12 == False %}
+                                    <input id="chk12" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=1, period=2)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk12" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=1, period=2)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                            <div class="col-12">
+                                เริ่ม <span id="R1_Sch3_on"></span> เป็นเวลา <span id="R1_Sch3_duration"></span>
+                                นาที
+                                สิ้นสุด <span id="R1_Sch3_off"></span> <span id="R1_Sch3_pause"></span>
+                                {% if initialchk13 == False %}
+                                    <input id="chk13" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=1, period=3)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk13" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=1, period=3)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                            <div class="col-12">
+                                เริ่ม <span id="R1_Sch4_on"></span> เป็นเวลา <span id="R1_Sch4_duration"></span>
+                                นาที
+                                สิ้นสุด <span id="R1_Sch4_off"></span> <span id="R1_Sch4_pause"></span>
+
+                                {% if initialchk14 == False %}
+                                    <input id="chk14" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=1, period=4)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk14" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=1, period=4)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                            <div class="col-12">
+                                เริ่ม <span id="R1_Sch5_on"></span> เป็นเวลา <span id="R1_Sch5_duration"></span>
+                                นาที
+                                สิ้นสุด <span id="R1_Sch5_off"></span> <span id="R1_Sch5_pause"></span>
+                                {% if initialchk15 == False %}
+                                    <input id="chk15" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=1, period=5)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk15" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=1, period=5)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                            <div class="col-12">
+                                <p>เริ่ม <span id="R1_Sch6_on"></span> เป็นเวลา <span
+                                        id="R1_Sch6_duration"></span> นาที
+                                    สิ้นสุด <span id="R1_Sch6_off"></span> <span id="R1_Sch6_pause"></span>
+                                    {% if initialchk16 == False %}
+                                        <input id="chk16" type="checkbox" checked data-toggle="toggle"
+                                               onchange="toggleScheduleRelay(relay_num=1, period=6)"
+                                               data-onstyle="success">
+                                    {% else %}
+                                        <input id="chk16" type="checkbox" data-toggle="toggle"
+                                               onchange="toggleScheduleRelay(relay_num=1, period=6)"
+                                               data-onstyle="success">
+                                    {% endif %}
                             </div>
                         </div>
-                        <div class="col-xs-8">
-                            {# Period 1#}
-                            <div class="row">
-                                <div class="col-12">
-                                    <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1"
-                                           value="timePeriod1R1">
-                                    เริ่มเวลา <input type="time" step="1" id="timePeriod1R1Start">
-                                    เป็นเวลา <input id="timePeriod1R1Delay"> นาที
-                                    สิ้นสุดเวลา <input type="time" step="1" id="timePeriod1R1Stop" disabled>
-                                    <button type="button" id="buttonTimePeriod1R1Submit">บันทึกค่า/ดำเนินการตั้งเวลา
-                                    </button>
-                                </div>
+                    </div>
+                    {# Schedule edit #}
+                    <div id="Relay1Edit" class="col-xs-8 collapse">
+                        {# Period 1#}
+                        <div class="row">
+                            <div class="col-12">
+
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod1R1Start">
+                                เป็นเวลา <input id="timePeriod1R1Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod1R1Stop" disabled>
+                                <button type="button" onclick="timeCal(relay_num=1, period=1)"> คำนวนเวลา</button>
+                                <button type="button" onclick="scheduleSet(relay_num=1,period=1)"> ตั้งเวลา</button>
+                                </button>
+
+
                             </div>
-                            {# Period 2#}
-                            <div class="row">
-                                <div class="col-12">
-                                    <input type="checkbox" id="timePeriod2R1" name="timePeriod2R1"
-                                           value="timePeriod2R1">
-                                    เริ่มเวลา <input type="time" step="1" id="timePeriod2R1Start">
-                                    เป็นเวลา <input id="timePeriod2R1Delay"> นาที
-                                    สิ้นสุดเวลา <input type="texts" step="1" id="timePeriod2R1Stop" disabled>
-                                    <button type="button" id="buttonTimePeriod2R1Submit">บันทึกค่า/ดำเนินการตั้งเวลา
-                                    </button>
-
-
-
-
-                                </div>
-                            </div>
-                            {# Period 3#}
-                            <div class="row">
-                                <div class="col-12">
-                                    <input type="checkbox" id="timePeriod3R1" name="timePeriod3R1"
-                                           value="timePeriod3R1">
-                                    เริ่มเวลา <input type="time" step="1" id="timePeriod3R1Start">
-                                    เป็นเวลา <input id="timePeriod3R1Delay"> นาที
-                                    สิ้นสุดเวลา <input type="time" step="1" id="timePeriod3R1Stop" disabled>
-                                    <button type="button" id="buttonTimePeriod3R1Submit">บันทึกค่า/ดำเนินการตั้งเวลา
-                                    </button>
-                                </div>
-                            </div>
-                            {# Period 4#}
-                            <div class="row">
-                                <div class="col-12">
-                                    <input type="checkbox" id="timePeriod4R1" name="timePeriod4R1"
-                                           value="timePeriod4R1">
-                                    เริ่มเวลา <input type="time" step="1" id="timePeriod4R1Start">
-                                    เป็นเวลา <input id="timePeriod4R1Delay"> นาที
-                                    สิ้นสุดเวลา <input type="time" step="1" id="timePeriod4R1Stop" disabled>
-                                    <button type="button" id="buttonTimePeriod4R1Submit">บันทึกค่า/ดำเนินการตั้งเวลา
-                                    </button>
-
-                                </div>
-                            </div>
-                            {# Period 5#}
-                            <div class="row">
-                                <div class="col-12">
-                                    <input type="checkbox" id="timePeriod5R1" name="timePeriod5R1"
-                                           value="timePeriod5R1">
-                                    เริ่มเวลา <input type="time" step="1" id="timePeriod5R1Start">
-                                    เป็นเวลา <input id="timePeriod5R1Delay"> นาที
-                                    สิ้นสุดเวลา <input type="time" step="1" id="timePeriod5R1Stop" disabled>
-                                    <button type="button" id="buttonTimePeriod5R1Submit">บันทึกค่า/ดำเนินการตั้งเวลา
-                                    </button>
-
-                                </div>
-                            </div>
-                            {# Period 6#}
-                            <div class="row">
-                                <div class="col-12">
-                                    <input type="checkbox" id="timePeriod6R1" name="timePeriod6R1"
-                                           value="timePeriod6R1">
-                                    เริ่มเวลา <input type="text"  id="timePeriod6R1Start">
-                                    เป็นเวลา <input id="timePeriod6R1Delay"> นาที
-                                    สิ้นสุดเวลา <input type="time" step="1" id="timePeriod6R1Stop" disabled>
-                                    <button type="button" id="buttonTimePeriod6R1Submit">บันทึกค่า/ดำเนินการตั้งเวลา
-                                    </button>
-
-                                                                        <script>
-                                        var timepicker = new TimePicker('timePeriod6R1Start', {
-  lang: 'en',
-  theme: 'dark'
-});
-timepicker.on('change', function(evt) {
-
-  var value = (evt.hour || '00') + ':' + (evt.minute || '00') + ':' + (evt.second || '00');
-  evt.element.value = value;
-  console.log(value)
-
-});
-
-                                    </script>
-
-                                </div>
-                            </div>
-                            <button type="button" id="buttonTimeRelayAllCal">คำนวนเวลา</button>
                         </div>
+                        {# Period 2#}
+                        <div class="row">
+                            <div class="col-12">
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod2R1Start">
+                                เป็นเวลา <input id="timePeriod2R1Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod2R1Stop" disabled>
+                                <button type="button" onclick="timeCal(relay_num=1, period=2)"> คำนวนเวลา</button>
+                                <button type="button" onclick="scheduleSet(relay_num=1,period=2)"> ตั้งเวลา</button>
 
+
+                                </button>
+
+
+                            </div>
+                        </div>
+                        {# Period 3#}
+                        <div class="row">
+                            <div class="col-12">
+
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod3R1Start">
+                                เป็นเวลา <input id="timePeriod3R1Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod3R1Stop" disabled>
+                                <button type="button" onclick="timeCal(relay_num=1, period=3)"> คำนวนเวลา</button>
+                                <button type="button" onclick="scheduleSet(relay_num=1,period=3)"> ตั้งเวลา</button>
+                                </button>
+                            </div>
+                        </div>
+                        {# Period 4#}
+                        <div class="row">
+                            <div class="col-12">
+
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod4R1Start">
+                                เป็นเวลา <input id="timePeriod4R1Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod4R1Stop" disabled>
+                                <button type="button" onclick="timeCal(relay_num=1, period=4)"> คำนวนเวลา</button>
+                                <button type="button" onclick="scheduleSet(relay_num=1,period=4)"> ตั้งเวลา</button>
+                                </button>
+
+                            </div>
+                        </div>
+                        {# Period 5#}
+                        <div class="row">
+                            <div class="col-12">
+
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod5R1Start">
+                                เป็นเวลา <input id="timePeriod5R1Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod5R1Stop" disabled>
+                                <button type="button" onclick="timeCal(relay_num=1, period=5)"> คำนวนเวลา</button>
+                                <button type="button" onclick="scheduleSet(relay_num=1,period=5)"> ตั้งเวลา</button>
+                                </button>
+
+                            </div>
+                        </div>
+                        {# Period 6#}
+                        <div class="row">
+                            <div class="col-12">
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod6R1Start">
+                                เป็นเวลา <input id="timePeriod6R1Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod6R1Stop" disabled>
+                                <button type="button" onclick="timeCal(relay_num=1, period=6)"> คำนวนเวลา</button>
+                                <button type="button" onclick="scheduleSet(relay_num=1,period=6)"> ตั้งเวลา</button>
+
+                                </button>
+
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-<p>-</p>
+        <p>-</p>
+        {# set relay 2#}
         <div class="row">
             <div class="col">
-                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Relay2">ปั๊มปุ๋ย
-                    (Relay-2)
+                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Relay2">
+                    ปั๊มปุ๋ย (Relay-2)
                 </button>
                 <div id="Relay2" class="collapse">
-                    <p>ปั๊มปุ๋ย  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Relay2Edit">ตั้งเวลา</button></p>
+                    <p>ปั๊มปุ๋ย
+                        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Relay2Edit">
+                            ตั้งเวลา
+                        </button>
+                    </p>
+                    {# Schedule set #}
                     <div class="col-xs-4">
                         <div class="row">
                             <div class="col-12">
@@ -827,7 +884,7 @@ timepicker.on('change', function(evt) {
                 </div>
             </div>
         </div>
-<p>-</p>
+        <p>-</p>
 
         <div class="row">
             <div class="col">
@@ -836,7 +893,7 @@ timepicker.on('change', function(evt) {
                 </button>
                 <div id="Relay3" class="collapse">
                     <p>เดรนวาว์ล</p>
-                                        <div class="col-xs-4">
+                    <div class="col-xs-4">
                         <div class="row">
                             <div class="col-12">
                                 เริ่ม <span>00:00:00</span>
@@ -976,7 +1033,7 @@ timepicker.on('change', function(evt) {
                 </div>
             </div>
         </div>
-<p>-</p>
+        <p>-</p>
 
         <div class="row">
             <div class="col">
@@ -985,7 +1042,7 @@ timepicker.on('change', function(evt) {
                 </button>
                 <div id="Relay4" class="collapse">
                     <p>วาร์ลโซน 1</p>
-                                        <div class="col-xs-4">
+                    <div class="col-xs-4">
                         <div class="row">
                             <div class="col-12">
                                 เริ่ม <span>00:00:00</span>
@@ -1125,7 +1182,7 @@ timepicker.on('change', function(evt) {
                 </div>
             </div>
         </div>
-<p>-</p>
+        <p>-</p>
 
         <div class="row">
             <div class="col">
@@ -1134,7 +1191,7 @@ timepicker.on('change', function(evt) {
                 </button>
                 <div id="Relay5" class="collapse">
                     <p>วาร์ลโซน 2</p>
-                                        <div class="col-xs-4">
+                    <div class="col-xs-4">
                         <div class="row">
                             <div class="col-12">
                                 เริ่ม <span>00:00:00</span>
@@ -1274,7 +1331,7 @@ timepicker.on('change', function(evt) {
                 </div>
             </div>
         </div>
-<p>-</p>
+        <p>-</p>
 
         <div class="row">
             <div class="col">
@@ -1283,7 +1340,7 @@ timepicker.on('change', function(evt) {
                 </button>
                 <div id="Relay6" class="collapse">
                     <p>วาร์ลโซน 3</p>
-                                        <div class="col-xs-4">
+                    <div class="col-xs-4">
                         <div class="row">
                             <div class="col-12">
                                 เริ่ม <span>00:00:00</span>
@@ -2092,10 +2149,104 @@ timepicker.on('change', function(evt) {
 
 </script>
 
-{# schedule set#}
+{# Schedule set#}
 <script>
-    {# Time picker#}
+    function toggleScheduleRelay(relay_num, period) {
+        console.log(relay_num)
+        console.log(period)
+        start = $('#R' + relay_num + '_Sch' + period + '_on').text();
+        end = $('#R' + relay_num + '_Sch' + period + '_off').text();
+        duration = $('#R' + relay_num + '_Sch' + period + '_duration').text();
+        var s = start.split(":")
+        var e = end.split(":")
 
+
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        if (relay_num == 1 && period == 1) {
+            if (document.getElementById('chk11').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+            ;
+        } else if (relay_num == 1 && period == 2) {
+            if (document.getElementById('chk12').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num == 1 && period == 3) {
+            if (document.getElementById('chk13').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num == 1 && period == 4) {
+            if (document.getElementById('chk14').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num == 1 && period == 5) {
+            if (document.getElementById('chk15').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num == 1 && period == 6) {
+            if (document.getElementById('chk16').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        }
+        ;
+
+
+        var raw = JSON.stringify({
+            "farmID": "{{ farmCode }}",
+            "token": "xxx",
+            "method": "scheduleSet",
+            "detail": {
+                "device": "relay" + relay_num,
+                "period": period,
+                "start_hour": s[0],
+                "start_minute": s[1],
+                "start_second": s[2],
+                "end_hour": e[0],
+                "end_minute": e[1],
+                "end_second": e[2],
+                "duration": duration,
+                "pause": p
+            },
+            "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+        fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)
+        {#fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)#}
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+    }
+</script>
+
+
+{# schedule Edit#}
+<script>
     function pad(num) {
         return ("0" + num).slice(-2);
     }
@@ -2107,313 +2258,57 @@ timepicker.on('change', function(evt) {
         return "" + pad(h) + ":" + pad(m) + ":" + pad(s);
     }
 
-    document.getElementById('buttonTimeRelayAllCal').onclick = function () {
-        console.log('buttonTimeRelayAllCal clicked')
-        var period;
-        for (period = 1; period < 7; period++) {
-            console.log(period);
-            console.log('timePeriod' + period.toString() + 'R1');
-            if (document.getElementById('timePeriod' + period.toString() + 'R1').checked || true) {
-                document.getElementById('timePeriod' + period.toString() + 'R1Stop').value = endTime(
-                    document.getElementById('timePeriod' + period.toString() + 'R1Start').value,
-                    document.getElementById('timePeriod' + period.toString() + 'R1Delay').value
-                )
-            }
-
-        }
-
-
+    function timeCal(relay_num, period) {
+        console.log(relay_num)
+        console.log(period)
+        document.getElementById('timePeriod' + period + 'R' + relay_num + 'Stop').value = endTime(
+            document.getElementById('timePeriod' + period + 'R' + relay_num + 'Start').value,
+            document.getElementById('timePeriod' + period + 'R' + relay_num + 'Delay').value)
     }
 
-    {#Relay 1#}
-    document.getElementById('buttonTimePeriod1R1Submit').onclick = function () {
-        if (document.getElementById('timePeriod1R1').checked || true) {
-            pause = document.getElementById('timePeriod1R1').checked
-            console.log('value of pause')
-            console.log(pause)
-            start = document.getElementById('timePeriod1R1Start').value
-            end = document.getElementById('timePeriod1R1Stop').value
-            duration = document.getElementById('timePeriod1R1Delay').value
-            var s = start.split(":")
-            var e = end.split(":")
+    function scheduleSet(relay_num, period) {
+        start = document.getElementById('timePeriod' + period + 'R' + relay_num + 'Start').value
+        end = document.getElementById('timePeriod' + period + 'R' + relay_num + 'Stop').value
+        duration = document.getElementById('timePeriod' + period + 'R' + relay_num + 'Delay').value
+        var s = start.split(":")
+        var e = end.split(":")
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        var raw = JSON.stringify({
+            "farmID": "{{ farmCode }}",
+            "token": "xxx",
+            "method": "scheduleSet",
+            "detail": {
+                "device": "relay" + relay_num,
+                "period": period,
+                "start_hour": s[0],
+                "start_minute": s[1],
+                "start_second": s[2],
+                "end_hour": e[0],
+                "end_minute": e[1],
+                "end_second": e[2],
+                "duration": duration,
+                "pause": true
+            },
+            "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
+        });
+        console.log(raw)
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
 
-            var myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
-            var raw = JSON.stringify({
-                "farmID": "{{ farmCode }}",
-                "token": "xxx",
-                "method": "scheduleSet",
-                "detail": {
-                    "device": "relay1",
-                    "period": 1,
-                    "start_hour": s[0],
-                    "start_minute": s[1],
-                    "start_second": s[2],
-                    "end_hour": e[0],
-                    "end_minute": e[1],
-                    "end_second": e[2],
-                    "duration": duration,
-                    "pause": !document.getElementById('timePeriod1R1').checked
-                },
-                "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
-            });
-            console.log(raw)
-            var requestOptions = {
-                method: 'POST',
-                headers: myHeaders,
-                body: raw,
-                redirect: 'follow'
-            };
+        fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)
+        {#fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)#}
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
 
-            {#fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)#}
-            fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)
-                .then(response => response.text())
-                .then(result => console.log(result))
-                .catch(error => console.log('error', error));
-
-
-        }
     }
-    document.getElementById('buttonTimePeriod2R1Submit').onclick = function () {
-        if (document.getElementById('timePeriod2R1').checked || true) {
-            start = document.getElementById('timePeriod2R1Start').value
-            end = document.getElementById('timePeriod2R1Stop').value
-            duration = document.getElementById('timePeriod2R1Delay').value
-
-            var s = start.split(":")
-            var e = end.split(":")
-
-            var myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
-            var raw = JSON.stringify({
-                "farmID": "{{ farmCode }}",
-                "token": "xxx",
-                "method": "scheduleSet",
-                "detail": {
-                    "device": "relay1",
-                    "period": 2,
-                    "start_hour": s[0],
-                    "start_minute": s[1],
-                    "start_second": s[2],
-                    "end_hour": e[0],
-                    "end_minute": e[1],
-                    "end_second": e[2],
-                    "duration": duration,
-                    "pause": !document.getElementById('timePeriod2R1').checked
-                },
-                "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
-            });
-            console.log(raw)
-            var requestOptions = {
-                method: 'POST',
-                headers: myHeaders,
-                body: raw,
-                redirect: 'follow'
-            };
-
-            {#fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)#}
-            fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)
-                .then(response => response.text())
-                .then(result => console.log(result))
-                .catch(error => console.log('error', error));
-
-
-        }
-    }
-    document.getElementById('buttonTimePeriod3R1Submit').onclick = function () {
-        if (document.getElementById('timePeriod3R1').checked || true) {
-            start = document.getElementById('timePeriod3R1Start').value
-            end = document.getElementById('timePeriod3R1Stop').value
-            duration = document.getElementById('timePeriod3R1Delay').value
-
-            var s = start.split(":")
-            var e = end.split(":")
-
-            var myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
-            var raw = JSON.stringify({
-                "farmID": "{{ farmCode }}",
-                "token": "xxx",
-                "method": "scheduleSet",
-                "detail": {
-                    "device": "relay1",
-                    "period": 3,
-                    "start_hour": s[0],
-                    "start_minute": s[1],
-                    "start_second": s[2],
-                    "end_hour": e[0],
-                    "end_minute": e[1],
-                    "end_second": e[2],
-                    "duration": duration,
-                    "pause": !document.getElementById('timePeriod3R1').checked
-                },
-                "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
-            });
-            console.log(raw)
-            var requestOptions = {
-                method: 'POST',
-                headers: myHeaders,
-                body: raw,
-                redirect: 'follow'
-            };
-
-            {#fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)#}
-            fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)
-                .then(response => response.text())
-                .then(result => console.log(result))
-                .catch(error => console.log('error', error));
-
-
-        }
-    }
-    document.getElementById('buttonTimePeriod4R1Submit').onclick = function () {
-        if (document.getElementById('timePeriod4R1').checked || true) {
-            start = document.getElementById('timePeriod4R1Start').value
-            end = document.getElementById('timePeriod4R1Stop').value
-            duration = document.getElementById('timePeriod4R1Delay').value
-
-            var s = start.split(":")
-            var e = end.split(":")
-
-            var myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
-            var raw = JSON.stringify({
-                "farmID": "{{ farmCode }}",
-                "token": "xxx",
-                "method": "scheduleSet",
-                "detail": {
-                    "device": "relay1",
-                    "period": 4,
-                    "start_hour": s[0],
-                    "start_minute": s[1],
-                    "start_second": s[2],
-                    "end_hour": e[0],
-                    "end_minute": e[1],
-                    "end_second": e[2],
-                    "duration": duration,
-                    "pause": !document.getElementById('timePeriod4R1').checked
-                },
-                "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
-            });
-            console.log(raw)
-            var requestOptions = {
-                method: 'POST',
-                headers: myHeaders,
-                body: raw,
-                redirect: 'follow'
-            };
-
-            {#fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)#}
-            fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)
-                .then(response => response.text())
-                .then(result => console.log(result))
-                .catch(error => console.log('error', error));
-
-
-        }
-    }
-    document.getElementById('buttonTimePeriod5R1Submit').onclick = function () {
-        if (document.getElementById('timePeriod5R1').checked || true) {
-            start = document.getElementById('timePeriod5R1Start').value
-            end = document.getElementById('timePeriod5R1Stop').value
-            duration = document.getElementById('timePeriod5R1Delay').value
-
-            var s = start.split(":")
-            var e = end.split(":")
-
-            var myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
-            var raw = JSON.stringify({
-                "farmID": "{{ farmCode }}",
-                "token": "xxx",
-                "method": "scheduleSet",
-                "detail": {
-                    "device": "relay1",
-                    "period": 5,
-                    "start_hour": s[0],
-                    "start_minute": s[1],
-                    "start_second": s[2],
-                    "end_hour": e[0],
-                    "end_minute": e[1],
-                    "end_second": e[2],
-                    "duration": duration,
-                    "pause": !document.getElementById('timePeriod5R1').checked
-                },
-                "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
-            });
-            console.log(raw)
-            var requestOptions = {
-                method: 'POST',
-                headers: myHeaders,
-                body: raw,
-                redirect: 'follow'
-            };
-
-            {#fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)#}
-            fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)
-                .then(response => response.text())
-                .then(result => console.log(result))
-                .catch(error => console.log('error', error));
-
-
-        }
-    }
-    document.getElementById('buttonTimePeriod6R1Submit').onclick = function () {
-        if (document.getElementById('timePeriod6R1').checked || true) {
-            start = document.getElementById('timePeriod6R1Start').value
-            end = document.getElementById('timePeriod6R1Stop').value
-            duration = document.getElementById('timePeriod6R1Delay').value
-
-            var s = start.split(":")
-            var e = end.split(":")
-
-            var myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
-            var raw = JSON.stringify({
-                "farmID": "{{ farmCode }}",
-                "token": "xxx",
-                "method": "scheduleSet",
-                "detail": {
-                    "device": "relay1",
-                    "period": 6,
-                    "start_hour": s[0],
-                    "start_minute": s[1],
-                    "start_second": s[2],
-                    "end_hour": e[0],
-                    "end_minute": e[1],
-                    "end_second": e[2],
-                    "duration": duration,
-                    "pause": !document.getElementById('timePeriod6R1').checked
-                },
-                "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
-            });
-            console.log(raw)
-            var requestOptions = {
-                method: 'POST',
-                headers: myHeaders,
-                body: raw,
-                redirect: 'follow'
-            };
-
-            {#fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)#}
-            fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)
-                .then(response => response.text())
-                .then(result => console.log(result))
-                .catch(error => console.log('error', error));
-
-
-        }
-    }
-
-    {#Relay 2#}
-    {#Relay 3#}
-    {#Relay 4#}
-    {#Relay 5#}
-    {#Relay 6#}
-
 
 </script>
-
 
 {#  <script src="../../static/js/vendor/modernizr-3.8.0.min.js"></script>#}
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"

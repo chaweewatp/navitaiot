@@ -143,7 +143,6 @@ django_heroku.settings(locals())
 del DATABASES['default']['OPTIONS']['sslmode']
 
 
-
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.AllowAny',),
     'DEFAULT_RENDERER_CLASSES': (

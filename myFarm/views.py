@@ -41,7 +41,12 @@ def pageFarm(request, id):
         'farmName' : farm.objects.get(farmCode=id).farmName,
         'farmCode' : farm.objects.get(farmCode=id).farmCode,
         'serverTime': serverTime,
-        'initialchk1':relay1Ref.val()['Schedule']['Period1']['pause'],
+        'initialchk11':relay1Ref.val()['Schedule']['Period1']['pause'],
+        'initialchk12': relay1Ref.val()['Schedule']['Period2']['pause'],
+        'initialchk13': relay1Ref.val()['Schedule']['Period3']['pause'],
+        'initialchk14': relay1Ref.val()['Schedule']['Period4']['pause'],
+        'initialchk15': relay1Ref.val()['Schedule']['Period5']['pause'],
+        'initialchk16': relay1Ref.val()['Schedule']['Period6']['pause'],
 
     }
 
