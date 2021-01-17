@@ -450,11 +450,15 @@ def wakeUp(request):
     command = []
     for item in relay_list:
         relay_num.append(item.relayNumber)
-        command.append(item.scheduleStatus)
+        if item.manualMode==True:
+            command.append(False)
+        else:
+            command.append(item.scheduleStatus)
+
 
     command = ['turnOn' if item is True else 'turnOff' for item in command]
 
-    topic = "AA0001/getCurrentCommand"
+    topic = "AA0001/getWakeUpCommand"
     msg = "relay" + relay_num[0] + '/' + command[0] + ",relay" + relay_num[1] + '/' + command[1] + ",relay" + relay_num[
         2] + '/' + command[2]
     client.publish(topic, msg)
