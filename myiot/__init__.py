@@ -24,7 +24,6 @@ firebase = pyrebase.initialize_app(config)
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
     client.subscribe("TEST/MQTT")
-    client.subscribe("reportSensor")
     client.subscribe("reportLED")
     client.subscribe("reportRelay")
     client.subscribe("wakeUp")
@@ -39,9 +38,9 @@ def on_message(client, userdata, msg):
         farmID=data.split('/')[0]
         content=data.split('/')[1]
         print("farm id is ", farmID, ' content is ', content)
-        # urlServer =  "http://127.0.0.1:8000/wakeUp/"
+        urlServer =  "http://127.0.0.1:8000/wakeUp/"
 
-        urlServer =  "https://navitaiot.herokuapp.com/wakeUp"
+        # urlServer =  "https://navitaiot.herokuapp.com/"
 
         url = urlServer
 
