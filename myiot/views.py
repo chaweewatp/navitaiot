@@ -186,12 +186,12 @@ def testAPI2(request):
     relay = data["detail"]["device"]
     if data["method"] == "control":
         if data["detail"]["control"] == "on":
-            sendCommandOn(chipID=chipID, device='relay'+relay[-1])
+            sendCommandOn(chipID=chipID, device=relay)
             # set mode --> manual
             modeManualSet(farmID=chipID, relay=relay)
 
         elif data["detail"]["control"] == "off":
-            sendCommandOff(chipID=chipID, device='relay'+relay[-1])
+            sendCommandOff(chipID=chipID, device=relay)
             # set mode --> manual
             modeManualSet(farmID=chipID, relay=relay)
 
@@ -441,7 +441,7 @@ def wakeUp(request):
 
     command = ['turnOn' if item is True else 'turnOff' for item in command]
 
-    topic = farmID+"/getCurrentCommand"
+    topic = "AA0001/getCurrentCommand"
     msg = "relay" + relay_num[0] + '/' + command[0] + ",relay" + relay_num[1] + '/' + command[1] + ",relay" + relay_num[
         2] + '/' + command[2]
     client.publish(topic, msg)
