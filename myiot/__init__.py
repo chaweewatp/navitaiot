@@ -6,6 +6,7 @@ import json
 import time
 import requests
 import pyrebase
+import datetime
 
 ## firebase configuration
 config = {
@@ -71,6 +72,9 @@ def on_message(client, userdata, msg):
         db.child("farmCode").child(farmID).update(text)
 
     if msg.topic == "reportRelay":
+
+
+
         print("IoT report Relay status")
 
         farmID=data.split('/')[0]
@@ -119,6 +123,9 @@ def on_message(client, userdata, msg):
             text={"relaystatus": "NA"}
             db.child("farmCode").child(farmID).update(text)
 
+        serverTime = datetime.timestamp(datetime.now())
+        text={'last_time':serverTime}
+        db.child("farmCode").child(farmID).update(text)
 
 
 def sendToMQTT(client, userdata, msg):
