@@ -39,9 +39,9 @@ def on_message(client, userdata, msg):
         farmID=data.split('/')[0]
         content=data.split('/')[1]
         print("farm id is ", farmID, ' content is ', content)
-        urlServer =  "http://127.0.0.1:8000/wakeUp/"
+        # urlServer =  "http://127.0.0.1:8000/wakeUp/"
 
-        # urlServer =  "https://navitaiot.herokuapp.com/"
+        urlServer =  "https://navitaiot.herokuapp.com/wakeUp/"
 
         url = urlServer
 
