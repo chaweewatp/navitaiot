@@ -441,7 +441,7 @@ def wakeUp(request):
 
     command = ['turnOn' if item is True else 'turnOff' for item in command]
 
-    topic = "AA0001/getCurrentCommand"
+    topic = farmID+"/getCurrentCommand"
     msg = "relay" + relay_num[0] + '/' + command[0] + ",relay" + relay_num[1] + '/' + command[1] + ",relay" + relay_num[
         2] + '/' + command[2]
     client.publish(topic, msg)
