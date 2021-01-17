@@ -186,12 +186,12 @@ def testAPI2(request):
     relay = data["detail"]["device"]
     if data["method"] == "control":
         if data["detail"]["control"] == "on":
-            sendCommandOn(chipID=chipID, device=relay)
+            sendCommandOn(chipID=chipID, device='relay'+relay[:])
             # set mode --> manual
             modeManualSet(farmID=chipID, relay=relay)
 
         elif data["detail"]["control"] == "off":
-            sendCommandOff(chipID=chipID, device=relay)
+            sendCommandOff(chipID=chipID, device='relay'+relay[:])
             # set mode --> manual
             modeManualSet(farmID=chipID, relay=relay)
 
@@ -295,19 +295,31 @@ def createSchedule(request):
         newSch.save()
 
     jobId = str(newSch.scheduleId)
+
+    # delete previous jobExecutions
+    jobs = DjangoJobExecution.objects.filter(job_id=jobId)
+    if len(jobs) > 1:
+        for item in jobs:
+            item.delete()
+
     scheduler = BackgroundScheduler()
     scheduler.add_jobstore(DjangoJobStore(), "default")
     text = '{' + '"command":"On","farmID":"{}","device":"{}", "duration":"{}"'.format(farmID, device, duration) + '}'
     scheduler.add_job(sendScheduleToIoT, trigger=CronTrigger(day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=start_hour,
                                                              minute=start_minute), second=start_second,
                       id=jobId, replace_existing=True, args=[text], misfire_grace_time=3600)
+    scheduler.add_job(
+        delete_old_job_executions,
+        trigger=CronTrigger(
+            day_of_week='mon,tue,wed,thu,fri,sat,sun', hour="00", minute="00"
+        ),  # Midnight on Monday, before start of the next work week.
+        id="delete_old_job_executions",
+        max_instances=1,
+        replace_existing=True,
+    )
     scheduler.start()
 
-    # delete previous jobExecutions
-    jobs = DjangoJobExecution.objects.filter(job_id=jobId)
-    if len(jobs) > 1:
-        for item in jobs[1:len(jobs)]:
-            item.delete()
+
 
 
     print("Schedule created {}".format(text))
@@ -346,6 +358,13 @@ def createSchedule(request):
         newSch.save()
 
     jobId = str(newSch.scheduleId)
+
+    # delete previous jobExecutions
+    jobs = DjangoJobExecution.objects.filter(job_id=jobId)
+    if len(jobs) > 1:
+        for item in jobs:
+            item.delete()
+
     scheduler = BackgroundScheduler()
     scheduler.add_jobstore(DjangoJobStore(), "default")
     text = '{' + '"command":"Off","farmID":"{}","device":"{}"'.format(farmID, device) + '}'
@@ -353,6 +372,16 @@ def createSchedule(request):
                       trigger=CronTrigger(day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=end_hour, minute=end_minute,
                                           second=end_second, ),
                       id=jobId, replace_existing=True, args=[text], misfire_grace_time=3600)
+    scheduler.add_job(
+        delete_old_job_executions,
+        trigger=CronTrigger(
+            day_of_week='mon,tue,wed,thu,fri,sat,sun', hour="00", minute="00"
+        ),  # Midnight on Monday, before start of the next work week.
+        id="delete_old_job_executions",
+        max_instances=1,
+        replace_existing=True,
+    )
+
     scheduler.start()
 
     print("Schedule created {}".format(text))
@@ -362,12 +391,6 @@ def createSchedule(request):
     else:
         scheduler.pause_job(jobId)
         print("Schedule pause {}".format(text))
-
-    #delete previous jobExecutions
-    jobs=DjangoJobExecution.objects.filter(job_id=jobId)
-    if len(jobs)>1:
-        for item in jobs[1:len(jobs)]:
-            item.delete()
 
     #update to firebase
     text = {"sch_off": "{:02d}:{:02d}:{:02d}".format(int(end_hour), int(end_minute), int(end_second)), "pause":pause}
