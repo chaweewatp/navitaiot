@@ -55,8 +55,6 @@ def on_message(client, userdata, msg):
 
         response = requests.request("POST", url, data=json.dumps(payload), headers=headers)
 
-
-
     if msg.topic == "reportLED":
         farmID=data.split('/')[0]
         content=data.split('/')[1]
@@ -72,11 +70,7 @@ def on_message(client, userdata, msg):
         db.child("farmCode").child(farmID).update(text)
 
     if msg.topic == "reportRelay":
-
-
-
         print("IoT report Relay status")
-
         farmID=data.split('/')[0]
         content=data.split('/')[1]
         print("farm id is ", farmID, ' content is ', content)
@@ -128,6 +122,17 @@ def on_message(client, userdata, msg):
         text={'last_time':serverTime}
         db.child("farmCode").child(farmID).update(text)
 
+    if msg.topic == "TEST/MQTT":
+        # print(data)
+        farmID=data[0:6]
+        print(farmID)
+        serverTime = datetime.timestamp(datetime.now())
+        # print(serverTime)
+        text={'last_time':serverTime}
+        print(text)
+        db = firebase.database()
+
+        db.child("farmCode").child(farmID).update(text)
 
 def sendToMQTT(client, userdata, msg):
     # urlServer =  "http://127.0.0.1:8000"
