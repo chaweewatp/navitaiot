@@ -81,6 +81,16 @@ def modeScheduleSet(farmID, relay):
     # update firebase
     firebaseModeSet(mode=False, farmID=farmID, relay=relay)
     print('farmID :{} - relay number : {} set as Schedule mode'.format(farmID, relay))
+    print(r1.__dict__)
+
+    #send command to NbIoT
+    if r1.scheduleStatus==True:
+        sendCommandOn(farmID, 'relay'+relay[-1])
+
+    elif r1.scheduleStatus==False:
+        sendCommandOff(farmID, 'relay'+relay[-1])
+
+
 
 
 @api_view(['POST'])
@@ -95,12 +105,15 @@ def setMode(request):
         if data['detail']['mode']=="schedule":
             # set manual mode "False" in relay model
             modeScheduleSet(farmID, relay)
+
         elif data['detail']['mode']=="manual":
             # set manual mode "True" in relay model
             modeManualSet(farmID, relay)
-
         else:
             pass
+
+
+
     return Response("OK")
 
 
