@@ -6,7 +6,7 @@ import json
 import time
 import requests
 import pyrebase
-import datetime
+from datetime import datetime
 
 ## firebase configuration
 config = {
@@ -124,6 +124,7 @@ def on_message(client, userdata, msg):
             db.child("farmCode").child(farmID).update(text)
 
         serverTime = datetime.timestamp(datetime.now())
+        print(serverTime)
         text={'last_time':serverTime}
         db.child("farmCode").child(farmID).update(text)
 
