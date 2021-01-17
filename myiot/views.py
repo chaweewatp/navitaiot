@@ -186,12 +186,12 @@ def testAPI2(request):
     relay = data["detail"]["device"]
     if data["method"] == "control":
         if data["detail"]["control"] == "on":
-            sendCommandOn(chipID=chipID, device='relay'+relay[:])
+            sendCommandOn(chipID=chipID, device='relay'+relay[-1])
             # set mode --> manual
             modeManualSet(farmID=chipID, relay=relay)
 
         elif data["detail"]["control"] == "off":
-            sendCommandOff(chipID=chipID, device='relay'+relay[:])
+            sendCommandOff(chipID=chipID, device='relay'+relay[-1])
             # set mode --> manual
             modeManualSet(farmID=chipID, relay=relay)
 
