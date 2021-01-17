@@ -53,7 +53,7 @@ def on_message(client, userdata, msg):
             'content-type': "application/json"
         }
 
-        response = requests.request("POST", url, data=json.dumps(payload), headers=headers)
+        requests.request("POST", url, data=json.dumps(payload), headers=headers)
 
     if msg.topic == "reportLED":
         farmID=data.split('/')[0]
