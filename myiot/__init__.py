@@ -39,11 +39,9 @@ def on_message(client, userdata, msg):
         farmID=data.split('/')[0]
         content=data.split('/')[1]
         print("farm id is ", farmID, ' content is ', content)
-        # urlServer =  "http://127.0.0.1:8000/wakeUp/"
+        # url =  "http://127.0.0.1:8000/wakeUp/"
+        url =  "https://navitaiot.herokuapp.com/wakeUp/"
 
-        urlServer =  "https://navitaiot.herokuapp.com/wakeUp/"
-
-        url = urlServer
 
         payload = {
             'farmID': farmID,
@@ -52,8 +50,13 @@ def on_message(client, userdata, msg):
         headers = {
             'content-type': "application/json"
         }
-
-        requests.request("POST", url, data=json.dumps(payload), headers=headers)
+        try:
+            requests.request("POST", url, data=json.dumps(payload), headers=headers, timeout=5)
+        except requests.Timeout:
+            # back off and retry
+            pass
+        except requests.ConnectionError:
+            pass
 
     if msg.topic == "reportLED":
         farmID=data.split('/')[0]
