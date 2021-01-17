@@ -140,23 +140,23 @@
         </div>
 
         {# LED control #}
-        <div class="row">
-            <div class="col-xs-12 col-md12 text-title">
-                <form method="POST">
-                    {% csrf_token %}
-
-                    <li>
-                        <input type="radio" id="a-option" name="command" value="ON">
-                        <label for="a-option" id="text8"> เปิด LED </label>
-                    </li>
-                    <li>
-                        <input type="radio" id="a-option" name="command" value="OFF">
-                        <label for="a-option" id="text8"> ปิด LED </label>
-                    </li>
-                    <input id="submit" class="w-100 btn" type="submit" value="ส่งค่า">
-                </form>
-            </div>
-        </div>
+{#        <div class="row">#}
+{#            <div class="col-xs-12 col-md12 text-title">#}
+{#                <form method="POST">#}
+{#                    {% csrf_token %}#}
+{##}
+{#                    <li>#}
+{#                        <input type="radio" id="a-option" name="command" value="ON">#}
+{#                        <label for="a-option" id="text8"> เปิด LED </label>#}
+{#                    </li>#}
+{#                    <li>#}
+{#                        <input type="radio" id="a-option" name="command" value="OFF">#}
+{#                        <label for="a-option" id="text8"> ปิด LED </label>#}
+{#                    </li>#}
+{#                    <input id="submit" class="w-100 btn" type="submit" value="ส่งค่า">#}
+{#                </form>#}
+{#            </div>#}
+{#        </div>#}
 
 
         {# Relay controller#}
