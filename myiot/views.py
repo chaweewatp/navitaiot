@@ -18,6 +18,9 @@ import paho.mqtt.client as mqtt
 
 # from .mqtt import client, sendToMQTT
 from .__init__ import client
+from django.conf import settings
+
+from apscheduler.schedulers.blocking import BlockingScheduler
 
 from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -316,12 +319,14 @@ def createSchedule(request):
         for item in jobs:
             item.delete()
 
-    scheduler = BackgroundScheduler()
+    # scheduler = BackgroundScheduler()
+    scheduler=BlockingScheduler(timezone=settings.TIME_ZONE)
+
     scheduler.add_jobstore(DjangoJobStore(), "default")
     text = '{' + '"command":"On","farmID":"{}","device":"{}", "duration":"{}"'.format(farmID, device, duration) + '}'
     scheduler.add_job(sendScheduleToIoT, trigger=CronTrigger(day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=start_hour,
                                                              minute=start_minute), second=start_second,
-                      id=jobId, replace_existing=True, args=[text], misfire_grace_time=3600)
+                      id=jobId, replace_existing=True, args=[text], misfire_grace_time=3600, jitter=5)
     scheduler.add_job(
         delete_old_job_executions,
         trigger=CronTrigger(
@@ -329,7 +334,7 @@ def createSchedule(request):
         ),  # Midnight on Monday, before start of the next work week.
         id="delete_old_job_executions",
         max_instances=1,
-        replace_existing=True,
+        replace_existing=True,jitter=5
     )
     scheduler.start()
 
@@ -379,7 +384,9 @@ def createSchedule(request):
         for item in jobs:
             item.delete()
 
-    scheduler = BackgroundScheduler()
+    # scheduler = BackgroundScheduler()
+    scheduler=BlockingScheduler(timezone=settings.TIME_ZONE)
+
     scheduler.add_jobstore(DjangoJobStore(), "default")
     text = '{' + '"command":"Off","farmID":"{}","device":"{}"'.format(farmID, device) + '}'
     scheduler.add_job(sendScheduleToIoT,
