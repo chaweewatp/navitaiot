@@ -184,8 +184,8 @@
             redirect: 'follow'
         };
 
-        fetch("http://127.0.0.1:8000/emergencyOff/", requestOptions)
-        {#fetch("https://navitaiot.herokuapp.com/emergencyOff/", requestOptions)#}
+        {#fetch("http://127.0.0.1:8000/emergencyOff/", requestOptions)#}
+        fetch("https://navitaiot.herokuapp.com/emergencyOff/", requestOptions)
 
             .then(response => response.text())
             .then(result => console.log(result))
