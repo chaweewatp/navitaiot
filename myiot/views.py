@@ -384,8 +384,8 @@ def createSchedule(request):
         for item in jobs:
             item.delete()
 
-    # scheduler = BackgroundScheduler()
-    scheduler=BlockingScheduler(timezone=settings.TIME_ZONE)
+    scheduler = BackgroundScheduler()
+    # scheduler=BlockingScheduler(timezone=settings.TIME_ZONE)
 
     scheduler.add_jobstore(DjangoJobStore(), "default")
     text = '{' + '"command":"Off","farmID":"{}","device":"{}"'.format(farmID, device) + '}'
