@@ -12,6 +12,7 @@ import json
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
+from rest_framework.renderers import JSONRenderer
 
 import paho.mqtt.client as mqtt
 
@@ -458,10 +459,19 @@ def wakeUp(request):
 
     command = ['turnOn' if item is True else 'turnOff' for item in command]
 
-    topic = "AA0001/getWakeUpCommand"
-    msg = "relay" + relay_num[0] + '/' + command[0] + ",relay" + relay_num[1] + '/' + command[1] + ",relay" + relay_num[
-        2] + '/' + command[2]
+    topic = "AA0001/getCurrentCommand"
+    # msg = "relay" + relay_num[0] + s/' + command[0] + ",relay" + relay_num[1] + '/' + command[1] + ",relay" + relay_num[
+    #     2] + '/' + command[2]
+
+    msg=JSONRenderer().render({"relay{}".format(relay_num[0]):"{}".format(command[0]),
+                               "relay{}".format(relay_num[1]):"{}".format(command[1]),
+                               "relay{}".format(relay_num[2]):"{}".format(command[2]),
+                               "relay{}".format(relay_num[3]):"{}".format(command[3]),
+                               "relay{}".format(relay_num[4]):"{}".format(command[4]),
+                               "relay{}".format(relay_num[5]):"{}".format(command[5])})
+    print(msg)
+    print(str(msg))
     client.publish(topic, msg)
-    print('Message publish to ' + "AA0001" + ", msg :" + msg)
+    print('Message publish to ' + "AA0001" + ", msg :" + str(msg))
 
     return Response("OK")

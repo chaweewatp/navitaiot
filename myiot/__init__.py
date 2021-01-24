@@ -77,8 +77,11 @@ def on_message(client, userdata, msg):
         farmID=data.split('/')[0]
         content=data.split('/')[1]
         print("farm id is ", farmID, ' content is ', content)
-        db = firebase.database()
 
+
+
+
+        db = firebase.database()
         if content == 'relay1On':
             text={'cur_status': True}
             db.child("farmCode").child(farmID).child('Relay1').update(text)
@@ -140,11 +143,9 @@ def on_message(client, userdata, msg):
 def sendToMQTT(client, userdata, msg):
     # urlServer =  "http://127.0.0.1:8000"
     urlServer =  "https://navitaiot.herokuapp.com/"
-
     chipID="AA0001"
     mqttTopic=chipID
     url = urlServer
-
     payload = {
         'text': "helloFromServer",
     }
