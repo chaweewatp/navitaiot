@@ -319,14 +319,14 @@ def createSchedule(request):
         for item in jobs:
             item.delete()
 
-    # scheduler = BackgroundScheduler()
-    scheduler=BlockingScheduler(timezone=settings.TIME_ZONE)
+    scheduler = BackgroundScheduler()
+    # scheduler=BlockingScheduler(timezone=settings.TIME_ZONE)
 
     scheduler.add_jobstore(DjangoJobStore(), "default")
     text = '{' + '"command":"On","farmID":"{}","device":"{}", "duration":"{}"'.format(farmID, device, duration) + '}'
     scheduler.add_job(sendScheduleToIoT, trigger=CronTrigger(day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=start_hour,
                                                              minute=start_minute), second=start_second,
-                      id=jobId, replace_existing=True, args=[text], max_instances=1,misfire_grace_time=3600 )
+                      id=jobId, replace_existing=True, args=[text], max_instances=1,misfire_grace_time=3600, jitter=3)
     scheduler.add_job(
         delete_old_job_executions,
         trigger=CronTrigger(
@@ -334,7 +334,7 @@ def createSchedule(request):
         ),  # Midnight on Monday, before start of the next work week.
         id="delete_old_job_executions",
         max_instances=1,
-        replace_existing=True
+        replace_existing=True, jitter=3
     )
     scheduler.start()
 
@@ -392,7 +392,7 @@ def createSchedule(request):
     scheduler.add_job(sendScheduleToIoT,
                       trigger=CronTrigger(day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=end_hour, minute=end_minute,
                                           second=end_second, ),
-                      id=jobId, replace_existing=True, args=[text], max_instances=1, misfire_grace_time=3600)
+                      id=jobId, replace_existing=True, args=[text], max_instances=1, misfire_grace_time=3600, jitter=3)
     scheduler.add_job(
         delete_old_job_executions,
         trigger=CronTrigger(
@@ -400,7 +400,7 @@ def createSchedule(request):
         ),  # Midnight on Monday, before start of the next work week.
         id="delete_old_job_executions",
         max_instances=1,
-        replace_existing=True,
+        replace_existing=True, jitter=3
     )
 
     scheduler.start()
