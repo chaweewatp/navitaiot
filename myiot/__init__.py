@@ -83,8 +83,8 @@ def on_message(client, userdata, msg):
         print(content)
 
 
-        url =  "http://127.0.0.1:8000/reportRelay/"
-        # url =  "https://navitaiot.herokuapp.com/reportRelay/"
+        # url =  "http://127.0.0.1:8000/reportRelay/"
+        url =  "https://navitaiot.herokuapp.com/reportRelay/"
         for item in content:
 
             payload = {
@@ -157,8 +157,8 @@ def on_message(client, userdata, msg):
         content=data.split('/')[1]
         print("farm id is ", farmID, ' content is ', content)
 
-        url =  "http://127.0.0.1:8000/reportRelay/"
-        # url =  "https://navitaiot.herokuapp.com/reportRelay/"
+        # url =  "http://127.0.0.1:8000/reportRelay/"
+        url =  "https://navitaiot.herokuapp.com/reportRelay/"
 
 
         payload = {
