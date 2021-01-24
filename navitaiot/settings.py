@@ -140,7 +140,7 @@ STATIC_URL = '/static/'
 
 #activate Django-heroku
 django_heroku.settings(locals())
-# del DATABASES['default']['OPTIONS']['sslmode']
+del DATABASES['default']['OPTIONS']['sslmode']
 
 
 
