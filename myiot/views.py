@@ -12,6 +12,7 @@ import json
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
+from rest_framework.renderers import JSONRenderer
 
 import paho.mqtt.client as mqtt
 
@@ -19,6 +20,7 @@ import paho.mqtt.client as mqtt
 from .__init__ import client
 
 from apscheduler.schedulers.background import BackgroundScheduler
+
 from apscheduler.triggers.cron import CronTrigger
 from django.core.management.base import BaseCommand
 from django_apscheduler.jobstores import DjangoJobStore
@@ -53,6 +55,45 @@ def testAPI(request):
     return Response("OK")
 
 
+def firebaseModeSet(mode, farmID, relay):
+    print(relay)
+    text = {'manual': mode}
+    db = firebase.database()
+    db.child("farmCode").child(farmID).child(relay).update(text)
+
+def modeManualSet(farmID, relay):
+    f1 = farm.objects.get(farmCode=farmID)
+    r1 = relayDevice.objects.get(farm=f1, relayNumber=relay[-1])
+    r1.manualMode = True
+    r1.save()
+    #pause schedule
+
+    # update firebase
+    firebaseModeSet(mode=True, farmID=farmID, relay=relay)
+    print('farmID :{} - relay number : {} set as Manual mode'.format(farmID, relay))
+
+def modeScheduleSet(farmID, relay):
+    f1 = farm.objects.get(farmCode=farmID)
+    r1 = relayDevice.objects.get(farm=f1, relayNumber=relay[-1])
+    r1.manualMode = False
+    r1.save()
+    #resume schedule
+
+    # update firebase
+    firebaseModeSet(mode=False, farmID=farmID, relay=relay)
+    print('farmID :{} - relay number : {} set as Schedule mode'.format(farmID, relay))
+    print(r1.__dict__)
+
+    #send command to NbIoT
+    if r1.scheduleStatus==True:
+        sendCommandOn(farmID, 'relay'+relay[-1])
+
+    elif r1.scheduleStatus==False:
+        sendCommandOff(farmID, 'relay'+relay[-1])
+
+
+
+
 @api_view(['POST'])
 @permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
 def setMode(request):
@@ -64,28 +105,16 @@ def setMode(request):
         relay=data['detail']['device']
         if data['detail']['mode']=="schedule":
             # set manual mode "False" in relay model
-            f1 = farm.objects.get(farmCode=farmID)
-            r1 =relayDevice.objects.get(farm=f1, relayNumber=relay[-1])
-            r1.manualMode=False
-            r1.save()
-            #update firebase
+            modeScheduleSet(farmID, relay)
 
-            text={'manual':False}
-            db = firebase.database()
-            db.child("farmCode").child(farmID).child(relay).update(text)
         elif data['detail']['mode']=="manual":
             # set manual mode "True" in relay model
-            f1 = farm.objects.get(farmCode=farmID)
-            r1 = relayDevice.objects.get(farm=f1, relayNumber=relay[-1])
-            r1.manualMode = True
-            r1.save()
-
-            # update firebase
-            text={'manual':True}
-            db = firebase.database()
-            db.child("farmCode").child(farmID).child(relay).update(text)
+            modeManualSet(farmID, relay)
         else:
             pass
+
+
+
     return Response("OK")
 
 
@@ -95,9 +124,6 @@ def updateFirebase(request, farmID, text):
     # db.child("farmCode").child("AA0001").update({"flow1Status": False})
     db.child("farmCode").child(farmID).update(text)
     return HttpResponse("OK")
-
-
-
 
 #
 # @csrf_exempt
@@ -158,6 +184,9 @@ def sendCommandOn(chipID, device):
     print('Message publish to ' + chipID + ", msg :" + msg)
 
 
+
+
+
 @api_view(['POST'])
 @permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
 def testAPI2(request):
@@ -168,22 +197,28 @@ def testAPI2(request):
     # print(data["method"])
 
     chipID = data["farmID"]
-    device = data["detail"]["device"]
+    relay = data["detail"]["device"]
     if data["method"] == "control":
         if data["detail"]["control"] == "on":
-            sendCommandOn(chipID=chipID, device=device)
+            sendCommandOn(chipID=chipID, device='relay'+relay[-1])
+            # set mode --> manual
+            modeManualSet(farmID=chipID, relay=relay)
+
         elif data["detail"]["control"] == "off":
-            sendCommandOff(chipID=chipID, device=device)
+            sendCommandOff(chipID=chipID, device='relay'+relay[-1])
+            # set mode --> manual
+            modeManualSet(farmID=chipID, relay=relay)
+
         else:
             pass
     return Response("OK2")
 
 
-def sendCommandOnDuration(chipID, device, duration):
-    topic = chipID + "/turnOnDuration/"
-    msg = device + str(duration)
-    client.publish(topic, msg)
-    print('Message publish to ' + chipID + ", msg :" + msg)
+# def sendCommandOnDuration(chipID, device, duration):
+#     topic = chipID + "/turnOnDuration/"
+#     msg = device + str(duration)
+#     client.publish(topic, msg)
+#     print('Message publish to ' + chipID + ", msg :" + msg)
 
 
 def sendScheduleToIoT(text):
@@ -197,8 +232,7 @@ def sendScheduleToIoT(text):
     r1 = relayDevice.objects.get(farm=f1, relayNumber=device[-1])
     print(r1.__dict__)
     if res["command"] == "On":
-        # sendCommandOnDuration(chipID=chipId, device=device, duration=duration)
-        if r1.manualMode == False:
+        if r1.manualMode == False: #check if manual mode is disable
             sendCommandOn(chipID=chipId, device=device)
             print('Send command to IoT')
         r1.scheduleStatus=True
@@ -208,7 +242,7 @@ def sendScheduleToIoT(text):
         db.child("farmCode").child(chipId).child('Relay' + str(device[-1])).update(text)
 
     elif res["command"] == "Off":
-        if r1.manualMode == False:
+        if r1.manualMode == False:  #check if manual mode is disable
             sendCommandOff(chipID=chipId, device=device)
             print('Send command to IoT')
         r1.scheduleStatus=False
@@ -264,6 +298,7 @@ def createSchedule(request):
         newSch.enable = True
         newSch.save()
 
+
     except:
         print('create new schedule')
         f1 = farm.objects.get(farmCode=farmID)
@@ -274,29 +309,46 @@ def createSchedule(request):
         newSch.save()
 
     jobId = str(newSch.scheduleId)
+
+    # delete previous jobExecutions
+    jobs = DjangoJobExecution.objects.filter(job_id=jobId)
+    if len(jobs) > 1:
+        for item in jobs:
+            item.delete()
+
     scheduler = BackgroundScheduler()
     scheduler.add_jobstore(DjangoJobStore(), "default")
     text = '{' + '"command":"On","farmID":"{}","device":"{}", "duration":"{}"'.format(farmID, device, duration) + '}'
-    # scheduler.add_job(updateSchedule, 'interval', minutes=1)
-    # scheduler.add_job(sendCommandOnTest, 'cron', id=jobId, replace_existing=True, day_of_week='mon, tue, wed, thu, fri, sat, sun', hour=hour, minute=minute, args=["{'farmID':'AA0001','device':'relay1'}"])
-    # scheduler.add_job(sendCommandOnTest, trigger=CronTrigger(day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=hour, minute=minute),
-    #                   id=jobId, replace_existing=True, args=[text])
     scheduler.add_job(sendScheduleToIoT, trigger=CronTrigger(day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=start_hour,
                                                              minute=start_minute), second=start_second,
                       id=jobId, replace_existing=True, args=[text], misfire_grace_time=3600)
+    scheduler.add_job(
+        delete_old_job_executions,
+        trigger=CronTrigger(
+            day_of_week='mon,tue,wed,thu,fri,sat,sun', hour="00", minute="00"
+        ),  # Midnight on Monday, before start of the next work week.
+        id="delete_old_job_executions",
+        max_instances=1,
+        replace_existing=True,
+    )
     scheduler.start()
-    print("Schedule created {}".format(text))
 
+
+
+
+    print("Schedule created {}".format(text))
     if pause == False:
-        # scheduler.resume_job(jobId)
+        scheduler.resume_job(jobId)
         print("Schedule resume {}".format(text))
-        # pass
     else:
         scheduler.pause_job(jobId)
         print("Schedule pause {}".format(text))
 
     #update to firebase
+
     text = {'sch_duration':duration, "sch_on": "{:02d}:{:02d}:{:02d}".format(int(start_hour), int(start_minute), int(start_second)),  "pause":pause}
+
+    print(str(text)+ " update to firebase")
     db = firebase.database()
     db.child("farmCode").child(farmID).child('Relay'+str(device[-1])).child('Schedule').child('Period'+str(period)).update(text)
 
@@ -320,35 +372,50 @@ def createSchedule(request):
         newSch.save()
 
     jobId = str(newSch.scheduleId)
+
+    # delete previous jobExecutions
+    jobs = DjangoJobExecution.objects.filter(job_id=jobId)
+    if len(jobs) > 1:
+        for item in jobs:
+            item.delete()
+
     scheduler = BackgroundScheduler()
     scheduler.add_jobstore(DjangoJobStore(), "default")
     text = '{' + '"command":"Off","farmID":"{}","device":"{}"'.format(farmID, device) + '}'
-    # scheduler.add_job(updateSchedule, 'interval', minutes=1)
-    # scheduler.add_job(sendCommandOnTest, 'cron', id=jobId, replace_existing=True, day_of_week='mon, tue, wed, thu, fri, sat, sun', hour=hour, minute=minute, args=["{'farmID':'AA0001','device':'relay1'}"])
-    # scheduler.add_job(sendCommandOnTest, trigger=CronTrigger(day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=hour, minute=minute),
-    #                   id=jobId, replace_existing=True, args=[text])
     scheduler.add_job(sendScheduleToIoT,
                       trigger=CronTrigger(day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=end_hour, minute=end_minute,
                                           second=end_second, ),
                       id=jobId, replace_existing=True, args=[text], misfire_grace_time=3600)
+    scheduler.add_job(
+        delete_old_job_executions,
+        trigger=CronTrigger(
+            day_of_week='mon,tue,wed,thu,fri,sat,sun', hour="00", minute="00"
+        ),  # Midnight on Monday, before start of the next work week.
+        id="delete_old_job_executions",
+        max_instances=1,
+        replace_existing=True,
+    )
+
     scheduler.start()
+
     print("Schedule created {}".format(text))
     if pause == False:
-        # scheduler.resume_job(jobId)
+        scheduler.resume_job(jobId)
         print("Schedule resume {}".format(text))
-        # pass
-
     else:
         scheduler.pause_job(jobId)
         print("Schedule pause {}".format(text))
-    #update to firebase
 
+    #update to firebase
     text = {"sch_off": "{:02d}:{:02d}:{:02d}".format(int(end_hour), int(end_minute), int(end_second)), "pause":pause}
+    print(str(text)+ " update to firebase")
     db = firebase.database()
     db.child("farmCode").child(farmID).child('Relay'+str(device[-1])).child('Schedule').child('Period'+str(period)).update(text)
+
     close_old_connections()
 
     return Response("OK")
+
 
 
 @api_view(['POST'])
@@ -384,14 +451,83 @@ def wakeUp(request):
     command = []
     for item in relay_list:
         relay_num.append(item.relayNumber)
-        command.append(item.scheduleStatus)
+        if item.manualMode==True:
+            command.append(False)
+        else:
+            command.append(item.scheduleStatus)
+
 
     command = ['turnOn' if item is True else 'turnOff' for item in command]
 
-    topic = "AA0001/getCurrentCommand"
-    msg = "relay" + relay_num[0] + '/' + command[0] + ",relay" + relay_num[1] + '/' + command[1] + ",relay" + relay_num[
-        2] + '/' + command[2]
+    topic = "{}/getCurrentCommand".format(farmID)
+    # msg = "relay" + relay_num[0] + s/' + command[0] + ",relay" + relay_num[1] + '/' + command[1] + ",relay" + relay_num[
+    #     2] + '/' + command[2]
+
+    msg=JSONRenderer().render({"relay{}".format(relay_num[0]):"{}".format(command[0]),
+                               "relay{}".format(relay_num[1]):"{}".format(command[1]),
+                               "relay{}".format(relay_num[2]):"{}".format(command[2]),
+                               "relay{}".format(relay_num[3]):"{}".format(command[3]),
+                               "relay{}".format(relay_num[4]):"{}".format(command[4]),
+                               "relay{}".format(relay_num[5]):"{}".format(command[5])})
+    print(msg)
+    print(str(msg))
     client.publish(topic, msg)
-    print('Message publish to ' + "AA0001" + ", msg :" + msg)
+    print('Message publish to ' + "{}".format(farmID) + ", msg :" + str(msg))
+
+    return Response("OK")
+
+
+
+
+@api_view(['POST'])
+@permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
+def emergencyOff(request):
+    data = json.loads(str(request.body, encoding='utf-8'))
+    print(data)
+    farmID = data["farmID"]
+    f1 = farm.objects.get(farmCode=farmID)
+    relay_list = relayDevice.objects.filter(farm=f1)
+    relay_num = []
+    command = []
+    for item in relay_list:
+        relay_num.append(item.relayNumber)
+
+    command = ['turnOn' if item is True else 'turnOff' for item in command]
+
+    topic = "{}/getCurrentCommand".format(farmID)
+
+
+    msg=JSONRenderer().render({"relay{}".format(relay_num[0]):"turnOff",
+                               "relay{}".format(relay_num[1]):"turnOff",
+                               "relay{}".format(relay_num[2]):"turnOff",
+                               "relay{}".format(relay_num[3]):"turnOff",
+                               "relay{}".format(relay_num[4]):"turnOff",
+                               "relay{}".format(relay_num[5]):"turnOff"})
+    print(msg)
+    print(str(msg))
+    client.publish(topic, msg)
+    print('Message publish to ' + "{}".format(farmID) + ", msg :" + str(msg))
+
+    return Response("OK")
+
+
+
+
+
+@api_view(['POST'])
+@permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
+def reportRelay(request):
+    data = json.loads(str(request.body, encoding='utf-8'))
+    print(data)
+    farmID = data["farmID"]
+    content=data['content']
+    f1 = farm.objects.get(farmCode=farmID)
+    r1= relayDevice.objects.get(farm=f1, relayNumber=content[5])
+    if content[6:]=="On":
+        r1.currentStatus=True
+        r1.save()
+    elif content[6:]=="Off":
+        r1.currentStatus=False
+        r1.save()
 
     return Response("OK")

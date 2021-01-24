@@ -7,9 +7,14 @@
     {#    <link rel="stylesheet" href="{% static  'css/landingPage.css' %}">#}
     {#    <link rel="stylesheet" href="{% static 'css/landingPageFonts.css' %}">#}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    {#    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>#}
-    {#    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>#}
-    {#    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>#}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <script src="http://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.js"></script>
+    <link href="http://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.css" rel="stylesheet"/>
+
 
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-clockpicker.min.css' %}">
 
@@ -17,7 +22,7 @@
 
     <style>
         .block {
-            padding: 40px;
+            padding: 30px;
             text-align: center;
         }
 
@@ -40,6 +45,68 @@
     </style>
 
 
+    <style>
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+    </style>
+
 </head>
 <body>
 
@@ -50,293 +117,10 @@
      https://firebase.google.com/docs/web/setup#available-libraries -->
 <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-analytics.js"></script>
 
-<script>
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    var firebaseConfig = {
-        apiKey: "AIzaSyCs9xyouIlR_7SBQwCpL_Bde22ZDC4vpWM",
-        authDomain: "navitaiot.firebaseapp.com",
-        databaseURL: "https://navitaiot.firebaseio.com",
-        projectId: "navitaiot",
-        storageBucket: "navitaiot.appspot.com",
-        messagingSenderId: "840926440731",
-        appId: "1:840926440731:web:9e7d0a635d9e89ff0db7be",
-        measurementId: "G-5FY5JL3YN1"
-    };
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
-    var relay1Period1Ref=firebase.database().ref("farmCode/"+'{{ farmCode }}'+"/Relay1/Schedule/Period1");
-    relay1Period1Ref.on('value',function (snapshot) {
-                var arr = snapshot.val();
-        console.log(arr)
-        console.log(arr['sch_on'])
-        console.log(arr['sch_off'])
-        console.log(arr['sch_duration'])
-        document.getElementById("R1_Sch1_on").innerHTML = arr['sch_on'];
-        document.getElementById("R1_Sch1_off").innerHTML = arr['sch_off'];
-        document.getElementById("R1_Sch1_duration").innerHTML = arr['sch_duration'];
-        if (arr['pause']==false){
-            document.getElementById("R1_Sch1_pause").innerHTML = "(enable)";
-        }else{
-            document.getElementById("R1_Sch1_pause").innerHTML = "(disable)";
-        }
-    });
-
-
-        var relay1Period2Ref=firebase.database().ref("farmCode/"+'{{ farmCode }}'+"/Relay1/Schedule/Period2");
-    relay1Period2Ref.on('value',function (snapshot) {
-                var arr = snapshot.val();
-        console.log(arr)
-        console.log(arr['sch_on'])
-        console.log(arr['sch_off'])
-        console.log(arr['sch_duration'])
-        document.getElementById("R1_Sch2_on").innerHTML = arr['sch_on'];
-        document.getElementById("R1_Sch2_off").innerHTML = arr['sch_off'];
-        document.getElementById("R1_Sch2_duration").innerHTML = arr['sch_duration'];
-        if (arr['pause']==false){
-            document.getElementById("R1_Sch2_pause").innerHTML = "(enable)";
-        }else{
-            document.getElementById("R1_Sch2_pause").innerHTML = "(disable)";
-        }
-    });
-
-        var relay1Period3Ref=firebase.database().ref("farmCode/"+'{{ farmCode }}'+"/Relay1/Schedule/Period3");
-    relay1Period3Ref.on('value',function (snapshot) {
-                var arr = snapshot.val();
-        console.log(arr)
-        console.log(arr['sch_on'])
-        console.log(arr['sch_off'])
-        console.log(arr['sch_duration'])
-        document.getElementById("R1_Sch3_on").innerHTML = arr['sch_on'];
-        document.getElementById("R1_Sch3_off").innerHTML = arr['sch_off'];
-        document.getElementById("R1_Sch3_duration").innerHTML = arr['sch_duration'];
-        if (arr['pause']==false){
-            document.getElementById("R1_Sch3_pause").innerHTML = "(enable)";
-        }else{
-            document.getElementById("R1_Sch3_pause").innerHTML = "(disable)";
-        }
-    });
-
-        var relay1Period4Ref=firebase.database().ref("farmCode/"+'{{ farmCode }}'+"/Relay1/Schedule/Period4");
-    relay1Period4Ref.on('value',function (snapshot) {
-                var arr = snapshot.val();
-        console.log(arr)
-        console.log(arr['sch_on'])
-        console.log(arr['sch_off'])
-        console.log(arr['sch_duration'])
-        document.getElementById("R1_Sch4_on").innerHTML = arr['sch_on'];
-        document.getElementById("R1_Sch4_off").innerHTML = arr['sch_off'];
-        document.getElementById("R1_Sch4_duration").innerHTML = arr['sch_duration'];
-        if (arr['pause']==false){
-            document.getElementById("R1_Sch4_pause").innerHTML = "(enable)";
-        }else{
-            document.getElementById("R1_Sch4_pause").innerHTML = "(disable)";
-        }
-    });
-
-        var relay1Period5Ref=firebase.database().ref("farmCode/"+'{{ farmCode }}'+"/Relay1/Schedule/Period5");
-    relay1Period5Ref.on('value',function (snapshot) {
-                var arr = snapshot.val();
-        console.log(arr)
-        console.log(arr['sch_on'])
-        console.log(arr['sch_off'])
-        console.log(arr['sch_duration'])
-        document.getElementById("R1_Sch5_on").innerHTML = arr['sch_on'];
-        document.getElementById("R1_Sch5_off").innerHTML = arr['sch_off'];
-        document.getElementById("R1_Sch5_duration").innerHTML = arr['sch_duration'];
-        if (arr['pause']==false){
-            document.getElementById("R1_Sch5_pause").innerHTML = "(enable)";
-        }else{
-            document.getElementById("R1_Sch5_pause").innerHTML = "(disable)";
-        }
-    });
-
-        var relay1Period6Ref=firebase.database().ref("farmCode/"+'{{ farmCode }}'+"/Relay1/Schedule/Period6");
-    relay1Period6Ref.on('value',function (snapshot) {
-                var arr = snapshot.val();
-        console.log(arr)
-        console.log(arr['sch_on'])
-        console.log(arr['sch_off'])
-        console.log(arr['sch_duration'])
-        document.getElementById("R1_Sch6_on").innerHTML = arr['sch_on'];
-        document.getElementById("R1_Sch6_off").innerHTML = arr['sch_off'];
-        document.getElementById("R1_Sch6_duration").innerHTML = arr['sch_duration'];
-        if (arr['pause']==false){
-            document.getElementById("R1_Sch6_pause").innerHTML = "(enable)";
-        }else{
-            document.getElementById("R1_Sch6_pause").innerHTML = "(disable)";
-        }
-    });
-
-
-
-
-    var farmRef = firebase.database().ref("farmCode/" + '{{ farmCode }}');
-    farmRef.on('value', function (snapshot) {
-        {#console.log(snapshot.val());#}
-        var arr = snapshot.val();
-        console.log(arr)
-        {#console.log(arr['flow1Status'])#}
-
-
-        if (arr['flow1Status'] == true) {
-            document.getElementById("flowSensor1").innerHTML = "เปิด";
-        } else if (arr['flow1Status'] == false) {
-            document.getElementById("flowSensor1").innerHTML = "ปิด";
-        } else {
-            document.getElementById("flowSensor1").innerHTML = "N/A";
-        }
-
-
-        if (arr['Relay1']['manual'] == true) {
-            document.getElementById("Relay1_mode").innerHTML = "manual";
-        } else if (arr['Relay1']['manual'] == false) {
-            document.getElementById("Relay1_mode").innerHTML = "schedule";
-        } else {
-            document.getElementById("Relay1_mode").innerHTML = "N/A";
-        }
-
-        if (arr['Relay2']['manual'] == true) {
-            document.getElementById("Relay2_mode").innerHTML = "manual";
-        } else if (arr['Relay2']['manual'] == false) {
-            document.getElementById("Relay2_mode").innerHTML = "schedule";
-        } else {
-            document.getElementById("Relay2_mode").innerHTML = "N/A";
-        }
-
-        if (arr['Relay3']['manual'] == true) {
-            document.getElementById("Relay3_mode").innerHTML = "manual";
-        } else if (arr['Relay3']['manual'] == false) {
-            document.getElementById("Relay3_mode").innerHTML = "schedule";
-        } else {
-            document.getElementById("Relay3_mode").innerHTML = "N/A";
-        }
-
-        if (arr['Relay4']['manual'] == true) {
-            document.getElementById("Relay4_mode").innerHTML = "manual";
-        } else if (arr['Relay4']['manual'] == false) {
-            document.getElementById("Relay4_mode").innerHTML = "schedule";
-        } else {
-            document.getElementById("Relay4_mode").innerHTML = "N/A";
-        }
-
-        if (arr['Relay5']['manual'] == true) {
-            document.getElementById("Relay5_mode").innerHTML = "manual";
-        } else if (arr['Relay5']['manual'] == false) {
-            document.getElementById("Relay5_mode").innerHTML = "schedule";
-        } else {
-            document.getElementById("Relay5_mode").innerHTML = "N/A";
-        }
-        if (arr['Relay6']['manual'] == true) {
-            document.getElementById("Relay6_mode").innerHTML = "manual";
-        } else if (arr['Relay6']['manual'] == false) {
-            document.getElementById("Relay6_mode").innerHTML = "schedule";
-        } else {
-            document.getElementById("Relay6_mode").innerHTML = "N/A";
-        }
-
-        if (arr['Relay1']['sch_status'] == true) {
-            document.getElementById("Relay1_sch_status").innerHTML = "เปิด";
-        } else if (arr['Relay1']['sch_status'] == false) {
-            document.getElementById("Relay1_sch_status").innerHTML = "ปิด";
-        } else {
-            document.getElementById("Relay1_sch_status").innerHTML = "N/A";
-        }
-
-        if (arr['Relay2']['sch_status'] == true) {
-            document.getElementById("Relay2_sch_status").innerHTML = "เปิด";
-        } else if (arr['Relay2']['sch_status'] == false) {
-            document.getElementById("Relay2_sch_status").innerHTML = "ปิด";
-        } else {
-            document.getElementById("Relay2_sch_status").innerHTML = "N/A";
-        }
-
-        if (arr['Relay3']['sch_status'] == true) {
-            document.getElementById("Relay3_sch_status").innerHTML = "เปิด";
-        } else if (arr['Relay3']['sch_status'] == false) {
-            document.getElementById("Relay3_sch_status").innerHTML = "ปิด";
-        } else {
-            document.getElementById("Relay3_sch_status").innerHTML = "N/A";
-        }
-
-        if (arr['Relay4']['sch_status'] == true) {
-            document.getElementById("Relay4_sch_status").innerHTML = "เปิด";
-        } else if (arr['Relay4']['sch_status'] == false) {
-            document.getElementById("Relay4_sch_status").innerHTML = "ปิด";
-        } else {
-            document.getElementById("Relay4_sch_status").innerHTML = "N/A";
-        }
-
-        if (arr['Relay5']['sch_status'] == true) {
-            document.getElementById("Relay5_sch_status").innerHTML = "เปิด";
-        } else if (arr['Relay5']['sch_status'] == false) {
-            document.getElementById("Relay5_sch_status").innerHTML = "ปิด";
-        } else {
-            document.getElementById("Relay5_sch_status").innerHTML = "N/A";
-        }
-
-        if (arr['Relay6']['sch_status'] == true) {
-            document.getElementById("Relay6_sch_status").innerHTML = "เปิด";
-        } else if (arr['Relay6']['sch_status'] == false) {
-            document.getElementById("Relay6_sch_status").innerHTML = "ปิด";
-        } else {
-            document.getElementById("Relay6_sch_status").innerHTML = "N/A";
-        }
-
-
-        if (arr['Relay1']['cur_status'] == true) {
-            document.getElementById("Relay1_cur_status").innerHTML = "เปิด";
-        } else if (arr['Relay1']['cur_status'] == false) {
-            document.getElementById("Relay1_cur_status").innerHTML = "ปิด";
-        } else {
-            document.getElementById("Relay1_cur_status").innerHTML = "N/A";
-        }
-
-        if (arr['Relay2']['cur_status'] == true) {
-            document.getElementById("Relay2_cur_status").innerHTML = "เปิด";
-        } else if (arr['Relay2']['cur_status'] == false) {
-            document.getElementById("Relay2_cur_status").innerHTML = "ปิด";
-        } else {
-            document.getElementById("Relay2_cur_status").innerHTML = "N/A";
-        }
-
-        if (arr['Relay3']['cur_status'] == true) {
-            document.getElementById("Relay3_cur_status").innerHTML = "เปิด";
-        } else if (arr['Relay3']['cur_status'] == false) {
-            document.getElementById("Relay3_cur_status").innerHTML = "ปิด";
-        } else {
-            document.getElementById("Relay3_cur_status").innerHTML = "N/A";
-        }
-        if (arr['Relay4']['cur_status'] == true) {
-            document.getElementById("Relay4_cur_status").innerHTML = "เปิด";
-        } else if (arr['Relay4']['cur_status'] == false) {
-            document.getElementById("Relay4_cur_status").innerHTML = "ปิด";
-        } else {
-            document.getElementById("Relay4_cur_status").innerHTML = "N/A";
-        }
-        if (arr['Relay5']['cur_status'] == true) {
-            document.getElementById("Relay5_cur_status").innerHTML = "เปิด";
-        } else if (arr['Relay5']['cur_status'] == false) {
-            document.getElementById("Relay5_cur_status").innerHTML = "ปิด";
-        } else {
-            document.getElementById("Relay5_cur_status").innerHTML = "N/A";
-        }
-
-        if (arr['Relay6']['cur_status'] == true) {
-            document.getElementById("Relay6_cur_status").innerHTML = "เปิด";
-        } else if (arr['Relay6']['cur_status'] == true) {
-            document.getElementById("Relay6_cur_status").innerHTML = "ปิด";
-        } else {
-            document.getElementById("Relay6_cur_status").innerHTML = "N/A";
-        }
-    });
-
-</script>
-
 
 <div class="body">
     <div class="container-fluid">
+
         {# farm detial#}
         <div class="row">
             <div class="col-xs-12 col-md12 text-title">
@@ -344,6 +128,8 @@
                 <p>{{ farmCode }}</p>
             </div>
         </div>
+
+    <span id="last_Time"></span>
 
         {# Sensor #}
         <div class="row">
@@ -354,29 +140,60 @@
         </div>
 
         {# LED control #}
-        <div class="row">
-            <div class="col-xs-12 col-md12 text-title">
-                <form method="POST">
-                    {% csrf_token %}
+{#        <div class="row">#}
+{#            <div class="col-xs-12 col-md12 text-title">#}
+{#                <form method="POST">#}
+{#                    {% csrf_token %}#}
+{##}
+{#                    <li>#}
+{#                        <input type="radio" id="a-option" name="command" value="ON">#}
+{#                        <label for="a-option" id="text8"> เปิด LED </label>#}
+{#                    </li>#}
+{#                    <li>#}
+{#                        <input type="radio" id="a-option" name="command" value="OFF">#}
+{#                        <label for="a-option" id="text8"> ปิด LED </label>#}
+{#                    </li>#}
+{#                    <input id="submit" class="w-100 btn" type="submit" value="ส่งค่า">#}
+{#                </form>#}
+{#            </div>#}
+{#        </div>#}
 
-                    <li>
-                        <input type="radio" id="a-option" name="command" value="ON">
-                        <label for="a-option" id="text8"> เปิด LED </label>
-                    </li>
-                    <li>
-                        <input type="radio" id="a-option" name="command" value="OFF">
-                        <label for="a-option" id="text8"> ปิด LED </label>
-                    </li>
-                    <input id="submit" class="w-100 btn" type="submit" value="ส่งค่า">
-                </form>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-6">-------------------------------------------</div>
-            <div class="col-xs-6">###########################################</div>
-        </div>
 
         {# Relay controller#}
+        <div class="row">
+            <div class="col-xs-12">
+                <button type="button" class="btn btn-warning" id="emergencyOff">Emergency Off!
+                </button>
+                <script>
+                        document.getElementById('emergencyOff').onclick = function () {
+        console.log('emergencyOff clicked')
+        var myHeaders = new Headers();
+        var farmID = "{{ farmCode }}";
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            "farmID": farmID,
+            "token": "xxx",
+            "method": "emergencyOff",
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        {#fetch("http://127.0.0.1:8000/emergencyOff/", requestOptions)#}
+        fetch("https://navitaiot.herokuapp.com/emergencyOff/", requestOptions)
+
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+    }
+                </script>
+</div>
+        </div>
         <div class="row">
             <div class="col-xs-12 col-md12 text-title">
                 <div class="row">
@@ -384,40 +201,48 @@
                     <div class="col-xs-4 ">
                         {# block css#}
                         <div class="block b">
+
                             <div class="row">
                                 <div class="col12">
                                     Relay1 (ปั๊มน้ำ)
                                 </div>
                             </div>
+                            <p></p>
                             <div class="row">
                                 <div class="col12">
-                                    Mode: <span id="Relay1_mode"></span>
+                                    โหมดปัจจุบัน: <span id="Relay1_mode"></span>
                                     <button type="button" class="btn btn-warning" id="setRelay1Manual">Manual</button>
                                     <button type="button" class="btn btn-primary" id="setRelay1Schedule">Schedule
                                     </button>
                                 </div>
                             </div>
+                            <p></p>
                             <div class="row">
-                                <div class="col12">
-                                    Current status: <span id="Relay1_cur_status"></span>
+                                <div class="col-xs-6">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            สถานะปัจจุบัน : <span id="Relay1_cur_status"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            สถานะตามตาราง : <span id="Relay1_sch_status"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <button type="button" class="btn btn-success" id="controlRelay1On">On
+                                            </button>
+                                            <button type="button" class="btn btn-danger" id="controlRelay1Off">Off
+                                            </button>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col12">
-                                    Schedual status: <span id="Relay1_sch_status"></span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <button type="button" class="btn btn-success" id="controlRelay1On">On</button>
-                                <button type="button" class="btn btn-danger" id="controlRelay1Off">Off</button>
-                            </div>
-                            {#                            <div class="row">#}
-                            {#                                <div class="col12">#}
-                            {#                                    <button type="button" class="btn btn-primary" id="setRelay1Schedule">Schedule#}
-                            {#                                    </button>#}
-                            {#                                </div>#}
-                            {#                            </div>#}
                         </div>
                     </div>
                     {# relay 2#}
@@ -607,141 +432,1120 @@
         </div>
 
 
-<script>
+        <script>
 
-// Unix time value from server: seconds since 1970-01-01T00:00:00Z
-// Below is a number for 2014-07-02T06:48:24.000Z, set to actual server value
-{#var serverTime = 1404283704;#}
+            // Unix time value from server: seconds since 1970-01-01T00:00:00Z
+            // Below is a number for 2014-07-02T06:48:24.000Z, set to actual server value
+            {#var serverTime = 1404283704;#}
 
-var serverTime = "{{ serverTime }}";
-console.log(serverTime)
+            var serverTime = "{{ serverTime }}";
+            {#console.log(serverTime)#}
 
-var doClock = (function () {
+            var doClock = (function () {
 
-  // Calc offset from server time
-  // Javascript time value is milliseconds since above epoch
-  var serverOffset = serverTime - (new Date() / 1000 | 0);
+                // Calc offset from server time
+                // Javascript time value is milliseconds since above epoch
+                var serverOffset = serverTime - (new Date() / 1000 | 0);
 
-  // Helper
-  function z(n){return (n<10?'0':'') + n}
+                // Helper
+                function z(n) {
+                    return (n < 10 ? '0' : '') + n
+                }
 
-  return function() {
+                return function () {
 
-    // Create a new Date object each time so
-    // it doesn't matter if a second or more is skipped
-    var now = new Date();
+                    // Create a new Date object each time so
+                    // it doesn't matter if a second or more is skipped
+                    var now = new Date();
 
-    // Adjust for server offset
-    now.setSeconds(now.getSeconds() + serverOffset);
+                    // Adjust for server offset
+                    now.setSeconds(now.getSeconds() + serverOffset);
 
-    // write clock to document, values are local, not UTC
-    document.getElementById('clock').innerHTML = now.getFullYear()   + '-' +
-                                                 z(now.getMonth()+1) + '-' +
-                                                 z(now.getDate())    + ' ' +
-                                                 z(now.getHours())   + ':' +
-                                                 z(now.getMinutes()) + ':' +
-                                                 z(now.getSeconds());
-    // Run again just after next full second
-    setTimeout(doClock, 1020 - now.getMilliseconds());
-  };
-}());
+                    // write clock to document, values are local, not UTC
+                    document.getElementById('clock').innerHTML = now.getFullYear() + '-' +
+                        z(now.getMonth() + 1) + '-' +
+                        z(now.getDate()) + ' ' +
+                        z(now.getHours()) + ':' +
+                        z(now.getMinutes()) + ':' +
+                        z(now.getSeconds());
+                    // Run again just after next full second
+                    setTimeout(doClock, 1020 - now.getMilliseconds());
 
-window.onload = doClock;
 
-</script>
+                };
+            }());
 
-<div id="clock"></div>
+            window.onload = doClock;
 
-        {# Schedule set #}
-        <p>Relay 1 (ปั๊มน้่ำ)</p>
+        </script>
+
+        {# Clock #}
         <div class="row">
-            <div class="col-xs-4">
-                <div class="row">
-                    <div class="col-12">
-                        เริ่มเวลา <span id ="R1_Sch1_on"></span> เป็นเวลา <span id="R1_Sch1_duration"></span> นาที สิ้นสุดเวลา <span id="R1_Sch1_off"></span> <span id="R1_Sch1_pause"></span>
+            <div class="col">
+                <div id="clock"></div>
+
+            </div>
+        </div>
+        {# set schedule #}
+        {# set relay 1#}
+        <div class="row">
+            <div class="col">
+                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Relay1">
+                    ปั๊มน้ำ 1(Relay-1)
+                </button>
+                <div id="Relay1" class="collapse">
+                    <p>ปั๊มน้ำ
+                        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Relay1Edit">
+                            ตั้งเวลา
+                        </button>
+                    </p>
+                    {# Schedule set #}
+                    <div class="col-xs-4">
+                        <div class="row">
+                            <div class="col-12">
+                                เริ่ม <span id="R1_Sch1_on"></span>
+                                เป็นเวลา <span id="R1_Sch1_duration"></span> นาที
+                                สิ้นสุด <span id="R1_Sch1_off"></span> <span id="R1_Sch1_pause"></span>
+                                {% if initialchk11 == False %}
+                                    <input id="chk11" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=1, period=1)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk11" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=1, period=1)"
+                                           data-onstyle="success">
+                                {% endif %}
+
+                            </div>
+                            <div class="col-12">
+                                เริ่ม <span id="R1_Sch2_on"></span> เป็นเวลา <span id="R1_Sch2_duration"></span>
+                                นาที
+                                สิ้นสุด <span id="R1_Sch2_off"></span> <span id="R1_Sch2_pause"></span>
+                                {% if initialchk12 == False %}
+                                    <input id="chk12" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=1, period=2)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk12" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=1, period=2)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                            <div class="col-12">
+                                เริ่ม <span id="R1_Sch3_on"></span> เป็นเวลา <span id="R1_Sch3_duration"></span>
+                                นาที
+                                สิ้นสุด <span id="R1_Sch3_off"></span> <span id="R1_Sch3_pause"></span>
+                                {% if initialchk13 == False %}
+                                    <input id="chk13" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=1, period=3)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk13" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=1, period=3)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                            <div class="col-12">
+                                เริ่ม <span id="R1_Sch4_on"></span> เป็นเวลา <span id="R1_Sch4_duration"></span>
+                                นาที
+                                สิ้นสุด <span id="R1_Sch4_off"></span> <span id="R1_Sch4_pause"></span>
+
+                                {% if initialchk14 == False %}
+                                    <input id="chk14" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=1, period=4)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk14" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=1, period=4)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                            <div class="col-12">
+                                เริ่ม <span id="R1_Sch5_on"></span> เป็นเวลา <span id="R1_Sch5_duration"></span>
+                                นาที
+                                สิ้นสุด <span id="R1_Sch5_off"></span> <span id="R1_Sch5_pause"></span>
+                                {% if initialchk15 == False %}
+                                    <input id="chk15" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=1, period=5)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk15" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=1, period=5)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                            <div class="col-12">
+                                <p>เริ่ม <span id="R1_Sch6_on"></span> เป็นเวลา <span
+                                        id="R1_Sch6_duration"></span> นาที
+                                    สิ้นสุด <span id="R1_Sch6_off"></span> <span id="R1_Sch6_pause"></span>
+                                    {% if initialchk16 == False %}
+                                        <input id="chk16" type="checkbox" checked data-toggle="toggle"
+                                               onchange="toggleScheduleRelay(relay_num=1, period=6)"
+                                               data-onstyle="success">
+                                    {% else %}
+                                        <input id="chk16" type="checkbox" data-toggle="toggle"
+                                               onchange="toggleScheduleRelay(relay_num=1, period=6)"
+                                               data-onstyle="success">
+                                    {% endif %}
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-12">
-                        เริ่มเวลา <span id ="R1_Sch2_on"></span> เป็นเวลา <span id="R1_Sch2_duration"></span> นาที สิ้นสุดเวลา <span id="R1_Sch2_off"></span> <span id="R1_Sch2_pause"></span>
-                    </div>
-                                        <div class="col-12">
-                        เริ่มเวลา <span id ="R1_Sch3_on"></span> เป็นเวลา <span id="R1_Sch3_duration"></span> นาที สิ้นสุดเวลา <span id="R1_Sch3_off"></span> <span id="R1_Sch3_pause"></span>
-                    </div>
-                                        <div class="col-12">
-                        เริ่มเวลา <span id ="R1_Sch4_on"></span> เป็นเวลา <span id="R1_Sch4_duration"></span> นาที สิ้นสุดเวลา <span id="R1_Sch4_off"></span> <span id="R1_Sch4_pause"></span>
-                    </div>
-                                        <div class="col-12">
-                        เริ่มเวลา <span id ="R1_Sch5_on"></span> เป็นเวลา <span id="R1_Sch5_duration"></span> นาที สิ้นสุดเวลา <span id="R1_Sch5_off"></span> <span id="R1_Sch5_pause"></span>
-                    </div>
-                    <div class="col-12">
-                        <p>เริ่มเวลา <span id ="R1_Sch6_on"></span> เป็นเวลา <span id="R1_Sch6_duration"></span> นาที สิ้นสุดเวลา <span id="R1_Sch6_off"></span> <span id="R1_Sch6_pause"></span></p>
+                    {# Schedule edit #}
+                    <div id="Relay1Edit" class="col-xs-8 collapse">
+                        {# Period 1#}
+                        <div class="row">
+                            <div class="col-12">
+
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod1R1Start">
+                                เป็นเวลา <input id="timePeriod1R1Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod1R1Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=1, period=1)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=1,period=1)"> ตั้งเวลา</button>
+                                </button>
+
+
+                            </div>
+                        </div>
+                        {# Period 2#}
+                        <div class="row">
+                            <div class="col-12">
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod2R1Start">
+                                เป็นเวลา <input id="timePeriod2R1Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod2R1Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=1, period=2)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=1,period=2)"> ตั้งเวลา</button>
+
+
+                                </button>
+
+
+                            </div>
+                        </div>
+                        {# Period 3#}
+                        <div class="row">
+                            <div class="col-12">
+
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod3R1Start">
+                                เป็นเวลา <input id="timePeriod3R1Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod3R1Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=1, period=3)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=1,period=3)"> ตั้งเวลา</button>
+                                </button>
+                            </div>
+                        </div>
+                        {# Period 4#}
+                        <div class="row">
+                            <div class="col-12">
+
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod4R1Start">
+                                เป็นเวลา <input id="timePeriod4R1Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod4R1Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=1, period=4)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=1,period=4)"> ตั้งเวลา</button>
+                                </button>
+
+                            </div>
+                        </div>
+                        {# Period 5#}
+                        <div class="row">
+                            <div class="col-12">
+
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod5R1Start">
+                                เป็นเวลา <input id="timePeriod5R1Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod5R1Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=1, period=5)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=1,period=5)"> ตั้งเวลา</button>
+                                </button>
+
+                            </div>
+                        </div>
+                        {# Period 6#}
+                        <div class="row">
+                            <div class="col-12">
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod6R1Start">
+                                เป็นเวลา <input id="timePeriod6R1Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod6R1Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=1, period=6)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=1,period=6)"> ตั้งเวลา</button>
+
+                                </button>
+
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-xs-8">
-                {# Period 1#}
-                <div class="row">
-                    <div class="col-12">
-                        <input type="checkbox" id="timePeriod1R1" name="timePeriod1R1" value="timePeriod1R1">
-                        เริ่มเวลา <input type="time" step="1" id="timePeriod1R1Start">
-                        เป็นเวลา <input id="timePeriod1R1Delay"> นาที
-                        สิ้นสุดเวลา <input type="time" step="1" id="timePeriod1R1Stop" disable>
-                        <button type="button" id="buttonTimePeriod1R1Submit">บันทึกค่า/ดำเนินการตั้งเวลา</button>
+        </div>
+        <p>-</p>
+        {# set relay 2#}
+        <div class="row">
+            <div class="col">
+                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Relay2">
+                    ปั๊มปุ๋ย (Relay-2)
+                </button>
+                <div id="Relay2" class="collapse">
+                    <p>ปั๊มปุ๋ย
+                        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Relay2Edit">
+                            ตั้งเวลา
+                        </button>
+                    </p>
+                    {# Schedule set #}
+                    <div class="col-xs-4">
+                        <div class="row">
+                            <div class="col-12">
+                                เริ่ม <span id="R2_Sch1_on"></span>
+                                เป็นเวลา <span id="R2_Sch1_duration"></span> นาที
+                                สิ้นสุด <span id="R2_Sch1_off"></span> <span id="R2_Sch1_pause"></span>
+                                {% if initialchk21 == False %}
+                                    <input id="chk21" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=2, period=1)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk21" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=2, period=1)"
+                                           data-onstyle="success">
+                                {% endif %}
+
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่ม <span id="R2_Sch2_on"></span>
+                                เป็นเวลา <span id="R2_Sch2_duration"></span> นาที
+                                สิ้นสุด <span id="R2_Sch2_off"></span> <span id="R2_Sch2_pause"></span>
+                                {% if initialchk22 == False %}
+                                    <input id="chk22" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=2, period=2)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk22" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=2, period=2)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่ม <span id="R2_Sch3_on"></span>
+                                เป็นเวลา <span id="R2_Sch3_duration"></span> นาที
+                                สิ้นสุด <span id="R2_Sch3_off"></span> <span id="R2_Sch3_pause"></span>
+                                {% if initialchk23 == False %}
+                                    <input id="chk23" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=2, period=3)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk23" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=2, period=3)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่ม <span id="R2_Sch4_on"></span>
+                                เป็นเวลา <span id="R2_Sch4_duration"></span> นาที
+                                สิ้นสุด <span id="R2_Sch4_off"></span> <span id="R2_Sch4_pause"></span>
+                                {% if initialchk24 == False %}
+                                    <input id="chk24" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=2, period=4)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk24" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=2, period=4)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่ม <span id="R2_Sch5_on"></span>
+                                เป็นเวลา <span id="R2_Sch5_duration"></span> นาที
+                                สิ้นสุด <span id="R2_Sch5_off"></span> <span id="R2_Sch5_pause"></span>
+                                {% if initialchk25 == False %}
+                                    <input id="chk25" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=2, period=5)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk25" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=2, period=5)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่ม <span id="R2_Sch6_on"></span>
+                                เป็นเวลา <span id="R2_Sch6_duration"></span> นาที
+                                สิ้นสุด <span id="R2_Sch6_off"></span> <span id="R2_Sch6_pause"></span>
+                                {% if initialchk26 == False %}
+                                    <input id="chk26" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=2, period=6)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk26" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=2, period=6)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div id="Relay2Edit" class="col-xs-8 collapse">
+                        {# Period 1#}
+                        <div class="row">
+                            <div class="col-12">
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod1R2Start">
+                                เป็นเวลา <input id="timePeriod1R2Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod1R2Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=2, period=1)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=2,period=1)"> ตั้งเวลา</button>
+                                </button>
+
+                            </div>
+                        </div>
+                        {# Period 2#}
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod2R2Start">
+                                เป็นเวลา <input id="timePeriod2R2Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod2R2Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=2, period=2)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=2,period=2)"> ตั้งเวลา</button>
+                                </button>
+                            </div>
+                        </div>
+                        {# Period 3#}
+                        <div class="row">
+                            <div class="col-12">
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod3R2Start">
+                                เป็นเวลา <input id="timePeriod3R2Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod3R2Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=2, period=3)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=2,period=3)"> ตั้งเวลา</button>
+                                </button>
+                            </div>
+                        </div>
+                        {# Period 4#}
+                        <div class="row">
+                            <div class="col-12">
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod4R2Start">
+                                เป็นเวลา <input id="timePeriod4R2Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod4R2Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=2, period=4)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=2,period=4)"> ตั้งเวลา</button>
+                                </button>
+                            </div>
+                        </div>
+                        {# Period 5#}
+                        <div class="row">
+                            <div class="col-12">
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod5R2Start">
+                                เป็นเวลา <input id="timePeriod5R2Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod5R2Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=2, period=5)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=2,period=5)"> ตั้งเวลา</button>
+                                </button>
+                            </div>
+                        </div>
+                        {# Period 6#}
+                        <div class="row">
+                            <div class="col-12">
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod6R2Start">
+                                เป็นเวลา <input id="timePeriod6R2Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod6R2Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=2, period=6)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=2,period=6)"> ตั้งเวลา</button>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                {# Period 2#}
-                <div class="row">
-                    <div class="col-12">
-                        <input type="checkbox" id="timePeriod2R1" name="timePeriod2R1" value="timePeriod2R1">
-                        เริ่มเวลา <input type="time" step="1" id="timePeriod2R1Start">
-                        เป็นเวลา <input id="timePeriod2R1Delay"> นาที
-                        สิ้นสุดเวลา <input type="time" step="1" id="timePeriod2R1Stop" disable>
-                        <button type="button" id="buttonTimePeriod2R1Submit">บันทึกค่า/ดำเนินการตั้งเวลา</button>
-                    </div>
-                </div>
-                {# Period 3#}
-                <div class="row">
-                    <div class="col-12">
-                        <input type="checkbox" id="timePeriod3R1" name="timePeriod3R1" value="timePeriod3R1">
-                        เริ่มเวลา <input type="time" step="1" id="timePeriod3R1Start">
-                        เป็นเวลา <input id="timePeriod3R1Delay"> นาที
-                        สิ้นสุดเวลา <input type="time" step="1" id="timePeriod3R1Stop" disable>
-                        <button type="button" id="buttonTimePeriod3R1Submit">บันทึกค่า/ดำเนินการตั้งเวลา</button>
-                    </div>
-                </div>
-                {# Period 4#}
-                <div class="row">
-                    <div class="col-12">
-                        <input type="checkbox" id="timePeriod4R1" name="timePeriod4R1" value="timePeriod4R1">
-                        เริ่มเวลา <input type="time" step="1" id="timePeriod4R1Start">
-                        เป็นเวลา <input id="timePeriod4R1Delay"> นาที
-                        สิ้นสุดเวลา <input type="time" step="1" id="timePeriod4R1Stop" disable>
-                                                <button type="button" id="buttonTimePeriod4R1Submit">บันทึกค่า/ดำเนินการตั้งเวลา</button>
+            </div>
+        </div>
+        <p>-</p>
+        {# set relay 3#}
+
+        <div class="row">
+            <div class="col">
+                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Relay3">Drain valve
+                    (Relay-3)
+                </button>
+                <div id="Relay3" class="collapse">
+                    <p>เดรนวาว์ล
+                                            <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Relay3Edit">
+                            ตั้งเวลา
+                        </button></p>
+                    <div class="col-xs-4">
+                        <div class="row">
+                            <div class="col-12">
+                                เริ่ม <span id="R3_Sch1_on"></span>
+                                เป็นเวลา <span id="R3_Sch1_duration"></span> นาที
+                                สิ้นสุด <span id="R3_Sch1_off"></span> <span id="R3_Sch1_pause"></span>
+                                {% if initialchk31 == False %}
+                                    <input id="chk31" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=3, period=1)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk31" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=3, period=1)"
+                                           data-onstyle="success">
+                                {% endif %}
+
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่ม <span id="R3_Sch2_on"></span>
+                                เป็นเวลา <span id="R3_Sch2_duration"></span> นาที
+                                สิ้นสุด <span id="R3_Sch2_off"></span> <span id="R3_Sch2_pause"></span>
+                                {% if initialchk22 == False %}
+                                    <input id="chk32" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=3, period=2)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk32" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=3, period=2)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่ม <span id="R3_Sch3_on"></span>
+                                เป็นเวลา <span id="R3_Sch3_duration"></span> นาที
+                                สิ้นสุด <span id="R3_Sch3_off"></span> <span id="R3_Sch3_pause"></span>
+                                {% if initialchk33 == False %}
+                                    <input id="chk33" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=3, period=3)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk33" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=3, period=3)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่ม <span id="R3_Sch4_on"></span>
+                                เป็นเวลา <span id="R3_Sch4_duration"></span> นาที
+                                สิ้นสุด <span id="R3_Sch4_off"></span> <span id="R3_Sch4_pause"></span>
+                                {% if initialchk34 == False %}
+                                    <input id="chk34" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=3, period=4)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk23" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=3, period=4)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่ม <span id="R3_Sch5_on"></span>
+                                เป็นเวลา <span id="R3_Sch5_duration"></span> นาที
+                                สิ้นสุด <span id="R3_Sch5_off"></span> <span id="R3_Sch5_pause"></span>
+                                {% if initialchk35 == False %}
+                                    <input id="chk35" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=3, period=5)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk35" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=3, period=5)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่ม <span id="R3_Sch6_on"></span>
+                                เป็นเวลา <span id="R3_Sch6_duration"></span> นาที
+                                สิ้นสุด <span id="R3_Sch6_off"></span> <span id="R3_Sch6_pause"></span>
+                                {% if initialchk36 == False %}
+                                    <input id="chk36" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=3, period=6)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk36" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=3, period=6)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                        </div>
 
                     </div>
-                </div>
-                {# Period 5#}
-                <div class="row">
-                    <div class="col-12">
-                        <input type="checkbox" id="timePeriod5R1" name="timePeriod5R1" value="timePeriod5R1">
-                        เริ่มเวลา <input type="time" step="1" id="timePeriod5R1Start">
-                        เป็นเวลา <input id="timePeriod5R1Delay"> นาที
-                        สิ้นสุดเวลา <input type="time" step="1" id="timePeriod5R1Stop" disable>
-                                                <button type="button" id="buttonTimePeriod5R1Submit">บันทึกค่า/ดำเนินการตั้งเวลา</button>
+                    <div id="Relay3Edit" class="col-xs-8 collapse">
+                        {# Period 1#}
+                        <div class="row">
+                            <div class="col-12">
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod1R3Start">
+                                เป็นเวลา <input id="timePeriod1R3Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod1R3Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=3, period=1)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=3,period=1)"> ตั้งเวลา</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod2R3Start">
+                                เป็นเวลา <input id="timePeriod2R3Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod2R3Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=3, period=2)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=3,period=2)"> ตั้งเวลา</button>
+                            </div>
+                        </div>
+                        <div class="row">
 
+                            <div class="col-12">
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod3R3Start">
+                                เป็นเวลา <input id="timePeriod3R3Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod3R3Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=3, period=3)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=3,period=3)"> ตั้งเวลา</button>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod4R3Start">
+                                เป็นเวลา <input id="timePeriod4R3Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod4R3Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=3, period=4)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=3,period=4)"> ตั้งเวลา</button>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod5R3Start">
+                                เป็นเวลา <input id="timePeriod5R3Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod5R3Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=3, period=5)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=3,period=5)"> ตั้งเวลา</button>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod6R3Start">
+                                เป็นเวลา <input id="timePeriod6R3Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod6R3Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=3, period=6)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=3,period=6)"> ตั้งเวลา</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                {# Period 6#}
-                <div class="row">
-                    <div class="col-12">
-                        <input type="checkbox" id="timePeriod6R1" name="timePeriod6R1" value="timePeriod6R1">
-                        เริ่มเวลา <input type="time" step="1" id="timePeriod6R1Start">
-                        เป็นเวลา <input id="timePeriod6R1Delay"> นาที
-                        สิ้นสุดเวลา <input type="time" step="1" id="timePeriod6R1Stop" disable>
-                        <button type="button" id="buttonTimePeriod6R1Submit">บันทึกค่า/ดำเนินการตั้งเวลา</button>
+            </div>
+        </div>
+        <p>-</p>
+        {# set relay 4#}
 
+        <div class="row">
+            <div class="col">
+                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Relay4">วาร์ลโซน 1
+                    (Relay-4)
+                </button>
+                <div id="Relay4" class="collapse">
+                    <p>วาร์ลโซน 1<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Relay4Edit">
+                            ตั้งเวลา
+                        </button></p>
+                    <div class="col-xs-4">
+                        <div class="row">
+                            <div class="col-12">
+                                เริ่ม <span id="R4_Sch1_on"></span>
+                                เป็นเวลา <span id="R4_Sch1_duration"></span> นาที
+                                สิ้นสุด <span id="R4_Sch1_off"></span> <span id="R4_Sch1_pause"></span>
+                                {% if initialchk41 == False %}
+                                    <input id="chk41" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=4, period=1)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk41" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=4, period=1)"
+                                           data-onstyle="success">
+                                {% endif %}
+
+                            </div>
+                            <div class="col-12">
+                                เริ่ม <span id="R4_Sch2_on"></span> เป็นเวลา <span id="R4_Sch2_duration"></span>
+                                นาที
+                                สิ้นสุด <span id="R4_Sch2_off"></span> <span id="R4_Sch2_pause"></span>
+                                {% if initialchk42 == False %}
+                                    <input id="chk42" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=4, period=2)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk42" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=4, period=2)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                            <div class="col-12">
+                                เริ่ม <span id="R4_Sch3_on"></span> เป็นเวลา <span id="R4_Sch3_duration"></span>
+                                นาที
+                                สิ้นสุด <span id="R4_Sch3_off"></span> <span id="R4_Sch3_pause"></span>
+                                {% if initialchk43 == False %}
+                                    <input id="chk43" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=4, period=3)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk43" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=4, period=3)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                            <div class="col-12">
+                                เริ่ม <span id="R4_Sch4_on"></span> เป็นเวลา <span id="R4_Sch4_duration"></span>
+                                นาที
+                                สิ้นสุด <span id="R4_Sch4_off"></span> <span id="R4_Sch4_pause"></span>
+
+                                {% if initialchk44 == False %}
+                                    <input id="chk44" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=4, period=4)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk44" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=4, period=4)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                            <div class="col-12">
+                                เริ่ม <span id="R4_Sch5_on"></span> เป็นเวลา <span id="R4_Sch5_duration"></span>
+                                นาที
+                                สิ้นสุด <span id="R4_Sch5_off"></span> <span id="R4_Sch5_pause"></span>
+                                {% if initialchk45 == False %}
+                                    <input id="chk45" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=4, period=5)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk45" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=4, period=5)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                            <div class="col-124">
+                                เริ่ม <span id="R4_Sch6_on"></span> เป็นเวลา <span
+                                        id="R4_Sch6_duration"></span> นาที
+                                    สิ้นสุด <span id="R4_Sch6_off"></span> <span id="R4_Sch6_pause"></span>
+                                    {% if initialchk46 == False %}
+                                        <input id="chk46" type="checkbox" checked data-toggle="toggle"
+                                               onchange="toggleScheduleRelay(relay_num=4, period=6)"
+                                               data-onstyle="success">
+                                    {% else %}
+                                        <input id="chk46" type="checkbox" data-toggle="toggle"
+                                               onchange="toggleScheduleRelay(relay_num=4, period=6)"
+                                               data-onstyle="success">
+                                    {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div id="Relay4Edit" class="col-xs-8 collapse">
+                        {# Period 1#}
+                        <div class="row">
+                            <div class="col-12">
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod1R4Start">
+                                เป็นเวลา <input id="timePeriod1R4Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod1R4Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=4, period=1)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=4,period=1)"> ตั้งเวลา</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod2R4Start">
+                                เป็นเวลา <input id="timePeriod2R4Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod2R4Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=4, period=2)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=4,period=2)"> ตั้งเวลา</button>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod3R4Start">
+                                เป็นเวลา <input id="timePeriod3R4Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod3R4Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=4, period=3)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=4,period=3)"> ตั้งเวลา</button>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod4R4Start">
+                                เป็นเวลา <input id="timePeriod4R4Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod4R4Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=4, period=4)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=4,period=4)"> ตั้งเวลา</button>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod5R4Start">
+                                เป็นเวลา <input id="timePeriod5R4Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod5R4Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=4, period=5)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=4,period=5)"> ตั้งเวลา</button>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod6R4Start">
+                                เป็นเวลา <input id="timePeriod6R4Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod6R4Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=4, period=6)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=4,period=6)"> ตั้งเวลา</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <button type="button" id="buttonTimeRelayAllCal">คำนวนเวลา</button>
+            </div>
+        </div>
+        <p>-</p>
+        {# set relay 5#}
+
+        <div class="row">
+            <div class="col">
+                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Relay5">วาร์ลโซน 2
+                    (Relay-5)
+                </button>
+                <div id="Relay5" class="collapse">
+                    <p>วาร์ลโซน 2<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Relay5Edit">
+                            ตั้งเวลา
+                        </button></p>
+                    <div class="col-xs-4">
+                        <div class="row">
+                            <div class="col-12">
+                                เริ่ม <span id="R5_Sch1_on"></span>
+                                เป็นเวลา <span id="R5_Sch1_duration"></span> นาที
+                                สิ้นสุด <span id="R5_Sch1_off"></span> <span id="R5_Sch1_pause"></span>
+                                {% if initialchk51 == False %}
+                                    <input id="chk51" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=5, period=1)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk51" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=5, period=1)"
+                                           data-onstyle="success">
+                                {% endif %}
+
+                            </div>
+                            <div class="col-12">
+                                เริ่ม <span id="R5_Sch2_on"></span> เป็นเวลา <span id="R5_Sch2_duration"></span>
+                                นาที
+                                สิ้นสุด <span id="R5_Sch2_off"></span> <span id="R5_Sch2_pause"></span>
+                                {% if initialchk52 == False %}
+                                    <input id="chk52" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=5, period=2)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk52" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=5, period=2)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                            <div class="col-12">
+                                เริ่ม <span id="R5_Sch3_on"></span> เป็นเวลา <span id="R5_Sch3_duration"></span>
+                                นาที
+                                สิ้นสุด <span id="R5_Sch3_off"></span> <span id="R5_Sch3_pause"></span>
+                                {% if initialchk53 == False %}
+                                    <input id="chk53" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=5, period=3)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk53" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=5, period=3)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                            <div class="col-12">
+                                เริ่ม <span id="R5_Sch4_on"></span> เป็นเวลา <span id="R5_Sch4_duration"></span>
+                                นาที
+                                สิ้นสุด <span id="R5_Sch4_off"></span> <span id="R5_Sch4_pause"></span>
+
+                                {% if initialchk54 == False %}
+                                    <input id="chk54" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=5, period=4)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk54" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=5, period=4)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                            <div class="col-12">
+                                เริ่ม <span id="R5_Sch5_on"></span> เป็นเวลา <span id="R5_Sch5_duration"></span>
+                                นาที
+                                สิ้นสุด <span id="R5_Sch5_off"></span> <span id="R5_Sch5_pause"></span>
+                                {% if initialchk55 == False %}
+                                    <input id="chk55" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=5, period=5)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk55" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=5, period=5)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                            <div class="col-124">
+                                เริ่ม <span id="R5_Sch6_on"></span> เป็นเวลา <span
+                                        id="R5_Sch6_duration"></span> นาที
+                                    สิ้นสุด <span id="R5_Sch6_off"></span> <span id="R5_Sch6_pause"></span>
+                                    {% if initialchk56 == False %}
+                                        <input id="chk56" type="checkbox" checked data-toggle="toggle"
+                                               onchange="toggleScheduleRelay(relay_num=5, period=6)"
+                                               data-onstyle="success">
+                                    {% else %}
+                                        <input id="chk56" type="checkbox" data-toggle="toggle"
+                                               onchange="toggleScheduleRelay(relay_num=5, period=6)"
+                                               data-onstyle="success">
+                                    {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div id="Relay5Edit" class="col-xs-8 collapse">
+                        {# Period 1#}
+                        <div class="row">
+                            <div class="col-12">
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod1R5Start">
+                                เป็นเวลา <input id="timePeriod1R5Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod1R5Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=5, period=1)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=5,period=1)"> ตั้งเวลา</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod2R5Start">
+                                เป็นเวลา <input id="timePeriod2R5Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod2R5Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=5, period=2)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=5,period=2)"> ตั้งเวลา</button>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod3R5Start">
+                                เป็นเวลา <input id="timePeriod3R5Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod3R5Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=5, period=3)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=5,period=3)"> ตั้งเวลา</button>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod4R5Start">
+                                เป็นเวลา <input id="timePeriod4R5Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod4R5Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=5, period=4)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=5,period=4)"> ตั้งเวลา</button>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod5R5Start">
+                                เป็นเวลา <input id="timePeriod5R5Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod5R5Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=5, period=5)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=5,period=5)"> ตั้งเวลา</button>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod6R5Start">
+                                เป็นเวลา <input id="timePeriod6R5Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod6R5Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=5, period=6)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=5,period=6)"> ตั้งเวลา</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p>-</p>
+        {# set relay 6#}
+
+        <div class="row">
+            <div class="col">
+                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Relay6">วาร์ลโซน 3
+                    (Relay-6)
+                </button>
+                <div id="Relay6" class="collapse">
+                    <p>วาร์ลโซน 3<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Relay6Edit">
+                            ตั้งเวลา
+                        </button></p>
+                    <div class="col-xs-4">
+                        <div class="row">
+                            <div class="col-12">
+                                เริ่ม <span id="R6_Sch1_on"></span>
+                                เป็นเวลา <span id="R6_Sch1_duration"></span> นาที
+                                สิ้นสุด <span id="R6_Sch1_off"></span> <span id="R6_Sch1_pause"></span>
+                                {% if initialchk61 == False %}
+                                    <input id="chk61" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=6, period=1)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk61" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=6, period=1)"
+                                           data-onstyle="success">
+                                {% endif %}
+
+                            </div>
+                            <div class="col-12">
+                                เริ่ม <span id="R6_Sch2_on"></span> เป็นเวลา <span id="R6_Sch2_duration"></span>
+                                นาที
+                                สิ้นสุด <span id="R6_Sch2_off"></span> <span id="R6_Sch2_pause"></span>
+                                {% if initialchk62 == False %}
+                                    <input id="chk62" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=6, period=2)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk62" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=6, period=2)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                            <div class="col-12">
+                                เริ่ม <span id="R6_Sch3_on"></span> เป็นเวลา <span id="R6_Sch3_duration"></span>
+                                นาที
+                                สิ้นสุด <span id="R6_Sch3_off"></span> <span id="R6_Sch3_pause"></span>
+                                {% if initialchk63 == False %}
+                                    <input id="chk63" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=4, period=3)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk63" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=6, period=3)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                            <div class="col-12">
+                                เริ่ม <span id="R6_Sch4_on"></span> เป็นเวลา <span id="R6_Sch4_duration"></span>
+                                นาที
+                                สิ้นสุด <span id="R6_Sch4_off"></span> <span id="R6_Sch4_pause"></span>
+
+                                {% if initialchk64 == False %}
+                                    <input id="chk64" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=6, period=4)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk64" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=6, period=4)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                            <div class="col-12">
+                                เริ่ม <span id="R6_Sch5_on"></span> เป็นเวลา <span id="R6_Sch5_duration"></span>
+                                นาที
+                                สิ้นสุด <span id="R6_Sch5_off"></span> <span id="R6_Sch5_pause"></span>
+                                {% if initialchk65 == False %}
+                                    <input id="chk65" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=6, period=5)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk65" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=6, period=5)"
+                                           data-onstyle="success">
+                                {% endif %}
+                            </div>
+                            <div class="col-124">
+                                เริ่ม <span id="R6_Sch6_on"></span> เป็นเวลา <span
+                                        id="R6_Sch6_duration"></span> นาที
+                                    สิ้นสุด <span id="R6_Sch6_off"></span> <span id="R6_Sch6_pause"></span>
+                                    {% if initialchk66 == False %}
+                                        <input id="chk66" type="checkbox" checked data-toggle="toggle"
+                                               onchange="toggleScheduleRelay(relay_num=6, period=6)"
+                                               data-onstyle="success">
+                                    {% else %}
+                                        <input id="chk66" type="checkbox" data-toggle="toggle"
+                                               onchange="toggleScheduleRelay(relay_num=6, period=6)"
+                                               data-onstyle="success">
+                                    {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div id="Relay6Edit" class="col-xs-8 collapse">
+                        {# Period 1#}
+                        <div class="row">
+                            <div class="col-12">
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod1R6Start">
+                                เป็นเวลา <input id="timePeriod1R6Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod1R6Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=6, period=1)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=6,period=1)"> ตั้งเวลา</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod2R6Start">
+                                เป็นเวลา <input id="timePeriod2R6Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod2R6Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=6, period=2)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=6,period=2)"> ตั้งเวลา</button>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod3R6Start">
+                                เป็นเวลา <input id="timePeriod3R6Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod3R6Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=6, period=3)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=6,period=3)"> ตั้งเวลา</button>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod4R6Start">
+                                เป็นเวลา <input id="timePeriod4R6Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod4R6Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=6, period=4)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=6,period=4)"> ตั้งเวลา</button>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod5R6Start">
+                                เป็นเวลา <input id="timePeriod5R6Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod5R6Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=6, period=5)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=6,period=5)"> ตั้งเวลา</button>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-12">
+                                เริ่มเวลา <input type="time" step="1" id="timePeriod6R6Start">
+                                เป็นเวลา <input id="timePeriod6R6Delay"> นาที
+                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod6R6Stop" disabled>
+{#                                <button type="button" onclick="timeCal(relay_num=6, period=6)"> คำนวนเวลา</button>#}
+                                <button type="button" onclick="scheduleSet(relay_num=6,period=6)"> ตั้งเวลา</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -755,8 +1559,10 @@ window.onload = doClock;
 <script>
     {# control relay 1#}
     var url = "https://navitaiot.herokuapp.com/testAPI2/"
+    {#var url = "http://127.0.0.1:8000/testAPI2/"#}
+
     document.getElementById('controlRelay1On').onclick = function () {
-        console.log('controlRelay1On clicked')
+        {#console.log('controlRelay1On clicked')#}
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Cookie", "csrftoken=rEjFtI8SYft2HZ0JZJe02HuyzYjPv7VTqbsNnfbl1V0zHQVt7VsdwAhzhjVdVRsH");
@@ -765,7 +1571,7 @@ window.onload = doClock;
             "farmID": "AA0001",
             "token": "xxx",
             "method": "control",
-            "detail": {"device": "relay1", "control": "on"}
+            "detail": {"device": "Relay1", "control": "on"}
         });
 
         var requestOptions = {
@@ -782,7 +1588,7 @@ window.onload = doClock;
 
     }
     document.getElementById('controlRelay1Off').onclick = function () {
-        console.log('controlRelay1Off clicked')
+        {#console.log('controlRelay1Off clicked')#}
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Cookie", "csrftoken=rEjFtI8SYft2HZ0JZJe02HuyzYjPv7VTqbsNnfbl1V0zHQVt7VsdwAhzhjVdVRsH");
@@ -791,7 +1597,7 @@ window.onload = doClock;
             "farmID": "AA0001",
             "token": "xxx",
             "method": "control",
-            "detail": {"device": "relay1", "control": "off"}
+            "detail": {"device": "Relay1", "control": "off"}
         });
 
         var requestOptions = {
@@ -828,7 +1634,7 @@ window.onload = doClock;
         };
 
         {#fetch("http://127.0.0.1:8000/setMode/", requestOptions)#}
-                        fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
+        fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
 
             .then(response => response.text())
             .then(result => console.log(result))
@@ -856,7 +1662,7 @@ window.onload = doClock;
         };
 
         {#fetch("http://127.0.0.1:8000/setMode/", requestOptions)#}
-                                    fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
+        fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
 
             .then(response => response.text())
             .then(result => console.log(result))
@@ -874,7 +1680,7 @@ window.onload = doClock;
             "farmID": "AA0001",
             "token": "xxx",
             "method": "control",
-            "detail": {"device": "relay2", "control": "on"}
+            "detail": {"device": "Relay2", "control": "on"}
         });
 
         var requestOptions = {
@@ -900,7 +1706,7 @@ window.onload = doClock;
             "farmID": "AA0001",
             "token": "xxx",
             "method": "control",
-            "detail": {"device": "relay2", "control": "off"}
+            "detail": {"device": "Relay2", "control": "off"}
         });
 
         var requestOptions = {
@@ -937,7 +1743,7 @@ window.onload = doClock;
         };
 
         {#fetch("http://127.0.0.1:8000/setMode/", requestOptions)#}
-                                    fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
+        fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
 
             .then(response => response.text())
             .then(result => console.log(result))
@@ -965,7 +1771,7 @@ window.onload = doClock;
         };
 
         {#fetch("http://127.0.0.1:8000/setMode/", requestOptions)#}
-                                    fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
+        fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
 
             .then(response => response.text())
             .then(result => console.log(result))
@@ -983,7 +1789,7 @@ window.onload = doClock;
             "farmID": "AA0001",
             "token": "xxx",
             "method": "control",
-            "detail": {"device": "relay3", "control": "on"}
+            "detail": {"device": "Relay3", "control": "on"}
         });
 
         var requestOptions = {
@@ -1009,7 +1815,7 @@ window.onload = doClock;
             "farmID": "AA0001",
             "token": "xxx",
             "method": "control",
-            "detail": {"device": "relay3", "control": "off"}
+            "detail": {"device": "Relay3", "control": "off"}
         });
 
         var requestOptions = {
@@ -1046,7 +1852,7 @@ window.onload = doClock;
         };
 
         {#fetch("http://127.0.0.1:8000/setMode/", requestOptions)#}
-                                    fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
+        fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
 
             .then(response => response.text())
             .then(result => console.log(result))
@@ -1074,7 +1880,7 @@ window.onload = doClock;
         };
 
         {#fetch("http://127.0.0.1:8000/setMode/", requestOptions)#}
-                                    fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
+        fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
 
             .then(response => response.text())
             .then(result => console.log(result))
@@ -1092,7 +1898,7 @@ window.onload = doClock;
             "farmID": "AA0001",
             "token": "xxx",
             "method": "control",
-            "detail": {"device": "relay4", "control": "on"}
+            "detail": {"device": "Relay4", "control": "on"}
         });
 
         var requestOptions = {
@@ -1118,7 +1924,7 @@ window.onload = doClock;
             "farmID": "AA0001",
             "token": "xxx",
             "method": "control",
-            "detail": {"device": "relay4", "control": "off"}
+            "detail": {"device": "Relay4", "control": "off"}
         });
 
         var requestOptions = {
@@ -1155,7 +1961,7 @@ window.onload = doClock;
         };
 
         {#fetch("http://127.0.0.1:8000/setMode/", requestOptions)#}
-                                    fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
+        fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
 
             .then(response => response.text())
             .then(result => console.log(result))
@@ -1183,7 +1989,7 @@ window.onload = doClock;
         };
 
         {#fetch("http://127.0.0.1:8000/setMode/", requestOptions)#}
-                                    fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
+        fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
 
             .then(response => response.text())
             .then(result => console.log(result))
@@ -1202,7 +2008,7 @@ window.onload = doClock;
             "farmID": "AA0001",
             "token": "xxx",
             "method": "control",
-            "detail": {"device": "relay5", "control": "on"}
+            "detail": {"device": "Relay5", "control": "on"}
         });
 
         var requestOptions = {
@@ -1228,7 +2034,7 @@ window.onload = doClock;
             "farmID": "AA0001",
             "token": "xxx",
             "method": "control",
-            "detail": {"device": "relay5", "control": "off"}
+            "detail": {"device": "Relay5", "control": "off"}
         });
 
         var requestOptions = {
@@ -1265,7 +2071,7 @@ window.onload = doClock;
         };
 
         {#fetch("http://127.0.0.1:8000/setMode/", requestOptions)#}
-                                    fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
+        fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
 
             .then(response => response.text())
             .then(result => console.log(result))
@@ -1293,7 +2099,7 @@ window.onload = doClock;
         };
 
         {#fetch("http://127.0.0.1:8000/setMode/", requestOptions)#}
-                                    fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
+        fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
 
             .then(response => response.text())
             .then(result => console.log(result))
@@ -1311,7 +2117,7 @@ window.onload = doClock;
             "farmID": "AA0001",
             "token": "xxx",
             "method": "control",
-            "detail": {"device": "relay6", "control": "on"}
+            "detail": {"device": "Relay6", "control": "on"}
         });
 
         var requestOptions = {
@@ -1337,7 +2143,7 @@ window.onload = doClock;
             "farmID": "AA0001",
             "token": "xxx",
             "method": "control",
-            "detail": {"device": "relay6", "control": "off"}
+            "detail": {"device": "Relay6", "control": "off"}
         });
 
         var requestOptions = {
@@ -1374,7 +2180,7 @@ window.onload = doClock;
         };
 
         {#fetch("http://127.0.0.1:8000/setMode/", requestOptions)#}
-                                    fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
+        fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
 
             .then(response => response.text())
             .then(result => console.log(result))
@@ -1402,7 +2208,7 @@ window.onload = doClock;
         };
 
         {#fetch("http://127.0.0.1:8000/setMode/", requestOptions)#}
-                                    fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
+        fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
 
             .then(response => response.text())
             .then(result => console.log(result))
@@ -1411,10 +2217,314 @@ window.onload = doClock;
 
 </script>
 
-{# schedule set#}
+{# Schedule set#}
 <script>
-    {# Time picker#}
+    function toggleScheduleRelay(relay_num, period) {
+        console.log(relay_num)
+        console.log(period)
+        start = $('#R' + relay_num + '_Sch' + period + '_on').text();
+        end = $('#R' + relay_num + '_Sch' + period + '_off').text();
+        duration = $('#R' + relay_num + '_Sch' + period + '_duration').text();
+        var s = start.split(":")
+        var e = end.split(":")
 
+
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        if (relay_num == 1 && period == 1) {
+            if (document.getElementById('chk11').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num == 1 && period == 2) {
+            if (document.getElementById('chk12').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num == 1 && period == 3) {
+            if (document.getElementById('chk13').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num == 1 && period == 4) {
+            if (document.getElementById('chk14').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num == 1 && period == 5) {
+            if (document.getElementById('chk15').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num == 1 && period == 6) {
+            if (document.getElementById('chk16').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num == 2 && period == 1) {
+            if (document.getElementById('chk21').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num == 2 && period == 2) {
+            if (document.getElementById('chk22').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num == 2 && period == 3) {
+            if (document.getElementById('chk23').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num == 2 && period == 4) {
+            if (document.getElementById('chk24').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num == 2 && period == 5) {
+            if (document.getElementById('chk25').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num == 2 && period == 6) {
+            if (document.getElementById('chk26').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num == 3 && period == 1) {
+            if (document.getElementById('chk31').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num ==3 && period == 2) {
+            if (document.getElementById('chk32').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num ==3 && period == 3) {
+            if (document.getElementById('chk33').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num ==3 && period == 4) {
+            if (document.getElementById('chk34').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num ==3 && period == 5) {
+            if (document.getElementById('chk35').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num ==3 && period == 6) {
+            if (document.getElementById('chk36').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num == 4 && period == 1) {
+            if (document.getElementById('chk41').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num == 4 && period == 2) {
+            if (document.getElementById('chk42').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num == 4 && period == 3) {
+            if (document.getElementById('chk43').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num == 4 && period == 4) {
+            if (document.getElementById('chk44').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num == 4 && period == 5) {
+            if (document.getElementById('chk45').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num == 4 && period == 6) {
+            if (document.getElementById('chk46').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num == 5 && period == 1) {
+            if (document.getElementById('chk51').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num == 5 && period == 2) {
+            if (document.getElementById('chk52').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num == 5 && period == 3) {
+            if (document.getElementById('chk53').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num == 5 && period == 4) {
+            if (document.getElementById('chk54').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num == 5 && period == 5) {
+            if (document.getElementById('chk55').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num == 5 && period == 6) {
+            if (document.getElementById('chk56').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num == 6 && period == 1) {
+            if (document.getElementById('chk61').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num == 6 && period == 2) {
+            if (document.getElementById('chk62').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num == 6 && period == 3) {
+            if (document.getElementById('chk63').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num == 6 && period == 4) {
+            if (document.getElementById('chk64').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num == 6 && period == 5) {
+            if (document.getElementById('chk65').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        } else if (relay_num == 6 && period == 6) {
+            if (document.getElementById('chk66').checked) {
+                var p = false
+            } else {
+                console.log("button 1 Not Checked")
+                var p = true
+            }
+        }
+
+
+
+        var raw = JSON.stringify({
+            "farmID": "{{ farmCode }}",
+            "token": "xxx",
+            "method": "scheduleSet",
+            "detail": {
+                "device": "relay" + relay_num,
+                "period": period,
+                "start_hour": s[0],
+                "start_minute": s[1],
+                "start_second": s[2],
+                "end_hour": e[0],
+                "end_minute": e[1],
+                "end_second": e[2],
+                "duration": duration,
+                "pause": p
+            },
+            "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+        {#console.log(raw)#}
+        {#fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)#}
+        fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+    }
+</script>
+
+
+{# schedule Edit#}
+<script>
     function pad(num) {
         return ("0" + num).slice(-2);
     }
@@ -1426,321 +2536,753 @@ window.onload = doClock;
         return "" + pad(h) + ":" + pad(m) + ":" + pad(s);
     }
 
-    document.getElementById('buttonTimeRelayAllCal').onclick = function () {
-        console.log('buttonTimeRelayAllCal clicked')
-        var period;
-        for (period = 1; period < 7; period++) {
-            console.log(period);
-            console.log('timePeriod' + period.toString() + 'R1');
-            if (document.getElementById('timePeriod' + period.toString() + 'R1').checked || true) {
-                document.getElementById('timePeriod' + period.toString() + 'R1Stop').value = endTime(
-                    document.getElementById('timePeriod' + period.toString() + 'R1Start').value,
-                    document.getElementById('timePeriod' + period.toString() + 'R1Delay').value
-                )
-            }
-
-        }
-
-
+    function timeCal(relay_num, period) {
+        console.log('calculate time')
+        console.log(relay_num)
+        console.log(period)
+        document.getElementById('timePeriod' + period + 'R' + relay_num + 'Stop').value = endTime(
+            document.getElementById('timePeriod' + period + 'R' + relay_num + 'Start').value,
+            document.getElementById('timePeriod' + period + 'R' + relay_num + 'Delay').value)
     }
 
-    {#Relay 1#}
-    document.getElementById('buttonTimePeriod1R1Submit').onclick = function () {
-        if (document.getElementById('timePeriod1R1').checked || true) {
-            pause=document.getElementById('timePeriod1R1').checked
-            console.log('value of pause')
-            console.log(pause)
-            start = document.getElementById('timePeriod1R1Start').value
-            end = document.getElementById('timePeriod1R1Stop').value
-            duration=document.getElementById('timePeriod1R1Delay').value
-            var s = start.split(":")
-            var e = end.split(":")
+    function scheduleSet(relay_num, period) {
 
-            var myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
+        timeCal(relay_num, period);
+
+        start = document.getElementById('timePeriod' + period + 'R' + relay_num + 'Start').value
+        end = document.getElementById('timePeriod' + period + 'R' + relay_num + 'Stop').value
+        duration = document.getElementById('timePeriod' + period + 'R' + relay_num + 'Delay').value
+        var s = start.split(":")
+        var e = end.split(":")
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        if (document.getElementById('chk'+relay_num+''+period).checked)
+        {
+        var raw = JSON.stringify({
+            "farmID": "{{ farmCode }}",
+            "token": "xxx",
+            "method": "scheduleSet",
+            "detail": {
+                "device": "relay" + relay_num,
+                "period": period,
+                "start_hour": s[0],
+                "start_minute": s[1],
+                "start_second": s[2],
+                "end_hour": e[0],
+                "end_minute": e[1],
+                "end_second": e[2],
+                "duration": duration,
+                "pause": false
+            },
+            "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
+        });
+        }else {
             var raw = JSON.stringify({
-                "farmID": "{{ farmCode }}",
-                "token": "xxx",
-                "method": "scheduleSet",
-                "detail": {
-                    "device": "relay1",
-                    "period": 1,
-                    "start_hour": s[0],
-                    "start_minute": s[1],
-                    "start_second": s[2],
-                    "end_hour": e[0],
-                    "end_minute": e[1],
-                    "end_second": e[2],
-                    "duration": duration,
-                    "pause": !document.getElementById('timePeriod1R1').checked
-                },
-                "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
-            });
-            console.log(raw)
-            var requestOptions = {
-                method: 'POST',
-                headers: myHeaders,
-                body: raw,
-                redirect: 'follow'
-            };
-
-            {#fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)#}
-            fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)
-                .then(response => response.text())
-                .then(result => console.log(result))
-                .catch(error => console.log('error', error));
-
-
+            "farmID": "{{ farmCode }}",
+            "token": "xxx",
+            "method": "scheduleSet",
+            "detail": {
+                "device": "relay" + relay_num,
+                "period": period,
+                "start_hour": s[0],
+                "start_minute": s[1],
+                "start_second": s[2],
+                "end_hour": e[0],
+                "end_minute": e[1],
+                "end_second": e[2],
+                "duration": duration,
+                "pause": true
+            },
+            "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
+        });
         }
+        console.log(raw)
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        {#fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)#}
+        fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+
     }
-    document.getElementById('buttonTimePeriod2R1Submit').onclick = function () {
-        if (document.getElementById('timePeriod2R1').checked || true) {
-            start = document.getElementById('timePeriod2R1Start').value
-            end = document.getElementById('timePeriod2R1Stop').value
-                        duration=document.getElementById('timePeriod2R1Delay').value
-
-            var s = start.split(":")
-            var e = end.split(":")
-
-            var myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
-            var raw = JSON.stringify({
-                "farmID": "{{ farmCode }}",
-                "token": "xxx",
-                "method": "scheduleSet",
-                "detail": {
-                    "device": "relay1",
-                    "period": 2,
-                    "start_hour": s[0],
-                    "start_minute": s[1],
-                    "start_second": s[2],
-                    "end_hour": e[0],
-                    "end_minute": e[1],
-                    "end_second": e[2],
-                    "duration": duration,
-                    "pause": !document.getElementById('timePeriod2R1').checked
-                },
-                "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
-            });
-            console.log(raw)
-            var requestOptions = {
-                method: 'POST',
-                headers: myHeaders,
-                body: raw,
-                redirect: 'follow'
-            };
-
-            {#fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)#}
-            fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)
-                .then(response => response.text())
-                .then(result => console.log(result))
-                .catch(error => console.log('error', error));
-
-
-        }
-    }
-    document.getElementById('buttonTimePeriod3R1Submit').onclick = function () {
-        if (document.getElementById('timePeriod3R1').checked || true) {
-            start = document.getElementById('timePeriod3R1Start').value
-            end = document.getElementById('timePeriod3R1Stop').value
-                        duration=document.getElementById('timePeriod3R1Delay').value
-
-            var s = start.split(":")
-            var e = end.split(":")
-
-            var myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
-            var raw = JSON.stringify({
-                "farmID": "{{ farmCode }}",
-                "token": "xxx",
-                "method": "scheduleSet",
-                "detail": {
-                    "device": "relay1",
-                    "period": 3,
-                    "start_hour": s[0],
-                    "start_minute": s[1],
-                    "start_second": s[2],
-                    "end_hour": e[0],
-                    "end_minute": e[1],
-                    "end_second": e[2],
-                    "duration": duration,
-                    "pause": !document.getElementById('timePeriod3R1').checked
-                },
-                "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
-            });
-            console.log(raw)
-            var requestOptions = {
-                method: 'POST',
-                headers: myHeaders,
-                body: raw,
-                redirect: 'follow'
-            };
-
-            {#fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)#}
-            fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)
-                .then(response => response.text())
-                .then(result => console.log(result))
-                .catch(error => console.log('error', error));
-
-
-        }
-    }
-    document.getElementById('buttonTimePeriod4R1Submit').onclick = function () {
-        if (document.getElementById('timePeriod4R1').checked || true) {
-            start = document.getElementById('timePeriod4R1Start').value
-            end = document.getElementById('timePeriod4R1Stop').value
-                        duration=document.getElementById('timePeriod4R1Delay').value
-
-            var s = start.split(":")
-            var e = end.split(":")
-
-            var myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
-            var raw = JSON.stringify({
-                "farmID": "{{ farmCode }}",
-                "token": "xxx",
-                "method": "scheduleSet",
-                "detail": {
-                    "device": "relay1",
-                    "period": 4,
-                    "start_hour": s[0],
-                    "start_minute": s[1],
-                    "start_second": s[2],
-                    "end_hour": e[0],
-                    "end_minute": e[1],
-                    "end_second": e[2],
-                    "duration": duration,
-                    "pause": !document.getElementById('timePeriod4R1').checked
-                },
-                "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
-            });
-            console.log(raw)
-            var requestOptions = {
-                method: 'POST',
-                headers: myHeaders,
-                body: raw,
-                redirect: 'follow'
-            };
-
-            {#fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)#}
-            fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)
-                .then(response => response.text())
-                .then(result => console.log(result))
-                .catch(error => console.log('error', error));
-
-
-        }
-    }
-    document.getElementById('buttonTimePeriod5R1Submit').onclick = function () {
-        if (document.getElementById('timePeriod5R1').checked || true) {
-            start = document.getElementById('timePeriod5R1Start').value
-            end = document.getElementById('timePeriod5R1Stop').value
-                        duration=document.getElementById('timePeriod5R1Delay').value
-
-            var s = start.split(":")
-            var e = end.split(":")
-
-            var myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
-            var raw = JSON.stringify({
-                "farmID": "{{ farmCode }}",
-                "token": "xxx",
-                "method": "scheduleSet",
-                "detail": {
-                    "device": "relay1",
-                    "period": 5,
-                    "start_hour": s[0],
-                    "start_minute": s[1],
-                    "start_second": s[2],
-                    "end_hour": e[0],
-                    "end_minute": e[1],
-                    "end_second": e[2],
-                    "duration": duration,
-                    "pause": !document.getElementById('timePeriod5R1').checked
-                },
-                "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
-            });
-            console.log(raw)
-            var requestOptions = {
-                method: 'POST',
-                headers: myHeaders,
-                body: raw,
-                redirect: 'follow'
-            };
-
-            {#fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)#}
-            fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)
-                .then(response => response.text())
-                .then(result => console.log(result))
-                .catch(error => console.log('error', error));
-
-
-        }
-    }
-    document.getElementById('buttonTimePeriod6R1Submit').onclick = function () {
-        if (document.getElementById('timePeriod6R1').checked || true) {
-            start = document.getElementById('timePeriod6R1Start').value
-            end = document.getElementById('timePeriod6R1Stop').value
-                        duration=document.getElementById('timePeriod6R1Delay').value
-
-            var s = start.split(":")
-            var e = end.split(":")
-
-            var myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
-            var raw = JSON.stringify({
-                "farmID": "{{ farmCode }}",
-                "token": "xxx",
-                "method": "scheduleSet",
-                "detail": {
-                    "device": "relay1",
-                    "period": 6,
-                    "start_hour": s[0],
-                    "start_minute": s[1],
-                    "start_second": s[2],
-                    "end_hour": e[0],
-                    "end_minute": e[1],
-                    "end_second": e[2],
-                    "duration": duration,
-                    "pause": !document.getElementById('timePeriod6R1').checked
-                },
-                "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
-            });
-            console.log(raw)
-            var requestOptions = {
-                method: 'POST',
-                headers: myHeaders,
-                body: raw,
-                redirect: 'follow'
-            };
-
-            {#fetch("http://127.0.0.1:8000/createSchedule/", requestOptions)#}
-            fetch("https://navitaiot.herokuapp.com/createSchedule/", requestOptions)
-                .then(response => response.text())
-                .then(result => console.log(result))
-                .catch(error => console.log('error', error));
-
-
-        }
-    }
-
-        {#Relay 2#}
-        {#Relay 3#}
-        {#Relay 4#}
-        {#Relay 5#}
-        {#Relay 6#}
-
 
 </script>
 
-
-
 {#  <script src="../../static/js/vendor/modernizr-3.8.0.min.js"></script>#}
-{#  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>#}
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 {#  <script>window.jQuery || document.write('<script src="./js/vendor/jquery-3.4.1.min.js"><\/script>')</script>#}
 {#  <script src="../../static/js/plugins.js"></script>#}
 {#<script src="{% static 'js/main.js' %}"></script>#}
 {#  <script src="../../static/js/main.js"></script>#}
+
+<script>
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+        apiKey: "AIzaSyCs9xyouIlR_7SBQwCpL_Bde22ZDC4vpWM",
+        authDomain: "navitaiot.firebaseapp.com",
+        databaseURL: "https://navitaiot.firebaseio.com",
+        projectId: "navitaiot",
+        storageBucket: "navitaiot.appspot.com",
+        messagingSenderId: "840926440731",
+        appId: "1:840926440731:web:9e7d0a635d9e89ff0db7be",
+        measurementId: "G-5FY5JL3YN1"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+    var relay1Period1Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay1/Schedule/Period1");
+    relay1Period1Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R1_Sch1_on").innerHTML = arr['sch_on'];
+        document.getElementById("R1_Sch1_off").innerHTML = arr['sch_off'];
+        document.getElementById("R1_Sch1_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R1_Sch1_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R1_Sch1_pause").innerHTML = "(disable)";
+        }
+    });
+
+
+    var relay1Period2Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay1/Schedule/Period2");
+    relay1Period2Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R1_Sch2_on").innerHTML = arr['sch_on'];
+        document.getElementById("R1_Sch2_off").innerHTML = arr['sch_off'];
+        document.getElementById("R1_Sch2_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R1_Sch2_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R1_Sch2_pause").innerHTML = "(disable)";
+        }
+    });
+
+    var relay1Period3Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay1/Schedule/Period3");
+    relay1Period3Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R1_Sch3_on").innerHTML = arr['sch_on'];
+        document.getElementById("R1_Sch3_off").innerHTML = arr['sch_off'];
+        document.getElementById("R1_Sch3_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R1_Sch3_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R1_Sch3_pause").innerHTML = "(disable)";
+        }
+    });
+
+    var relay1Period4Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay1/Schedule/Period4");
+    relay1Period4Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R1_Sch4_on").innerHTML = arr['sch_on'];
+        document.getElementById("R1_Sch4_off").innerHTML = arr['sch_off'];
+        document.getElementById("R1_Sch4_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R1_Sch4_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R1_Sch4_pause").innerHTML = "(disable)";
+        }
+    });
+
+    var relay1Period5Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay1/Schedule/Period5");
+    relay1Period5Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R1_Sch5_on").innerHTML = arr['sch_on'];
+        document.getElementById("R1_Sch5_off").innerHTML = arr['sch_off'];
+        document.getElementById("R1_Sch5_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R1_Sch5_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R1_Sch5_pause").innerHTML = "(disable)";
+        }
+    });
+
+    var relay1Period6Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay1/Schedule/Period6");
+    relay1Period6Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R1_Sch6_on").innerHTML = arr['sch_on'];
+        document.getElementById("R1_Sch6_off").innerHTML = arr['sch_off'];
+        document.getElementById("R1_Sch6_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R1_Sch6_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R1_Sch6_pause").innerHTML = "(disable)";
+        }
+    });
+
+
+    var relay2Period1Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay2/Schedule/Period1");
+    relay2Period1Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R2_Sch1_on").innerHTML = arr['sch_on'];
+        document.getElementById("R2_Sch1_off").innerHTML = arr['sch_off'];
+        document.getElementById("R2_Sch1_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R2_Sch1_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R2_Sch1_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay2Period2Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay2/Schedule/Period2");
+    relay2Period2Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R2_Sch2_on").innerHTML = arr['sch_on'];
+        document.getElementById("R2_Sch2_off").innerHTML = arr['sch_off'];
+        document.getElementById("R2_Sch2_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R2_Sch2_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R2_Sch2_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay2Period3Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay2/Schedule/Period3");
+    relay2Period3Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R2_Sch3_on").innerHTML = arr['sch_on'];
+        document.getElementById("R2_Sch3_off").innerHTML = arr['sch_off'];
+        document.getElementById("R2_Sch3_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R2_Sch3_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R2_Sch3_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay2Period4Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay2/Schedule/Period4");
+    relay2Period4Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R2_Sch4_on").innerHTML = arr['sch_on'];
+        document.getElementById("R2_Sch4_off").innerHTML = arr['sch_off'];
+        document.getElementById("R2_Sch4_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R2_Sch4_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R2_Sch4_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay2Period5Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay2/Schedule/Period5");
+    relay2Period5Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R2_Sch5_on").innerHTML = arr['sch_on'];
+        document.getElementById("R2_Sch5_off").innerHTML = arr['sch_off'];
+        document.getElementById("R2_Sch5_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R2_Sch5_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R2_Sch5_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay2Period6Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay2/Schedule/Period6");
+    relay2Period6Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R2_Sch6_on").innerHTML = arr['sch_on'];
+        document.getElementById("R2_Sch6_off").innerHTML = arr['sch_off'];
+        document.getElementById("R2_Sch6_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R2_Sch6_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R2_Sch6_pause").innerHTML = "(disable)";
+        }
+    });
+
+    var relay3Period1Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay3/Schedule/Period1");
+    relay3Period1Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R3_Sch1_on").innerHTML = arr['sch_on'];
+        document.getElementById("R3_Sch1_off").innerHTML = arr['sch_off'];
+        document.getElementById("R3_Sch1_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R3_Sch1_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R3_Sch1_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay3Period2Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay3/Schedule/Period2");
+    relay3Period2Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R3_Sch2_on").innerHTML = arr['sch_on'];
+        document.getElementById("R3_Sch2_off").innerHTML = arr['sch_off'];
+        document.getElementById("R3_Sch2_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R3_Sch2_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R3_Sch2_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay3Period3Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay3/Schedule/Period3");
+    relay3Period3Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R3_Sch3_on").innerHTML = arr['sch_on'];
+        document.getElementById("R3_Sch3_off").innerHTML = arr['sch_off'];
+        document.getElementById("R3_Sch3_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R3_Sch3_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R3_Sch3_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay3Period4Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay3/Schedule/Period4");
+    relay3Period4Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R3_Sch4_on").innerHTML = arr['sch_on'];
+        document.getElementById("R3_Sch4_off").innerHTML = arr['sch_off'];
+        document.getElementById("R3_Sch4_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R3_Sch4_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R3_Sch4_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay3Period5Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay3/Schedule/Period5");
+    relay3Period5Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R3_Sch5_on").innerHTML = arr['sch_on'];
+        document.getElementById("R3_Sch5_off").innerHTML = arr['sch_off'];
+        document.getElementById("R3_Sch5_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R3_Sch5_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R3_Sch5_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay3Period6Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay3/Schedule/Period6");
+    relay3Period6Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R3_Sch6_on").innerHTML = arr['sch_on'];
+        document.getElementById("R3_Sch6_off").innerHTML = arr['sch_off'];
+        document.getElementById("R3_Sch6_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R3_Sch6_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R3_Sch6_pause").innerHTML = "(disable)";
+        }
+    });
+
+    var relay4Period1Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay4/Schedule/Period1");
+    relay4Period1Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R4_Sch1_on").innerHTML = arr['sch_on'];
+        document.getElementById("R4_Sch1_off").innerHTML = arr['sch_off'];
+        document.getElementById("R4_Sch1_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R4_Sch1_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R4_Sch1_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay4Period2Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay4/Schedule/Period2");
+    relay4Period2Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R4_Sch2_on").innerHTML = arr['sch_on'];
+        document.getElementById("R4_Sch2_off").innerHTML = arr['sch_off'];
+        document.getElementById("R4_Sch2_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R4_Sch2_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R4_Sch2_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay4Period3Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay4/Schedule/Period3");
+    relay4Period3Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R4_Sch3_on").innerHTML = arr['sch_on'];
+        document.getElementById("R4_Sch3_off").innerHTML = arr['sch_off'];
+        document.getElementById("R4_Sch3_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R4_Sch3_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R4_Sch3_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay4Period4Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay4/Schedule/Period4");
+    relay4Period4Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R4_Sch4_on").innerHTML = arr['sch_on'];
+        document.getElementById("R4_Sch4_off").innerHTML = arr['sch_off'];
+        document.getElementById("R4_Sch4_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R4_Sch4_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R4_Sch4_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay4Period5Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay4/Schedule/Period5");
+    relay4Period5Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R4_Sch5_on").innerHTML = arr['sch_on'];
+        document.getElementById("R4_Sch5_off").innerHTML = arr['sch_off'];
+        document.getElementById("R4_Sch5_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R4_Sch5_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R4_Sch5_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay4Period6Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay4/Schedule/Period6");
+    relay4Period6Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R4_Sch6_on").innerHTML = arr['sch_on'];
+        document.getElementById("R4_Sch6_off").innerHTML = arr['sch_off'];
+        document.getElementById("R4_Sch6_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R4_Sch6_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R4_Sch6_pause").innerHTML = "(disable)";
+        }
+    });
+
+
+    var relay5Period1Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay5/Schedule/Period1");
+    relay5Period1Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R5_Sch1_on").innerHTML = arr['sch_on'];
+        document.getElementById("R5_Sch1_off").innerHTML = arr['sch_off'];
+        document.getElementById("R5_Sch1_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R5_Sch1_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R5_Sch1_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay5Period2Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay5/Schedule/Period2");
+    relay5Period2Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R5_Sch2_on").innerHTML = arr['sch_on'];
+        document.getElementById("R5_Sch2_off").innerHTML = arr['sch_off'];
+        document.getElementById("R5_Sch2_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R5_Sch2_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R5_Sch2_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay5Period3Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay5/Schedule/Period3");
+    relay5Period3Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R5_Sch3_on").innerHTML = arr['sch_on'];
+        document.getElementById("R5_Sch3_off").innerHTML = arr['sch_off'];
+        document.getElementById("R5_Sch3_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R5_Sch3_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R5_Sch3_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay5Period4Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay5/Schedule/Period4");
+    relay5Period4Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R5_Sch4_on").innerHTML = arr['sch_on'];
+        document.getElementById("R5_Sch4_off").innerHTML = arr['sch_off'];
+        document.getElementById("R5_Sch4_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R5_Sch4_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R5_Sch4_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay5Period5Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay5/Schedule/Period5");
+    relay5Period5Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R5_Sch5_on").innerHTML = arr['sch_on'];
+        document.getElementById("R5_Sch5_off").innerHTML = arr['sch_off'];
+        document.getElementById("R5_Sch5_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R5_Sch5_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R5_Sch5_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay5Period6Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay5/Schedule/Period6");
+    relay5Period6Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R5_Sch6_on").innerHTML = arr['sch_on'];
+        document.getElementById("R5_Sch6_off").innerHTML = arr['sch_off'];
+        document.getElementById("R5_Sch6_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R5_Sch6_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R5_Sch6_pause").innerHTML = "(disable)";
+        }
+    });
+
+
+    var relay6Period1Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay6/Schedule/Period1");
+    relay6Period1Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R6_Sch1_on").innerHTML = arr['sch_on'];
+        document.getElementById("R6_Sch1_off").innerHTML = arr['sch_off'];
+        document.getElementById("R6_Sch1_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R6_Sch1_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R6_Sch1_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay6Period2Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay6/Schedule/Period2");
+    relay6Period2Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R6_Sch2_on").innerHTML = arr['sch_on'];
+        document.getElementById("R6_Sch2_off").innerHTML = arr['sch_off'];
+        document.getElementById("R6_Sch2_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R6_Sch2_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R6_Sch2_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay6Period3Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay6/Schedule/Period3");
+    relay6Period3Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R6_Sch3_on").innerHTML = arr['sch_on'];
+        document.getElementById("R6_Sch3_off").innerHTML = arr['sch_off'];
+        document.getElementById("R6_Sch3_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R6_Sch3_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R6_Sch3_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay6Period4Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay6/Schedule/Period4");
+    relay6Period4Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R6_Sch4_on").innerHTML = arr['sch_on'];
+        document.getElementById("R6_Sch4_off").innerHTML = arr['sch_off'];
+        document.getElementById("R6_Sch4_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R6_Sch4_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R6_Sch4_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay6Period5Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay6/Schedule/Period5");
+    relay6Period5Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R6_Sch5_on").innerHTML = arr['sch_on'];
+        document.getElementById("R6_Sch5_off").innerHTML = arr['sch_off'];
+        document.getElementById("R6_Sch5_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R6_Sch5_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R6_Sch5_pause").innerHTML = "(disable)";
+        }
+    });
+    var relay6Period6Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay6/Schedule/Period6");
+    relay6Period6Ref.on('value', function (snapshot) {
+        var arr = snapshot.val();
+        document.getElementById("R6_Sch6_on").innerHTML = arr['sch_on'];
+        document.getElementById("R6_Sch6_off").innerHTML = arr['sch_off'];
+        document.getElementById("R6_Sch6_duration").innerHTML = arr['sch_duration'];
+        if (arr['pause'] == false) {
+            document.getElementById("R6_Sch6_pause").innerHTML = "(enable)";
+        } else {
+            document.getElementById("R6_Sch6_pause").innerHTML = "(disable)";
+        }
+    });
+
+    var lastTimeRef = firebase.database().ref("farmCode/" + '{{ farmCode }}'+'/last_time');
+    lastTimeRef.on('value', function(snapshot){
+        var arr =snapshot.val()
+        console.log(arr)
+
+
+
+
+        var date = new Date(arr * 1000);
+// Hours part from the timestamp
+var day =date.getDate();
+var year =date.getFullYear()
+var month = date.getMonth()+1;
+var hours = date.getHours();
+// Minutes part from the timestamp
+var minutes = "0" + date.getMinutes();
+// Seconds part from the timestamp
+var seconds = "0" + date.getSeconds();
+
+// Will display time in 10:30:23 format
+var formattedTime = day + '-' + month  +'-'+year+ ' '+ hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+
+console.log(formattedTime);
+        document.getElementById("last_Time").innerHTML = formattedTime;
+
+
+
+        }
+    );
+
+
+
+    var farmRef = firebase.database().ref("farmCode/" + '{{ farmCode }}');
+    farmRef.on('value', function (snapshot) {
+        {#console.log(snapshot.val());#}
+        var arr = snapshot.val();
+        {#console.log(arr)#}
+        {#console.log(arr['flow1Status'])#}
+
+
+
+
+
+
+        if (arr['flow1Status'] == true) {
+            document.getElementById("flowSensor1").innerHTML = "เปิด";
+        } else if (arr['flow1Status'] == false) {
+            document.getElementById("flowSensor1").innerHTML = "ปิด";
+        } else {
+            document.getElementById("flowSensor1").innerHTML = "N/A";
+        }
+
+
+        if (arr['Relay1']['manual'] == true) {
+            document.getElementById("Relay1_mode").innerHTML = "manual";
+        } else if (arr['Relay1']['manual'] == false) {
+            document.getElementById("Relay1_mode").innerHTML = "schedule";
+        } else {
+            document.getElementById("Relay1_mode").innerHTML = "N/A";
+        }
+
+        if (arr['Relay2']['manual'] == true) {
+            document.getElementById("Relay2_mode").innerHTML = "manual";
+        } else if (arr['Relay2']['manual'] == false) {
+            document.getElementById("Relay2_mode").innerHTML = "schedule";
+        } else {
+            document.getElementById("Relay2_mode").innerHTML = "N/A";
+        }
+
+        if (arr['Relay3']['manual'] == true) {
+            document.getElementById("Relay3_mode").innerHTML = "manual";
+        } else if (arr['Relay3']['manual'] == false) {
+            document.getElementById("Relay3_mode").innerHTML = "schedule";
+        } else {
+            document.getElementById("Relay3_mode").innerHTML = "N/A";
+        }
+
+        if (arr['Relay4']['manual'] == true) {
+            document.getElementById("Relay4_mode").innerHTML = "manual";
+        } else if (arr['Relay4']['manual'] == false) {
+            document.getElementById("Relay4_mode").innerHTML = "schedule";
+        } else {
+            document.getElementById("Relay4_mode").innerHTML = "N/A";
+        }
+
+        if (arr['Relay5']['manual'] == true) {
+            document.getElementById("Relay5_mode").innerHTML = "manual";
+        } else if (arr['Relay5']['manual'] == false) {
+            document.getElementById("Relay5_mode").innerHTML = "schedule";
+        } else {
+            document.getElementById("Relay5_mode").innerHTML = "N/A";
+        }
+        if (arr['Relay6']['manual'] == true) {
+            document.getElementById("Relay6_mode").innerHTML = "manual";
+        } else if (arr['Relay6']['manual'] == false) {
+            document.getElementById("Relay6_mode").innerHTML = "schedule";
+        } else {
+            document.getElementById("Relay6_mode").innerHTML = "N/A";
+        }
+
+        if (arr['Relay1']['sch_status'] == true) {
+            document.getElementById("Relay1_sch_status").innerHTML = "เปิด";
+        } else if (arr['Relay1']['sch_status'] == false) {
+            document.getElementById("Relay1_sch_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay1_sch_status").innerHTML = "N/A";
+        }
+
+        if (arr['Relay2']['sch_status'] == true) {
+            document.getElementById("Relay2_sch_status").innerHTML = "เปิด";
+        } else if (arr['Relay2']['sch_status'] == false) {
+            document.getElementById("Relay2_sch_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay2_sch_status").innerHTML = "N/A";
+        }
+
+        if (arr['Relay3']['sch_status'] == true) {
+            document.getElementById("Relay3_sch_status").innerHTML = "เปิด";
+        } else if (arr['Relay3']['sch_status'] == false) {
+            document.getElementById("Relay3_sch_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay3_sch_status").innerHTML = "N/A";
+        }
+
+        if (arr['Relay4']['sch_status'] == true) {
+            document.getElementById("Relay4_sch_status").innerHTML = "เปิด";
+        } else if (arr['Relay4']['sch_status'] == false) {
+            document.getElementById("Relay4_sch_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay4_sch_status").innerHTML = "N/A";
+        }
+
+        if (arr['Relay5']['sch_status'] == true) {
+            document.getElementById("Relay5_sch_status").innerHTML = "เปิด";
+        } else if (arr['Relay5']['sch_status'] == false) {
+            document.getElementById("Relay5_sch_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay5_sch_status").innerHTML = "N/A";
+        }
+
+        if (arr['Relay6']['sch_status'] == true) {
+            document.getElementById("Relay6_sch_status").innerHTML = "เปิด";
+        } else if (arr['Relay6']['sch_status'] == false) {
+            document.getElementById("Relay6_sch_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay6_sch_status").innerHTML = "N/A";
+        }
+
+
+        if (arr['Relay1']['cur_status'] == true) {
+            document.getElementById("Relay1_cur_status").innerHTML = "เปิด";
+        } else if (arr['Relay1']['cur_status'] == false) {
+            document.getElementById("Relay1_cur_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay1_cur_status").innerHTML = "N/A";
+        }
+
+        if (arr['Relay2']['cur_status'] == true) {
+            document.getElementById("Relay2_cur_status").innerHTML = "เปิด";
+        } else if (arr['Relay2']['cur_status'] == false) {
+            document.getElementById("Relay2_cur_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay2_cur_status").innerHTML = "N/A";
+        }
+
+        if (arr['Relay3']['cur_status'] == true) {
+            document.getElementById("Relay3_cur_status").innerHTML = "เปิด";
+        } else if (arr['Relay3']['cur_status'] == false) {
+            document.getElementById("Relay3_cur_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay3_cur_status").innerHTML = "N/A";
+        }
+        if (arr['Relay4']['cur_status'] == true) {
+            document.getElementById("Relay4_cur_status").innerHTML = "เปิด";
+        } else if (arr['Relay4']['cur_status'] == false) {
+            document.getElementById("Relay4_cur_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay4_cur_status").innerHTML = "N/A";
+        }
+        if (arr['Relay5']['cur_status'] == true) {
+            document.getElementById("Relay5_cur_status").innerHTML = "เปิด";
+        } else if (arr['Relay5']['cur_status'] == false) {
+            document.getElementById("Relay5_cur_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay5_cur_status").innerHTML = "N/A";
+        }
+
+        if (arr['Relay6']['cur_status'] == true) {
+            document.getElementById("Relay6_cur_status").innerHTML = "เปิด";
+        } else if (arr['Relay6']['cur_status'] == false) {
+            document.getElementById("Relay6_cur_status").innerHTML = "ปิด";
+        } else {
+            document.getElementById("Relay6_cur_status").innerHTML = "N/A";
+        }
+    });
+
+</script>
 
 
 </body>
