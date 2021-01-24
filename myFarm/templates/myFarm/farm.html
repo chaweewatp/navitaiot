@@ -161,6 +161,40 @@
 
         {# Relay controller#}
         <div class="row">
+            <div class="col-xs-12">
+                <button type="button" class="btn btn-warning" id="emergencyOff">Emergency Off!
+                </button>
+                <script>
+                        document.getElementById('emergencyOff').onclick = function () {
+        console.log('emergencyOff clicked')
+        var myHeaders = new Headers();
+        var farmID = "{{ farmCode }}";
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            "farmID": farmID,
+            "token": "xxx",
+            "method": "emergencyOff",
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch("http://127.0.0.1:8000/emergencyOff/", requestOptions)
+        {#fetch("https://navitaiot.herokuapp.com/emergencyOff/", requestOptions)#}
+
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+    }
+                </script>
+</div>
+        </div>
+        <div class="row">
             <div class="col-xs-12 col-md12 text-title">
                 <div class="row">
                     {# relay 1#}

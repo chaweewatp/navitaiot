@@ -81,9 +81,6 @@ def pageFarm(request, id):
         'initialchk65': relay6Ref.val()['Schedule']['Period5']['pause'],
         'initialchk66': relay6Ref.val()['Schedule']['Period6']['pause'],
 
-
-
-
     }
 
     if (request.method == "POST"):
