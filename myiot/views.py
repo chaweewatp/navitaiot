@@ -459,7 +459,7 @@ def wakeUp(request):
 
     command = ['turnOn' if item is True else 'turnOff' for item in command]
 
-    topic = "AA0001/getCurrentCommand"
+    topic = "{}/getCurrentCommand".format(farmID)
     # msg = "relay" + relay_num[0] + s/' + command[0] + ",relay" + relay_num[1] + '/' + command[1] + ",relay" + relay_num[
     #     2] + '/' + command[2]
 
@@ -472,6 +472,40 @@ def wakeUp(request):
     print(msg)
     print(str(msg))
     client.publish(topic, msg)
-    print('Message publish to ' + "AA0001" + ", msg :" + str(msg))
+    print('Message publish to ' + "{}".format(farmID) + ", msg :" + str(msg))
+
+    return Response("OK")
+
+
+
+
+@api_view(['POST'])
+@permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
+def emergencyOff(request):
+    data = json.loads(str(request.body, encoding='utf-8'))
+    print(data)
+    farmID = data["farmID"]
+    f1 = farm.objects.get(farmCode=farmID)
+    relay_list = relayDevice.objects.filter(farm=f1)
+    relay_num = []
+    command = []
+    for item in relay_list:
+        relay_num.append(item.relayNumber)
+
+    command = ['turnOn' if item is True else 'turnOff' for item in command]
+
+    topic = "{}/getCurrentCommand".format(farmID)
+
+
+    msg=JSONRenderer().render({"relay{}".format(relay_num[0]):"turnOff",
+                               "relay{}".format(relay_num[1]):"turnOff",
+                               "relay{}".format(relay_num[2]):"turnOff",
+                               "relay{}".format(relay_num[3]):"turnOff",
+                               "relay{}".format(relay_num[4]):"turnOff",
+                               "relay{}".format(relay_num[5]):"turnOff"})
+    print(msg)
+    print(str(msg))
+    client.publish(topic, msg)
+    print('Message publish to ' + "{}".format(farmID) + ", msg :" + str(msg))
 
     return Response("OK")
