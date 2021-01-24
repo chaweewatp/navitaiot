@@ -509,3 +509,25 @@ def emergencyOff(request):
     print('Message publish to ' + "{}".format(farmID) + ", msg :" + str(msg))
 
     return Response("OK")
+
+
+
+
+
+@api_view(['POST'])
+@permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
+def reportRelay(request):
+    data = json.loads(str(request.body, encoding='utf-8'))
+    print(data)
+    farmID = data["farmID"]
+    content=data['content']
+    f1 = farm.objects.get(farmCode=farmID)
+    r1= relayDevice.objects.get(farm=f1, relayNumber=content[5])
+    if content[6:]=="On":
+        r1.currentStatus=True
+        r1.save()
+    elif content[6:]=="Off":
+        r1.currentStatus=False
+        r1.save()
+
+    return Response("OK")

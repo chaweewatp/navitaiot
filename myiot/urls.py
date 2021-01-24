@@ -11,7 +11,6 @@ urlpatterns = [
     path('wakeUp/', views.wakeUp, name='wakeUp'),
     path('setMode/', views.setMode, name='setMode'),
     path('emergencyOff/', views.emergencyOff, name='emergencyOff'),
-
-
+    path('reportRelay/', views.reportRelay, name='reportRelay'),
 
 ]
