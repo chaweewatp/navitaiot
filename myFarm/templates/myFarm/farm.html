@@ -3145,14 +3145,16 @@ console.log(formattedTime);
 
         if (arr['Relay1']['manual'] == true) {
             document.getElementById("Relay1_mode").innerHTML = "manual";
-            document.getElementById("setRelay1Manual").className = "btn btn-secondary";
-            document.getElementById("setRelay1Schedule").className = "btn btn-info";
+            document.getElementById("setRelay1Manual").className = "btn btn-warning";
+            document.getElementById("setRelay1Schedule").className = "btn btn-secondary";
+
 
 
         } else if (arr['Relay1']['manual'] == false) {
             document.getElementById("Relay1_mode").innerHTML = "schedule";
-            document.getElementById("setRelay1Manual").className = "btn btn-warning";
-            document.getElementById("setRelay1Schedule").className = "btn btn-secondary";
+            document.getElementById("setRelay1Manual").className = "btn btn-secondary";
+            document.getElementById("setRelay1Schedule").className = "btn btn-info";
+
 
         } else {
             document.getElementById("Relay1_mode").innerHTML = "N/A";
@@ -3250,13 +3252,15 @@ console.log(formattedTime);
 
         if (arr['Relay1']['cur_status'] == true) {
             document.getElementById("Relay1_cur_status").innerHTML = "เปิด";
-            document.getElementById("controlRelay1On").className = "btn btn-secondary";
-            document.getElementById("controlRelay1Off").className = "btn btn-danger";
+                        document.getElementById("controlRelay1On").className = "btn btn-success";
+            document.getElementById("controlRelay1Off").className = "btn btn-secondary";
+
 
         } else if (arr['Relay1']['cur_status'] == false) {
             document.getElementById("Relay1_cur_status").innerHTML = "ปิด";
-            document.getElementById("controlRelay1On").className = "btn btn-success";
-            document.getElementById("controlRelay1Off").className = "btn btn-secondary";
+                        document.getElementById("controlRelay1On").className = "btn btn-secondary";
+            document.getElementById("controlRelay1Off").className = "btn btn-danger";
+
 
         } else {
             document.getElementById("Relay1_cur_status").innerHTML = "N/A";
