@@ -434,7 +434,9 @@ def createSchedule(request):
                                                                                           duration) + '}'
         sendScheduleToIoT(text)
         # sendCommandOn(chipID=farmID, device=device)
-
+        text = {'sch_status':True}
+        db = firebase.database()
+        db.child("farmCode").child(farmID).child('Relay' + str(device[-1])).update(text)
     else:
         print(" not set On")
 
