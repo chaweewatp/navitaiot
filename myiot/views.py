@@ -425,8 +425,8 @@ def createSchedule(request):
     # ถ้าเลยเวลาเปิดแล้วให้เปิดอัตโนมัติ
 
 
-    on_time = datetime.time(start_hour, start_minute,start_second)
-    off_time = datetime.time(end_hour, end_minute,end_second)
+    on_time = datetime.time(int(start_hour), int(start_minute),int(start_second))
+    off_time = datetime.time(int(end_hour), int(end_minute),int(end_second))
     current_time = datetime.datetime.now().time()
     if (check_time(current_time, on_time, off_time)):
         print("set On now")
