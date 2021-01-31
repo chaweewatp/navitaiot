@@ -472,7 +472,23 @@ def createSchedule(request):
             db = firebase.database()
             db.child("farmCode").child(farmID).child('Relay' + str(device[-1])).update(text)
         else:
-            print(" not set On")
+            print(" not set On now")
+    elif pause==True:
+        on_time = datetime.time(int(start_hour), int(start_minute),int(start_second))
+        off_time = datetime.time(int(end_hour), int(end_minute),int(end_second))
+        current_time = datetime.datetime.now().time()
+        if (check_time(current_time, on_time, off_time)):
+            print("set Off now")
+            text = '{' + '"command":"Off","farmID":"{}","device":"{}", "duration":"{}"'.format(farmID, device,
+                                                                                              duration) + '}'
+            sendScheduleToIoT(text)
+            # sendCommandOn(chipID=farmID, device=device)
+            text = {'sch_status':False}
+            db = firebase.database()
+            db.child("farmCode").child(farmID).child('Relay' + str(device[-1])).update(text)
+        else:
+            print(" not set Off now")
+
     return Response("OK")
 
 
