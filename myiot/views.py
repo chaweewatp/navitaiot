@@ -54,13 +54,13 @@ firebase = pyrebase.initialize_app(config)
 @api_view(['POST'])
 @permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
 def testAPI(request):
-    print('Raw Data: "%s"' % request.__dict__)
-    print('Body Data: "%s"' % request.body)
+    # print('Raw Data: "%s"' % request.__dict__)
+    # print('Body Data: "%s"' % request.body)
     return Response("OK")
 
 
 def firebaseModeSet(mode, farmID, relay):
-    print(relay)
+    # print(relay)
     text = {'manual': mode}
     db = firebase.database()
     db.child("farmCode").child(farmID).child(relay).update(text)
@@ -74,7 +74,7 @@ def modeManualSet(farmID, relay):
 
     # update firebase
     firebaseModeSet(mode=True, farmID=farmID, relay=relay)
-    print('farmID :{} - relay number : {} set as Manual mode'.format(farmID, relay))
+    # print('farmID :{} - relay number : {} set as Manual mode'.format(farmID, relay))
 
 def modeScheduleSet(farmID, relay):
     f1 = farm.objects.get(farmCode=farmID)
@@ -85,8 +85,8 @@ def modeScheduleSet(farmID, relay):
 
     # update firebase
     firebaseModeSet(mode=False, farmID=farmID, relay=relay)
-    print('farmID :{} - relay number : {} set as Schedule mode'.format(farmID, relay))
-    print(r1.__dict__)
+    # print('farmID :{} - relay number : {} set as Schedule mode'.format(farmID, relay))
+    # print(r1.__dict__)
 
     #send command to NbIoT
     if r1.scheduleStatus==True:
@@ -101,8 +101,8 @@ def modeScheduleSet(farmID, relay):
 @api_view(['POST'])
 @permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
 def setMode(request):
-    print('Raw Data: "%s"' % request.__dict__)
-    print('Body Data: "%s"' % request.body)
+    # print('Raw Data: "%s"' % request.__dict__)
+    # print('Body Data: "%s"' % request.body)
     data = json.loads(str(request.body, encoding='utf-8'))
     farmID=data['farmID']
     if data['method']=="setMode":
@@ -148,8 +148,8 @@ def sendCommandONLED():
     # client.connect("jaguar.rmq.cloudamqp.com", 1883, 60)
 
     client.publish(topic, msg)
-    print('Message publish to ' + chipID + ", msg :" + msg)
-    print()
+    # print('Message publish to ' + chipID + ", msg :" + msg)
+    # print()
     # return HttpResponse("ON")
 
 
@@ -164,8 +164,8 @@ def sendCommandOffLED():
     # client.connect("jaguar.rmq.cloudamqp.com", 1883, 60)
 
     client.publish(topic, msg)
-    print('Message publish to ' + chipID + ", msg :" + msg)
-    print()
+    # print('Message publish to ' + chipID + ", msg :" + msg)
+    # print()
     # return HttpResponse("Off")
 
 
@@ -194,8 +194,8 @@ def sendCommandOn(chipID, device):
 @api_view(['POST'])
 @permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
 def testAPI2(request):
-    print('Raw Data: "%s"' % request.__dict__)
-    print('Body Data: "%s"' % request.body)
+    # print('Raw Data: "%s"' % request.__dict__)
+    # print('Body Data: "%s"' % request.body)
     data = json.loads(str(request.body, encoding='utf-8'))
     # print(data)
     # print(data["method"])
@@ -234,7 +234,7 @@ def sendScheduleToIoT(text):
     device = res["device"]
     f1 = farm.objects.get(farmCode=chipId)
     r1 = relayDevice.objects.get(farm=f1, relayNumber=device[-1])
-    print(r1.__dict__)
+    # print(r1.__dict__)
     if res["command"] == "On":
         if r1.manualMode == False: #check if manual mode is disable
             sendCommandOn(chipID=chipId, device=device)
@@ -260,11 +260,11 @@ def sendScheduleToIoT(text):
 
 
 def sendCommandOnTest(text):
-    print(text)
+    # print(text)
     topic = "AA0001"
     msg = "relay3" + "/turnOn"
     client.publish(topic, msg)
-    print('Message publish to ' + "AA0001" + ", msg :" + msg)
+    # print('Message publish to ' + "AA0001" + ", msg :" + msg)
 
 
 def delete_old_job_executions(max_age=604_800):
