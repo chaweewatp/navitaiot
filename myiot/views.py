@@ -23,6 +23,7 @@ from django.conf import settings
 from apscheduler.schedulers.blocking import BlockingScheduler
 
 from apscheduler.schedulers.background import BackgroundScheduler
+from .__init__ import scheduler
 
 from apscheduler.triggers.cron import CronTrigger
 from django.core.management.base import BaseCommand
@@ -273,7 +274,7 @@ def delete_old_job_executions(max_age=604_800):
 
 @api_view(['POST'])
 @permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
-def createSchedule(request):
+def createSchedule(request, scheduler):
     data = json.loads(str(request.body, encoding='utf-8'))
     print(data)
     farmID = data["farmID"]
@@ -319,7 +320,7 @@ def createSchedule(request):
         for item in jobs:
             item.delete()
 
-    scheduler = BackgroundScheduler()
+    # scheduler = BackgroundScheduler()
     # scheduler=BlockingScheduler(timezone=settings.TIME_ZONE)
 
     scheduler.add_jobstore(DjangoJobStore(), "default")
@@ -337,9 +338,6 @@ def createSchedule(request):
         replace_existing=True, jitter=3
     )
     scheduler.start()
-
-
-
 
     print("Schedule created {}".format(text))
     if pause == False:
@@ -384,7 +382,7 @@ def createSchedule(request):
         for item in jobs:
             item.delete()
 
-    scheduler = BackgroundScheduler()
+    # scheduler = BackgroundScheduler()
     # scheduler=BlockingScheduler(timezone=settings.TIME_ZONE)
 
     scheduler.add_jobstore(DjangoJobStore(), "default")
