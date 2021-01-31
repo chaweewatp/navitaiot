@@ -335,7 +335,7 @@ def createSchedule(request):
         newSch = scheduleRelay.objects.get(scheduleId=scheduleID_On)
         print('schedule is exist')
         newSch.period = period
-        newSch.startTime = '{:02d}:{:02d}:{:02d}'.format(start_hour, start_minute,start_second)
+        newSch.startTime = '{:02d}:{:02d}:{:02d}'.format(int(start_hour), int(start_minute),int(start_second))
         newSch.duration = duration
         newSch.dayOfWeek = 'x'
         newSch.enable = not pause
@@ -346,7 +346,7 @@ def createSchedule(request):
         print('create new schedule')
         f1 = farm.objects.get(farmCode=farmID)
         r1 = relayDevice.objects.get(farm_id=f1, relayNumber=device[-1])
-        newSch = scheduleRelay(relay=r1, period=period, startTime='{:02d}:{:02d}:{:02d}'.format(start_hour, start_minute,start_second),
+        newSch = scheduleRelay(relay=r1, period=period, startTime='{:02d}:{:02d}:{:02d}'.format(int(start_hour), int(start_minute),int(start_second)),
                                duration=duration,
                                dayOfWeek='x', enable=True, scheduleId=scheduleID_On)
         newSch.save()
@@ -399,7 +399,7 @@ def createSchedule(request):
         newSch = scheduleRelay.objects.get(scheduleId=scheduleID_Off)
         print('schedule is exist')
         newSch.period = period
-        newSch.startTime = '{:02d}:{:02d}:{:02d}'.format(end_hour, end_minute, end_second)
+        newSch.startTime = '{:02d}:{:02d}:{:02d}'.format(int(end_hour), int(end_minute), int(end_second))
         newSch.duration = 0
         newSch.dayOfWeek = 'x'
         newSch.enable = not pause
@@ -409,7 +409,7 @@ def createSchedule(request):
         print('create new schedule')
         f1 = farm.objects.get(farmCode=farmID)
         r1 = relayDevice.objects.get(farm_id=f1, relayNumber=device[-1])
-        newSch = scheduleRelay(relay=r1, period=period, startTime='{:02d}:{:02d}:{:02d}'.format(end_hour, end_minute, end_second), duration=0,
+        newSch = scheduleRelay(relay=r1, period=period, startTime='{:02d}:{:02d}:{:02d}'.format(int(end_hour), int(end_minute), int(end_second)), duration=0,
                                dayOfWeek='x', enable=True, scheduleId=scheduleID_Off)
         newSch.save()
 
