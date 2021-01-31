@@ -19,9 +19,6 @@ config = {
 firebase = pyrebase.initialize_app(config)
 
 
-
-
-
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
     client.subscribe("TEST/MQTT")
@@ -269,3 +266,7 @@ print('start MQTT client')
 client.loop_start()
 print('MQTT client started')
 
+
+from apscheduler.schedulers.background import BackgroundScheduler
+
+scheduler = BackgroundScheduler()
