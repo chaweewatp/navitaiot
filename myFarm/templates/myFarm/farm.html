@@ -1435,7 +1435,7 @@
                                 สิ้นสุด <span id="R6_Sch3_off"></span> <span id="R6_Sch3_pause"></span>
                                 {% if initialchk63 == False %}
                                     <input id="chk63" type="checkbox" checked data-toggle="toggle"
-                                           onchange="toggleScheduleRelay(relay_num=4, period=3)"
+                                           onchange="toggleScheduleRelay(relay_num=6, period=3)"
                                            data-onstyle="success">
                                 {% else %}
                                     <input id="chk63" type="checkbox" data-toggle="toggle"
@@ -2614,7 +2614,7 @@
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
-
+        {#$('#chk11').bootstrapToggle('on')#}
     }
 
 </script>
