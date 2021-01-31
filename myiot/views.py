@@ -80,6 +80,7 @@ def modeManualSet(farmID, relay):
     # print('farmID :{} - relay number : {} set as Manual mode'.format(farmID, relay))
 
 def modeScheduleSet(farmID, relay):
+    print('HERE')
     f1 = farm.objects.get(farmCode=farmID)
     r1 = relayDevice.objects.get(farm=f1, relayNumber=relay[-1])
     r1.manualMode = False
@@ -91,13 +92,47 @@ def modeScheduleSet(farmID, relay):
     # print('farmID :{} - relay number : {} set as Schedule mode'.format(farmID, relay))
     # print(r1.__dict__)
 
+    # เช็คก่อนว่าตอนที่กดมา อยู่ในระหว่าง schedule ไหม มีในเวลาที่ตั้งไว้ไหม
+    onSchedule=False
+    for period in [1,2,3,4,5,6]:
+        # print(period)
+
+
+        try:
+            on_schedule=scheduleRelay.objects.get(scheduleId='{}_relay{}_period{}_On'.format(r1.farm.farmCode, r1.relayNumber,period))
+            # print(on_schedule.__dict__)
+            if  (on_schedule.enable):
+                on_time = datetime.time(int(on_schedule.startTime.split(':')[0]),
+                                        int(on_schedule.startTime.split(':')[1]),
+                                        int(on_schedule.startTime.split(':')[2]))
+                off_schedule=scheduleRelay.objects.get(scheduleId='{}_relay{}_period{}_Off'.format(r1.farm.farmCode, r1.relayNumber,period))
+                off_time=datetime.time(int(off_schedule.startTime.split(':')[0]), int(off_schedule.startTime.split(':')[1]), int(off_schedule.startTime.split(':')[2]))
+
+                current_time = datetime.datetime.now().time()
+                check=check_time(current_time,on_time,off_time)
+                print(check)
+                if (check):
+                    onSchedule=True
+        except:
+            pass
+
+    print(onSchedule)
     #send command to NbIoT
-    if r1.scheduleStatus==True:
+    if (onSchedule):
+        r1.scheduleStatus=True
+        r1.save()
         sendCommandOn(farmID, 'relay'+relay[-1])
 
-    elif r1.scheduleStatus==False:
+        text = {'sch_status':True}
+        db = firebase.database()
+        db.child("farmCode").child(farmID).child('Relay' + str(r1.relayNumber)).update(text)
+    else:
+        r1.scheduleStatus=False
+        r1.save()
         sendCommandOff(farmID, 'relay'+relay[-1])
-
+        text = {'sch_status':False}
+        db = firebase.database()
+        db.child("farmCode").child(farmID).child('Relay' + str(r1.relayNumber)).update(text)
 
 
 
@@ -300,10 +335,10 @@ def createSchedule(request):
         newSch = scheduleRelay.objects.get(scheduleId=scheduleID_On)
         print('schedule is exist')
         newSch.period = period
-        newSch.startTime = '{}:{}'.format(start_hour, start_minute)
+        newSch.startTime = '{:02d}:{:02d}:{:02d}'.format(start_hour, start_minute,start_second)
         newSch.duration = duration
         newSch.dayOfWeek = 'x'
-        newSch.enable = True
+        newSch.enable = not pause
         newSch.save()
 
 
@@ -311,7 +346,7 @@ def createSchedule(request):
         print('create new schedule')
         f1 = farm.objects.get(farmCode=farmID)
         r1 = relayDevice.objects.get(farm_id=f1, relayNumber=device[-1])
-        newSch = scheduleRelay(relay=r1, period=period, startTime='{}:{}'.format(start_hour, start_minute),
+        newSch = scheduleRelay(relay=r1, period=period, startTime='{:02d}:{:02d}:{:02d}'.format(start_hour, start_minute,start_second),
                                duration=duration,
                                dayOfWeek='x', enable=True, scheduleId=scheduleID_On)
         newSch.save()
@@ -364,17 +399,17 @@ def createSchedule(request):
         newSch = scheduleRelay.objects.get(scheduleId=scheduleID_Off)
         print('schedule is exist')
         newSch.period = period
-        newSch.startTime = '{}:{}'.format(end_hour, end_hour)
+        newSch.startTime = '{:02d}:{:02d}:{:02d}'.format(end_hour, end_minute, end_second)
         newSch.duration = 0
         newSch.dayOfWeek = 'x'
-        newSch.enable = True
+        newSch.enable = not pause
         newSch.save()
 
     except:
         print('create new schedule')
         f1 = farm.objects.get(farmCode=farmID)
         r1 = relayDevice.objects.get(farm_id=f1, relayNumber=device[-1])
-        newSch = scheduleRelay(relay=r1, period=period, startTime='{}:{}'.format(end_hour, end_minute), duration=0,
+        newSch = scheduleRelay(relay=r1, period=period, startTime='{:02d}:{:02d}:{:02d}'.format(end_hour, end_minute, end_second), duration=0,
                                dayOfWeek='x', enable=True, scheduleId=scheduleID_Off)
         newSch.save()
 
@@ -423,23 +458,21 @@ def createSchedule(request):
     close_old_connections()
 
     # ถ้าเลยเวลาเปิดแล้วให้เปิดอัตโนมัติ
-
-
-    on_time = datetime.time(int(start_hour), int(start_minute),int(start_second))
-    off_time = datetime.time(int(end_hour), int(end_minute),int(end_second))
-    current_time = datetime.datetime.now().time()
-    if (check_time(current_time, on_time, off_time)):
-        print("set On now")
-        text = '{' + '"command":"On","farmID":"{}","device":"{}", "duration":"{}"'.format(farmID, device,
-                                                                                          duration) + '}'
-        sendScheduleToIoT(text)
-        # sendCommandOn(chipID=farmID, device=device)
-        text = {'sch_status':True}
-        db = firebase.database()
-        db.child("farmCode").child(farmID).child('Relay' + str(device[-1])).update(text)
-    else:
-        print(" not set On")
-
+    if pause==False:
+        on_time = datetime.time(int(start_hour), int(start_minute),int(start_second))
+        off_time = datetime.time(int(end_hour), int(end_minute),int(end_second))
+        current_time = datetime.datetime.now().time()
+        if (check_time(current_time, on_time, off_time)):
+            print("set On now")
+            text = '{' + '"command":"On","farmID":"{}","device":"{}", "duration":"{}"'.format(farmID, device,
+                                                                                              duration) + '}'
+            sendScheduleToIoT(text)
+            # sendCommandOn(chipID=farmID, device=device)
+            text = {'sch_status':True}
+            db = firebase.database()
+            db.child("farmCode").child(farmID).child('Relay' + str(device[-1])).update(text)
+        else:
+            print(" not set On")
     return Response("OK")
 
 
