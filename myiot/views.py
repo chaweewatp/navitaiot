@@ -274,7 +274,7 @@ def delete_old_job_executions(max_age=604_800):
 
 @api_view(['POST'])
 @permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
-def createSchedule(request, scheduler):
+def createSchedule(request):
     data = json.loads(str(request.body, encoding='utf-8'))
     print(data)
     farmID = data["farmID"]
@@ -322,8 +322,8 @@ def createSchedule(request, scheduler):
 
     # scheduler = BackgroundScheduler()
     # scheduler=BlockingScheduler(timezone=settings.TIME_ZONE)
+    # scheduler.add_jobstore(DjangoJobStore(), "default")
 
-    scheduler.add_jobstore(DjangoJobStore(), "default")
     text = '{' + '"command":"On","farmID":"{}","device":"{}", "duration":"{}"'.format(farmID, device, duration) + '}'
     scheduler.add_job(sendScheduleToIoT, trigger=CronTrigger(day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=start_hour,
                                                              minute=start_minute), second=start_second,
@@ -337,7 +337,7 @@ def createSchedule(request, scheduler):
         max_instances=1,
         replace_existing=True, jitter=3
     )
-    scheduler.start()
+    # scheduler.start()
 
     print("Schedule created {}".format(text))
     if pause == False:
@@ -384,8 +384,7 @@ def createSchedule(request, scheduler):
 
     # scheduler = BackgroundScheduler()
     # scheduler=BlockingScheduler(timezone=settings.TIME_ZONE)
-
-    scheduler.add_jobstore(DjangoJobStore(), "default")
+    # scheduler.add_jobstore(DjangoJobStore(), "default")
     text = '{' + '"command":"Off","farmID":"{}","device":"{}"'.format(farmID, device) + '}'
     scheduler.add_job(sendScheduleToIoT,
                       trigger=CronTrigger(day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=end_hour, minute=end_minute,
@@ -401,7 +400,7 @@ def createSchedule(request, scheduler):
         replace_existing=True, jitter=3
     )
 
-    scheduler.start()
+    # scheduler.start()
 
     print("Schedule created {}".format(text))
     if pause == False:
