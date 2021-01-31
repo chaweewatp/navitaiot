@@ -6,7 +6,6 @@ from django.db import close_old_connections
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-
 import json
 
 from rest_framework.decorators import api_view, permission_classes
@@ -29,6 +28,10 @@ from apscheduler.triggers.cron import CronTrigger
 from django.core.management.base import BaseCommand
 from django_apscheduler.jobstores import DjangoJobStore
 from django_apscheduler.models import DjangoJobExecution
+
+from django.utils import timezone
+import datetime
+
 
 from myFarm.models import scheduleRelay, relayDevice, farm
 
@@ -224,6 +227,7 @@ def testAPI2(request):
 #     client.publish(topic, msg)
 #     print('Message publish to ' + chipID + ", msg :" + msg)
 
+# text = '{' + '"command":"On","farmID":"{}","device":"{}", "duration":"{}"'.format(farmID, device, duration) + '}'
 
 def sendScheduleToIoT(text):
     """ send set of command to IoT"""
@@ -418,8 +422,30 @@ def createSchedule(request):
 
     close_old_connections()
 
+    # ถ้าเลยเวลาเปิดแล้วให้เปิดอัตโนมัติ
+
+
+    on_time = datetime.time(start_hour, start_minute,start_second)
+    off_time = datetime.time(end_hour, end_minute,end_second)
+    current_time = datetime.datetime.now().time()
+    if (check_time(current_time, on_time, off_time)):
+        print("set On now")
+        text = '{' + '"command":"On","farmID":"{}","device":"{}", "duration":"{}"'.format(farmID, device,
+                                                                                          duration) + '}'
+        sendScheduleToIoT(text)
+        # sendCommandOn(chipID=farmID, device=device)
+
+    else:
+        print(" not set On")
+
     return Response("OK")
 
+
+def check_time(time_to_check, on_time, off_time):
+    if time_to_check > on_time and time_to_check < off_time:
+        return True
+    else:
+        return False
 
 
 @api_view(['POST'])
