@@ -268,5 +268,9 @@ print('MQTT client started')
 
 
 from apscheduler.schedulers.background import BackgroundScheduler
+# from django_apscheduler.jobstores import DjangoJobStore
+# from django_apscheduler.models import DjangoJobExecution
 
 scheduler = BackgroundScheduler()
+# scheduler.add_jobstore(DjangoJobStore(), "default")
+scheduler.start()
