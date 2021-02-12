@@ -287,20 +287,20 @@ def testAPI2(request):
             # set mode --> manual
             modeManualSet(farmID=chipID, relay=relay)
 
-            recieveTime = datetime.datetime.now().strftime("%Y%m%d:%H%M%S")
+            recieveTime = datetime.datetime.now().strftime("%Y-%m-%d:%H-%M-%S")
             db = firebase.database()
             db.child("farmCode").child(chipID).child('logs').child(relay).child(
-                '{}'.format(recieveTime)).set({'type': 'commandMan', 'oper': 'on'})
+                '{}'.format(recieveTime)).set({'type': 'manual', 'oper': 'on'})
 
         elif data["detail"]["control"] == "off":
             sendCommandOff(chipID=chipID, device='relay'+relay[-1])
             # set mode --> manual
             modeManualSet(farmID=chipID, relay=relay)
 
-            recieveTime = datetime.datetime.now().strftime("%Y%m%d:%H%M%S")
+            recieveTime = datetime.datetime.now().strftime("%Y-%m-%d:%H-%M-%S")
             db = firebase.database()
             db.child("farmCode").child(chipID).child('logs').child(relay).child(
-                '{}'.format(recieveTime)).set({'type': 'commandMan', 'oper': 'off'})
+                '{}'.format(recieveTime)).set({'type': 'manual', 'oper': 'off'})
 
         else:
             pass
@@ -322,10 +322,10 @@ def sendScheduleToIoT(text):
         if r1.manualMode == False: #check if manual mode is disable
             sendCommandOn(chipID=chipId, device=device)
             print('Send command to IoT')
-            recieveTime = datetime.datetime.now().strftime("%Y%m%d:%H%M%S")
+            recieveTime = datetime.datetime.now().strftime("%Y-%m-%d:%H-%M-%S")
             db = firebase.database()
             db.child("farmCode").child(chipId).child('logs').child(device).child(
-                '{}'.format(recieveTime)).set({'type': 'commandSch', 'oper': 'on'})
+                '{}'.format(recieveTime)).set({'type': 'schedule', 'oper': 'on'})
         r1.scheduleStatus=True
         r1.save()
         text = {'sch_status':True}
@@ -336,10 +336,10 @@ def sendScheduleToIoT(text):
         if r1.manualMode == False:  #check if manual mode is disable
             sendCommandOff(chipID=chipId, device=device)
             print('Send command to IoT')
-            recieveTime = datetime.datetime.now().strftime("%Y%m%d:%H%M%S")
+            recieveTime = datetime.datetime.now().strftime("%Y-%m-%d:%H-%M-%S")
             db = firebase.database()
             db.child("farmCode").child(chipId).child('logs').child(device).child(
-                '{}'.format(recieveTime)).set({'type': 'commandSch', 'oper': 'off'})
+                '{}'.format(recieveTime)).set({'type': 'schedule', 'oper': 'off'})
 
 
 
@@ -674,7 +674,7 @@ def reportRelay(request):
 
 
 def updateRTDB(request):
-    serverTime=datetime.datetime.now().strftime("%Y%m%d:%H%M%S")
+    serverTime=datetime.datetime.now().strftime("%Y-%m-%d:%H-%M-%S")
     timeStamp=datetime.datetime.timestamp(datetime.datetime.now())
 
     print(serverTime)

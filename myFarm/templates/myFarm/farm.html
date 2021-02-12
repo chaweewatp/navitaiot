@@ -123,13 +123,16 @@
 
         {# farm detial#}
         <div class="row">
-            <div class="col-xs-12 col-md12 text-title">
+            <div class="col-xs-8 text-title">
                 <p>{{ farmName }}</p>
                 <p>{{ farmCode }}</p>
             </div>
+            <div class="col-xs-4 text-title">
+                <p>Historical</p>
+            </div>
         </div>
 
-    <span id="last_Time"></span>
+        <span id="last_Time"></span>
 
         {# Sensor #}
         <div class="row">
@@ -140,23 +143,23 @@
         </div>
 
         {# LED control #}
-{#        <div class="row">#}
-{#            <div class="col-xs-12 col-md12 text-title">#}
-{#                <form method="POST">#}
-{#                    {% csrf_token %}#}
-{##}
-{#                    <li>#}
-{#                        <input type="radio" id="a-option" name="command" value="ON">#}
-{#                        <label for="a-option" id="text8"> เปิด LED </label>#}
-{#                    </li>#}
-{#                    <li>#}
-{#                        <input type="radio" id="a-option" name="command" value="OFF">#}
-{#                        <label for="a-option" id="text8"> ปิด LED </label>#}
-{#                    </li>#}
-{#                    <input id="submit" class="w-100 btn" type="submit" value="ส่งค่า">#}
-{#                </form>#}
-{#            </div>#}
-{#        </div>#}
+        {#        <div class="row">#}
+        {#            <div class="col-xs-12 col-md12 text-title">#}
+        {#                <form method="POST">#}
+        {#                    {% csrf_token %}#}
+        {##}
+        {#                    <li>#}
+        {#                        <input type="radio" id="a-option" name="command" value="ON">#}
+        {#                        <label for="a-option" id="text8"> เปิด LED </label>#}
+        {#                    </li>#}
+        {#                    <li>#}
+        {#                        <input type="radio" id="a-option" name="command" value="OFF">#}
+        {#                        <label for="a-option" id="text8"> ปิด LED </label>#}
+        {#                    </li>#}
+        {#                    <input id="submit" class="w-100 btn" type="submit" value="ส่งค่า">#}
+        {#                </form>#}
+        {#            </div>#}
+        {#        </div>#}
 
 
         {# Relay controller#}
@@ -165,34 +168,35 @@
                 <button type="button" class="btn btn-warning" id="emergencyOff">Emergency Off!
                 </button>
                 <script>
-                        document.getElementById('emergencyOff').onclick = function () {
-        console.log('emergencyOff clicked')
-        var myHeaders = new Headers();
-        var farmID = "{{ farmCode }}";
-        myHeaders.append("Content-Type", "application/json");
+                    document.getElementById('emergencyOff').onclick = function () {
+                        console.log('emergencyOff clicked')
+                        var myHeaders = new Headers();
+                        var farmID = "{{ farmCode }}";
+                        myHeaders.append("Content-Type", "application/json");
 
-        var raw = JSON.stringify({
-            "farmID": farmID,
-            "token": "xxx",
-            "method": "emergencyOff",
-        });
+                        var raw = JSON.stringify({
+                            "farmID": farmID,
+                            "token": "xxx",
+                            "method": "emergencyOff",
+                        });
 
-        var requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
-        };
+                        var requestOptions = {
+                            method: 'POST',
+                            headers: myHeaders,
+                            body: raw,
+                            redirect: 'follow'
+                        };
 
-        {#fetch("http://127.0.0.1:8000/emergencyOff/", requestOptions)#}
-        fetch("https://navitaiot.herokuapp.com/emergencyOff/", requestOptions)
+                        {#fetch("http://127.0.0.1:8000/emergencyOff/", requestOptions)#}
+                        fetch("https://navitaiot.herokuapp.com/emergencyOff/", requestOptions)
 
-            .then(response => response.text())
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));
-    }
+                            .then(response => response.text())
+                            .then(result => console.log(result))
+                            .catch(error => console.log('error', error));
+                    }
                 </script>
-</div>
+
+            </div>
         </div>
         <div class="row">
             <div class="col-xs-12 col-md12 text-title">
@@ -237,9 +241,11 @@
                                         <div class="col-xs-12">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <button type="button" class="btn btn-success" id="controlRelay1On">On
+                                                    <button type="button" class="btn btn-success" id="controlRelay1On">
+                                                        On
                                                     </button>
-                                                    <button type="button" class="btn btn-danger" id="controlRelay1Off">Off
+                                                    <button type="button" class="btn btn-danger" id="controlRelay1Off">
+                                                        Off
                                                     </button>
                                                 </div>
                                             </div>
@@ -603,7 +609,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod1R1Start">
                                 เป็นเวลา <input id="timePeriod1R1Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod1R1Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=1, period=1)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=1, period=1)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=1,period=1)"> ตั้งเวลา</button>
                                 </button>
 
@@ -616,7 +622,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod2R1Start">
                                 เป็นเวลา <input id="timePeriod2R1Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod2R1Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=1, period=2)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=1, period=2)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=1,period=2)"> ตั้งเวลา</button>
 
 
@@ -632,7 +638,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod3R1Start">
                                 เป็นเวลา <input id="timePeriod3R1Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod3R1Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=1, period=3)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=1, period=3)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=1,period=3)"> ตั้งเวลา</button>
                                 </button>
                             </div>
@@ -644,7 +650,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod4R1Start">
                                 เป็นเวลา <input id="timePeriod4R1Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod4R1Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=1, period=4)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=1, period=4)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=1,period=4)"> ตั้งเวลา</button>
                                 </button>
 
@@ -657,7 +663,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod5R1Start">
                                 เป็นเวลา <input id="timePeriod5R1Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod5R1Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=1, period=5)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=1, period=5)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=1,period=5)"> ตั้งเวลา</button>
                                 </button>
 
@@ -669,7 +675,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod6R1Start">
                                 เป็นเวลา <input id="timePeriod6R1Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod6R1Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=1, period=6)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=1, period=6)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=1,period=6)"> ตั้งเวลา</button>
 
                                 </button>
@@ -806,7 +812,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod1R2Start">
                                 เป็นเวลา <input id="timePeriod1R2Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod1R2Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=2, period=1)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=2, period=1)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=2,period=1)"> ตั้งเวลา</button>
                                 </button>
 
@@ -819,7 +825,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod2R2Start">
                                 เป็นเวลา <input id="timePeriod2R2Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod2R2Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=2, period=2)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=2, period=2)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=2,period=2)"> ตั้งเวลา</button>
                                 </button>
                             </div>
@@ -830,7 +836,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod3R2Start">
                                 เป็นเวลา <input id="timePeriod3R2Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod3R2Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=2, period=3)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=2, period=3)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=2,period=3)"> ตั้งเวลา</button>
                                 </button>
                             </div>
@@ -841,7 +847,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod4R2Start">
                                 เป็นเวลา <input id="timePeriod4R2Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod4R2Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=2, period=4)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=2, period=4)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=2,period=4)"> ตั้งเวลา</button>
                                 </button>
                             </div>
@@ -852,7 +858,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod5R2Start">
                                 เป็นเวลา <input id="timePeriod5R2Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod5R2Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=2, period=5)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=2, period=5)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=2,period=5)"> ตั้งเวลา</button>
                                 </button>
                             </div>
@@ -863,7 +869,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod6R2Start">
                                 เป็นเวลา <input id="timePeriod6R2Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod6R2Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=2, period=6)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=2, period=6)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=2,period=6)"> ตั้งเวลา</button>
                                 </button>
                             </div>
@@ -882,9 +888,10 @@
                 </button>
                 <div id="Relay3" class="collapse">
                     <p>เดรนวาว์ล
-                                            <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Relay3Edit">
+                        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Relay3Edit">
                             ตั้งเวลา
-                        </button></p>
+                        </button>
+                    </p>
                     <div class="col-xs-4">
                         <div class="row">
                             <div class="col-12">
@@ -997,7 +1004,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod1R3Start">
                                 เป็นเวลา <input id="timePeriod1R3Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod1R3Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=3, period=1)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=3, period=1)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=3,period=1)"> ตั้งเวลา</button>
                             </div>
                         </div>
@@ -1006,7 +1013,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod2R3Start">
                                 เป็นเวลา <input id="timePeriod2R3Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod2R3Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=3, period=2)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=3, period=2)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=3,period=2)"> ตั้งเวลา</button>
                             </div>
                         </div>
@@ -1016,7 +1023,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod3R3Start">
                                 เป็นเวลา <input id="timePeriod3R3Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod3R3Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=3, period=3)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=3, period=3)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=3,period=3)"> ตั้งเวลา</button>
                             </div>
                         </div>
@@ -1026,7 +1033,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod4R3Start">
                                 เป็นเวลา <input id="timePeriod4R3Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod4R3Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=3, period=4)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=3, period=4)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=3,period=4)"> ตั้งเวลา</button>
                             </div>
                         </div>
@@ -1036,7 +1043,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod5R3Start">
                                 เป็นเวลา <input id="timePeriod5R3Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod5R3Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=3, period=5)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=3, period=5)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=3,period=5)"> ตั้งเวลา</button>
                             </div>
                         </div>
@@ -1046,7 +1053,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod6R3Start">
                                 เป็นเวลา <input id="timePeriod6R3Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod6R3Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=3, period=6)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=3, period=6)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=3,period=6)"> ตั้งเวลา</button>
                             </div>
                         </div>
@@ -1063,9 +1070,11 @@
                     (Relay-4)
                 </button>
                 <div id="Relay4" class="collapse">
-                    <p>วาร์ลโซน 1<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Relay4Edit">
+                    <p>วาร์ลโซน 1
+                        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Relay4Edit">
                             ตั้งเวลา
-                        </button></p>
+                        </button>
+                    </p>
                     <div class="col-xs-4">
                         <div class="row">
                             <div class="col-12">
@@ -1142,17 +1151,17 @@
                             </div>
                             <div class="col-124">
                                 เริ่ม <span id="R4_Sch6_on"></span> เป็นเวลา <span
-                                        id="R4_Sch6_duration"></span> นาที
-                                    สิ้นสุด <span id="R4_Sch6_off"></span> <span id="R4_Sch6_pause"></span>
-                                    {% if initialchk46 == False %}
-                                        <input id="chk46" type="checkbox" checked data-toggle="toggle"
-                                               onchange="toggleScheduleRelay(relay_num=4, period=6)"
-                                               data-onstyle="success">
-                                    {% else %}
-                                        <input id="chk46" type="checkbox" data-toggle="toggle"
-                                               onchange="toggleScheduleRelay(relay_num=4, period=6)"
-                                               data-onstyle="success">
-                                    {% endif %}
+                                    id="R4_Sch6_duration"></span> นาที
+                                สิ้นสุด <span id="R4_Sch6_off"></span> <span id="R4_Sch6_pause"></span>
+                                {% if initialchk46 == False %}
+                                    <input id="chk46" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=4, period=6)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk46" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=4, period=6)"
+                                           data-onstyle="success">
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -1163,7 +1172,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod1R4Start">
                                 เป็นเวลา <input id="timePeriod1R4Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod1R4Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=4, period=1)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=4, period=1)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=4,period=1)"> ตั้งเวลา</button>
                             </div>
                         </div>
@@ -1172,7 +1181,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod2R4Start">
                                 เป็นเวลา <input id="timePeriod2R4Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod2R4Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=4, period=2)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=4, period=2)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=4,period=2)"> ตั้งเวลา</button>
                             </div>
                         </div>
@@ -1182,7 +1191,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod3R4Start">
                                 เป็นเวลา <input id="timePeriod3R4Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod3R4Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=4, period=3)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=4, period=3)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=4,period=3)"> ตั้งเวลา</button>
                             </div>
                         </div>
@@ -1192,7 +1201,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod4R4Start">
                                 เป็นเวลา <input id="timePeriod4R4Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod4R4Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=4, period=4)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=4, period=4)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=4,period=4)"> ตั้งเวลา</button>
                             </div>
                         </div>
@@ -1202,7 +1211,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod5R4Start">
                                 เป็นเวลา <input id="timePeriod5R4Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod5R4Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=4, period=5)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=4, period=5)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=4,period=5)"> ตั้งเวลา</button>
                             </div>
                         </div>
@@ -1212,7 +1221,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod6R4Start">
                                 เป็นเวลา <input id="timePeriod6R4Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod6R4Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=4, period=6)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=4, period=6)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=4,period=6)"> ตั้งเวลา</button>
                             </div>
                         </div>
@@ -1229,9 +1238,11 @@
                     (Relay-5)
                 </button>
                 <div id="Relay5" class="collapse">
-                    <p>วาร์ลโซน 2<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Relay5Edit">
+                    <p>วาร์ลโซน 2
+                        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Relay5Edit">
                             ตั้งเวลา
-                        </button></p>
+                        </button>
+                    </p>
                     <div class="col-xs-4">
                         <div class="row">
                             <div class="col-12">
@@ -1308,17 +1319,17 @@
                             </div>
                             <div class="col-124">
                                 เริ่ม <span id="R5_Sch6_on"></span> เป็นเวลา <span
-                                        id="R5_Sch6_duration"></span> นาที
-                                    สิ้นสุด <span id="R5_Sch6_off"></span> <span id="R5_Sch6_pause"></span>
-                                    {% if initialchk56 == False %}
-                                        <input id="chk56" type="checkbox" checked data-toggle="toggle"
-                                               onchange="toggleScheduleRelay(relay_num=5, period=6)"
-                                               data-onstyle="success">
-                                    {% else %}
-                                        <input id="chk56" type="checkbox" data-toggle="toggle"
-                                               onchange="toggleScheduleRelay(relay_num=5, period=6)"
-                                               data-onstyle="success">
-                                    {% endif %}
+                                    id="R5_Sch6_duration"></span> นาที
+                                สิ้นสุด <span id="R5_Sch6_off"></span> <span id="R5_Sch6_pause"></span>
+                                {% if initialchk56 == False %}
+                                    <input id="chk56" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=5, period=6)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk56" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=5, period=6)"
+                                           data-onstyle="success">
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -1329,7 +1340,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod1R5Start">
                                 เป็นเวลา <input id="timePeriod1R5Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod1R5Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=5, period=1)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=5, period=1)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=5,period=1)"> ตั้งเวลา</button>
                             </div>
                         </div>
@@ -1338,7 +1349,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod2R5Start">
                                 เป็นเวลา <input id="timePeriod2R5Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod2R5Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=5, period=2)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=5, period=2)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=5,period=2)"> ตั้งเวลา</button>
                             </div>
                         </div>
@@ -1348,7 +1359,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod3R5Start">
                                 เป็นเวลา <input id="timePeriod3R5Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod3R5Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=5, period=3)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=5, period=3)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=5,period=3)"> ตั้งเวลา</button>
                             </div>
                         </div>
@@ -1358,7 +1369,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod4R5Start">
                                 เป็นเวลา <input id="timePeriod4R5Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod4R5Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=5, period=4)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=5, period=4)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=5,period=4)"> ตั้งเวลา</button>
                             </div>
                         </div>
@@ -1368,7 +1379,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod5R5Start">
                                 เป็นเวลา <input id="timePeriod5R5Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod5R5Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=5, period=5)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=5, period=5)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=5,period=5)"> ตั้งเวลา</button>
                             </div>
                         </div>
@@ -1378,7 +1389,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod6R5Start">
                                 เป็นเวลา <input id="timePeriod6R5Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod6R5Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=5, period=6)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=5, period=6)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=5,period=6)"> ตั้งเวลา</button>
                             </div>
                         </div>
@@ -1395,9 +1406,11 @@
                     (Relay-6)
                 </button>
                 <div id="Relay6" class="collapse">
-                    <p>วาร์ลโซน 3<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Relay6Edit">
+                    <p>วาร์ลโซน 3
+                        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Relay6Edit">
                             ตั้งเวลา
-                        </button></p>
+                        </button>
+                    </p>
                     <div class="col-xs-4">
                         <div class="row">
                             <div class="col-12">
@@ -1474,17 +1487,17 @@
                             </div>
                             <div class="col-124">
                                 เริ่ม <span id="R6_Sch6_on"></span> เป็นเวลา <span
-                                        id="R6_Sch6_duration"></span> นาที
-                                    สิ้นสุด <span id="R6_Sch6_off"></span> <span id="R6_Sch6_pause"></span>
-                                    {% if initialchk66 == False %}
-                                        <input id="chk66" type="checkbox" checked data-toggle="toggle"
-                                               onchange="toggleScheduleRelay(relay_num=6, period=6)"
-                                               data-onstyle="success">
-                                    {% else %}
-                                        <input id="chk66" type="checkbox" data-toggle="toggle"
-                                               onchange="toggleScheduleRelay(relay_num=6, period=6)"
-                                               data-onstyle="success">
-                                    {% endif %}
+                                    id="R6_Sch6_duration"></span> นาที
+                                สิ้นสุด <span id="R6_Sch6_off"></span> <span id="R6_Sch6_pause"></span>
+                                {% if initialchk66 == False %}
+                                    <input id="chk66" type="checkbox" checked data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=6, period=6)"
+                                           data-onstyle="success">
+                                {% else %}
+                                    <input id="chk66" type="checkbox" data-toggle="toggle"
+                                           onchange="toggleScheduleRelay(relay_num=6, period=6)"
+                                           data-onstyle="success">
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -1495,7 +1508,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod1R6Start">
                                 เป็นเวลา <input id="timePeriod1R6Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod1R6Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=6, period=1)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=6, period=1)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=6,period=1)"> ตั้งเวลา</button>
                             </div>
                         </div>
@@ -1504,7 +1517,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod2R6Start">
                                 เป็นเวลา <input id="timePeriod2R6Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod2R6Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=6, period=2)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=6, period=2)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=6,period=2)"> ตั้งเวลา</button>
                             </div>
                         </div>
@@ -1514,7 +1527,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod3R6Start">
                                 เป็นเวลา <input id="timePeriod3R6Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod3R6Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=6, period=3)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=6, period=3)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=6,period=3)"> ตั้งเวลา</button>
                             </div>
                         </div>
@@ -1524,7 +1537,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod4R6Start">
                                 เป็นเวลา <input id="timePeriod4R6Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod4R6Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=6, period=4)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=6, period=4)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=6,period=4)"> ตั้งเวลา</button>
                             </div>
                         </div>
@@ -1534,7 +1547,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod5R6Start">
                                 เป็นเวลา <input id="timePeriod5R6Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod5R6Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=6, period=5)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=6, period=5)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=6,period=5)"> ตั้งเวลา</button>
                             </div>
                         </div>
@@ -1544,7 +1557,7 @@
                                 เริ่มเวลา <input type="time" step="1" id="timePeriod6R6Start">
                                 เป็นเวลา <input id="timePeriod6R6Delay"> นาที
                                 สิ้นสุดเวลา <input type="time" step="1" id="timePeriod6R6Stop" disabled>
-{#                                <button type="button" onclick="timeCal(relay_num=6, period=6)"> คำนวนเวลา</button>#}
+                                {#                                <button type="button" onclick="timeCal(relay_num=6, period=6)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=6,period=6)"> ตั้งเวลา</button>
                             </div>
                         </div>
@@ -2327,35 +2340,35 @@
                 console.log("button 1 Not Checked")
                 var p = true
             }
-        } else if (relay_num ==3 && period == 2) {
+        } else if (relay_num == 3 && period == 2) {
             if (document.getElementById('chk32').checked) {
                 var p = false
             } else {
                 console.log("button 1 Not Checked")
                 var p = true
             }
-        } else if (relay_num ==3 && period == 3) {
+        } else if (relay_num == 3 && period == 3) {
             if (document.getElementById('chk33').checked) {
                 var p = false
             } else {
                 console.log("button 1 Not Checked")
                 var p = true
             }
-        } else if (relay_num ==3 && period == 4) {
+        } else if (relay_num == 3 && period == 4) {
             if (document.getElementById('chk34').checked) {
                 var p = false
             } else {
                 console.log("button 1 Not Checked")
                 var p = true
             }
-        } else if (relay_num ==3 && period == 5) {
+        } else if (relay_num == 3 && period == 5) {
             if (document.getElementById('chk35').checked) {
                 var p = false
             } else {
                 console.log("button 1 Not Checked")
                 var p = true
             }
-        } else if (relay_num ==3 && period == 6) {
+        } else if (relay_num == 3 && period == 6) {
             if (document.getElementById('chk36').checked) {
                 var p = false
             } else {
@@ -2491,7 +2504,6 @@
         }
 
 
-
         var raw = JSON.stringify({
             "farmID": "{{ farmCode }}",
             "token": "xxx",
@@ -2561,45 +2573,44 @@
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
-        if (document.getElementById('chk'+relay_num+''+period).checked)
-        {
-        var raw = JSON.stringify({
-            "farmID": "{{ farmCode }}",
-            "token": "xxx",
-            "method": "scheduleSet",
-            "detail": {
-                "device": "relay" + relay_num,
-                "period": period,
-                "start_hour": s[0],
-                "start_minute": s[1],
-                "start_second": s[2],
-                "end_hour": e[0],
-                "end_minute": e[1],
-                "end_second": e[2],
-                "duration": duration,
-                "pause": false
-            },
-            "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
-        });
-        }else {
+        if (document.getElementById('chk' + relay_num + '' + period).checked) {
             var raw = JSON.stringify({
-            "farmID": "{{ farmCode }}",
-            "token": "xxx",
-            "method": "scheduleSet",
-            "detail": {
-                "device": "relay" + relay_num,
-                "period": period,
-                "start_hour": s[0],
-                "start_minute": s[1],
-                "start_second": s[2],
-                "end_hour": e[0],
-                "end_minute": e[1],
-                "end_second": e[2],
-                "duration": duration,
-                "pause": true
-            },
-            "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
-        });
+                "farmID": "{{ farmCode }}",
+                "token": "xxx",
+                "method": "scheduleSet",
+                "detail": {
+                    "device": "relay" + relay_num,
+                    "period": period,
+                    "start_hour": s[0],
+                    "start_minute": s[1],
+                    "start_second": s[2],
+                    "end_hour": e[0],
+                    "end_minute": e[1],
+                    "end_second": e[2],
+                    "duration": duration,
+                    "pause": false
+                },
+                "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
+            });
+        } else {
+            var raw = JSON.stringify({
+                "farmID": "{{ farmCode }}",
+                "token": "xxx",
+                "method": "scheduleSet",
+                "detail": {
+                    "device": "relay" + relay_num,
+                    "period": period,
+                    "start_hour": s[0],
+                    "start_minute": s[1],
+                    "start_second": s[2],
+                    "end_hour": e[0],
+                    "end_minute": e[1],
+                    "end_second": e[2],
+                    "duration": duration,
+                    "pause": true
+                },
+                "dayOfWeek": "mon,tue,wed,thu,fri,sat,sun"
+            });
         }
         console.log(raw)
         var requestOptions = {
@@ -3090,36 +3101,32 @@
         }
     });
 
-    var lastTimeRef = firebase.database().ref("farmCode/" + '{{ farmCode }}'+'/last_time');
-    lastTimeRef.on('value', function(snapshot){
-        var arr =snapshot.val()
-        console.log(arr)
+    var lastTimeRef = firebase.database().ref("farmCode/" + '{{ farmCode }}' + '/last_time');
+    lastTimeRef.on('value', function (snapshot) {
+            var arr = snapshot.val()
+            console.log(arr)
 
 
-
-
-        var date = new Date(arr * 1000);
+            var date = new Date(arr * 1000);
 // Hours part from the timestamp
-var day =date.getDate();
-var year =date.getFullYear()
-var month = date.getMonth()+1;
-var hours = date.getHours();
+            var day = date.getDate();
+            var year = date.getFullYear()
+            var month = date.getMonth() + 1;
+            var hours = date.getHours();
 // Minutes part from the timestamp
-var minutes = "0" + date.getMinutes();
+            var minutes = "0" + date.getMinutes();
 // Seconds part from the timestamp
-var seconds = "0" + date.getSeconds();
+            var seconds = "0" + date.getSeconds();
 
 // Will display time in 10:30:23 format
-var formattedTime = day + '-' + month  +'-'+year+ ' '+ hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+            var formattedTime = day + '-' + month + '-' + year + ' ' + hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
 
-console.log(formattedTime);
-        document.getElementById("last_Time").innerHTML = formattedTime;
-
+            console.log(formattedTime);
+            document.getElementById("last_Time").innerHTML = formattedTime;
 
 
         }
     );
-
 
 
     var farmRef = firebase.database().ref("farmCode/" + '{{ farmCode }}');
@@ -3128,10 +3135,6 @@ console.log(formattedTime);
         var arr = snapshot.val();
         {#console.log(arr)#}
         {#console.log(arr['flow1Status'])#}
-
-
-
-
 
 
         if (arr['flow1Status'] == true) {
@@ -3147,7 +3150,6 @@ console.log(formattedTime);
             document.getElementById("Relay1_mode").innerHTML = "manual";
             document.getElementById("setRelay1Manual").className = "btn btn-warning";
             document.getElementById("setRelay1Schedule").className = "btn btn-secondary";
-
 
 
         } else if (arr['Relay1']['manual'] == false) {
@@ -3252,13 +3254,13 @@ console.log(formattedTime);
 
         if (arr['Relay1']['cur_status'] == true) {
             document.getElementById("Relay1_cur_status").innerHTML = "เปิด";
-                        document.getElementById("controlRelay1On").className = "btn btn-success";
+            document.getElementById("controlRelay1On").className = "btn btn-success";
             document.getElementById("controlRelay1Off").className = "btn btn-secondary";
 
 
         } else if (arr['Relay1']['cur_status'] == false) {
             document.getElementById("Relay1_cur_status").innerHTML = "ปิด";
-                        document.getElementById("controlRelay1On").className = "btn btn-secondary";
+            document.getElementById("controlRelay1On").className = "btn btn-secondary";
             document.getElementById("controlRelay1Off").className = "btn btn-danger";
 
 
