@@ -33,7 +33,10 @@ def on_message(client, userdata, msg):
     # print(msg.topic)
     # print(str(msg.payload.decode("utf-8")))
     data=str(msg.payload.decode("utf-8"))
-
+    print("message topic :")
+    print(msg.topic)
+    print("message data :")
+    print(data)
     if msg.topic == "wakeUp":
         farmID=data.split('/')[0]
         content=data.split('/')[1]
@@ -100,6 +103,11 @@ def on_message(client, userdata, msg):
             except requests.ConnectionError:
                 pass
             db = firebase.database()
+            recieveTime = datetime.now().strftime("%Y%m%d:%H%M%S")
+            db.child("farmCode").child(farmID).child('logs').child('relay{}'.format(item[5])).child(
+                '{}'.format(recieveTime)).set({'type': 'reportRelay', 'oper': item[6:]})
+
+
             if item == 'relay1On':
                 text={'cur_status': True}
                 db.child("farmCode").child(farmID).child('Relay1').update(text)
@@ -173,7 +181,15 @@ def on_message(client, userdata, msg):
             pass
         except requests.ConnectionError:
             pass
+
+
         db = firebase.database()
+        recieveTime = datetime.now().strftime("%Y%m%d:%H%M%S")
+
+        db.child("farmCode").child(farmID).child('logs').child('relay{}'.format(content[5])).child('{}'.format(recieveTime)).set({'type':'reportRelay', 'oper':content[6:]})
+
+
+
         if content == 'relay1On':
             text={'cur_status': True}
             db.child("farmCode").child(farmID).child('Relay1').update(text)
@@ -225,12 +241,21 @@ def on_message(client, userdata, msg):
         farmID=data[0:6]
         print(farmID)
         serverTime = datetime.timestamp(datetime.now())
-        # print(serverTime)
         text={'last_time':serverTime}
-        print(text)
         db = firebase.database()
-
         db.child("farmCode").child(farmID).update(text)
+        recieveTime = datetime.now().strftime("%Y%m%d:%H%M%S")
+        content=data.split(' ')
+        dict_a={"humid":"boardHumi", "temp":"boardTemp","flowSen1":"flowSen1"}
+        # print({dict_a["{}".format(item.split('=')[0])] :item.split('=')[1] for item in content[1:]})
+        raw_data = {'farmID': farmID, 'detail': {dict_a["{}".format(item.split('=')[0])] : item.split('=')[1] for item in content[1:]}}
+        db = firebase.database()
+        for key, value in raw_data['detail'].items():
+            db.child("farmCode").child(raw_data['farmID']).child('sensors').child(key).update(
+                {'t': serverTime, 'v': value})
+            db.child("farmCode").child(raw_data['farmID']).child('sensors').child(key).child('history').update(
+                {'{}'.format(recieveTime): value})
+
 
 def sendToMQTT(client, userdata, msg):
     # urlServer =  "http://127.0.0.1:8000"
