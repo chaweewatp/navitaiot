@@ -260,7 +260,6 @@ def sendCommandOff(chipID, device):
     client.publish(topic, msg)
     print('Message publish to ' + chipID + ", msg :" + msg)
 
-
 def sendCommandOn(chipID, device):
     topic = chipID
     msg = device + "/turnOn"
@@ -288,23 +287,26 @@ def testAPI2(request):
             # set mode --> manual
             modeManualSet(farmID=chipID, relay=relay)
 
+            recieveTime = datetime.datetime.now().strftime("%Y-%m-%d:%H-%M-%S")
+            db = firebase.database()
+            db.child("farmCode").child(chipID).child('logs').child(relay).child(
+                '{}'.format(recieveTime)).set({'type': 'manual', 'oper': 'on'})
+
         elif data["detail"]["control"] == "off":
             sendCommandOff(chipID=chipID, device='relay'+relay[-1])
             # set mode --> manual
             modeManualSet(farmID=chipID, relay=relay)
+
+            recieveTime = datetime.datetime.now().strftime("%Y-%m-%d:%H-%M-%S")
+            db = firebase.database()
+            db.child("farmCode").child(chipID).child('logs').child(relay).child(
+                '{}'.format(recieveTime)).set({'type': 'manual', 'oper': 'off'})
 
         else:
             pass
     return Response("OK2")
 
 
-# def sendCommandOnDuration(chipID, device, duration):
-#     topic = chipID + "/turnOnDuration/"
-#     msg = device + str(duration)
-#     client.publish(topic, msg)
-#     print('Message publish to ' + chipID + ", msg :" + msg)
-
-# text = '{' + '"command":"On","farmID":"{}","device":"{}", "duration":"{}"'.format(farmID, device, duration) + '}'
 
 def sendScheduleToIoT(text):
     """ send set of command to IoT"""
@@ -320,6 +322,10 @@ def sendScheduleToIoT(text):
         if r1.manualMode == False: #check if manual mode is disable
             sendCommandOn(chipID=chipId, device=device)
             print('Send command to IoT')
+            recieveTime = datetime.datetime.now().strftime("%Y-%m-%d:%H-%M-%S")
+            db = firebase.database()
+            db.child("farmCode").child(chipId).child('logs').child(device).child(
+                '{}'.format(recieveTime)).set({'type': 'schedule', 'oper': 'on'})
         r1.scheduleStatus=True
         r1.save()
         text = {'sch_status':True}
@@ -330,6 +336,13 @@ def sendScheduleToIoT(text):
         if r1.manualMode == False:  #check if manual mode is disable
             sendCommandOff(chipID=chipId, device=device)
             print('Send command to IoT')
+            recieveTime = datetime.datetime.now().strftime("%Y-%m-%d:%H-%M-%S")
+            db = firebase.database()
+            db.child("farmCode").child(chipId).child('logs').child(device).child(
+                '{}'.format(recieveTime)).set({'type': 'schedule', 'oper': 'off'})
+
+
+
         r1.scheduleStatus=False
         r1.save()
         text = {'sch_status':False}
@@ -658,3 +671,21 @@ def reportRelay(request):
         r1.save()
 
     return Response("OK")
+
+
+def updateRTDB(request):
+    serverTime=datetime.datetime.now().strftime("%Y-%m-%d:%H-%M-%S")
+    timeStamp=datetime.datetime.timestamp(datetime.datetime.now())
+
+    print(serverTime)
+
+    raw_data={'farmID':'AA0001','detail':{'boardHumi':60.9,'boardTemp':34,'flowSen1':False}}
+    db = firebase.database()
+    for key, value in raw_data['detail'].items():
+        print(key)
+        print(value)
+        db.child("farmCode").child(raw_data['farmID']).child('sensors').child(key).update({'t':timeStamp, 'v':value})
+        db.child("farmCode").child(raw_data['farmID']).child('sensors').child(key).child('history').update({'{}'.format(serverTime):value})
+
+    return HttpResponse("OK")
+

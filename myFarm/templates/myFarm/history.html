@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {#    <link rel="stylesheet" href="{% static  'css/landingPage.css' %}">#}
+    {#    <link rel="stylesheet" href="{% static 'css/landingPageFonts.css' %}">#}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <script src="http://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.js"></script>
+    <link href="http://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.css" rel="stylesheet"/>
+
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-clockpicker.min.css' %}">
+
+    <title>Title</title>
+
+    <style>
+        .block {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .y {
+            background: yellow;
+        }
+
+        .r {
+            background: red;
+        }
+
+        .b {
+            background: lightblue;
+        }
+
+        .g {
+            background: lightgreen;
+        }
+
+    </style>
+
+
+    <style>
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+    </style>
+
+</head>
+<body>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-analytics.js"></script>
+
+
+<div class="body">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="row">
+                    <div class="col-xs-12">
+                        ------- sensor part -------
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        ความชื้นบอร์ด
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <span id="bht1"></span>: <span id="bhv1"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <span id="bht2"></span>: <span id="bhv2"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <span id="bht3"></span>: <span id="bhv3"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <span id="bht4"></span>: <span id="bhv4"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <span id="bht5"></span>: <span id="bhv5"></span>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        อุณหภูมิบอร์ด
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <span id="btt1"></span>: <span id="btv1"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <span id="btt2"></span>: <span id="btv2"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <span id="btt3"></span>: <span id="btv3"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <span id="btt4"></span>: <span id="btv4"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <span id="btt5"></span>: <span id="btv5"></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="row">
+                    <div class="col-xs-12">
+                        ------- control part -------
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        relay1
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <span id="r1t1"></span>: <span id="r1v1"></span> (<span id="r1p1"></span>)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <span id="r1t2"></span>: <span id="r1v2"></span> (<span id="r1p2"></span>)
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <span id="r1t3"></span>: <span id="r1v3"></span> (<span id="r1p3"></span>)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <span id="r1t4"></span>: <span id="r1v4"></span> (<span id="r1p4"></span>)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <span id="r1t5"></span>: <span id="r1v5"></span> (<span id="r1p5"></span>)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{# control relay#}
+<script>
+
+</script>
+
+{# Schedule set#}
+<script>
+
+</script>
+
+
+{# schedule Edit#}
+<script>
+
+</script>
+
+{#  <script src="../../static/js/vendor/modernizr-3.8.0.min.js"></script>#}
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+{#  <script>window.jQuery || document.write('<script src="./js/vendor/jquery-3.4.1.min.js"><\/script>')</script>#}
+{#  <script src="../../static/js/plugins.js"></script>#}
+{#<script src="{% static 'js/main.js' %}"></script>#}
+{#  <script src="../../static/js/main.js"></script>#}
+
+<script>
+
+
+    function snapshotToArray(snapshot) {
+        let returnArr = [];
+
+        snapshot.forEach(childSnapshot => {
+            let item = childSnapshot.val();
+            item.key = childSnapshot.key;
+            returnArr.push(item);
+        });
+        return returnArr;
+    }
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+        apiKey: "AIzaSyCs9xyouIlR_7SBQwCpL_Bde22ZDC4vpWM",
+        authDomain: "navitaiot.firebaseapp.com",
+        databaseURL: "https://navitaiot.firebaseio.com",
+        projectId: "navitaiot",
+        storageBucket: "navitaiot.appspot.com",
+        messagingSenderId: "840926440731",
+        appId: "1:840926440731:web:9e7d0a635d9e89ff0db7be",
+        measurementId: "G-5FY5JL3YN1"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+    var bh = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/sensors/boardHumi/history");
+    bh.orderByKey().limitToLast(5).on('value', function (snapshot) {
+        arr = snapshotToArray(snapshot)
+        var i;
+        for (i = 0; i < arr.length; i++) {
+            {#console.log(i)#}
+            {#console.log(arr[i])#}
+            {#console.log(arr[i]['v'])#}
+            document.getElementById("bhv" + (i + 1).toString()).innerHTML = arr[i]['v'];
+            document.getElementById("bht" + (i + 1).toString()).innerHTML = arr[i]['key'];
+        }
+    })
+
+
+    var bt = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/sensors/boardTemp/history");
+    bt.orderByKey().limitToLast(5).on('value', function (snapshot) {
+        arr = snapshotToArray(snapshot)
+        var i;
+        for (i = 0; i < arr.length; i++) {
+            {#console.log(i)#}
+            {#console.log(arr[i])#}
+            {#console.log(arr[i]['v'])#}
+            document.getElementById("btv" + (i + 1).toString()).innerHTML = arr[i]['v'];
+            document.getElementById("btt" + (i + 1).toString()).innerHTML = arr[i]['key'];
+        }
+    })
+
+
+    var r1 = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/logs/relay1");
+    r1.orderByKey().limitToLast(5).on('value', function (snapshot) {
+        arr = snapshotToArray(snapshot)
+        console.log(arr)
+        var i;
+        for (i = 0; i < arr.length; i++) {
+            console.log(arr[i])
+            document.getElementById("r1v" + (i + 1).toString()).innerHTML = arr[i]['oper'];
+            document.getElementById("r1p" + (i + 1).toString()).innerHTML = arr[i]['type'];
+
+            document.getElementById("r1t" + (i + 1).toString()).innerHTML = arr[i]['key'];
+        }
+    })
+
+
+</script>
+
+
+</body>
+</html>
