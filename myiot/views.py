@@ -289,7 +289,7 @@ def testAPI2(request):
 
             recieveTime = datetime.datetime.now().strftime("%Y-%m-%d:%H-%M-%S")
             db = firebase.database()
-            db.child("farmCode").child(chipID).child('logs').child(relay).child(
+            db.child("farmCode").child(chipID).child('logs').child('relay'+relay[-1]).child(
                 '{}'.format(recieveTime)).set({'type': 'manual', 'oper': 'on'})
 
         elif data["detail"]["control"] == "off":
@@ -299,7 +299,7 @@ def testAPI2(request):
 
             recieveTime = datetime.datetime.now().strftime("%Y-%m-%d:%H-%M-%S")
             db = firebase.database()
-            db.child("farmCode").child(chipID).child('logs').child(relay).child(
+            db.child("farmCode").child(chipID).child('logs').child('relay'+relay[-1]).child(
                 '{}'.format(recieveTime)).set({'type': 'manual', 'oper': 'off'})
 
         else:
@@ -324,7 +324,7 @@ def sendScheduleToIoT(text):
             print('Send command to IoT')
             recieveTime = datetime.datetime.now().strftime("%Y-%m-%d:%H-%M-%S")
             db = firebase.database()
-            db.child("farmCode").child(chipId).child('logs').child(device).child(
+            db.child("farmCode").child(chipId).child('logs').child('relay'+device[-1]).child(
                 '{}'.format(recieveTime)).set({'type': 'schedule', 'oper': 'on'})
         r1.scheduleStatus=True
         r1.save()
@@ -338,7 +338,7 @@ def sendScheduleToIoT(text):
             print('Send command to IoT')
             recieveTime = datetime.datetime.now().strftime("%Y-%m-%d:%H-%M-%S")
             db = firebase.database()
-            db.child("farmCode").child(chipId).child('logs').child(device).child(
+            db.child("farmCode").child(chipId).child('logs').child('relay'+device[-1]).child(
                 '{}'.format(recieveTime)).set({'type': 'schedule', 'oper': 'off'})
 
 
