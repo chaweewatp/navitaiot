@@ -26,6 +26,19 @@ def home(request):
     print('User access to home page')
     return render(request, 'myFarm/home.html')
 
+def history(request, id):
+    context={
+        'farmName': farm.objects.get(farmCode=id).farmName,
+        'farmCode': farm.objects.get(farmCode=id).farmCode,
+    }
+    # db = firebase.database()
+    # boardHumi=db.child("farmCode").child(id).child("sensors").child("boardHumi").child('history').order_by_child('ts').get()
+    # print(boardHumi.key())
+    # print(boardHumi.val())
+    return render(request, 'myFarm/history.html', context)
+
+
+
 def pageFarm(request, id):
     print('User access to myFarm page')
     serverTime=datetime.timestamp(datetime.now())

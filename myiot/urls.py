@@ -1,6 +1,8 @@
 from django.urls import path, include
 from . import views
 
+
+
 urlpatterns = [
     path('sendCommandONLED/', views.sendCommandONLED, name='sendCommandONLED'),
     path('sendCommandOffLED/', views.sendCommandOffLED, name='sendCommandOffLED'),
@@ -12,5 +14,5 @@ urlpatterns = [
     path('setMode/', views.setMode, name='setMode'),
     path('emergencyOff/', views.emergencyOff, name='emergencyOff'),
     path('reportRelay/', views.reportRelay, name='reportRelay'),
-
+    path('updateRTDB/', views.updateRTDB, name='updateRTDB')
 ]
