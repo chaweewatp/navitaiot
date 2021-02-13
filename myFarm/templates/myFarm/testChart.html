@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script src="../../static/js/Chart.js"></script>
+</head>
+<body>
+
+
+<canvas id="btc"></canvas>
+
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-analytics.js"></script>
+<script>
+
+
+    function snapshotToArray2(snapshot) {
+        let returnArr = [];
+        snapshot.forEach(childSnapshot => {
+            let item = childSnapshot.val();
+            item.key = childSnapshot.key.replace(':', ' ');
+            returnArr.push(item);
+        });
+        return returnArr;
+    }
+
+
+
+    // Get the context of the canvas element we want to select
+    function genData(arr) {
+                let returnArr = [];
+
+        var i;
+        for (i = 0; i < arr.length; i++) {
+
+            returnArr.push({'y':arr[i]['v'], 'x':arr[i]['key'].split(' ')[0] + ' ' + arr[i]['key'].split(' ')[1].split('-')[0]+':'+ arr[i]['key'].split(' ')[1].split('-')[1]+':'+ arr[i]['key'].split(' ')[1].split('-')[2]})
+        }
+        console.log(returnArr)
+        return returnArr
+    }
+
+    var firebaseConfig = {
+        apiKey: "AIzaSyCs9xyouIlR_7SBQwCpL_Bde22ZDC4vpWM",
+        authDomain: "navitaiot.firebaseapp.com",
+        databaseURL: "https://navitaiot.firebaseio.com",
+        projectId: "navitaiot",
+        storageBucket: "navitaiot.appspot.com",
+        messagingSenderId: "840926440731",
+        appId: "1:840926440731:web:9e7d0a635d9e89ff0db7be",
+        measurementId: "G-5FY5JL3YN1"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+    var btc = firebase.database().ref("farmCode/" + 'AA0001' + "/sensors/boardTemp/history");
+    btc.orderByKey().limitToLast(100).on('value', function (snapshot) {
+        arr = snapshotToArray2(snapshot)
+        var config = {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    data: genData(arr),
+                    label: "Temperature",
+                    borderColor: "#3e95cd",
+                    fill: false
+                }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        type: 'time',
+                        distribution: 'linear',
+                    }],
+                    title: {
+                        display: false,
+                    }
+                }
+            }
+        };
+        console.log(config)
+        var ctx = document.getElementById('btc').getContext('2d');
+        new Chart(ctx, config);
+
+    });
+
+
+</script>
+
+
+</body>
+</html>
