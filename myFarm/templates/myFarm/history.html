@@ -15,6 +15,8 @@
     <script src="http://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.js"></script>
     <link href="http://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.css" rel="stylesheet"/>
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script src="../../static/js/Chart.js"></script>
 
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-clockpicker.min.css' %}">
 
@@ -107,6 +109,9 @@
         }
     </style>
 
+
+
+
 </head>
 <body>
 
@@ -128,69 +133,83 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-xs-12">
-                        ความชื้นบอร์ด
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <span id="bht1"></span>: <span id="bhv1"></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <span id="bht2"></span>: <span id="bhv2"></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <span id="bht3"></span>: <span id="bhv3"></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <span id="bht4"></span>: <span id="bhv4"></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <span id="bht5"></span>: <span id="bhv5"></span>
-                    </div>
-                </div>
-
 
                 <div class="row">
-                    <div class="col-xs-12">
-                        อุณหภูมิบอร์ด
+                    <div class="col-xs-4">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                ความชื้นบอร์ด
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <span id="bht1"></span>: <span id="bhv1"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <span id="bht2"></span>: <span id="bhv2"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <span id="bht3"></span>: <span id="bhv3"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <span id="bht4"></span>: <span id="bhv4"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <span id="bht5"></span>: <span id="bhv5"></span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <span id="btt1"></span>: <span id="btv1"></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <span id="btt2"></span>: <span id="btv2"></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <span id="btt3"></span>: <span id="btv3"></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <span id="btt4"></span>: <span id="btv4"></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <span id="btt5"></span>: <span id="btv5"></span>
-                    </div>
-                </div>
+                    <div class="col-xs-8">
+                                                <canvas id="bhc"></canvas>
 
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                อุณหภูมิบอร์ด
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <span id="btt1"></span>: <span id="btv1"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <span id="btt2"></span>: <span id="btv2"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <span id="btt3"></span>: <span id="btv3"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <span id="btt4"></span>: <span id="btv4"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <span id="btt5"></span>: <span id="btv5"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-8">
+                        <canvas id="btc"></canvas>
+
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -202,7 +221,7 @@
                         ------- control part -------
                     </div>
                 </div>
-{#                relay 1#}
+                {#                relay 1#}
                 <div class="row">
                     <div class="col-xs-12">
                         relay1
@@ -449,6 +468,33 @@
         return returnArr;
     }
 
+
+        function snapshotToArray2(snapshot) {
+        let returnArr = [];
+        snapshot.forEach(childSnapshot => {
+            let item = childSnapshot.val();
+            item.key = childSnapshot.key.replace(':', ' ');
+            returnArr.push(item);
+        });
+        return returnArr;
+    }
+
+
+
+    // Get the context of the canvas element we want to select
+    function genData(arr) {
+                let returnArr = [];
+
+        var i;
+        for (i = 0; i < arr.length; i++) {
+
+            returnArr.push({'y':arr[i]['v'], 'x':arr[i]['key'].split(' ')[0] + ' ' + arr[i]['key'].split(' ')[1].split('-')[0]+':'+ arr[i]['key'].split(' ')[1].split('-')[1]+':'+ arr[i]['key'].split(' ')[1].split('-')[2]})
+        }
+        console.log(returnArr)
+        return returnArr
+    }
+
+
     // Your web app's Firebase configuration
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
     var firebaseConfig = {
@@ -464,6 +510,72 @@
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     firebase.analytics();
+
+    var btc = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/sensors/boardTemp/history");
+    btc.orderByKey().limitToLast(100).on('value', function (snapshot) {
+        arr = snapshotToArray2(snapshot)
+        var config = {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    data: genData(arr),
+                    label: "Temperature",
+                    borderColor: "#aa95cd",
+                    fill: false
+                }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        type: 'time',
+                        distribution: 'linear',
+                    }],
+                    title: {
+                        display: false,
+                    }
+                }
+            }
+        };
+        console.log(config)
+        var ctx = document.getElementById('btc').getContext('2d');
+        new Chart(ctx, config);
+
+    });
+
+        var bhc = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/sensors/boardHumi/history");
+    bhc.orderByKey().limitToLast(100).on('value', function (snapshot) {
+        arr = snapshotToArray2(snapshot)
+        var config = {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    data: genData(arr),
+                    label: "Humidity",
+                    borderColor: "#3e95cd",
+                    fill: false
+                }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        type: 'time',
+                        distribution: 'linear',
+                    }],
+                    title: {
+                        display: false,
+                    }
+                }
+            }
+        };
+        console.log(config)
+        var ctx = document.getElementById('bhc').getContext('2d');
+        new Chart(ctx, config);
+
+    });
+
+
     var bh = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/sensors/boardHumi/history");
     bh.orderByKey().limitToLast(5).on('value', function (snapshot) {
         arr = snapshotToArray(snapshot)
@@ -534,7 +646,7 @@
     })
 
 
-        var r4 = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/logs/relay4");
+    var r4 = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/logs/relay4");
     r4.orderByKey().limitToLast(5).on('value', function (snapshot) {
         arr = snapshotToArray(snapshot)
         console.log(arr)
@@ -548,7 +660,7 @@
         }
     })
 
-        var r5 = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/logs/relay5");
+    var r5 = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/logs/relay5");
     r5.orderByKey().limitToLast(5).on('value', function (snapshot) {
         arr = snapshotToArray(snapshot)
         console.log(arr)
@@ -562,7 +674,7 @@
         }
     })
 
-        var r6 = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/logs/relay6");
+    var r6 = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/logs/relay6");
     r6.orderByKey().limitToLast(5).on('value', function (snapshot) {
         arr = snapshotToArray(snapshot)
         console.log(arr)
