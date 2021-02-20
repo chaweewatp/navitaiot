@@ -679,6 +679,6 @@ def getJob(request, id):
 def removeJob(request,id):
     sch=scheduler.get_job(job_id=id)
     print(sch)
-    sch.remove()
+    sch.remove_job()
 
     return HttpResponse("OK")
