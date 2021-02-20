@@ -421,7 +421,12 @@ def createSchedule(request):
     # scheduler.add_jobstore(DjangoJobStore(), "default")
 
     text = '{' + '"command":"On","farmID":"{}","device":"{}", "duration":"{}"'.format(farmID, device, duration) + '}'
-    scheduler.remove_job(job_id=jobId)
+    try:
+        scheduler.remove_job(job_id=jobId)
+        print('jobs removed')
+    except:
+        print('no job existed')
+
     scheduler.add_job(sendScheduleToIoT, trigger=CronTrigger(day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=start_hour,
                                                              minute=start_minute), second=start_second,
                       id=jobId, replace_existing=True, args=[text], max_instances=1,misfire_grace_time=3600)
@@ -483,7 +488,11 @@ def createSchedule(request):
     # scheduler=BlockingScheduler(timezone=settings.TIME_ZONE)
     # scheduler.add_jobstore(DjangoJobStore(), "default")
     text = '{' + '"command":"Off","farmID":"{}","device":"{}"'.format(farmID, device) + '}'
-    scheduler.remove_job(job_id=jobId)
+    try:
+        scheduler.remove_job(job_id=jobId)
+        print('jobs removed')
+    except:
+        print('no job existed')
 
     scheduler.add_job(sendScheduleToIoT,
                       trigger=CronTrigger(day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=end_hour, minute=end_minute,
