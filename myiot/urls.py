@@ -16,8 +16,8 @@ urlpatterns = [
     path('reportRelay/', views.reportRelay, name='reportRelay'),
     path('updateRTDB/', views.updateRTDB, name='updateRTDB'),
 
-    path('returnJob/', views.returnJob, name='returnJob')
-
-
+    path('returnJob/', views.returnJob, name='returnJob'),
+    path('getJob/<id>', views.getJob, name='getJob'),
+    path('removeJob/<id>', views.removeJob, name='removeJob'),
 
 ]

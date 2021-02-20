@@ -82,44 +82,44 @@ def modeManualSet(farmID, relay):
 
 def responseSchedule(farmID, r1):
     onSchedule=False
-    if r1.manualMode==False:
-        for period in [1,2,3,4,5,6]:
-            # print(period)
-            try:
-                on_schedule=scheduleRelay.objects.get(scheduleId='{}_relay{}_period{}_On'.format(r1.farm.farmCode, r1.relayNumber,period))
-                # print(on_schedule.__dict__)
-                if  (on_schedule.enable):
-                    on_time = datetime.time(int(on_schedule.startTime.split(':')[0]),
-                                            int(on_schedule.startTime.split(':')[1]),
-                                            int(on_schedule.startTime.split(':')[2]))
-                    off_schedule=scheduleRelay.objects.get(scheduleId='{}_relay{}_period{}_Off'.format(r1.farm.farmCode, r1.relayNumber,period))
-                    off_time=datetime.time(int(off_schedule.startTime.split(':')[0]), int(off_schedule.startTime.split(':')[1]), int(off_schedule.startTime.split(':')[2]))
+    for period in [1,2,3,4,5,6]:
+        # print(period)
+        try:
+            on_schedule=scheduleRelay.objects.get(scheduleId='{}_relay{}_period{}_On'.format(r1.farm.farmCode, r1.relayNumber,period))
+            # print(on_schedule.__dict__)
+            if  (on_schedule.enable):
+                on_time = datetime.time(int(on_schedule.startTime.split(':')[0]),
+                                        int(on_schedule.startTime.split(':')[1]),
+                                        int(on_schedule.startTime.split(':')[2]))
+                off_schedule=scheduleRelay.objects.get(scheduleId='{}_relay{}_period{}_Off'.format(r1.farm.farmCode, r1.relayNumber,period))
+                off_time=datetime.time(int(off_schedule.startTime.split(':')[0]), int(off_schedule.startTime.split(':')[1]), int(off_schedule.startTime.split(':')[2]))
 
-                    current_time = datetime.datetime.now().time()
-                    check=check_time(current_time,on_time,off_time)
-                    print(check)
-                    if (check):
-                        onSchedule=True
-            except:
-                pass
+                current_time = datetime.datetime.now().time()
+                check=check_time(current_time,on_time,off_time)
+                print(check)
+                if (check):
+                    onSchedule=True
+        except:
+            pass
 
-        print(onSchedule)
-        #send command to NbIoT
-        if (onSchedule):
-            r1.scheduleStatus=True
-            r1.save()
+    print(onSchedule)
+    #send command to NbIoT
+    if (onSchedule):
+        r1.scheduleStatus=True
+        r1.save()
+        if r1.manualMode==False:
             sendCommandOn(farmID, 'relay'+r1.relayNumber)
-
-            text = {'sch_status':True}
-            db = firebase.database()
-            db.child("farmCode").child(farmID).child('Relay' + str(r1.relayNumber)).update(text)
-        else:
-            r1.scheduleStatus=False
-            r1.save()
+        text = {'sch_status':True}
+        db = firebase.database()
+        db.child("farmCode").child(farmID).child('Relay' + str(r1.relayNumber)).update(text)
+    else:
+        r1.scheduleStatus=False
+        r1.save()
+        if r1.manualMode==False:
             sendCommandOff(farmID, 'relay'+r1.relayNumber)
-            text = {'sch_status':False}
-            db = firebase.database()
-            db.child("farmCode").child(farmID).child('Relay' + str(r1.relayNumber)).update(text)
+        text = {'sch_status':False}
+        db = firebase.database()
+        db.child("farmCode").child(farmID).child('Relay' + str(r1.relayNumber)).update(text)
 
 
 
@@ -421,8 +421,16 @@ def createSchedule(request):
     # scheduler.add_jobstore(DjangoJobStore(), "default")
 
     text = '{' + '"command":"On","farmID":"{}","device":"{}", "duration":"{}"'.format(farmID, device, duration) + '}'
-    scheduler.add_job(sendScheduleToIoT, trigger=CronTrigger(day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=start_hour,
-                                                             minute=start_minute), second=start_second,
+    try:
+        scheduler.remove_job(job_id=jobId)
+        print('jobs removed')
+    except:
+        print('no job existed')
+
+    scheduler.add_job(sendScheduleToIoT,
+                      trigger=CronTrigger(
+                          day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=start_hour,minute=start_minute, second=start_second
+                      ),
                       id=jobId, replace_existing=True, args=[text], max_instances=1,misfire_grace_time=3600)
     scheduler.add_job(
         delete_old_job_executions,
@@ -482,9 +490,16 @@ def createSchedule(request):
     # scheduler=BlockingScheduler(timezone=settings.TIME_ZONE)
     # scheduler.add_jobstore(DjangoJobStore(), "default")
     text = '{' + '"command":"Off","farmID":"{}","device":"{}"'.format(farmID, device) + '}'
+    try:
+        scheduler.remove_job(job_id=jobId)
+        print('jobs removed')
+    except:
+        print('no job existed')
+
     scheduler.add_job(sendScheduleToIoT,
-                      trigger=CronTrigger(day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=end_hour, minute=end_minute,
-                                          second=end_second, ),
+                      trigger=CronTrigger(
+                          day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=end_hour, minute=end_minute,second=end_second
+                      ),
                       id=jobId, replace_existing=True, args=[text], max_instances=1, misfire_grace_time=3600)
     scheduler.add_job(
         delete_old_job_executions,
@@ -518,40 +533,6 @@ def createSchedule(request):
     f1 = farm.objects.get(farmCode=farmID)
     r1 = relayDevice.objects.get(farm_id=f1, relayNumber=device[-1])
     responseSchedule(farmID, r1)
-
-    # if pause==False:
-    #
-    #
-    #     on_time = datetime.time(int(start_hour), int(start_minute),int(start_second))
-    #     off_time = datetime.time(int(end_hour), int(end_minute),int(end_second))
-    #     current_time = datetime.datetime.now().time()
-    #     if (check_time(current_time, on_time, off_time)):
-    #         print("set On now")
-    #         text = '{' + '"command":"On","farmID":"{}","device":"{}", "duration":"{}"'.format(farmID, device,
-    #                                                                                           duration) + '}'
-    #         sendScheduleToIoT(text)
-    #         text = {'sch_status':True}
-    #         db = firebase.database()
-    #         db.child("farmCode").child(farmID).child('Relay' + str(device[-1])).update(text)
-    #     else:
-    #         print("not set On now")
-    # elif pause==True:
-    #
-    #
-    #     on_time = datetime.time(int(start_hour), int(start_minute),int(start_second))
-    #     off_time = datetime.time(int(end_hour), int(end_minute),int(end_second))
-    #     current_time = datetime.datetime.now().time()
-    #     if (check_time(current_time, on_time, off_time)):
-    #         print("set Off now")
-    #         text = '{' + '"command":"Off","farmID":"{}","device":"{}", "duration":"{}"'.format(farmID, device,
-    #                                                                                           duration) + '}'
-    #         sendScheduleToIoT(text)
-    #         text = {'sch_status':False}
-    #         db = firebase.database()
-    #         db.child("farmCode").child(farmID).child('Relay' + str(device[-1])).update(text)
-    #     else:
-    #         print(" not set Off now")
-
     return Response("OK")
 
 
@@ -699,5 +680,19 @@ def returnJob(request):
         print(item.id)
         print(item.name)
         print(item.next_run_time)
+
+    return HttpResponse("OK")
+
+def getJob(request, id):
+    # id="AA0001_relay6_period1_Off"
+    sch=scheduler.get_job(job_id=id)
+    print(sch)
+
+    return HttpResponse("OK")
+
+
+def removeJob(request,id):
+    scheduler.remove_job(job_id=id)
+
 
     return HttpResponse("OK")
