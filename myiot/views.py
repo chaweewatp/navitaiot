@@ -109,6 +109,12 @@ def responseSchedule(farmID, r1):
         r1.save()
         if r1.manualMode==False:
             sendCommandOn(farmID, 'relay'+r1.relayNumber)
+            print('Send command to IoT')
+            recieveTime = datetime.datetime.now().strftime("%Y-%m-%d:%H-%M-%S")
+            db = firebase.database()
+            db.child("farmCode").child(farmID).child('logs').child('relay'+str(r1.relayNumber)).child(
+                '{}'.format(recieveTime)).set({'type': 'schedule', 'oper': 'On'})
+
         text = {'sch_status':True}
         db = firebase.database()
         db.child("farmCode").child(farmID).child('Relay' + str(r1.relayNumber)).update(text)
@@ -117,6 +123,10 @@ def responseSchedule(farmID, r1):
         r1.save()
         if r1.manualMode==False:
             sendCommandOff(farmID, 'relay'+r1.relayNumber)
+            recieveTime = datetime.datetime.now().strftime("%Y-%m-%d:%H-%M-%S")
+            db = firebase.database()
+            db.child("farmCode").child(farmID).child('logs').child('relay'+str(r1.relayNumber)).child(
+                '{}'.format(recieveTime)).set({'type': 'schedule', 'oper': 'Off'})
         text = {'sch_status':False}
         db = firebase.database()
         db.child("farmCode").child(farmID).child('Relay' + str(r1.relayNumber)).update(text)
@@ -291,7 +301,7 @@ def testAPI2(request):
             recieveTime = datetime.datetime.now().strftime("%Y-%m-%d:%H-%M-%S")
             db = firebase.database()
             db.child("farmCode").child(chipID).child('logs').child('relay'+relay[-1]).child(
-                '{}'.format(recieveTime)).set({'type': 'manual', 'oper': 'on'})
+                '{}'.format(recieveTime)).set({'type': 'manual', 'oper': 'On'})
 
         elif data["detail"]["control"] == "off":
             sendCommandOff(chipID=chipID, device='relay'+relay[-1])
@@ -301,7 +311,7 @@ def testAPI2(request):
             recieveTime = datetime.datetime.now().strftime("%Y-%m-%d:%H-%M-%S")
             db = firebase.database()
             db.child("farmCode").child(chipID).child('logs').child('relay'+relay[-1]).child(
-                '{}'.format(recieveTime)).set({'type': 'manual', 'oper': 'off'})
+                '{}'.format(recieveTime)).set({'type': 'manual', 'oper': 'Off'})
 
         else:
             pass
