@@ -317,7 +317,10 @@ def sendScheduleToIoT(text):
     device = res["device"]
     f1 = farm.objects.get(farmCode=chipId)
     r1 = relayDevice.objects.get(farm=f1, relayNumber=device[-1])
-    # print(r1.__dict__)
+    print('relay detail :')
+    print(r1.__dict__)
+    print('relay manual mode :')
+    print(r1.manualMode)
     if res["command"] == "On":
         if r1.manualMode == False: #check if manual mode is disable
             sendCommandOn(chipID=chipId, device=device)
