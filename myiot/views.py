@@ -82,43 +82,44 @@ def modeManualSet(farmID, relay):
 
 def responseSchedule(farmID, r1):
     onSchedule=False
-    for period in [1,2,3,4,5,6]:
-        # print(period)
-        try:
-            on_schedule=scheduleRelay.objects.get(scheduleId='{}_relay{}_period{}_On'.format(r1.farm.farmCode, r1.relayNumber,period))
-            # print(on_schedule.__dict__)
-            if  (on_schedule.enable):
-                on_time = datetime.time(int(on_schedule.startTime.split(':')[0]),
-                                        int(on_schedule.startTime.split(':')[1]),
-                                        int(on_schedule.startTime.split(':')[2]))
-                off_schedule=scheduleRelay.objects.get(scheduleId='{}_relay{}_period{}_Off'.format(r1.farm.farmCode, r1.relayNumber,period))
-                off_time=datetime.time(int(off_schedule.startTime.split(':')[0]), int(off_schedule.startTime.split(':')[1]), int(off_schedule.startTime.split(':')[2]))
+    if r1.manualMode==False:
+        for period in [1,2,3,4,5,6]:
+            # print(period)
+            try:
+                on_schedule=scheduleRelay.objects.get(scheduleId='{}_relay{}_period{}_On'.format(r1.farm.farmCode, r1.relayNumber,period))
+                # print(on_schedule.__dict__)
+                if  (on_schedule.enable):
+                    on_time = datetime.time(int(on_schedule.startTime.split(':')[0]),
+                                            int(on_schedule.startTime.split(':')[1]),
+                                            int(on_schedule.startTime.split(':')[2]))
+                    off_schedule=scheduleRelay.objects.get(scheduleId='{}_relay{}_period{}_Off'.format(r1.farm.farmCode, r1.relayNumber,period))
+                    off_time=datetime.time(int(off_schedule.startTime.split(':')[0]), int(off_schedule.startTime.split(':')[1]), int(off_schedule.startTime.split(':')[2]))
 
-                current_time = datetime.datetime.now().time()
-                check=check_time(current_time,on_time,off_time)
-                print(check)
-                if (check):
-                    onSchedule=True
-        except:
-            pass
+                    current_time = datetime.datetime.now().time()
+                    check=check_time(current_time,on_time,off_time)
+                    print(check)
+                    if (check):
+                        onSchedule=True
+            except:
+                pass
 
-    print(onSchedule)
-    #send command to NbIoT
-    if (onSchedule):
-        r1.scheduleStatus=True
-        r1.save()
-        sendCommandOn(farmID, 'relay'+r1.relayNumber)
+        print(onSchedule)
+        #send command to NbIoT
+        if (onSchedule):
+            r1.scheduleStatus=True
+            r1.save()
+            sendCommandOn(farmID, 'relay'+r1.relayNumber)
 
-        text = {'sch_status':True}
-        db = firebase.database()
-        db.child("farmCode").child(farmID).child('Relay' + str(r1.relayNumber)).update(text)
-    else:
-        r1.scheduleStatus=False
-        r1.save()
-        sendCommandOff(farmID, 'relay'+r1.relayNumber)
-        text = {'sch_status':False}
-        db = firebase.database()
-        db.child("farmCode").child(farmID).child('Relay' + str(r1.relayNumber)).update(text)
+            text = {'sch_status':True}
+            db = firebase.database()
+            db.child("farmCode").child(farmID).child('Relay' + str(r1.relayNumber)).update(text)
+        else:
+            r1.scheduleStatus=False
+            r1.save()
+            sendCommandOff(farmID, 'relay'+r1.relayNumber)
+            text = {'sch_status':False}
+            db = firebase.database()
+            db.child("farmCode").child(farmID).child('Relay' + str(r1.relayNumber)).update(text)
 
 
 
@@ -317,7 +318,10 @@ def sendScheduleToIoT(text):
     device = res["device"]
     f1 = farm.objects.get(farmCode=chipId)
     r1 = relayDevice.objects.get(farm=f1, relayNumber=device[-1])
-    # print(r1.__dict__)
+    print('relay detail :')
+    print(r1.__dict__)
+    print('relay manual mode :')
+    print(r1.manualMode)
     if res["command"] == "On":
         if r1.manualMode == False: #check if manual mode is disable
             sendCommandOn(chipID=chipId, device=device)
@@ -353,12 +357,12 @@ def sendScheduleToIoT(text):
         print('Relay was set to manual')
 
 
-def sendCommandOnTest(text):
-    # print(text)
-    topic = "AA0001"
-    msg = "relay3" + "/turnOn"
-    client.publish(topic, msg)
-    # print('Message publish to ' + "AA0001" + ", msg :" + msg)
+# def sendCommandOnTest(text):
+#     # print(text)
+#     topic = "AA0001"
+#     msg = "relay3" + "/turnOn"
+#     client.publish(topic, msg)
+#     # print('Message publish to ' + "AA0001" + ", msg :" + msg)
 
 
 def delete_old_job_executions(max_age=604_800):
