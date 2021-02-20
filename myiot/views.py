@@ -107,15 +107,16 @@ def responseSchedule(farmID, r1):
     if (onSchedule):
         r1.scheduleStatus=True
         r1.save()
-        sendCommandOn(farmID, 'relay'+r1.relayNumber)
-
+        if r1.manualMode==False:
+            sendCommandOn(farmID, 'relay'+r1.relayNumber)
         text = {'sch_status':True}
         db = firebase.database()
         db.child("farmCode").child(farmID).child('Relay' + str(r1.relayNumber)).update(text)
     else:
         r1.scheduleStatus=False
         r1.save()
-        sendCommandOff(farmID, 'relay'+r1.relayNumber)
+        if r1.manualMode==False:
+            sendCommandOff(farmID, 'relay'+r1.relayNumber)
         text = {'sch_status':False}
         db = firebase.database()
         db.child("farmCode").child(farmID).child('Relay' + str(r1.relayNumber)).update(text)
@@ -356,12 +357,12 @@ def sendScheduleToIoT(text):
         print('Relay was set to manual')
 
 
-def sendCommandOnTest(text):
-    # print(text)
-    topic = "AA0001"
-    msg = "relay3" + "/turnOn"
-    client.publish(topic, msg)
-    # print('Message publish to ' + "AA0001" + ", msg :" + msg)
+# def sendCommandOnTest(text):
+#     # print(text)
+#     topic = "AA0001"
+#     msg = "relay3" + "/turnOn"
+#     client.publish(topic, msg)
+#     # print('Message publish to ' + "AA0001" + ", msg :" + msg)
 
 
 def delete_old_job_executions(max_age=604_800):
