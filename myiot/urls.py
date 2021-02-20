@@ -14,5 +14,10 @@ urlpatterns = [
     path('setMode/', views.setMode, name='setMode'),
     path('emergencyOff/', views.emergencyOff, name='emergencyOff'),
     path('reportRelay/', views.reportRelay, name='reportRelay'),
-    path('updateRTDB/', views.updateRTDB, name='updateRTDB')
+    path('updateRTDB/', views.updateRTDB, name='updateRTDB'),
+
+    path('returnJob/', views.returnJob, name='returnJob')
+
+
+
 ]

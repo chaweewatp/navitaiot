@@ -118,7 +118,7 @@ def on_message(client, userdata, msg):
                 db.child("farmCode").child(farmID).child('Relay2').update(text)
             elif item == 'relay3On':
                 text = {'cur_status': True}
-                db.child("farmCode").child(farmID).child('Relay2').update(text)
+                db.child("farmCode").child(farmID).child('Relay3').update(text)
             elif item == 'relay3Off':
                 text = {'cur_status': False}
                 db.child("farmCode").child(farmID).child('Relay3').update(text)
@@ -195,7 +195,7 @@ def on_message(client, userdata, msg):
             db.child("farmCode").child(farmID).child('Relay2').update(text)
         elif content == 'relay3On':
             text = {'cur_status': True}
-            db.child("farmCode").child(farmID).child('Relay2').update(text)
+            db.child("farmCode").child(farmID).child('Relay3').update(text)
         elif content == 'relay3Off':
             text = {'cur_status': False}
             db.child("farmCode").child(farmID).child('Relay3').update(text)
