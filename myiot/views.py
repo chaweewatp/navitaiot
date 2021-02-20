@@ -616,14 +616,10 @@ def emergencyOff(request):
     command = []
     for item in relay_list:
         relay_num.append(item.relayNumber)
-    command = ['turnOn' if item is True else 'turnOff' for item in command]
+    json_data={"relay{}".format(item[0]):"turnOff" for item in relay_num}
+    print(json_data)
     topic = "{}/getCurrentCommand".format(farmID)
-    msg=JSONRenderer().render({"relay{}".format(relay_num[0]):"turnOff",
-                               "relay{}".format(relay_num[1]):"turnOff",
-                               "relay{}".format(relay_num[2]):"turnOff",
-                               "relay{}".format(relay_num[3]):"turnOff",
-                               "relay{}".format(relay_num[4]):"turnOff",
-                               "relay{}".format(relay_num[5]):"turnOff"})
+    msg=JSONRenderer().render(json_data)
     print(msg)
     print(str(msg))
     client.publish(topic, msg)
