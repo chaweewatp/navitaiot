@@ -631,9 +631,11 @@ def emergencyOff(request):
     client.publish(topic, msg)
     print('Message publish to ' + "{}".format(farmID) + ", msg :" + str(msg))
     for item in relay_list:
+        print(item.__dict__)
         item.manualMode=True
         item.save()
-        firebaseModeSet(mode=True, farmID=farmID, relay=item)
+        print(item.__dict__)
+        firebaseModeSet(mode=True, farmID=farmID, relay="Relay{}".format(item.relayNumber))
 
     return Response("OK")
 
