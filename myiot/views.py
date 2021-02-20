@@ -616,12 +616,8 @@ def emergencyOff(request):
     command = []
     for item in relay_list:
         relay_num.append(item.relayNumber)
-
     command = ['turnOn' if item is True else 'turnOff' for item in command]
-
     topic = "{}/getCurrentCommand".format(farmID)
-
-
     msg=JSONRenderer().render({"relay{}".format(relay_num[0]):"turnOff",
                                "relay{}".format(relay_num[1]):"turnOff",
                                "relay{}".format(relay_num[2]):"turnOff",
@@ -632,6 +628,10 @@ def emergencyOff(request):
     print(str(msg))
     client.publish(topic, msg)
     print('Message publish to ' + "{}".format(farmID) + ", msg :" + str(msg))
+    for item in relay_list:
+        item.manualMode=True
+        item.save()
+        firebaseModeSet(mode=True, farmID=farmID, relay=item)
 
     return Response("OK")
 
