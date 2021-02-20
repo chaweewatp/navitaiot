@@ -82,44 +82,44 @@ def modeManualSet(farmID, relay):
 
 def responseSchedule(farmID, r1):
     onSchedule=False
-    if r1.manualMode==False:
-        for period in [1,2,3,4,5,6]:
-            # print(period)
-            try:
-                on_schedule=scheduleRelay.objects.get(scheduleId='{}_relay{}_period{}_On'.format(r1.farm.farmCode, r1.relayNumber,period))
-                # print(on_schedule.__dict__)
-                if  (on_schedule.enable):
-                    on_time = datetime.time(int(on_schedule.startTime.split(':')[0]),
-                                            int(on_schedule.startTime.split(':')[1]),
-                                            int(on_schedule.startTime.split(':')[2]))
-                    off_schedule=scheduleRelay.objects.get(scheduleId='{}_relay{}_period{}_Off'.format(r1.farm.farmCode, r1.relayNumber,period))
-                    off_time=datetime.time(int(off_schedule.startTime.split(':')[0]), int(off_schedule.startTime.split(':')[1]), int(off_schedule.startTime.split(':')[2]))
+    for period in [1,2,3,4,5,6]:
+        # print(period)
+        try:
+            on_schedule=scheduleRelay.objects.get(scheduleId='{}_relay{}_period{}_On'.format(r1.farm.farmCode, r1.relayNumber,period))
+            # print(on_schedule.__dict__)
+            if  (on_schedule.enable):
+                on_time = datetime.time(int(on_schedule.startTime.split(':')[0]),
+                                        int(on_schedule.startTime.split(':')[1]),
+                                        int(on_schedule.startTime.split(':')[2]))
+                off_schedule=scheduleRelay.objects.get(scheduleId='{}_relay{}_period{}_Off'.format(r1.farm.farmCode, r1.relayNumber,period))
+                off_time=datetime.time(int(off_schedule.startTime.split(':')[0]), int(off_schedule.startTime.split(':')[1]), int(off_schedule.startTime.split(':')[2]))
 
-                    current_time = datetime.datetime.now().time()
-                    check=check_time(current_time,on_time,off_time)
-                    print(check)
-                    if (check):
-                        onSchedule=True
-            except:
-                pass
+                current_time = datetime.datetime.now().time()
+                check=check_time(current_time,on_time,off_time)
+                print(check)
+                if (check):
+                    onSchedule=True
+        except:
+            pass
 
-        print(onSchedule)
-        #send command to NbIoT
-        if (onSchedule):
-            r1.scheduleStatus=True
-            r1.save()
+    print(onSchedule)
+    #send command to NbIoT
+    if (onSchedule):
+        r1.scheduleStatus=True
+        r1.save()
+        if r1.manualMode==False:
             sendCommandOn(farmID, 'relay'+r1.relayNumber)
-
-            text = {'sch_status':True}
-            db = firebase.database()
-            db.child("farmCode").child(farmID).child('Relay' + str(r1.relayNumber)).update(text)
-        else:
-            r1.scheduleStatus=False
-            r1.save()
+        text = {'sch_status':True}
+        db = firebase.database()
+        db.child("farmCode").child(farmID).child('Relay' + str(r1.relayNumber)).update(text)
+    else:
+        r1.scheduleStatus=False
+        r1.save()
+        if r1.manualMode==False:
             sendCommandOff(farmID, 'relay'+r1.relayNumber)
-            text = {'sch_status':False}
-            db = firebase.database()
-            db.child("farmCode").child(farmID).child('Relay' + str(r1.relayNumber)).update(text)
+        text = {'sch_status':False}
+        db = firebase.database()
+        db.child("farmCode").child(farmID).child('Relay' + str(r1.relayNumber)).update(text)
 
 
 
