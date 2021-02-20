@@ -619,6 +619,7 @@ def emergencyOff(request):
     json_data={"relay{}".format(item):"turnOff" for item in relay_num}
     print(json_data)
     topic = "{}/getCurrentCommand".format(farmID)
+    msg = JSONRenderer().render(json_data)
     # msg=JSONRenderer().render({"relay{}".format(relay_num[0]):"turnOff",
     #                            "relay{}".format(relay_num[1]):"turnOff",
     #                            "relay{}".format(relay_num[2]):"turnOff",
