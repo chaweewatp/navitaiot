@@ -427,8 +427,10 @@ def createSchedule(request):
     except:
         print('no job existed')
 
-    scheduler.add_job(sendScheduleToIoT, trigger=CronTrigger(day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=start_hour,
-                                                             minute=start_minute), second=start_second,
+    scheduler.add_job(sendScheduleToIoT,
+                      trigger=CronTrigger(
+                          day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=start_hour,minute=start_minute, second=start_second
+                      ),
                       id=jobId, replace_existing=True, args=[text], max_instances=1,misfire_grace_time=3600)
     scheduler.add_job(
         delete_old_job_executions,
@@ -495,8 +497,9 @@ def createSchedule(request):
         print('no job existed')
 
     scheduler.add_job(sendScheduleToIoT,
-                      trigger=CronTrigger(day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=end_hour, minute=end_minute,
-                                          second=end_second, ),
+                      trigger=CronTrigger(
+                          day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=end_hour, minute=end_minute,second=end_second
+                      ),
                       id=jobId, replace_existing=True, args=[text], max_instances=1, misfire_grace_time=3600)
     scheduler.add_job(
         delete_old_job_executions,
