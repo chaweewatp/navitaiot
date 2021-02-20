@@ -518,40 +518,6 @@ def createSchedule(request):
     f1 = farm.objects.get(farmCode=farmID)
     r1 = relayDevice.objects.get(farm_id=f1, relayNumber=device[-1])
     responseSchedule(farmID, r1)
-
-    # if pause==False:
-    #
-    #
-    #     on_time = datetime.time(int(start_hour), int(start_minute),int(start_second))
-    #     off_time = datetime.time(int(end_hour), int(end_minute),int(end_second))
-    #     current_time = datetime.datetime.now().time()
-    #     if (check_time(current_time, on_time, off_time)):
-    #         print("set On now")
-    #         text = '{' + '"command":"On","farmID":"{}","device":"{}", "duration":"{}"'.format(farmID, device,
-    #                                                                                           duration) + '}'
-    #         sendScheduleToIoT(text)
-    #         text = {'sch_status':True}
-    #         db = firebase.database()
-    #         db.child("farmCode").child(farmID).child('Relay' + str(device[-1])).update(text)
-    #     else:
-    #         print("not set On now")
-    # elif pause==True:
-    #
-    #
-    #     on_time = datetime.time(int(start_hour), int(start_minute),int(start_second))
-    #     off_time = datetime.time(int(end_hour), int(end_minute),int(end_second))
-    #     current_time = datetime.datetime.now().time()
-    #     if (check_time(current_time, on_time, off_time)):
-    #         print("set Off now")
-    #         text = '{' + '"command":"Off","farmID":"{}","device":"{}", "duration":"{}"'.format(farmID, device,
-    #                                                                                           duration) + '}'
-    #         sendScheduleToIoT(text)
-    #         text = {'sch_status':False}
-    #         db = firebase.database()
-    #         db.child("farmCode").child(farmID).child('Relay' + str(device[-1])).update(text)
-    #     else:
-    #         print(" not set Off now")
-
     return Response("OK")
 
 
@@ -699,5 +665,20 @@ def returnJob(request):
         print(item.id)
         print(item.name)
         print(item.next_run_time)
+
+    return HttpResponse("OK")
+
+def getJob(request, id):
+    # id="AA0001_relay6_period1_Off"
+    sch=scheduler.get_job(job_id=id)
+    print(sch)
+
+    return HttpResponse("OK")
+
+
+def removeJob(request,id):
+    sch=scheduler.get_job(job_id=id)
+    print(sch)
+    sch.remove()
 
     return HttpResponse("OK")
