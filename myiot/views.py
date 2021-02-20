@@ -689,3 +689,8 @@ def updateRTDB(request):
 
     return HttpResponse("OK")
 
+def returnJob(request):
+    print(scheduler.get_jobs())
+    for item in scheduler.get_jobs():
+        print(item.__dict__)
+    return HttpResponse("OK")
