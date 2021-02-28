@@ -707,6 +707,7 @@ def getJob(request, id):
 
 
 def removeJob(request,id):
+
     scheduler.remove_job(job_id=id)
 
 
