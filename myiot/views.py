@@ -432,16 +432,19 @@ def createSchedule(request):
 
     text = '{' + '"command":"On","farmID":"{}","device":"{}", "duration":"{}"'.format(farmID, device, duration) + '}'
     try:
-        scheduler.remove_job(job_id=jobId)
-        print('jobs removed')
+        scheduler.reschedule_job(jobId, trigger=CronTrigger(
+                          day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=start_hour,minute=start_minute, second=start_second
+                      ))
+        print('jobs reschedule')
     except:
         print('no job existed')
+        print('create new job')
 
-    scheduler.add_job(sendScheduleToIoT,
-                      trigger=CronTrigger(
-                          day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=start_hour,minute=start_minute, second=start_second
-                      ),
-                      id=jobId, replace_existing=True, args=[text], max_instances=1,misfire_grace_time=3600)
+        scheduler.add_job(sendScheduleToIoT,
+                          trigger=CronTrigger(
+                              day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=start_hour,minute=start_minute, second=start_second
+                          ),
+                          id=jobId, replace_existing=True, args=[text], max_instances=1,misfire_grace_time=3600)
     scheduler.add_job(
         delete_old_job_executions,
         trigger=CronTrigger(
@@ -501,17 +504,20 @@ def createSchedule(request):
     # scheduler.add_jobstore(DjangoJobStore(), "default")
     text = '{' + '"command":"Off","farmID":"{}","device":"{}"'.format(farmID, device) + '}'
     try:
-
-        scheduler.remove_job(job_id=jobId)
-        print('jobs removed')
+        #if scheduler is exist, then reschedule job
+        scheduler.reschedule_job(jobId, trigger=CronTrigger(
+                          day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=end_hour, minute=end_minute,second=end_second
+                      ))
+        print('jobs reschedule')
     except:
         print('no job existed')
+        print('create new job')
 
-    scheduler.add_job(sendScheduleToIoT,
-                      trigger=CronTrigger(
-                          day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=end_hour, minute=end_minute,second=end_second
-                      ),
-                      id=jobId, replace_existing=True, args=[text], max_instances=1, misfire_grace_time=3600)
+        scheduler.add_job(sendScheduleToIoT,
+                          trigger=CronTrigger(
+                              day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=end_hour, minute=end_minute,second=end_second
+                          ),
+                          id=jobId, replace_existing=True, args=[text], max_instances=1, misfire_grace_time=3600)
     scheduler.add_job(
         delete_old_job_executions,
         trigger=CronTrigger(
@@ -700,14 +706,13 @@ def returnJob(request):
 
 def getJob(request, id):
     # id="AA0001_relay6_period1_Off"
-    sch_list=scheduler.filter(job_id=id)
-    for item in sch_list:
-        print(item)
+    sch=scheduler.get_job(job_id=id)
+    print(sch)
+
     return HttpResponse("OK")
 
 
 def removeJob(request,id):
-
     scheduler.remove_job(job_id=id)
 
 
