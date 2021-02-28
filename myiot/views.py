@@ -501,6 +501,7 @@ def createSchedule(request):
     # scheduler.add_jobstore(DjangoJobStore(), "default")
     text = '{' + '"command":"Off","farmID":"{}","device":"{}"'.format(farmID, device) + '}'
     try:
+
         scheduler.remove_job(job_id=jobId)
         print('jobs removed')
     except:
@@ -564,14 +565,14 @@ def removeSchedule(request):
     return Response("OK")
 
 
-@api_view(['POST'])
-@permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
-def printSchedule(request):
-    scheduler = BackgroundScheduler()
-    scheduler.print_jobs()
-    print(scheduler.get_jobs())
-    print(scheduler.get_job('AA0001_relay1'))
-    return Response("OK")
+# @api_view(['POST'])
+# @permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
+# def printSchedule(request):
+#     scheduler = BackgroundScheduler()
+#     scheduler.print_jobs()
+#     print(scheduler.get_jobs())
+#     print(scheduler.get_job('AA0001_relay1'))
+#     return Response("OK")
 
 
 @api_view(['POST'])
@@ -699,9 +700,9 @@ def returnJob(request):
 
 def getJob(request, id):
     # id="AA0001_relay6_period1_Off"
-    sch=scheduler.get_job(job_id=id)
-    print(sch)
-
+    sch_list=scheduler.filter(job_id=id)
+    for item in sch_list:
+        print(item)
     return HttpResponse("OK")
 
 
