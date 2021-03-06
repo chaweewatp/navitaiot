@@ -241,7 +241,8 @@ def on_message(client, userdata, msg):
         dict_a = {"humid": "boardHumi", "temp": "boardTemp",
                   "flowSen1": "flowSen1", "flowSen2": "flowSen2","flowSen3": "flowSen3",
                   "airHumid":"airHumid", "airTemp":"airTemp",
-                  "soilHumid1":"soilHumid1", "soilHumid2":"soilHumid2", "soilHumid3":"soilHumid3"
+                  "soil1A":"soil1A", "soil2A":"soil2A", "soil3A":"soil3A",
+                  "soil1B": "soil1B", "soil2B": "soil2B", "soil3B": "soil3B"
                   }
         # print({dict_a["{}".format(item.split('=')[0])] :item.split('=')[1] for item in content[1:]})
         raw_data = {'farmID': farmID,
