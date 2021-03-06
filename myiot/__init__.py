@@ -238,7 +238,11 @@ def on_message(client, userdata, msg):
         recieveTime = datetime.now().strftime("%Y-%m-%d:%H-%M-%S")
 
         content = data.split(' ')
-        dict_a = {"humid": "boardHumi", "temp": "boardTemp", "flowSen1": "flowSen1"}
+        dict_a = {"humid": "boardHumi", "temp": "boardTemp",
+                  "flowSen1": "flowSen1", "flowSen2": "flowSen2","flowSen3": "flowSen3",
+                  "airHumid":"airHumid", "airTemp":"airTemp",
+                  "soilHumid1":"soilHumid1", "soilHumid2":"soilHumid2", "soilHumid3":"soilHumid3"
+                  }
         # print({dict_a["{}".format(item.split('=')[0])] :item.split('=')[1] for item in content[1:]})
         raw_data = {'farmID': farmID,
                     'detail': {dict_a["{}".format(item.split('=')[0])]: item.split('=')[1] for item in content[1:]}}

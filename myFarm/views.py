@@ -1,9 +1,24 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from datetime import datetime
-
 from .models import farm, airTempSensor, scheduleRelay
 from myiot.views import sendCommandOff, sendCommandOn, sendCommandONLED, sendCommandOffLED
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.authtoken.models import Token
+
+from myiot.authentication import token_expire_handler, expires_in, token_delete
+
+from rest_framework.status import (
+    HTTP_400_BAD_REQUEST,
+    HTTP_401_UNAUTHORIZED,
+    HTTP_404_NOT_FOUND,
+    HTTP_200_OK,
+)
+
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
+from myiot.serializers import UserSigninSerializer
 
 
 import pyrebase
@@ -21,6 +36,43 @@ from apscheduler.schedulers.background import BackgroundScheduler
 
 
 # Create your views here.
+
+
+def signin(request):
+    if request.method == "POST":
+        print('method = POST')
+        # check if username and password is valid
+
+        signin_serializer = UserSigninSerializer(data=request.POST)
+        print(request.POST)
+        if not signin_serializer.is_valid():
+            return HttpResponse('invalid input')
+            # return Response(signin_serializer.errors, status=HTTP_400_BAD_REQUEST)
+        user = authenticate(
+            username=request.POST.get("username"),
+            password=request.POST.get("password")
+        )
+        print(not user)
+        if not user:
+            return HttpResponse('Invalid Credentials or activate account')
+
+            # return Response({'detail': 'Invalid Credentials or activate account'}, status=HTTP_404_NOT_FOUND)
+        # TOKEN STUFF
+
+        token, _ = Token.objects.get_or_create(user=user)
+        is_expired, token = token_expire_handler(token)  # The implementation will be described further
+        try:
+            # then go ot home and send farmID with valid token
+            print('login success')
+            return HttpResponse("login success")
+        except ValueError as e:
+            # else: popup error
+            return HttpResponse("login fail")
+
+            # return Response({"detial": 'Error on authentication'}, status.HTTP_401_UNAUTHORIZED)
+
+    return render(request, 'myFarm/index.html')
+
 
 def home(request):
     print('User access to home page')
