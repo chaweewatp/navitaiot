@@ -7,6 +7,6 @@ urlpatterns = [
     path('myfarm/<id>/', views.pageFarm, name='pageFarm'),
     path('updateFirebase/', views.updateFirebase, name='updateFirebase'),
     path('history/<id>/', views.history, name='history'),
-    path('index/', views.signin, name='signin')
+    path('index/', views.index, name='index'),
 
 ]
