@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>my Farm</title>
+</head>
+<body>
+
+
+{{ farmID }}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{%  static 'js/main.js' %}"></script>
+
+
+<script>
+        console.log({{ farmID }});
+
+</script>
+</body>
+</html>
