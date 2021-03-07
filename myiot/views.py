@@ -1,35 +1,23 @@
-from django.shortcuts import render
 from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
 from django.db import close_old_connections
 
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework import status
 import json
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from rest_framework.renderers import JSONRenderer
 
-import paho.mqtt.client as mqtt
+from rest_framework.renderers import JSONRenderer
 
 # from .mqtt import client, sendToMQTT
 from .__init__ import client
-from django.conf import settings
-
-from apscheduler.schedulers.blocking import BlockingScheduler
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from .__init__ import scheduler
 
 from apscheduler.triggers.cron import CronTrigger
-from django.core.management.base import BaseCommand
-from django_apscheduler.jobstores import DjangoJobStore
 from django_apscheduler.models import DjangoJobExecution
 
-from django.utils import timezone
 import datetime
 
 
@@ -54,21 +42,30 @@ firebase = pyrebase.initialize_app(config)
 #     print('Hello world')
 #     return render(request, 'myiot/home.html')
 #
+
+
+
 @api_view(['POST'])
 @permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
 def testAPI(request):
+    print("function testAPI")
+
     # print('Raw Data: "%s"' % request.__dict__)
     # print('Body Data: "%s"' % request.body)
     return Response("OK")
 
 
 def firebaseModeSet(mode, farmID, relay):
+    print("function firebaseModeSet")
+
     # print(relay)
     text = {'manual': mode}
     db = firebase.database()
     db.child("farmCode").child(farmID).child(relay).update(text)
 
 def modeManualSet(farmID, relay):
+    print("function modeManualSet")
+
     f1 = farm.objects.get(farmCode=farmID)
     r1 = relayDevice.objects.get(farm=f1, relayNumber=relay[-1])
     r1.manualMode = True
@@ -81,6 +78,8 @@ def modeManualSet(farmID, relay):
 
 
 def responseSchedule(farmID, r1):
+    print("function responseSchedule")
+
     onSchedule=False
     for period in [1,2,3,4,5,6]:
         # print(period)
@@ -109,6 +108,12 @@ def responseSchedule(farmID, r1):
         r1.save()
         if r1.manualMode==False:
             sendCommandOn(farmID, 'relay'+r1.relayNumber)
+            print('Send command to IoT')
+            recieveTime = datetime.datetime.now().strftime("%Y-%m-%d:%H-%M-%S")
+            db = firebase.database()
+            db.child("farmCode").child(farmID).child('logs').child('relay'+str(r1.relayNumber)).child(
+                '{}'.format(recieveTime)).set({'type': 'schedule', 'oper': 'On'})
+
         text = {'sch_status':True}
         db = firebase.database()
         db.child("farmCode").child(farmID).child('Relay' + str(r1.relayNumber)).update(text)
@@ -117,6 +122,10 @@ def responseSchedule(farmID, r1):
         r1.save()
         if r1.manualMode==False:
             sendCommandOff(farmID, 'relay'+r1.relayNumber)
+            recieveTime = datetime.datetime.now().strftime("%Y-%m-%d:%H-%M-%S")
+            db = firebase.database()
+            db.child("farmCode").child(farmID).child('logs').child('relay'+str(r1.relayNumber)).child(
+                '{}'.format(recieveTime)).set({'type': 'schedule', 'oper': 'Off'})
         text = {'sch_status':False}
         db = firebase.database()
         db.child("farmCode").child(farmID).child('Relay' + str(r1.relayNumber)).update(text)
@@ -124,7 +133,7 @@ def responseSchedule(farmID, r1):
 
 
 def modeScheduleSet(farmID, relay):
-    print('HERE')
+    print("function modeScheduleSet")
     f1 = farm.objects.get(farmCode=farmID)
     r1 = relayDevice.objects.get(farm=f1, relayNumber=relay[-1])
     r1.manualMode = False
@@ -182,6 +191,8 @@ def modeScheduleSet(farmID, relay):
 @api_view(['POST'])
 @permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
 def setMode(request):
+    print("function setMode")
+
     # print('Raw Data: "%s"' % request.__dict__)
     # print('Body Data: "%s"' % request.body)
     data = json.loads(str(request.body, encoding='utf-8'))
@@ -204,6 +215,8 @@ def setMode(request):
 
 
 def updateFirebase(request, farmID, text):
+    print("function updateFirebase")
+
     # https://github.com/thisbejim/Pyrebase
     db = firebase.database()
     # db.child("farmCode").child("AA0001").update({"flow1Status": False})
@@ -218,6 +231,8 @@ def updateFirebase(request, farmID, text):
 #     return HttpResponse("OK")
 
 def sendCommandONLED():
+    print("function sendCommandONLED")
+
     userdata = "blankUser"
     msg = "blankMsg"
     chipID = "AA0001"
@@ -235,6 +250,8 @@ def sendCommandONLED():
 
 
 def sendCommandOffLED():
+    print("function sendCommandOffLED")
+
     userdata = "blankUser"
     msg = "blankMsg"
     chipID = "AA0001"
@@ -256,12 +273,16 @@ def sendCommandOffLED():
 
 
 def sendCommandOff(chipID, device):
+    print("function sendCommandOff")
+
     topic = chipID
     msg = device + "/turnOff"
     client.publish(topic, msg)
     print('Message publish to ' + chipID + ", msg :" + msg)
 
 def sendCommandOn(chipID, device):
+    print("function sendCommandOn")
+
     topic = chipID
     msg = device + "/turnOn"
     client.publish(topic, msg)
@@ -274,6 +295,8 @@ def sendCommandOn(chipID, device):
 @api_view(['POST'])
 @permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
 def testAPI2(request):
+    print("function testAPI2")
+
     # print('Raw Data: "%s"' % request.__dict__)
     # print('Body Data: "%s"' % request.body)
     data = json.loads(str(request.body, encoding='utf-8'))
@@ -291,7 +314,7 @@ def testAPI2(request):
             recieveTime = datetime.datetime.now().strftime("%Y-%m-%d:%H-%M-%S")
             db = firebase.database()
             db.child("farmCode").child(chipID).child('logs').child('relay'+relay[-1]).child(
-                '{}'.format(recieveTime)).set({'type': 'manual', 'oper': 'on'})
+                '{}'.format(recieveTime)).set({'type': 'manual', 'oper': 'On'})
 
         elif data["detail"]["control"] == "off":
             sendCommandOff(chipID=chipID, device='relay'+relay[-1])
@@ -301,7 +324,7 @@ def testAPI2(request):
             recieveTime = datetime.datetime.now().strftime("%Y-%m-%d:%H-%M-%S")
             db = firebase.database()
             db.child("farmCode").child(chipID).child('logs').child('relay'+relay[-1]).child(
-                '{}'.format(recieveTime)).set({'type': 'manual', 'oper': 'off'})
+                '{}'.format(recieveTime)).set({'type': 'manual', 'oper': 'Off'})
 
         else:
             pass
@@ -310,6 +333,8 @@ def testAPI2(request):
 
 
 def sendScheduleToIoT(text):
+    print("function sendScheduleToIoT")
+
     """ send set of command to IoT"""
     print(text)
     res = json.loads(text)
@@ -373,6 +398,7 @@ def delete_old_job_executions(max_age=604_800):
 @api_view(['POST'])
 @permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
 def createSchedule(request):
+    print("function createSchedule")
     data = json.loads(str(request.body, encoding='utf-8'))
     print(data)
     farmID = data["farmID"]
@@ -422,25 +448,28 @@ def createSchedule(request):
 
     text = '{' + '"command":"On","farmID":"{}","device":"{}", "duration":"{}"'.format(farmID, device, duration) + '}'
     try:
-        scheduler.remove_job(job_id=jobId)
-        print('jobs removed')
+        scheduler.reschedule_job(jobId, trigger=CronTrigger(
+                          day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=start_hour,minute=start_minute, second=start_second
+                      ))
+        print('jobs reschedule')
     except:
         print('no job existed')
+        print('create new job')
 
-    scheduler.add_job(sendScheduleToIoT,
-                      trigger=CronTrigger(
-                          day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=start_hour,minute=start_minute, second=start_second
-                      ),
-                      id=jobId, replace_existing=True, args=[text], max_instances=1,misfire_grace_time=3600)
-    scheduler.add_job(
-        delete_old_job_executions,
-        trigger=CronTrigger(
-            day_of_week='mon,tue,wed,thu,fri,sat,sun', hour="00", minute="00"
-        ),  # Midnight on Monday, before start of the next work week.
-        id="delete_old_job_executions",
-        max_instances=1,
-        replace_existing=True, jitter=3
-    )
+        scheduler.add_job(sendScheduleToIoT,
+                          trigger=CronTrigger(
+                              day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=start_hour,minute=start_minute, second=start_second
+                          ),
+                          id=jobId, replace_existing=True, args=[text], max_instances=1,misfire_grace_time=3600)
+    # scheduler.add_job(
+    #     delete_old_job_executions,
+    #     trigger=CronTrigger(
+    #         day_of_week='mon,tue,wed,thu,fri,sat,sun', hour="00", minute="00"
+    #     ),  # Midnight on Monday, before start of the next work week.
+    #     id="delete_old_job_executions",
+    #     max_instances=1,
+    #     replace_existing=True, jitter=3
+    # )
     # scheduler.start()
 
     print("Schedule created {}".format(text))
@@ -491,25 +520,29 @@ def createSchedule(request):
     # scheduler.add_jobstore(DjangoJobStore(), "default")
     text = '{' + '"command":"Off","farmID":"{}","device":"{}"'.format(farmID, device) + '}'
     try:
-        scheduler.remove_job(job_id=jobId)
-        print('jobs removed')
+        #if scheduler is exist, then reschedule job
+        scheduler.reschedule_job(jobId, trigger=CronTrigger(
+                          day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=end_hour, minute=end_minute,second=end_second
+                      ))
+        print('jobs reschedule')
     except:
         print('no job existed')
+        print('create new job')
 
-    scheduler.add_job(sendScheduleToIoT,
-                      trigger=CronTrigger(
-                          day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=end_hour, minute=end_minute,second=end_second
-                      ),
-                      id=jobId, replace_existing=True, args=[text], max_instances=1, misfire_grace_time=3600)
-    scheduler.add_job(
-        delete_old_job_executions,
-        trigger=CronTrigger(
-            day_of_week='mon,tue,wed,thu,fri,sat,sun', hour="00", minute="00"
-        ),  # Midnight on Monday, before start of the next work week.
-        id="delete_old_job_executions",
-        max_instances=1,
-        replace_existing=True, jitter=3
-    )
+        scheduler.add_job(sendScheduleToIoT,
+                          trigger=CronTrigger(
+                              day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=end_hour, minute=end_minute,second=end_second
+                          ),
+                          id=jobId, replace_existing=True, args=[text], max_instances=1, misfire_grace_time=3600)
+    # scheduler.add_job(
+    #     delete_old_job_executions,
+    #     trigger=CronTrigger(
+    #         day_of_week='mon,tue,wed,thu,fri,sat,sun', hour="00", minute="00"
+    #     ),  # Midnight on Monday, before start of the next work week.
+    #     id="delete_old_job_executions",
+    #     max_instances=1,
+    #     replace_existing=True, jitter=3
+    # )
 
     # scheduler.start()
 
@@ -546,6 +579,8 @@ def check_time(time_to_check, on_time, off_time):
 @api_view(['POST'])
 @permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
 def removeSchedule(request):
+    print("function removeSchedule")
+
     data = json.loads(str(request.body, encoding='utf-8'))
     farmID = data["farmID"]
     device = data["detail"]["device"]
@@ -554,19 +589,21 @@ def removeSchedule(request):
     return Response("OK")
 
 
-@api_view(['POST'])
-@permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
-def printSchedule(request):
-    scheduler = BackgroundScheduler()
-    scheduler.print_jobs()
-    print(scheduler.get_jobs())
-    print(scheduler.get_job('AA0001_relay1'))
-    return Response("OK")
+# @api_view(['POST'])
+# @permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
+# def printSchedule(request):
+#     scheduler = BackgroundScheduler()
+#     scheduler.print_jobs()
+#     print(scheduler.get_jobs())
+#     print(scheduler.get_job('AA0001_relay1'))
+#     return Response("OK")
 
 
 @api_view(['POST'])
 @permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
 def wakeUp(request):
+    print("function wakeUp")
+
     data = json.loads(str(request.body, encoding='utf-8'))
     print(data)
     farmID = data["farmID"]
@@ -607,6 +644,8 @@ def wakeUp(request):
 @api_view(['POST'])
 @permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
 def emergencyOff(request):
+    print("function emergenctOff")
+
     data = json.loads(str(request.body, encoding='utf-8'))
     print(data)
     farmID = data["farmID"]
@@ -616,22 +655,26 @@ def emergencyOff(request):
     command = []
     for item in relay_list:
         relay_num.append(item.relayNumber)
-
-    command = ['turnOn' if item is True else 'turnOff' for item in command]
-
+    json_data={"relay{}".format(item):"turnOff" for item in relay_num}
+    print(json_data)
     topic = "{}/getCurrentCommand".format(farmID)
-
-
-    msg=JSONRenderer().render({"relay{}".format(relay_num[0]):"turnOff",
-                               "relay{}".format(relay_num[1]):"turnOff",
-                               "relay{}".format(relay_num[2]):"turnOff",
-                               "relay{}".format(relay_num[3]):"turnOff",
-                               "relay{}".format(relay_num[4]):"turnOff",
-                               "relay{}".format(relay_num[5]):"turnOff"})
+    msg = JSONRenderer().render(json_data)
+    # msg=JSONRenderer().render({"relay{}".format(relay_num[0]):"turnOff",
+    #                            "relay{}".format(relay_num[1]):"turnOff",
+    #                            "relay{}".format(relay_num[2]):"turnOff",
+    #                            "relay{}".format(relay_num[3]):"turnOff",
+    #                            "relay{}".format(relay_num[4]):"turnOff",
+    #                            "relay{}".format(relay_num[5]):"turnOff"})
     print(msg)
     print(str(msg))
     client.publish(topic, msg)
     print('Message publish to ' + "{}".format(farmID) + ", msg :" + str(msg))
+    for item in relay_list:
+        print(item.__dict__)
+        item.manualMode=True
+        item.save()
+        print(item.__dict__)
+        firebaseModeSet(mode=True, farmID=farmID, relay="Relay{}".format(item.relayNumber))
 
     return Response("OK")
 
@@ -642,6 +685,7 @@ def emergencyOff(request):
 @api_view(['POST'])
 @permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
 def reportRelay(request):
+    print("function reportRelay")
     data = json.loads(str(request.body, encoding='utf-8'))
     print(data)
     farmID = data["farmID"]
@@ -659,6 +703,8 @@ def reportRelay(request):
 
 
 def updateRTDB(request):
+    print("function updateRTDB")
+
     serverTime=datetime.datetime.now().strftime("%Y-%m-%d:%H-%M-%S")
     timeStamp=datetime.datetime.timestamp(datetime.datetime.now())
 
@@ -675,6 +721,8 @@ def updateRTDB(request):
     return HttpResponse("OK")
 
 def returnJob(request):
+    print("function returnJob")
+
     print(scheduler.get_jobs())
     for item in scheduler.get_jobs():
         print(item.id)
@@ -684,6 +732,8 @@ def returnJob(request):
     return HttpResponse("OK")
 
 def getJob(request, id):
+    print("function getJob")
+
     # id="AA0001_relay6_period1_Off"
     sch=scheduler.get_job(job_id=id)
     print(sch)
@@ -692,7 +742,6 @@ def getJob(request, id):
 
 
 def removeJob(request,id):
+    print("function removeJob")
     scheduler.remove_job(job_id=id)
-
-
     return HttpResponse("OK")

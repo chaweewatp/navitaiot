@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from datetime import datetime
+from .models import farm
+from myiot.views import sendCommandONLED, sendCommandOffLED
 
-from .models import farm, airTempSensor, scheduleRelay
-from myiot.views import sendCommandOff, sendCommandOn, sendCommandONLED, sendCommandOffLED
+
 
 
 import pyrebase
@@ -16,11 +17,16 @@ config = {
 
 firebase = pyrebase.initialize_app(config)
 
-from myFarm import schedulejobs
-from apscheduler.schedulers.background import BackgroundScheduler
-
 
 # Create your views here.
+
+
+
+def index(request):
+    return render(request, 'myFarm/index.html')
+
+
+
 
 def home(request):
     print('User access to home page')

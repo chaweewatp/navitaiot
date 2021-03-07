@@ -39,11 +39,32 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'myFarm',
-    'myiot.apps.MyiotConfig',
     'django_apscheduler',
-'corsheaders',
+    'myFarm',
+    'myiot',
+    'corsheaders',
+    'rest_framework',  # add DRF
+    'rest_framework.authtoken',  # add token authentication
+
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'myAPI.authentication.ExpiringTokenAuthentication',  # custom authentication class
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
+}
+TOKEN_EXPIRED_AFTER_SECONDS=86400
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+    <label>username</label><input id = "username" name="username"> <br> <br>
+    <label>password</label><input id = "password" name="password"> <br><br>
+    <button  onclick="login()">Login</button>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{%  static 'js/login.js' %}"></script>
+</body>
+</html>
