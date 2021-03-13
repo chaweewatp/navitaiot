@@ -52,11 +52,11 @@
                             {#                            <span id="R1_Sch1_pause"></span>#}
                             {% if initialchk11 == False %}
                                 <input id="chk11" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=1, period=1)"
+                                       onchange="toggleScheduleRelay(relay_num=1, period=1, farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk11" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=1, period=1)"
+                                       onchange="toggleScheduleRelay(relay_num=1, period=1,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -64,7 +64,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod1R1Start">
                             เป็นเวลา <input id="timePeriod1R1Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod1R1Stop" disabled>
-                            <button type="button" class="sendButton11" onclick="scheduleSet(relay_num=1,period=1)">
+                            <button type="button" class="sendButton11" onclick="scheduleSet(relay_num=1,period=1,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -78,11 +78,11 @@
                             {#                            <span id="R1_Sch2_pause"></span>#}
                             {% if initialchk12 == False %}
                                 <input id="chk12" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=1, period=2)"
+                                       onchange="toggleScheduleRelay(relay_num=1, period=2,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk12" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=1, period=2)"
+                                       onchange="toggleScheduleRelay(relay_num=1, period=2,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -90,7 +90,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod2R1Start">
                             เป็นเวลา <input id="timePeriod2R1Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod2R1Stop" disabled>
-                            <button type="button" class="sendButton12" onclick="scheduleSet(relay_num=1,period=2)">
+                            <button type="button" class="sendButton12" onclick="scheduleSet(relay_num=1,period=2,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -105,11 +105,11 @@
                             {#                            <span id="R1_Sch3_pause"></span>#}
                             {% if initialchk13 == False %}
                                 <input id="chk13" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=1, period=3)"
+                                       onchange="toggleScheduleRelay(relay_num=1, period=3,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk13" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=1, period=3)"
+                                       onchange="toggleScheduleRelay(relay_num=1, period=3,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -117,7 +117,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod3R1Start">
                             เป็นเวลา <input id="timePeriod3R1Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod3R1Stop" disabled>
-                            <button type="button" class="sendButton13" onclick="scheduleSet(relay_num=1,period=3)">
+                            <button type="button" class="sendButton13" onclick="scheduleSet(relay_num=1,period=3,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -132,11 +132,11 @@
                             {#                            <span id="R1_Sch4_pause"></span>#}
                             {% if initialchk14 == False %}
                                 <input id="chk14" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=1, period=4)"
+                                       onchange="toggleScheduleRelay(relay_num=1, period=4,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk14" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=1, period=4)"
+                                       onchange="toggleScheduleRelay(relay_num=1, period=4,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -144,7 +144,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod4R1Start">
                             เป็นเวลา <input id="timePeriod4R1Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod4R1Stop" disabled>
-                            <button type="button"  class="sendButton14"onclick="scheduleSet(relay_num=1,period=4)">
+                            <button type="button"  class="sendButton14"onclick="scheduleSet(relay_num=1,period=4,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -160,11 +160,11 @@
                             {#                            <span id="R1_Sch5_pause"></span>#}
                             {% if initialchk15 == False %}
                                 <input id="chk15" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=1, period=5)"
+                                       onchange="toggleScheduleRelay(relay_num=1, period=5,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk15" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=1, period=5)"
+                                       onchange="toggleScheduleRelay(relay_num=1, period=5,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -172,7 +172,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod5R1Start">
                             เป็นเวลา <input id="timePeriod5R1Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod5R1Stop" disabled>
-                            <button type="button" class="sendButton15" onclick="scheduleSet(relay_num=1,period=5)">
+                            <button type="button" class="sendButton15" onclick="scheduleSet(relay_num=1,period=5,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -187,11 +187,11 @@
                             {#                            <span id="R1_Sch6_pause"></span>#}
                             {% if initialchk16 == False %}
                                 <input id="chk16" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=1, period=6)"
+                                       onchange="toggleScheduleRelay(relay_num=1, period=6,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk16" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=1, period=6)"
+                                       onchange="toggleScheduleRelay(relay_num=1, period=6,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -199,7 +199,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod6R1Start">
                             เป็นเวลา <input id="timePeriod6R1Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod6R1Stop" disabled>
-                            <button type="button" class="sendButton16" onclick="scheduleSet(relay_num=1,period=6)">
+                            <button type="button" class="sendButton16" onclick="scheduleSet(relay_num=1,period=6,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -237,11 +237,11 @@
                             {#                            <span id="R2_Sch1_pause"></span>#}
                             {% if initialchk21 == False %}
                                 <input id="chk21" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=2, period=1)"
+                                       onchange="toggleScheduleRelay(relay_num=2, period=1,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk21" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=2, period=1)"
+                                       onchange="toggleScheduleRelay(relay_num=2, period=1,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -249,7 +249,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod1R2Start">
                             เป็นเวลา <input id="timePeriod1R2Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod1R2Stop" disabled>
-                            <button type="button" class="sendButton21"onclick="scheduleSet(relay_num=2,period=1)">
+                            <button type="button" class="sendButton21"onclick="scheduleSet(relay_num=2,period=1,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -263,11 +263,11 @@
                             {#                            <span id="R2_Sch2_pause"></span>#}
                             {% if initialchk22 == False %}
                                 <input id="chk22" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=2, period=2)"
+                                       onchange="toggleScheduleRelay(relay_num=2, period=2,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk22" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=2, period=2)"
+                                       onchange="toggleScheduleRelay(relay_num=2, period=2,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -275,7 +275,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod2R2Start">
                             เป็นเวลา <input id="timePeriod2R2Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod2R2Stop" disabled>
-                            <button type="button" class="sendButton22"onclick="scheduleSet(relay_num=2,period=2)">
+                            <button type="button" class="sendButton22"onclick="scheduleSet(relay_num=2,period=2,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -290,11 +290,11 @@
                             {#                            <span id="R2_Sch3_pause"></span>#}
                             {% if initialchk23 == False %}
                                 <input id="chk23" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=2, period=3)"
+                                       onchange="toggleScheduleRelay(relay_num=2, period=3,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk23" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=2, period=3)"
+                                       onchange="toggleScheduleRelay(relay_num=2, period=3,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -302,7 +302,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod3R2Start">
                             เป็นเวลา <input id="timePeriod3R2Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod3R1Stop" disabled>
-                            <button type="button" class="sendButton23"onclick="scheduleSet(relay_num=2,period=3)">
+                            <button type="button" class="sendButton23"onclick="scheduleSet(relay_num=2,period=3,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -317,11 +317,11 @@
                             {#                            <span id="R1_Sch4_pause"></span>#}
                             {% if initialchk24 == False %}
                                 <input id="chk24" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=2, period=4)"
+                                       onchange="toggleScheduleRelay(relay_num=2, period=4,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk24" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=2, period=4)"
+                                       onchange="toggleScheduleRelay(relay_num=2, period=4,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -329,7 +329,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod4R2Start">
                             เป็นเวลา <input id="timePeriod4R2Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod4R2Stop" disabled>
-                            <button type="button" class="sendButton24"onclick="scheduleSet(relay_num=2,period=4)">
+                            <button type="button" class="sendButton24"onclick="scheduleSet(relay_num=2,period=4,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -345,11 +345,11 @@
                             {#                            <span id="R1_Sch5_pause"></span>#}
                             {% if initialchk25 == False %}
                                 <input id="chk25" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=2, period=5)"
+                                       onchange="toggleScheduleRelay(relay_num=2, period=5,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk25" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=2, period=5)"
+                                       onchange="toggleScheduleRelay(relay_num=2, period=5,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -357,7 +357,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod5R2Start">
                             เป็นเวลา <input id="timePeriod5R2Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod5R2Stop" disabled>
-                            <button type="button" class="sendButton25"onclick="scheduleSet(relay_num=2,period=5)">
+                            <button type="button" class="sendButton25"onclick="scheduleSet(relay_num=2,period=5,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -372,11 +372,11 @@
                             {#                            <span id="R2_Sch6_pause"></span>#}
                             {% if initialchk26 == False %}
                                 <input id="chk26" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=2, period=6)"
+                                       onchange="toggleScheduleRelay(relay_num=2, period=6,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk26" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=2, period=6)"
+                                       onchange="toggleScheduleRelay(relay_num=2, period=6,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -384,7 +384,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod6R2Start">
                             เป็นเวลา <input id="timePeriod6R2Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod6R2Stop" disabled>
-                            <button type="button" class="sendButton26"onclick="scheduleSet(relay_num=2,period=6)">
+                            <button type="button" class="sendButton26"onclick="scheduleSet(relay_num=2,period=6,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -424,11 +424,11 @@
                             {#                            <span id="R3_Sch1_pause"></span>#}
                             {% if initialchk31 == False %}
                                 <input id="chk31" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=3, period=1)"
+                                       onchange="toggleScheduleRelay(relay_num=3, period=1,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk31" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=3, period=1)"
+                                       onchange="toggleScheduleRelay(relay_num=3, period=1,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -436,7 +436,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod1R3Start">
                             เป็นเวลา <input id="timePeriod1R3Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod1R3Stop" disabled>
-                            <button type="button" class="sendButton31"onclick="scheduleSet(relay_num=3,period=1)">
+                            <button type="button" class="sendButton31"onclick="scheduleSet(relay_num=3,period=1,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -450,11 +450,11 @@
                             {#                            <span id="R3_Sch2_pause"></span>#}
                             {% if initialchk32 == False %}
                                 <input id="chk32" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=3, period=2)"
+                                       onchange="toggleScheduleRelay(relay_num=3, period=2,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk32" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=3, period=2)"
+                                       onchange="toggleScheduleRelay(relay_num=3, period=2,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -462,7 +462,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod2R3Start">
                             เป็นเวลา <input id="timePeriod2R3Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod2R3Stop" disabled>
-                            <button type="button" class="sendButton32"onclick="scheduleSet(relay_num=3,period=2)">
+                            <button type="button" class="sendButton32"onclick="scheduleSet(relay_num=3,period=2,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -477,11 +477,11 @@
                             {#                            <span id="R3_Sch3_pause"></span>#}
                             {% if initialchk33 == False %}
                                 <input id="chk33" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=3, period=3)"
+                                       onchange="toggleScheduleRelay(relay_num=3, period=3,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk33" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=3, period=3)"
+                                       onchange="toggleScheduleRelay(relay_num=3, period=3,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -489,7 +489,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod3R3Start">
                             เป็นเวลา <input id="timePeriod3R3Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod3R3Stop" disabled>
-                            <button type="button" class="sendButton33"onclick="scheduleSet(relay_num=3,period=3)">
+                            <button type="button" class="sendButton33"onclick="scheduleSet(relay_num=3,period=3,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -504,11 +504,11 @@
                             {#                            <span id="R3_Sch4_pause"></span>#}
                             {% if initialchk34 == False %}
                                 <input id="chk34" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=3, period=4)"
+                                       onchange="toggleScheduleRelay(relay_num=3, period=4,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk34" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=3, period=4)"
+                                       onchange="toggleScheduleRelay(relay_num=3, period=4,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -516,7 +516,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod4R3Start">
                             เป็นเวลา <input id="timePeriod4R3Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod4R3Stop" disabled>
-                            <button type="button" class="sendButton34"onclick="scheduleSet(relay_num=3,period=4)">
+                            <button type="button" class="sendButton34"onclick="scheduleSet(relay_num=3,period=4,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -532,11 +532,11 @@
                             {#                            <span id="R3_Sch5_pause"></span>#}
                             {% if initialchk35 == False %}
                                 <input id="chk35" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=3, period=5)"
+                                       onchange="toggleScheduleRelay(relay_num=3, period=5,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk35" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=3, period=5)"
+                                       onchange="toggleScheduleRelay(relay_num=3, period=5,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -544,7 +544,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod5R3Start">
                             เป็นเวลา <input id="timePeriod5R3Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod5R3Stop" disabled>
-                            <button type="button" class="sendButton35"onclick="scheduleSet(relay_num=3,period=5)">
+                            <button type="button" class="sendButton35"onclick="scheduleSet(relay_num=3,period=5,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -559,11 +559,11 @@
                             {#                            <span id="R3_Sch6_pause"></span>#}
                             {% if initialchk36 == False %}
                                 <input id="chk36" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=3, period=6)"
+                                       onchange="toggleScheduleRelay(relay_num=3, period=6,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk36" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=3, period=6)"
+                                       onchange="toggleScheduleRelay(relay_num=3, period=6,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -571,7 +571,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod6R3Start">
                             เป็นเวลา <input id="timePeriod6R3Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod6R3Stop" disabled>
-                            <button type="button" class="sendButton36"onclick="scheduleSet(relay_num=3,period=6)">
+                            <button type="button" class="sendButton36"onclick="scheduleSet(relay_num=3,period=6,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -610,11 +610,11 @@
                             {#                            <span id="R4_Sch1_pause"></span>#}
                             {% if initialchk41 == False %}
                                 <input id="chk41" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=4, period=1)"
+                                       onchange="toggleScheduleRelay(relay_num=4, period=1,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk41" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=4, period=1)"
+                                       onchange="toggleScheduleRelay(relay_num=4, period=1,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -622,7 +622,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod1R4Start">
                             เป็นเวลา <input id="timePeriod1R4Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod1R4Stop" disabled>
-                            <button type="button" class="sendButton41"onclick="scheduleSet(relay_num=4,period=1)">
+                            <button type="button" class="sendButton41"onclick="scheduleSet(relay_num=4,period=1,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -636,11 +636,11 @@
                             {#                            <span id="R4_Sch2_pause"></span>#}
                             {% if initialchk42 == False %}
                                 <input id="chk42" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=4, period=2)"
+                                       onchange="toggleScheduleRelay(relay_num=4, period=2,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk42" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=4, period=2)"
+                                       onchange="toggleScheduleRelay(relay_num=4, period=2,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -648,7 +648,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod2R4Start">
                             เป็นเวลา <input id="timePeriod2R4Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod2R4Stop" disabled>
-                            <button type="button" class="sendButton42"onclick="scheduleSet(relay_num=4,period=2)">
+                            <button type="button" class="sendButton42"onclick="scheduleSet(relay_num=4,period=2,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -663,11 +663,11 @@
                             {#                            <span id="R4_Sch3_pause"></span>#}
                             {% if initialchk43 == False %}
                                 <input id="chk43" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=4, period=3)"
+                                       onchange="toggleScheduleRelay(relay_num=4, period=3,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk43" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=4, period=3)"
+                                       onchange="toggleScheduleRelay(relay_num=4, period=3,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -675,7 +675,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod3R4Start">
                             เป็นเวลา <input id="timePeriod3R4Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod3R4Stop" disabled>
-                            <button type="button" class="sendButton43"onclick="scheduleSet(relay_num=4,period=3)">
+                            <button type="button" class="sendButton43"onclick="scheduleSet(relay_num=4,period=3,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -690,11 +690,11 @@
                             {#                            <span id="R4_Sch4_pause"></span>#}
                             {% if initialchk44 == False %}
                                 <input id="chk44" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=4, period=4)"
+                                       onchange="toggleScheduleRelay(relay_num=4, period=4,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk44" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=4, period=4)"
+                                       onchange="toggleScheduleRelay(relay_num=4, period=4,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -702,7 +702,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod4R4Start">
                             เป็นเวลา <input id="timePeriod4R4Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod4R4Stop" disabled>
-                            <button type="button" class="sendButton44"onclick="scheduleSet(relay_num=4,period=4)">
+                            <button type="button" class="sendButton44"onclick="scheduleSet(relay_num=4,period=4,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -718,11 +718,11 @@
                             {#                            <span id="R4_Sch5_pause"></span>#}
                             {% if initialchk45 == False %}
                                 <input id="chk45" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=4, period=5)"
+                                       onchange="toggleScheduleRelay(relay_num=4, period=5,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk45" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=4, period=5)"
+                                       onchange="toggleScheduleRelay(relay_num=4, period=5,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -730,7 +730,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod5R4Start">
                             เป็นเวลา <input id="timePeriod5R4Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod5R4Stop" disabled>
-                            <button type="button"class="sendButton45" onclick="scheduleSet(relay_num=4,period=5)">
+                            <button type="button"class="sendButton45" onclick="scheduleSet(relay_num=4,period=5,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -745,11 +745,11 @@
                             {#                            <span id="R4_Sch6_pause"></span>#}
                             {% if initialchk46 == False %}
                                 <input id="chk46" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=4, period=6)"
+                                       onchange="toggleScheduleRelay(relay_num=4, period=6,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk46" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=4, period=6)"
+                                       onchange="toggleScheduleRelay(relay_num=4, period=6,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -757,7 +757,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod6R4Start">
                             เป็นเวลา <input id="timePeriod6R4Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod6R4Stop" disabled>
-                            <button type="button" class="sendButton46"onclick="scheduleSet(relay_num=4,period=6)">
+                            <button type="button" class="sendButton46"onclick="scheduleSet(relay_num=4,period=6,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -795,11 +795,11 @@
                             {#                            <span id="R5_Sch1_pause"></span>#}
                             {% if initialchk51 == False %}
                                 <input id="chk51" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=5, period=1)"
+                                       onchange="toggleScheduleRelay(relay_num=5, period=1,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk51" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=5, period=1)"
+                                       onchange="toggleScheduleRelay(relay_num=5, period=1,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -807,7 +807,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod1R5Start">
                             เป็นเวลา <input id="timePeriod1R5Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod1R5Stop" disabled>
-                            <button type="button" class="sendButton51"onclick="scheduleSet(relay_num=5,period=1)">
+                            <button type="button" class="sendButton51"onclick="scheduleSet(relay_num=5,period=1,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -821,11 +821,11 @@
                             {#                            <span id="R5_Sch2_pause"></span>#}
                             {% if initialchk52 == False %}
                                 <input id="chk52" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=5, period=2)"
+                                       onchange="toggleScheduleRelay(relay_num=5, period=2,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk52" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=5, period=2)"
+                                       onchange="toggleScheduleRelay(relay_num=5, period=2,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -833,7 +833,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod2R5Start">
                             เป็นเวลา <input id="timePeriod2R5Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod2R5Stop" disabled>
-                            <button type="button" class="sendButton52"onclick="scheduleSet(relay_num=5,period=2)">
+                            <button type="button" class="sendButton52"onclick="scheduleSet(relay_num=5,period=2,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -848,11 +848,11 @@
                             {#                            <span id="R5_Sch3_pause"></span>#}
                             {% if initialchk53 == False %}
                                 <input id="chk53" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=5, period=3)"
+                                       onchange="toggleScheduleRelay(relay_num=5, period=3,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk53" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=5, period=3)"
+                                       onchange="toggleScheduleRelay(relay_num=5, period=3,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -860,7 +860,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod3R5Start">
                             เป็นเวลา <input id="timePeriod3R5Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod3R5Stop" disabled>
-                            <button type="button" class="sendButton53"onclick="scheduleSet(relay_num=5,period=3)">
+                            <button type="button" class="sendButton53"onclick="scheduleSet(relay_num=5,period=3,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -875,11 +875,11 @@
                             {#                            <span id="R5_Sch4_pause"></span>#}
                             {% if initialchk54 == False %}
                                 <input id="chk54" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=5, period=4)"
+                                       onchange="toggleScheduleRelay(relay_num=5, period=4,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk54" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=5, period=4)"
+                                       onchange="toggleScheduleRelay(relay_num=5, period=4,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -887,7 +887,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod4R5Start">
                             เป็นเวลา <input id="timePeriod4R5Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod4R5Stop" disabled>
-                            <button type="button" class="sendButton54"onclick="scheduleSet(relay_num=5,period=4)">
+                            <button type="button" class="sendButton54"onclick="scheduleSet(relay_num=5,period=4,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -903,11 +903,11 @@
                             {#                            <span id="R5_Sch5_pause"></span>#}
                             {% if initialchk55 == False %}
                                 <input id="chk55" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=5, period=5)"
+                                       onchange="toggleScheduleRelay(relay_num=5, period=5,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk55" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=5, period=5)"
+                                       onchange="toggleScheduleRelay(relay_num=5, period=5,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -915,7 +915,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod5R5Start">
                             เป็นเวลา <input id="timePeriod5R5Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod5R5Stop" disabled>
-                            <button type="button" class="sendButton55"onclick="scheduleSet(relay_num=5,period=5)">
+                            <button type="button" class="sendButton55"onclick="scheduleSet(relay_num=5,period=5,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -930,11 +930,11 @@
                             {#                            <span id="R5_Sch6_pause"></span>#}
                             {% if initialchk56 == False %}
                                 <input id="chk56" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=5, period=6)"
+                                       onchange="toggleScheduleRelay(relay_num=5, period=6,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk56" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=5, period=6)"
+                                       onchange="toggleScheduleRelay(relay_num=5, period=6,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -942,7 +942,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod6R5Start">
                             เป็นเวลา <input id="timePeriod6R5Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod6R5Stop" disabled>
-                            <button type="button"class="sendButton56" onclick="scheduleSet(relay_num=5,period=6)">
+                            <button type="button"class="sendButton56" onclick="scheduleSet(relay_num=5,period=6,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -981,11 +981,11 @@
                             {#                            <span id="R6_Sch1_pause"></span>#}
                             {% if initialchk61 == False %}
                                 <input id="chk61" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=6, period=1)"
+                                       onchange="toggleScheduleRelay(relay_num=6, period=1,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk61" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=6, period=1)"
+                                       onchange="toggleScheduleRelay(relay_num=6, period=1,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -993,7 +993,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod1R6Start">
                             เป็นเวลา <input id="timePeriod1R6Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod1R6Stop" disabled>
-                            <button type="button" class="sendButton61"onclick="scheduleSet(relay_num=6,period=1)">
+                            <button type="button" class="sendButton61"onclick="scheduleSet(relay_num=6,period=1,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -1007,11 +1007,11 @@
                             {#                            <span id="R6_Sch2_pause"></span>#}
                             {% if initialchk62 == False %}
                                 <input id="chk62" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=6, period=2)"
+                                       onchange="toggleScheduleRelay(relay_num=6, period=2,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk62" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=6, period=2)"
+                                       onchange="toggleScheduleRelay(relay_num=6, period=2,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -1019,7 +1019,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod2R6Start">
                             เป็นเวลา <input id="timePeriod2R6Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod2R6Stop" disabled>
-                            <button type="button"class="sendButton62" onclick="scheduleSet(relay_num=6,period=2)">
+                            <button type="button"class="sendButton62" onclick="scheduleSet(relay_num=6,period=2,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -1034,11 +1034,11 @@
                             {#                            <span id="R6_Sch3_pause"></span>#}
                             {% if initialchk63 == False %}
                                 <input id="chk63" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=6, period=3)"
+                                       onchange="toggleScheduleRelay(relay_num=6, period=3,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk63" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=6, period=3)"
+                                       onchange="toggleScheduleRelay(relay_num=6, period=3,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -1046,7 +1046,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod3R6Start">
                             เป็นเวลา <input id="timePeriod3R6Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod3R6Stop" disabled>
-                            <button type="button" class="sendButton63"onclick="scheduleSet(relay_num=6,period=3)">
+                            <button type="button" class="sendButton63"onclick="scheduleSet(relay_num=6,period=3,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -1061,11 +1061,11 @@
                             {#                            <span id="R6_Sch4_pause"></span>#}
                             {% if initialchk64 == False %}
                                 <input id="chk64" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=6, period=4)"
+                                       onchange="toggleScheduleRelay(relay_num=6, period=4,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk64" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=6, period=4)"
+                                       onchange="toggleScheduleRelay(relay_num=6, period=4,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -1073,7 +1073,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod4R6Start">
                             เป็นเวลา <input id="timePeriod4R6Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod4R6Stop" disabled>
-                            <button type="button"class="sendButton64" onclick="scheduleSet(relay_num=6,period=4)">
+                            <button type="button"class="sendButton64" onclick="scheduleSet(relay_num=6,period=4,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -1089,11 +1089,11 @@
                             {#                            <span id="R6_Sch5_pause"></span>#}
                             {% if initialchk65 == False %}
                                 <input id="chk65" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=6, period=5)"
+                                       onchange="toggleScheduleRelay(relay_num=6, period=5,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk65" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=6, period=5)"
+                                       onchange="toggleScheduleRelay(relay_num=6, period=5,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -1101,7 +1101,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod5R6Start">
                             เป็นเวลา <input id="timePeriod5R6Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod5R6Stop" disabled>
-                            <button type="button"class="sendButton65" onclick="scheduleSet(relay_num=6,period=5)">
+                            <button type="button"class="sendButton65" onclick="scheduleSet(relay_num=6,period=5,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -1116,11 +1116,11 @@
                             {#                            <span id="R6_Sch6_pause"></span>#}
                             {% if initialchk66 == False %}
                                 <input id="chk66" type="checkbox" checked data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=6, period=6)"
+                                       onchange="toggleScheduleRelay(relay_num=6, period=6,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% else %}
                                 <input id="chk66" type="checkbox" data-toggle="toggle"
-                                       onchange="toggleScheduleRelay(relay_num=6, period=6)"
+                                       onchange="toggleScheduleRelay(relay_num=6, period=6,farmCode='{{ farmCode }}')"
                                        data-onstyle="success">
                             {% endif %}
                         </div>
@@ -1128,7 +1128,7 @@
                             เริ่มเวลา <input type="time" id="timePeriod6R6Start">
                             เป็นเวลา <input id="timePeriod6R6Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod6R6Stop" disabled>
-                            <button type="button" class="sendButton66"onclick="scheduleSet(relay_num=6,period=6)">
+                            <button type="button" class="sendButton66"onclick="scheduleSet(relay_num=6,period=6,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>

@@ -424,7 +424,7 @@ $('.sendButton21').attr('disabled',true);
 }
 
 
-function toggleScheduleRelay(relay_num, period) {
+function toggleScheduleRelay(relay_num, period, farmCode) {
         start = $('#R' + relay_num + '_Sch' + period + '_on').text();
         end = $('#R' + relay_num + '_Sch' + period + '_off').text();
         duration = $('#R' + relay_num + '_Sch' + period + '_duration').text();
@@ -692,7 +692,7 @@ function toggleScheduleRelay(relay_num, period) {
 
 
         var raw = JSON.stringify({
-            "farmCode": localStorage.farmCode,
+            "farmCode": farmCode,
             "token": localStorage.tk,
             "method": "scheduleSet",
             "detail": {
@@ -744,7 +744,7 @@ function timeCal(relay_num, period) {
         document.getElementById('timePeriod' + period + 'R' + relay_num + 'Delay').value)
 }
 
-function scheduleSet(relay_num, period) {
+function scheduleSet(relay_num, period, farmCode) {
 
         timeCal(relay_num, period);
 
@@ -758,7 +758,7 @@ function scheduleSet(relay_num, period) {
 
         if (document.getElementById('chk' + relay_num + '' + period).checked) {
             var raw = JSON.stringify({
-                "farmCode": localStorage.farmCode,
+                "farmCode": farmCode,
                 "token": localStorage.tk,
                 "method": "scheduleSet",
                 "detail": {
@@ -777,7 +777,7 @@ function scheduleSet(relay_num, period) {
             });
         } else {
             var raw = JSON.stringify({
-                "farmCode": localStorage.farmCode,
+                "farmCode": farmCode,
                 "token": localStorage.tk,
                 "method": "scheduleSet",
                 "detail": {
@@ -805,7 +805,13 @@ function scheduleSet(relay_num, period) {
 
         // fetch("http://127.0.0.1:8000/createJobSchedule/", requestOptions)
         fetch("https://navitaiot.herokuapp.com/createJobSchedule/", requestOptions)
-            .then(response => response.text())
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));
+        //     .then(response => response.text())
+        //     .then(result => console.log(result))
+        //     .catch(error => console.log('error', error));
+                    .then(function (response){
+                        console.log(response.status);
+                        if (response.status =="404"){
+                            alert('Unauthorization')
+                        }
+                    });
     }
