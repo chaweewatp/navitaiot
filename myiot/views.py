@@ -1,6 +1,4 @@
-from django.shortcuts import render
 from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
 from django.db import close_old_connections
 
 import json
@@ -8,32 +6,18 @@ import json
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from rest_framework import status
 
 from rest_framework.renderers import JSONRenderer
 
-from rest_framework.authtoken.models import Token
-from .authentication import token_expire_handler, expires_in, token_delete
-
-
-
-import paho.mqtt.client as mqtt
-
 # from .mqtt import client, sendToMQTT
 from .__init__ import client
-from django.conf import settings
-
-from apscheduler.schedulers.blocking import BlockingScheduler
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from .__init__ import scheduler
 
 from apscheduler.triggers.cron import CronTrigger
-from django.core.management.base import BaseCommand
-from django_apscheduler.jobstores import DjangoJobStore
 from django_apscheduler.models import DjangoJobExecution
 
-from django.utils import timezone
 import datetime
 
 
@@ -64,18 +48,24 @@ firebase = pyrebase.initialize_app(config)
 @api_view(['POST'])
 @permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
 def testAPI(request):
+    print("function testAPI")
+
     # print('Raw Data: "%s"' % request.__dict__)
     # print('Body Data: "%s"' % request.body)
     return Response("OK")
 
 
 def firebaseModeSet(mode, farmID, relay):
+    print("function firebaseModeSet")
+
     # print(relay)
     text = {'manual': mode}
     db = firebase.database()
     db.child("farmCode").child(farmID).child(relay).update(text)
 
 def modeManualSet(farmID, relay):
+    print("function modeManualSet")
+
     f1 = farm.objects.get(farmCode=farmID)
     r1 = relayDevice.objects.get(farm=f1, relayNumber=relay[-1])
     r1.manualMode = True
@@ -88,6 +78,8 @@ def modeManualSet(farmID, relay):
 
 
 def responseSchedule(farmID, r1):
+    print("function responseSchedule")
+
     onSchedule=False
     for period in [1,2,3,4,5,6]:
         # print(period)
@@ -141,7 +133,7 @@ def responseSchedule(farmID, r1):
 
 
 def modeScheduleSet(farmID, relay):
-    print('HERE')
+    print("function modeScheduleSet")
     f1 = farm.objects.get(farmCode=farmID)
     r1 = relayDevice.objects.get(farm=f1, relayNumber=relay[-1])
     r1.manualMode = False
@@ -199,6 +191,8 @@ def modeScheduleSet(farmID, relay):
 @api_view(['POST'])
 @permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
 def setMode(request):
+    print("function setMode")
+
     # print('Raw Data: "%s"' % request.__dict__)
     # print('Body Data: "%s"' % request.body)
     data = json.loads(str(request.body, encoding='utf-8'))
@@ -221,6 +215,8 @@ def setMode(request):
 
 
 def updateFirebase(request, farmID, text):
+    print("function updateFirebase")
+
     # https://github.com/thisbejim/Pyrebase
     db = firebase.database()
     # db.child("farmCode").child("AA0001").update({"flow1Status": False})
@@ -235,6 +231,8 @@ def updateFirebase(request, farmID, text):
 #     return HttpResponse("OK")
 
 def sendCommandONLED():
+    print("function sendCommandONLED")
+
     userdata = "blankUser"
     msg = "blankMsg"
     chipID = "AA0001"
@@ -252,6 +250,8 @@ def sendCommandONLED():
 
 
 def sendCommandOffLED():
+    print("function sendCommandOffLED")
+
     userdata = "blankUser"
     msg = "blankMsg"
     chipID = "AA0001"
@@ -273,16 +273,15 @@ def sendCommandOffLED():
 
 
 def sendCommandOff(chipID, device):
+    print("function sendCommandOff")
+
     topic = chipID
     msg = device + "/turnOff"
     client.publish(topic, msg)
     print('Message publish to ' + chipID + ", msg :" + msg)
 
 def sendCommandOn(chipID, device):
-<<<<<<< HEAD
     print("function sendCommandOn")
-=======
->>>>>>> 83fda8ec8e294132b890beaeeea4fbd7feafce08
     topic = chipID
     msg = device + "/turnOn"
     client.publish(topic, msg)
@@ -295,6 +294,8 @@ def sendCommandOn(chipID, device):
 @api_view(['POST'])
 @permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
 def testAPI2(request):
+    print("function testAPI2")
+
     # print('Raw Data: "%s"' % request.__dict__)
     # print('Body Data: "%s"' % request.body)
     data = json.loads(str(request.body, encoding='utf-8'))
@@ -331,6 +332,8 @@ def testAPI2(request):
 
 
 def sendScheduleToIoT(text):
+    print("function sendScheduleToIoT")
+
     """ send set of command to IoT"""
     print(text)
     res = json.loads(text)
@@ -394,6 +397,7 @@ def delete_old_job_executions(max_age=604_800):
 @api_view(['POST'])
 @permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
 def createSchedule(request):
+    print("function createSchedule")
     data = json.loads(str(request.body, encoding='utf-8'))
     print(data)
     farmID = data["farmID"]
@@ -574,6 +578,8 @@ def check_time(time_to_check, on_time, off_time):
 @api_view(['POST'])
 @permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
 def removeSchedule(request):
+    print("function removeSchedule")
+
     data = json.loads(str(request.body, encoding='utf-8'))
     farmID = data["farmID"]
     device = data["detail"]["device"]
@@ -595,6 +601,8 @@ def removeSchedule(request):
 @api_view(['POST'])
 @permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
 def wakeUp(request):
+    print("function wakeUp")
+
     data = json.loads(str(request.body, encoding='utf-8'))
     print(data)
     farmID = data["farmID"]
@@ -635,6 +643,8 @@ def wakeUp(request):
 @api_view(['POST'])
 @permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
 def emergencyOff(request):
+    print("function emergenctOff")
+
     data = json.loads(str(request.body, encoding='utf-8'))
     print(data)
     farmID = data["farmID"]
@@ -674,6 +684,7 @@ def emergencyOff(request):
 @api_view(['POST'])
 @permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
 def reportRelay(request):
+    print("function reportRelay")
     data = json.loads(str(request.body, encoding='utf-8'))
     print(data)
     farmID = data["farmID"]
@@ -691,6 +702,8 @@ def reportRelay(request):
 
 
 def updateRTDB(request):
+    print("function updateRTDB")
+
     serverTime=datetime.datetime.now().strftime("%Y-%m-%d:%H-%M-%S")
     timeStamp=datetime.datetime.timestamp(datetime.datetime.now())
 
@@ -707,6 +720,8 @@ def updateRTDB(request):
     return HttpResponse("OK")
 
 def returnJob(request):
+    print("function returnJob")
+
     print(scheduler.get_jobs())
     for item in scheduler.get_jobs():
         print(item.id)
@@ -716,6 +731,8 @@ def returnJob(request):
     return HttpResponse("OK")
 
 def getJob(request, id):
+    print("function getJob")
+
     # id="AA0001_relay6_period1_Off"
     sch=scheduler.get_job(job_id=id)
     print(sch)
@@ -724,13 +741,8 @@ def getJob(request, id):
 
 
 def removeJob(request,id):
+    print("function removeJob")
     scheduler.remove_job(job_id=id)
-<<<<<<< HEAD
     return HttpResponse("OK")
 
 
-=======
-
-
-    return HttpResponse("OK")
->>>>>>> 83fda8ec8e294132b890beaeeea4fbd7feafce08
