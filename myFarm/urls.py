@@ -8,5 +8,6 @@ urlpatterns = [
     path('updateFirebase/', views.updateFirebase, name='updateFirebase'),
     path('history/<id>/', views.history, name='history'),
     path('index/', views.index, name='index'),
+    path('farm2/<id>', views.farm2, name='farm2'),
 
 ]

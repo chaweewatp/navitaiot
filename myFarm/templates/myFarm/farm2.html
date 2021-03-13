@@ -5,18 +5,1149 @@
 <head>
     <meta charset="UTF-8">
     <title>my Farm</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
 </head>
 <body>
 
+<div class="container-fluid">
+    {#   Set schedule part #}
+    <div class="row">
+<hr>
 
-{{ farmID }}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="{%  static 'js/main.js' %}"></script>
+        {#   Relay1  #}
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button type="button" class="btn btn-info" data-toggle="collapse"
+                                data-target="#Relay1Show ">
+                            <h5 style="font-size:18px" class="fa">ปั๊มน้ำ</h5>
+
+                        </button>
+
+                        <button type="button" class="btn btn-warning" data-toggle="collapse"
+                                data-target="#Relay1Edit ">
+                            <i style="font-size:32px" class="fa">&#xf013;</i>
+
+                        </button>
+                    </div>
+                </div>
+                <div class="collapse" id="Relay1Show">
+                    {#                    period 1#}
+                    <div class="row">
+
+                        <div class="col-xs-4" id="R1_Sch1">
+                            <span id="R1_Sch1_on"></span> -
+                            <span id="R1_Sch1_off"></span>
+                            (<span id="R1_Sch1_duration"></span> นาที)
+                            {#                            <span id="R1_Sch1_pause"></span>#}
+                            {% if initialchk11 == False %}
+                                <input id="chk11" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=1, period=1)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk11" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=1, period=1)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay1Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod1R1Start">
+                            เป็นเวลา <input id="timePeriod1R1Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod1R1Stop" disabled>
+                            <button type="button" class="sendButton11" onclick="scheduleSet(relay_num=1,period=1)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
+                    {#                    period 2#}
+                    <div class="row">
+                        <div class="col-xs-4" id="R1_Sch2">
+                            <span id="R1_Sch2_on"></span> -
+                            <span id="R1_Sch2_off"></span>
+                            (<span id="R1_Sch2_duration"></span> นาที)
+                            {#                            <span id="R1_Sch2_pause"></span>#}
+                            {% if initialchk12 == False %}
+                                <input id="chk12" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=1, period=2)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk12" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=1, period=2)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay1Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod2R1Start">
+                            เป็นเวลา <input id="timePeriod2R1Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod2R1Stop" disabled>
+                            <button type="button" class="sendButton12" onclick="scheduleSet(relay_num=1,period=2)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
+
+                    {#                    period 3#}
+                    <div class="row">
+                        <div class="col-xs-4" id="R1_Sch3">
+                            <span id="R1_Sch3_on"></span> -
+                            <span id="R1_Sch3_off"></span>
+                            (<span id="R1_Sch3_duration"></span> นาที)
+                            {#                            <span id="R1_Sch3_pause"></span>#}
+                            {% if initialchk13 == False %}
+                                <input id="chk13" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=1, period=3)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk13" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=1, period=3)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay1Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod3R1Start">
+                            เป็นเวลา <input id="timePeriod3R1Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod3R1Stop" disabled>
+                            <button type="button" class="sendButton13" onclick="scheduleSet(relay_num=1,period=3)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
+
+                    {#                    period 4#}
+                    <div class="row">
+                        <div class="col-xs-4" id="R1_Sch4">
+                            <span id="R1_Sch4_on"></span> -
+                            <span id="R1_Sch4_off"></span>
+                            (<span id="R1_Sch4_duration"></span> นาที)
+                            {#                            <span id="R1_Sch4_pause"></span>#}
+                            {% if initialchk14 == False %}
+                                <input id="chk14" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=1, period=4)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk14" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=1, period=4)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay1Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod4R1Start">
+                            เป็นเวลา <input id="timePeriod4R1Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod4R1Stop" disabled>
+                            <button type="button"  class="sendButton14"onclick="scheduleSet(relay_num=1,period=4)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
 
 
-<script>
-        console.log({{ farmID }});
+                    {#                    period 5#}
+                    <div class="row">
+                        <div class="col-xs-4" id="R1_Sch5">
+                            <span id="R1_Sch5_on"></span> -
+                            <span id="R1_Sch5_off"></span>
+                            (<span id="R1_Sch5_duration"></span> นาที)
+                            {#                            <span id="R1_Sch5_pause"></span>#}
+                            {% if initialchk15 == False %}
+                                <input id="chk15" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=1, period=5)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk15" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=1, period=5)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay1Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod5R1Start">
+                            เป็นเวลา <input id="timePeriod5R1Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod5R1Stop" disabled>
+                            <button type="button" class="sendButton15" onclick="scheduleSet(relay_num=1,period=5)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
 
-</script>
+                    {#                    period 6#}
+                    <div class="row">
+                        <div class="col-xs-4" id="R1_Sch6">
+                            <span id="R1_Sch6_on"></span> -
+                            <span id="R1_Sch6_off"></span>
+                            (<span id="R1_Sch6_duration"></span> นาที)
+                            {#                            <span id="R1_Sch6_pause"></span>#}
+                            {% if initialchk16 == False %}
+                                <input id="chk16" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=1, period=6)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk16" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=1, period=6)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay1Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod6R1Start">
+                            เป็นเวลา <input id="timePeriod6R1Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod6R1Stop" disabled>
+                            <button type="button" class="sendButton16" onclick="scheduleSet(relay_num=1,period=6)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+<hr>
+
+
+        {#   relay2  #}
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button type="button" class="btn btn-info" data-toggle="collapse"
+                                data-target="#Relay2Show ">
+                            <h5 style="font-size:18px" class="fa">ปั๊มปุ๋ย</h5>
+
+                            <button type="button" class="btn btn-warning" data-toggle="collapse"
+                                    data-target="#Relay2Edit ">
+                                <i style="font-size:32px" class="fa">&#xf013;</i></button>
+                        </button>
+                    </div>
+                </div>
+                <div class="collapse" id="Relay2Show">
+                    {#                    period 1#}
+                    <div class="row">
+
+                        <div class="col-xs-4" id="R2_Sch1">
+                            <span id="R2_Sch1_on"></span> -
+                            <span id="R2_Sch1_off"></span>
+                            (<span id="R2_Sch1_duration"></span> นาที)
+                            {#                            <span id="R2_Sch1_pause"></span>#}
+                            {% if initialchk21 == False %}
+                                <input id="chk21" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=2, period=1)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk21" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=2, period=1)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay2Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod1R2Start">
+                            เป็นเวลา <input id="timePeriod1R2Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod1R2Stop" disabled>
+                            <button type="button" class="sendButton21"onclick="scheduleSet(relay_num=2,period=1)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
+                    {#                    period 2#}
+                    <div class="row">
+                        <div class="col-xs-4" id="R2_Sch2">
+                            <span id="R2_Sch2_on"></span> -
+                            <span id="R2_Sch2_off"></span>
+                            (<span id="R2_Sch2_duration"></span> นาที)
+                            {#                            <span id="R2_Sch2_pause"></span>#}
+                            {% if initialchk22 == False %}
+                                <input id="chk22" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=2, period=2)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk22" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=2, period=2)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay2Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod2R2Start">
+                            เป็นเวลา <input id="timePeriod2R2Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod2R2Stop" disabled>
+                            <button type="button" class="sendButton22"onclick="scheduleSet(relay_num=2,period=2)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
+
+                    {#                    period 3#}
+                    <div class="row">
+                        <div class="col-xs-4" id="R2_Sch3">
+                            <span id="R2_Sch3_on"></span> -
+                            <span id="R2_Sch3_off"></span>
+                            (<span id="R2_Sch3_duration"></span> นาที)
+                            {#                            <span id="R2_Sch3_pause"></span>#}
+                            {% if initialchk23 == False %}
+                                <input id="chk23" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=2, period=3)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk23" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=2, period=3)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay2Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod3R2Start">
+                            เป็นเวลา <input id="timePeriod3R2Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod3R1Stop" disabled>
+                            <button type="button" class="sendButton23"onclick="scheduleSet(relay_num=2,period=3)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
+
+                    {#                    period 4#}
+                    <div class="row">
+                        <div class="col-xs-4" id="R2_Sch4">
+                            <span id="R2_Sch4_on"></span> -
+                            <span id="R2_Sch4_off"></span>
+                            (<span id="R2_Sch4_duration"></span> นาที)
+                            {#                            <span id="R1_Sch4_pause"></span>#}
+                            {% if initialchk24 == False %}
+                                <input id="chk24" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=2, period=4)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk24" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=2, period=4)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay2Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod4R2Start">
+                            เป็นเวลา <input id="timePeriod4R2Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod4R2Stop" disabled>
+                            <button type="button" class="sendButton24"onclick="scheduleSet(relay_num=2,period=4)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
+
+
+                    {#                    period 5#}
+                    <div class="row">
+                        <div class="col-xs-4" id="R2_Sch5">
+                            <span id="R2_Sch5_on"></span> -
+                            <span id="R2_Sch5_off"></span>
+                            (<span id="R2_Sch5_duration"></span> นาที)
+                            {#                            <span id="R1_Sch5_pause"></span>#}
+                            {% if initialchk25 == False %}
+                                <input id="chk25" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=2, period=5)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk25" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=2, period=5)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay2Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod5R2Start">
+                            เป็นเวลา <input id="timePeriod5R2Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod5R2Stop" disabled>
+                            <button type="button" class="sendButton25"onclick="scheduleSet(relay_num=2,period=5)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
+
+                    {#                    period 6#}
+                    <div class="row">
+                        <div class="col-xs-4" id="R2_Sch6">
+                            <span id="R2_Sch6_on"></span> -
+                            <span id="R2_Sch6_off"></span>
+                            (<span id="R2_Sch6_duration"></span> นาที)
+                            {#                            <span id="R2_Sch6_pause"></span>#}
+                            {% if initialchk26 == False %}
+                                <input id="chk26" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=2, period=6)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk26" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=2, period=6)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay2Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod6R2Start">
+                            เป็นเวลา <input id="timePeriod6R2Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod6R2Stop" disabled>
+                            <button type="button" class="sendButton26"onclick="scheduleSet(relay_num=2,period=6)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+<hr>
+
+        {#   Relay3  #}
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button type="button" class="btn btn-info" data-toggle="collapse"
+                                data-target="#Relay3Show ">
+                            <h5 style="font-size:18px" class="fa">เดรนวาล์ว</h5>
+                        </button>
+
+                        <button type="button" class="btn btn-warning" data-toggle="collapse"
+                                data-target="#Relay3Edit ">
+                            <i style="font-size:32px" class="fa">&#xf013;</i>
+
+                        </button>
+                    </div>
+                </div>
+                <div class="collapse" id="Relay3Show">
+                    {#                    period 1#}
+                    <div class="row">
+
+                        <div class="col-xs-4" id="R3_Sch1">
+                            <span id="R3_Sch1_on"></span> -
+                            <span id="R3_Sch1_off"></span>
+                            (<span id="R3_Sch1_duration"></span> นาที)
+                            {#                            <span id="R3_Sch1_pause"></span>#}
+                            {% if initialchk31 == False %}
+                                <input id="chk31" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=3, period=1)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk31" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=3, period=1)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay3Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod1R3Start">
+                            เป็นเวลา <input id="timePeriod1R3Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod1R3Stop" disabled>
+                            <button type="button" class="sendButton31"onclick="scheduleSet(relay_num=3,period=1)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
+                    {#                    period 2#}
+                    <div class="row">
+                        <div class="col-xs-4" id="R3_Sch2">
+                            <span id="R3_Sch2_on"></span> -
+                            <span id="R3_Sch2_off"></span>
+                            (<span id="R3_Sch2_duration"></span> นาที)
+                            {#                            <span id="R3_Sch2_pause"></span>#}
+                            {% if initialchk32 == False %}
+                                <input id="chk32" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=3, period=2)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk32" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=3, period=2)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay3Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod2R3Start">
+                            เป็นเวลา <input id="timePeriod2R3Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod2R3Stop" disabled>
+                            <button type="button" class="sendButton32"onclick="scheduleSet(relay_num=3,period=2)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
+
+                    {#                    period 3#}
+                    <div class="row">
+                        <div class="col-xs-4" id="R3_Sch3">
+                            <span id="R3_Sch3_on"></span> -
+                            <span id="R3_Sch3_off"></span>
+                            (<span id="R3_Sch3_duration"></span> นาที)
+                            {#                            <span id="R3_Sch3_pause"></span>#}
+                            {% if initialchk33 == False %}
+                                <input id="chk33" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=3, period=3)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk33" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=3, period=3)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay3Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod3R3Start">
+                            เป็นเวลา <input id="timePeriod3R3Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod3R3Stop" disabled>
+                            <button type="button" class="sendButton33"onclick="scheduleSet(relay_num=3,period=3)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
+
+                    {#                    period 4#}
+                    <div class="row">
+                        <div class="col-xs-4" id="R3_Sch4">
+                            <span id="R3_Sch4_on"></span> -
+                            <span id="R3_Sch4_off"></span>
+                            (<span id="R3_Sch4_duration"></span> นาที)
+                            {#                            <span id="R3_Sch4_pause"></span>#}
+                            {% if initialchk34 == False %}
+                                <input id="chk34" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=3, period=4)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk34" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=3, period=4)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay3Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod4R3Start">
+                            เป็นเวลา <input id="timePeriod4R3Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod4R3Stop" disabled>
+                            <button type="button" class="sendButton34"onclick="scheduleSet(relay_num=3,period=4)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
+
+
+                    {#                    period 5#}
+                    <div class="row">
+                        <div class="col-xs-4" id="R3_Sch5">
+                            <span id="R3_Sch5_on"></span> -
+                            <span id="R3_Sch5_off"></span>
+                            (<span id="R3_Sch5_duration"></span> นาที)
+                            {#                            <span id="R3_Sch5_pause"></span>#}
+                            {% if initialchk35 == False %}
+                                <input id="chk35" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=3, period=5)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk35" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=3, period=5)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay3Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod5R3Start">
+                            เป็นเวลา <input id="timePeriod5R3Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod5R3Stop" disabled>
+                            <button type="button" class="sendButton35"onclick="scheduleSet(relay_num=3,period=5)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
+
+                    {#                    period 6#}
+                    <div class="row">
+                        <div class="col-xs-4" id="R3_Sch6">
+                            <span id="R3_Sch6_on"></span> -
+                            <span id="R3_Sch6_off"></span>
+                            (<span id="R3_Sch6_duration"></span> นาที)
+                            {#                            <span id="R3_Sch6_pause"></span>#}
+                            {% if initialchk36 == False %}
+                                <input id="chk36" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=3, period=6)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk36" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=3, period=6)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay3Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod6R3Start">
+                            เป็นเวลา <input id="timePeriod6R3Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod6R3Stop" disabled>
+                            <button type="button" class="sendButton36"onclick="scheduleSet(relay_num=3,period=6)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+<hr>
+
+        {#   Relay4  #}
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button type="button" class="btn btn-info" data-toggle="collapse"
+                                data-target="#Relay4Show ">
+                            <h5 style="font-size:18px" class="fa">โซน 1</h5>
+                        </button>
+
+                        <button type="button" class="btn btn-warning" data-toggle="collapse"
+                                data-target="#Relay4Edit ">
+                            <i style="font-size:32px" class="fa">&#xf013;</i>
+
+                        </button>
+                    </div>
+                </div>
+                <div class="collapse" id="Relay4Show">
+                    {#                    period 1#}
+                    <div class="row">
+
+                        <div class="col-xs-4" id="R4_Sch1">
+                            <span id="R4_Sch1_on"></span> -
+                            <span id="R4_Sch1_off"></span>
+                            (<span id="R4_Sch1_duration"></span> นาที)
+                            {#                            <span id="R4_Sch1_pause"></span>#}
+                            {% if initialchk41 == False %}
+                                <input id="chk41" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=4, period=1)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk41" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=4, period=1)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay4Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod1R4Start">
+                            เป็นเวลา <input id="timePeriod1R4Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod1R4Stop" disabled>
+                            <button type="button" class="sendButton41"onclick="scheduleSet(relay_num=4,period=1)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
+                    {#                    period 2#}
+                    <div class="row">
+                        <div class="col-xs-4" id="R4_Sch2">
+                            <span id="R4_Sch2_on"></span> -
+                            <span id="R4_Sch2_off"></span>
+                            (<span id="R4_Sch2_duration"></span> นาที)
+                            {#                            <span id="R4_Sch2_pause"></span>#}
+                            {% if initialchk42 == False %}
+                                <input id="chk42" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=4, period=2)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk42" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=4, period=2)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay4Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod2R4Start">
+                            เป็นเวลา <input id="timePeriod2R4Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod2R4Stop" disabled>
+                            <button type="button" class="sendButton42"onclick="scheduleSet(relay_num=4,period=2)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
+
+                    {#                    period 3#}
+                    <div class="row">
+                        <div class="col-xs-4" id="R4_Sch3">
+                            <span id="R4_Sch3_on"></span> -
+                            <span id="R4_Sch3_off"></span>
+                            (<span id="R4_Sch3_duration"></span> นาที)
+                            {#                            <span id="R4_Sch3_pause"></span>#}
+                            {% if initialchk43 == False %}
+                                <input id="chk43" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=4, period=3)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk43" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=4, period=3)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay4Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod3R4Start">
+                            เป็นเวลา <input id="timePeriod3R4Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod3R4Stop" disabled>
+                            <button type="button" class="sendButton43"onclick="scheduleSet(relay_num=4,period=3)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
+
+                    {#                    period 4#}
+                    <div class="row">
+                        <div class="col-xs-4" id="R4_Sch4">
+                            <span id="R4_Sch4_on"></span> -
+                            <span id="R4_Sch4_off"></span>
+                            (<span id="R4_Sch4_duration"></span> นาที)
+                            {#                            <span id="R4_Sch4_pause"></span>#}
+                            {% if initialchk44 == False %}
+                                <input id="chk44" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=4, period=4)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk44" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=4, period=4)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay4Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod4R4Start">
+                            เป็นเวลา <input id="timePeriod4R4Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod4R4Stop" disabled>
+                            <button type="button" class="sendButton44"onclick="scheduleSet(relay_num=4,period=4)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
+
+
+                    {#                    period 5#}
+                    <div class="row">
+                        <div class="col-xs-4" id="R4_Sch5">
+                            <span id="R4_Sch5_on"></span> -
+                            <span id="R4_Sch5_off"></span>
+                            (<span id="R4_Sch5_duration"></span> นาที)
+                            {#                            <span id="R4_Sch5_pause"></span>#}
+                            {% if initialchk45 == False %}
+                                <input id="chk45" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=4, period=5)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk45" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=4, period=5)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay4Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod5R4Start">
+                            เป็นเวลา <input id="timePeriod5R4Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod5R4Stop" disabled>
+                            <button type="button"class="sendButton45" onclick="scheduleSet(relay_num=4,period=5)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
+
+                    {#                    period 6#}
+                    <div class="row">
+                        <div class="col-xs-4" id="R4_Sch6">
+                            <span id="R4_Sch6_on"></span> -
+                            <span id="R4_Sch6_off"></span>
+                            (<span id="R4_Sch6_duration"></span> นาที)
+                            {#                            <span id="R4_Sch6_pause"></span>#}
+                            {% if initialchk46 == False %}
+                                <input id="chk46" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=4, period=6)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk46" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=4, period=6)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay4Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod6R4Start">
+                            เป็นเวลา <input id="timePeriod6R4Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod6R4Stop" disabled>
+                            <button type="button" class="sendButton46"onclick="scheduleSet(relay_num=4,period=6)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+<hr>
+
+        {#   Relay5  #}
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button type="button" class="btn btn-info" data-toggle="collapse"
+                                data-target="#Relay5Show ">
+                            <h5 style="font-size:18px" class="fa">โซน 2</h5>
+                        </button>
+
+                        <button type="button" class="btn btn-warning" data-toggle="collapse"
+                                data-target="#Relay5Edit ">
+                            <i style="font-size:32px" class="fa">&#xf013;</i>
+                        </button>
+                    </div>
+                </div>
+                <div class="collapse" id="Relay5Show">
+                    {#                    period 1#}
+                    <div class="row">
+
+                        <div class="col-xs-4" id="R5_Sch1">
+                            <span id="R5_Sch1_on"></span> -
+                            <span id="R5_Sch1_off"></span>
+                            (<span id="R5_Sch1_duration"></span> นาที)
+                            {#                            <span id="R5_Sch1_pause"></span>#}
+                            {% if initialchk51 == False %}
+                                <input id="chk51" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=5, period=1)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk51" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=5, period=1)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay5Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod1R5Start">
+                            เป็นเวลา <input id="timePeriod1R5Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod1R5Stop" disabled>
+                            <button type="button" class="sendButton51"onclick="scheduleSet(relay_num=5,period=1)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
+                    {#                    period 2#}
+                    <div class="row">
+                        <div class="col-xs-4" id="R5_Sch2">
+                            <span id="R5_Sch2_on"></span> -
+                            <span id="R5_Sch2_off"></span>
+                            (<span id="R5_Sch2_duration"></span> นาที)
+                            {#                            <span id="R5_Sch2_pause"></span>#}
+                            {% if initialchk52 == False %}
+                                <input id="chk52" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=5, period=2)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk52" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=5, period=2)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay5Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod2R5Start">
+                            เป็นเวลา <input id="timePeriod2R5Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod2R5Stop" disabled>
+                            <button type="button" class="sendButton52"onclick="scheduleSet(relay_num=5,period=2)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
+
+                    {#                    period 3#}
+                    <div class="row">
+                        <div class="col-xs-4" id="R5_Sch3">
+                            <span id="R5_Sch3_on"></span> -
+                            <span id="R5_Sch3_off"></span>
+                            (<span id="R5_Sch3_duration"></span> นาที)
+                            {#                            <span id="R5_Sch3_pause"></span>#}
+                            {% if initialchk53 == False %}
+                                <input id="chk53" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=5, period=3)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk53" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=5, period=3)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay5Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod3R5Start">
+                            เป็นเวลา <input id="timePeriod3R5Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod3R5Stop" disabled>
+                            <button type="button" class="sendButton53"onclick="scheduleSet(relay_num=5,period=3)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
+
+                    {#                    period 4#}
+                    <div class="row">
+                        <div class="col-xs-4" id="R5_Sch4">
+                            <span id="R5_Sch4_on"></span> -
+                            <span id="R5_Sch4_off"></span>
+                            (<span id="R5_Sch4_duration"></span> นาที)
+                            {#                            <span id="R5_Sch4_pause"></span>#}
+                            {% if initialchk54 == False %}
+                                <input id="chk54" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=5, period=4)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk54" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=5, period=4)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay5Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod4R5Start">
+                            เป็นเวลา <input id="timePeriod4R5Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod4R5Stop" disabled>
+                            <button type="button" class="sendButton54"onclick="scheduleSet(relay_num=5,period=4)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
+
+
+                    {#                    period 5#}
+                    <div class="row">
+                        <div class="col-xs-4" id="R5_Sch5">
+                            <span id="R5_Sch5_on"></span> -
+                            <span id="R5_Sch5_off"></span>
+                            (<span id="R5_Sch5_duration"></span> นาที)
+                            {#                            <span id="R5_Sch5_pause"></span>#}
+                            {% if initialchk55 == False %}
+                                <input id="chk55" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=5, period=5)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk55" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=5, period=5)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay5Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod5R5Start">
+                            เป็นเวลา <input id="timePeriod5R5Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod5R5Stop" disabled>
+                            <button type="button" class="sendButton55"onclick="scheduleSet(relay_num=5,period=5)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
+
+                    {#                    period 6#}
+                    <div class="row">
+                        <div class="col-xs-4" id="R5_Sch6">
+                            <span id="R5_Sch6_on"></span> -
+                            <span id="R5_Sch6_off"></span>
+                            (<span id="R5_Sch6_duration"></span> นาที)
+                            {#                            <span id="R5_Sch6_pause"></span>#}
+                            {% if initialchk56 == False %}
+                                <input id="chk56" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=5, period=6)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk56" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=5, period=6)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay5Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod6R5Start">
+                            เป็นเวลา <input id="timePeriod6R5Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod6R5Stop" disabled>
+                            <button type="button"class="sendButton56" onclick="scheduleSet(relay_num=5,period=6)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+<hr>
+
+
+        {#   Relay6  #}
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button type="button" class="btn btn-info" data-toggle="collapse"
+                                data-target="#Relay6Show ">
+                            <h5 style="font-size:18px" class="fa">โซน 3</h5>
+
+                        </button>
+                        <button type="button" class="btn btn-warning" data-toggle="collapse"
+                                data-target="#Relay6Edit ">
+                            <i style="font-size:32px" class="fa">&#xf013;</i>
+                        </button>
+                    </div>
+                </div>
+                <div class="collapse" id="Relay6Show">
+                    {#                    period 1#}
+                    <div class="row">
+
+                        <div class="col-xs-4" id="R6_Sch1">
+                            <span id="R6_Sch1_on"></span> -
+                            <span id="R6_Sch1_off"></span>
+                            (<span id="R6_Sch1_duration"></span> นาที)
+                            {#                            <span id="R6_Sch1_pause"></span>#}
+                            {% if initialchk61 == False %}
+                                <input id="chk61" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=6, period=1)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk61" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=6, period=1)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay6Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod1R6Start">
+                            เป็นเวลา <input id="timePeriod1R6Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod1R6Stop" disabled>
+                            <button type="button" class="sendButton61"onclick="scheduleSet(relay_num=6,period=1)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
+                    {#                    period 2#}
+                    <div class="row">
+                        <div class="col-xs-4" id="R6_Sch2">
+                            <span id="R6_Sch2_on"></span> -
+                            <span id="R6_Sch2_off"></span>
+                            (<span id="R6_Sch2_duration"></span> นาที)
+                            {#                            <span id="R6_Sch2_pause"></span>#}
+                            {% if initialchk62 == False %}
+                                <input id="chk62" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=6, period=2)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk62" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=6, period=2)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay6Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod2R6Start">
+                            เป็นเวลา <input id="timePeriod2R6Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod2R6Stop" disabled>
+                            <button type="button"class="sendButton62" onclick="scheduleSet(relay_num=6,period=2)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
+
+                    {#                    period 3#}
+                    <div class="row">
+                        <div class="col-xs-4" id="R6_Sch3">
+                            <span id="R6_Sch3_on"></span> -
+                            <span id="R6_Sch3_off"></span>
+                            (<span id="R6_Sch3_duration"></span> นาที)
+                            {#                            <span id="R6_Sch3_pause"></span>#}
+                            {% if initialchk63 == False %}
+                                <input id="chk63" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=6, period=3)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk63" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=6, period=3)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay6Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod3R6Start">
+                            เป็นเวลา <input id="timePeriod3R6Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod3R6Stop" disabled>
+                            <button type="button" class="sendButton63"onclick="scheduleSet(relay_num=6,period=3)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
+
+                    {#                    period 4#}
+                    <div class="row">
+                        <div class="col-xs-4" id="R6_Sch4">
+                            <span id="R6_Sch4_on"></span> -
+                            <span id="R6_Sch4_off"></span>
+                            (<span id="R6_Sch4_duration"></span> นาที)
+                            {#                            <span id="R6_Sch4_pause"></span>#}
+                            {% if initialchk64 == False %}
+                                <input id="chk64" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=6, period=4)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk64" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=6, period=4)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay6Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod4R6Start">
+                            เป็นเวลา <input id="timePeriod4R6Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod4R6Stop" disabled>
+                            <button type="button"class="sendButton64" onclick="scheduleSet(relay_num=6,period=4)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
+
+
+                    {#                    period 5#}
+                    <div class="row">
+                        <div class="col-xs-4" id="R6_Sch5">
+                            <span id="R6_Sch5_on"></span> -
+                            <span id="R6_Sch5_off"></span>
+                            (<span id="R6_Sch5_duration"></span> นาที)
+                            {#                            <span id="R6_Sch5_pause"></span>#}
+                            {% if initialchk65 == False %}
+                                <input id="chk65" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=6, period=5)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk65" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=6, period=5)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay6Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod5R6Start">
+                            เป็นเวลา <input id="timePeriod5R6Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod5R6Stop" disabled>
+                            <button type="button"class="sendButton65" onclick="scheduleSet(relay_num=6,period=5)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
+
+                    {#                    period 6#}
+                    <div class="row">
+                        <div class="col-xs-4" id="R6_Sch6">
+                            <span id="R6_Sch6_on"></span> -
+                            <span id="R6_Sch6_off"></span>
+                            (<span id="R6_Sch6_duration"></span> นาที)
+                            {#                            <span id="R6_Sch6_pause"></span>#}
+                            {% if initialchk66 == False %}
+                                <input id="chk66" type="checkbox" checked data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=6, period=6)"
+                                       data-onstyle="success">
+                            {% else %}
+                                <input id="chk66" type="checkbox" data-toggle="toggle"
+                                       onchange="toggleScheduleRelay(relay_num=6, period=6)"
+                                       data-onstyle="success">
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 collapse" id="Relay6Edit">
+                            เริ่มเวลา <input type="time" id="timePeriod6R6Start">
+                            เป็นเวลา <input id="timePeriod6R6Delay" maxlength="3" size="3"> นาที
+                            สิ้นสุดเวลา <input type="time" id="timePeriod6R6Stop" disabled>
+                            <button type="button" class="sendButton66"onclick="scheduleSet(relay_num=6,period=6)">
+                                ตั้งเวลา
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    <hr>
+
+    </div>
+</div>
+</div>
+
+
+<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-analytics.js"></script>
+<script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'js/readFirebase.js' %}"></script>
+
 </body>
 </html>

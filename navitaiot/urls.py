@@ -21,5 +21,4 @@ urlpatterns = [
     path('', include('myiot.urls')),
     path('', include('myFarm.urls')),
     path('', include('myAPI.urls'))
-
 ]

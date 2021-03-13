@@ -282,7 +282,6 @@ def sendCommandOff(chipID, device):
 
 def sendCommandOn(chipID, device):
     print("function sendCommandOn")
-
     topic = chipID
     msg = device + "/turnOn"
     client.publish(topic, msg)
@@ -745,3 +744,5 @@ def removeJob(request,id):
     print("function removeJob")
     scheduler.remove_job(job_id=id)
     return HttpResponse("OK")
+
+
