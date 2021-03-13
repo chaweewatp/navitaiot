@@ -718,8 +718,8 @@ function toggleScheduleRelay(relay_num, period, farmCode) {
         };
         // {#console.log(raw)#}
         //     fetch("http://10.90.14.133:8000/createJobSchedule/", requestOptions)
-        fetch("http://127.0.0.1:8000/createJobSchedule/", requestOptions)
-        // fetch("https://navitaiot.herokuapp.com/createJobSchedule/", requestOptions)
+        // fetch("http://127.0.0.1:8000/createJobSchedule/", requestOptions)
+        fetch("https://navitaiot.herokuapp.com/createJobSchedule/", requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
@@ -803,8 +803,8 @@ function scheduleSet(relay_num, period, farmCode) {
         };
             // fetch("http://10.90.14.133:8000/createJobSchedule/", requestOptions)
 
-        fetch("http://127.0.0.1:8000/createJobSchedule/", requestOptions)
-        // fetch("https://navitaiot.herokuapp.com/createJobSchedule/", requestOptions)
+        // fetch("http://127.0.0.1:8000/createJobSchedule/", requestOptions)
+        fetch("https://navitaiot.herokuapp.com/createJobSchedule/", requestOptions)
         //     .then(response => response.text())
         //     .then(result => console.log(result))
         //     .catch(error => console.log('error', error));
