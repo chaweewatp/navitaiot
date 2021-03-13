@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+{% load static %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,12 +9,13 @@
 <body>
 
 
-<form method="POST">
-    {% csrf_token %}
-    <label>username</label><input name="username"> <br> <br>
-    <label>password</label><input name="password"> <br><br>
-    <input id="submit" type="submit" value="login">
+    <label>username</label><input id = "username" name="username"> <br> <br>
+    <label>password</label><input id = "password" name="password"> <br><br>
+    <button  onclick="login()">Login</button>
 
-</form>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{%  static 'js/login.js' %}"></script>
 </body>
 </html>
