@@ -721,14 +721,13 @@
                         <div class="row">
                             <div class="col-12">
 
-                                เริ่มเวลา <input type="time" step="1" id="timePeriod1R1Start">
+                                เริ่มเวลา <input type="time" step="2" id="timePeriod1R1Start">
                                 เป็นเวลา <input id="timePeriod1R1Delay"> นาที
-                                สิ้นสุดเวลา <input type="time" step="1" id="timePeriod1R1Stop"
+                                สิ้นสุดเวลา <input type="time" step="2" id="timePeriod1R1Stop"
                                                    disabled>
                                 {#                                <button type="button" onclick="timeCal(relay_num=1, period=1)"> คำนวนเวลา</button>#}
                                 <button type="button" onclick="scheduleSet(relay_num=1,period=1)">
                                     ตั้งเวลา
-                                </button>
                                 </button>
 
 
@@ -2934,6 +2933,7 @@
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     firebase.analytics();
+
     var relay1Period1Ref = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/Relay1/Schedule/Period1");
     relay1Period1Ref.on('value', function (snapshot) {
         var arr = snapshot.val();
@@ -3411,12 +3411,7 @@
 
     var farmRef = firebase.database().ref("farmCode/" + '{{ farmCode }}');
     farmRef.on('value', function (snapshot) {
-        {#console.log(snapshot.val());#}
         var arr = snapshot.val();
-        {#console.log(arr)#}
-        {#console.log(arr['flow1Status'])#}
-
-
         if (arr['flow1Status'] == true) {
             document.getElementById("flowSensor1").innerHTML = "เปิด";
         } else if (arr['flow1Status'] == false) {
@@ -3424,38 +3419,27 @@
         } else {
             document.getElementById("flowSensor1").innerHTML = "N/A";
         }
-
-
         if (arr['Relay1']['manual'] == true) {
             document.getElementById("Relay1_mode").innerHTML = "manual";
             document.getElementById("setRelay1Manual").className = "btn btn-warning";
             document.getElementById("setRelay1Schedule").className = "btn btn-secondary";
-
-
         } else if (arr['Relay1']['manual'] == false) {
             document.getElementById("Relay1_mode").innerHTML = "schedule";
             document.getElementById("setRelay1Manual").className = "btn btn-secondary";
             document.getElementById("setRelay1Schedule").className = "btn btn-info";
-
-
         } else {
             document.getElementById("Relay1_mode").innerHTML = "N/A";
         }
-
         if (arr['Relay2']['manual'] == true) {
             document.getElementById("Relay2_mode").innerHTML = "manual";
             document.getElementById("setRelay2Manual").className = "btn btn-warning";
             document.getElementById("setRelay2Schedule").className = "btn btn-secondary";
-
         } else if (arr['Relay2']['manual'] == false) {
             document.getElementById("Relay2_mode").innerHTML = "schedule";
             document.getElementById("setRelay2Manual").className = "btn btn-secondary";
             document.getElementById("setRelay2Schedule").className = "btn btn-info";
-
-
         } else {
             document.getElementById("Relay2_mode").innerHTML = "N/A";
-
         }
 
         if (arr['Relay3']['manual'] == true) {
