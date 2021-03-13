@@ -10,7 +10,7 @@ valveType=[('1','drain valve'),
 class farm(models.Model):
     farmName = models.CharField(max_length=255)
     farmCode = models.CharField(max_length=255)
-    # farmUser = models.ForeignKey(User, on_delete=models.CASCADE)  # relation
+    farmUser = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)  # relation
     class Meta:
         ordering = ['farmName']
     def __str__(self):
