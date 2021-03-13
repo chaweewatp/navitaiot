@@ -83,7 +83,7 @@ def farm2(request, id):
 
     }
 
-    return render(request, 'myFarm/farm2.html')
+    return render(request, 'myFarm/farm2.html', context)
 
 
 def home(request):
