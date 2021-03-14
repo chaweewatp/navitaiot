@@ -1864,7 +1864,7 @@
         myHeaders.append("Cookie", "csrftoken=rEjFtI8SYft2HZ0JZJe02HuyzYjPv7VTqbsNnfbl1V0zHQVt7VsdwAhzhjVdVRsH");
 
         var raw = JSON.stringify({
-            "farmID": "AA0001",
+            "farmID": "{{ farmCode }}",
             "token": "xxx",
             "method": "control",
             "detail": {"device": "Relay1", "control": "on"}
@@ -1890,7 +1890,7 @@
         myHeaders.append("Cookie", "csrftoken=rEjFtI8SYft2HZ0JZJe02HuyzYjPv7VTqbsNnfbl1V0zHQVt7VsdwAhzhjVdVRsH");
 
         var raw = JSON.stringify({
-            "farmID": "AA0001",
+            "farmID": "{{ farmCode }}",
             "token": "xxx",
             "method": "control",
             "detail": {"device": "Relay1", "control": "off"}
@@ -1916,7 +1916,7 @@
         myHeaders.append("Content-Type", "application/json");
 
         var raw = JSON.stringify({
-            "farmID": farmID,
+            "farmID": "{{ farmCode }}",
             "token": "xxx",
             "method": "setMode",
             "detail": {"device": "Relay1", "mode": "schedule"}
@@ -1944,7 +1944,7 @@
         myHeaders.append("Content-Type", "application/json");
 
         var raw = JSON.stringify({
-            "farmID": farmID,
+            "farmID": "{{ farmCode }}",
             "token": "xxx",
             "method": "setMode",
             "detail": {"device": "Relay1", "mode": "manual"}
@@ -1973,7 +1973,7 @@
         myHeaders.append("Cookie", "csrftoken=rEjFtI8SYft2HZ0JZJe02HuyzYjPv7VTqbsNnfbl1V0zHQVt7VsdwAhzhjVdVRsH");
 
         var raw = JSON.stringify({
-            "farmID": "AA0001",
+            "farmID": "{{ farmCode }}",
             "token": "xxx",
             "method": "control",
             "detail": {"device": "Relay2", "control": "on"}
@@ -1999,7 +1999,7 @@
         myHeaders.append("Cookie", "csrftoken=rEjFtI8SYft2HZ0JZJe02HuyzYjPv7VTqbsNnfbl1V0zHQVt7VsdwAhzhjVdVRsH");
 
         var raw = JSON.stringify({
-            "farmID": "AA0001",
+            "farmID": "{{ farmCode }}",
             "token": "xxx",
             "method": "control",
             "detail": {"device": "Relay2", "control": "off"}
@@ -2025,7 +2025,7 @@
         myHeaders.append("Content-Type", "application/json");
 
         var raw = JSON.stringify({
-            "farmID": farmID,
+            "farmID": "{{ farmCode }}",
             "token": "xxx",
             "method": "setMode",
             "detail": {"device": "Relay2", "mode": "schedule"}
@@ -2053,7 +2053,7 @@
         myHeaders.append("Content-Type", "application/json");
 
         var raw = JSON.stringify({
-            "farmID": farmID,
+            "farmID": "{{ farmCode }}",
             "token": "xxx",
             "method": "setMode",
             "detail": {"device": "Relay2", "mode": "manual"}
@@ -2082,7 +2082,7 @@
         myHeaders.append("Cookie", "csrftoken=rEjFtI8SYft2HZ0JZJe02HuyzYjPv7VTqbsNnfbl1V0zHQVt7VsdwAhzhjVdVRsH");
 
         var raw = JSON.stringify({
-            "farmID": "AA0001",
+            "farmID": "{{ farmCode }}",
             "token": "xxx",
             "method": "control",
             "detail": {"device": "Relay3", "control": "on"}
@@ -2108,7 +2108,7 @@
         myHeaders.append("Cookie", "csrftoken=rEjFtI8SYft2HZ0JZJe02HuyzYjPv7VTqbsNnfbl1V0zHQVt7VsdwAhzhjVdVRsH");
 
         var raw = JSON.stringify({
-            "farmID": "AA0001",
+            "farmID": "{{ farmCode }}",
             "token": "xxx",
             "method": "control",
             "detail": {"device": "Relay3", "control": "off"}
@@ -2134,7 +2134,7 @@
         myHeaders.append("Content-Type", "application/json");
 
         var raw = JSON.stringify({
-            "farmID": farmID,
+            "farmID": "{{ farmCode }}",
             "token": "xxx",
             "method": "setMode",
             "detail": {"device": "Relay3", "mode": "schedule"}
@@ -2162,7 +2162,7 @@
         myHeaders.append("Content-Type", "application/json");
 
         var raw = JSON.stringify({
-            "farmID": farmID,
+            "farmID": "{{ farmCode }}",
             "token": "xxx",
             "method": "setMode",
             "detail": {"device": "Relay3", "mode": "manual"}
@@ -2191,7 +2191,7 @@
         myHeaders.append("Cookie", "csrftoken=rEjFtI8SYft2HZ0JZJe02HuyzYjPv7VTqbsNnfbl1V0zHQVt7VsdwAhzhjVdVRsH");
 
         var raw = JSON.stringify({
-            "farmID": "AA0001",
+            "farmID": "{{ farmCode }}",
             "token": "xxx",
             "method": "control",
             "detail": {"device": "Relay4", "control": "on"}
@@ -2217,7 +2217,7 @@
         myHeaders.append("Cookie", "csrftoken=rEjFtI8SYft2HZ0JZJe02HuyzYjPv7VTqbsNnfbl1V0zHQVt7VsdwAhzhjVdVRsH");
 
         var raw = JSON.stringify({
-            "farmID": "AA0001",
+            "farmID": "{{ farmCode }}",
             "token": "xxx",
             "method": "control",
             "detail": {"device": "Relay4", "control": "off"}
@@ -2243,7 +2243,7 @@
         myHeaders.append("Content-Type", "application/json");
 
         var raw = JSON.stringify({
-            "farmID": farmID,
+            "farmID": "{{ farmCode }}",
             "token": "xxx",
             "method": "setMode",
             "detail": {"device": "Relay4", "mode": "schedule"}
@@ -2271,7 +2271,7 @@
         myHeaders.append("Content-Type", "application/json");
 
         var raw = JSON.stringify({
-            "farmID": farmID,
+            "farmID": "{{ farmCode }}",
             "token": "xxx",
             "method": "setMode",
             "detail": {"device": "Relay4", "mode": "manual"}
@@ -2301,7 +2301,7 @@
         myHeaders.append("Cookie", "csrftoken=rEjFtI8SYft2HZ0JZJe02HuyzYjPv7VTqbsNnfbl1V0zHQVt7VsdwAhzhjVdVRsH");
 
         var raw = JSON.stringify({
-            "farmID": "AA0001",
+            "farmID": "{{ farmCode }}",
             "token": "xxx",
             "method": "control",
             "detail": {"device": "Relay5", "control": "on"}
@@ -2327,7 +2327,7 @@
         myHeaders.append("Cookie", "csrftoken=rEjFtI8SYft2HZ0JZJe02HuyzYjPv7VTqbsNnfbl1V0zHQVt7VsdwAhzhjVdVRsH");
 
         var raw = JSON.stringify({
-            "farmID": "AA0001",
+            "farmID": "{{ farmCode }}",
             "token": "xxx",
             "method": "control",
             "detail": {"device": "Relay5", "control": "off"}
@@ -2353,7 +2353,7 @@
         myHeaders.append("Content-Type", "application/json");
 
         var raw = JSON.stringify({
-            "farmID": farmID,
+            "farmID": "{{ farmCode }}",
             "token": "xxx",
             "method": "setMode",
             "detail": {"device": "Relay5", "mode": "schedule"}
@@ -2381,7 +2381,7 @@
         myHeaders.append("Content-Type", "application/json");
 
         var raw = JSON.stringify({
-            "farmID": farmID,
+            "farmID": "{{ farmCode }}",
             "token": "xxx",
             "method": "setMode",
             "detail": {"device": "Relay5", "mode": "manual"}
@@ -2462,7 +2462,7 @@
         myHeaders.append("Content-Type", "application/json");
 
         var raw = JSON.stringify({
-            "farmID": farmID,
+            "farmID": "{{ farmCode }}",
             "token": "xxx",
             "method": "setMode",
             "detail": {"device": "Relay6", "mode": "schedule"}
@@ -2490,7 +2490,7 @@
         myHeaders.append("Content-Type", "application/json");
 
         var raw = JSON.stringify({
-            "farmID": farmID,
+            "farmID": "{{ farmCode }}",
             "token": "xxx",
             "method": "setMode",
             "detail": {"device": "Relay6", "mode": "manual"}
@@ -3639,7 +3639,7 @@
             document.getElementById("controlRelay6On").className = "btn btn-success";
             document.getElementById("controlRelay6Off").className = "btn btn-secondary";
 
-        } else if (arr['Relay6']['cur_status'] == falsae) {
+        } else if (arr['Relay6']['cur_status'] == false) {
             document.getElementById("Relay6_cur_status").innerHTML = "ปิด";
             document.getElementById("controlRelay6On").className = "btn btn-secondary";
             document.getElementById("controlRelay6Off").className = "btn btn-danger";
