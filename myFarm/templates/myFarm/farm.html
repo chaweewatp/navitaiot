@@ -2410,7 +2410,7 @@
         myHeaders.append("Cookie", "csrftoken=rEjFtI8SYft2HZ0JZJe02HuyzYjPv7VTqbsNnfbl1V0zHQVt7VsdwAhzhjVdVRsH");
 
         var raw = JSON.stringify({
-            "farmID": "AA0001",
+            "farmID": "{{ farmCode }}",
             "token": "xxx",
             "method": "control",
             "detail": {"device": "Relay6", "control": "on"}
@@ -2436,7 +2436,7 @@
         myHeaders.append("Cookie", "csrftoken=rEjFtI8SYft2HZ0JZJe02HuyzYjPv7VTqbsNnfbl1V0zHQVt7VsdwAhzhjVdVRsH");
 
         var raw = JSON.stringify({
-            "farmID": "AA0001",
+            "farmID": "{{ farmCode }}",
             "token": "xxx",
             "method": "control",
             "detail": {"device": "Relay6", "control": "off"}
