@@ -10,6 +10,7 @@ from myiot.views import sendCommandONLED, sendCommandOffLED
 import pyrebase
 config = {
   "apiKey": "AIzaSyCs9xyouIlR_7SBQwCpL_Bde22ZDC4vpWM",
+    
   "authDomain": "navitaiot.firebaseapp.com",
   "databaseURL": "https://navitaiot.firebaseio.com",
   "storageBucket": "navitaiot.appspot.com",
@@ -44,6 +45,12 @@ def farm2(request, id):
         'farmName' : farm.objects.get(farmCode=id).farmName,
         'farmCode' : farm.objects.get(farmCode=id).farmCode,
         'serverTime': serverTime,
+        'relay1Name':"ปั้มน้ำ",
+        'relay2Name': "ปั๊มปุ๋ย",
+        'relay3Name': "เดรนวาล์ว",
+        'relay4Name': "วาล์วโซน 1",
+        'relay5Name': "วาล์วโซน 2",
+        'relay6Name': "วาล์วโซน 3",
         'initialchk11':relay1Ref.val()['Schedule']['Period1']['pause'],
         'initialchk12': relay1Ref.val()['Schedule']['Period2']['pause'],
         'initialchk13': relay1Ref.val()['Schedule']['Period3']['pause'],
@@ -83,7 +90,7 @@ def farm2(request, id):
 
     }
 
-    return render(request, 'myFarm/farm2.html')
+    return render(request, 'myFarm/farm2.html', context)
 
 
 def home(request):
