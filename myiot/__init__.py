@@ -28,17 +28,17 @@ def on_connect(client, userdata, flags, rc):
 
 def on_message(client, userdata, msg):
     urlServer = "https://navitaiot.herokuapp.com/"  # "http://127.0.0.1:8000" #"https://pupaplug.herokuapp.com"
-    # print(msg.topic)
-    # print(str(msg.payload.decode("utf-8")))
-    data = str(msg.payload.decode("utf-8"))
-    print("message topic :")
     print(msg.topic)
-    print("message data :")
-    print(data)
+    print(str(msg.payload.decode("utf-8")))
+    data = str(msg.payload.decode("utf-8"))
+    # print("message topic :")
+    # print(msg.topic)
+    # print("message data :")
+    # print(data)
     if msg.topic == "wakeUp":
         farmID = data.split('/')[0]
         content = data.split('/')[1]
-        print("farm id is ", farmID, ' content is ', content)
+        # print("farm id is ", farmID, ' content is ', content)
         # url =  "http://127.0.0.1:8000/wakeUp/"
         url = "https://navitaiot.herokuapp.com/wakeUp/"
 
@@ -60,7 +60,7 @@ def on_message(client, userdata, msg):
     if msg.topic == "reportLED":
         farmID = data.split('/')[0]
         content = data.split('/')[1]
-        print("farm id is ", farmID, ' content is ', content)
+        # print("farm id is ", farmID, ' content is ', content)
         if content == 'ledOn':
             text = {"LEDstatus": True}
         elif content == 'ledOff':
@@ -72,13 +72,12 @@ def on_message(client, userdata, msg):
         db.child("farmCode").child(farmID).update(text)
 
     if msg.topic == "reportListRelay":
-        print("IoT report Relay status")
+        # print("IoT report Relay status")
         farmID = data.split('/')[0]
         content = data.split('/')[1]
-        print("farm id is ", farmID, ' content is ',
-              content)  ##['relay1On', 'relay2Off','relay3On', 'relay4Off','relay5On', 'relay6Off']
+        # print("farm id is ", farmID, ' content is ',content)  ##['relay1On', 'relay2Off','relay3On', 'relay4Off','relay5On', 'relay6Off']
         content = content.split(",")
-        print(content)
+        # print(content)
 
         # url =  "http://127.0.0.1:8000/reportRelay/"
         url = "https://navitaiot.herokuapp.com/reportRelay/"
@@ -141,7 +140,7 @@ def on_message(client, userdata, msg):
                 text = {'cur_status': False}
                 db.child("farmCode").child(farmID).child('Relay6').update(text)
             else:
-                print("text is NA")
+                # print("text is NA")
                 text = {"relaystatus": "NA"}
                 db.child("farmCode").child(farmID).update(text)
 
@@ -151,10 +150,10 @@ def on_message(client, userdata, msg):
         db.child("farmCode").child(farmID).update(text)
 
     if msg.topic == "reportRelay":
-        print("IoT report Relay status")
+        # print("IoT report Relay status")
         farmID = data.split('/')[0]
         content = data.split('/')[1]
-        print("farm id is ", farmID, ' content is ', content)
+        # print("farm id is ", farmID, ' content is ', content)
 
         # url =  "http://127.0.0.1:8000/reportRelay/"
         url = "https://navitaiot.herokuapp.com/reportRelay/"
@@ -218,19 +217,19 @@ def on_message(client, userdata, msg):
             text = {'cur_status': False}
             db.child("farmCode").child(farmID).child('Relay6').update(text)
         else:
-            print("text is NA")
+            # print("text is NA")
             text = {"relaystatus": "NA"}
             db.child("farmCode").child(farmID).update(text)
 
         serverTime = datetime.timestamp(datetime.now())
-        print(serverTime)
+        # print(serverTime)
         text = {'last_time': serverTime}
         db.child("farmCode").child(farmID).update(text)
 
     if msg.topic == "TEST/MQTT":
         # print(data)
         farmID = data[0:6]
-        print(farmID)
+        # print(farmID)
         serverTime = datetime.timestamp(datetime.now())
         text = {'last_time': serverTime}
         db = firebase.database()
@@ -272,8 +271,8 @@ def sendToMQTT(client, userdata, msg):
 
     response = requests.request("POST", url, data=json.dumps(payload), headers=headers)
     response = response.json()
-    print('response ' + str(response) + '\n')
-    print("-----------------------------------------")
+    # print('response ' + str(response) + '\n')
+    # print("-----------------------------------------")
 
     client.publish(mqttTopic, str(response['return']))
 

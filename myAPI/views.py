@@ -121,7 +121,7 @@ def createJobSchedule(request):
                 scheduleID_Off = '{}_{}_period{}_Off'.format(farmCode, device, period)
                 try:
                     newSch = scheduleRelay.objects.get(scheduleId=scheduleID_On)
-                    print('schedule is exist')
+                    # print('schedule is exist')
                     newSch.period = period
                     newSch.startTime = '{:02d}:{:02d}:{:02d}'.format(int(start_hour), int(start_minute),int(start_second))
                     newSch.duration = duration
@@ -129,7 +129,7 @@ def createJobSchedule(request):
                     newSch.enable = not pause
                     newSch.save()
                 except:
-                    print('create new schedule')
+                    # print('create new schedule')
                     f1 = farm.objects.get(farmCode=farmCode)
                     r1 = relayDevice.objects.get(farm_id=f1, relayNumber=device[-1])
                     newSch = scheduleRelay(relay=r1, period=period, startTime='{:02d}:{:02d}:{:02d}'.format(int(start_hour), int(start_minute),int(start_second)),
@@ -143,23 +143,23 @@ def createJobSchedule(request):
                     scheduler.reschedule_job(jobId, trigger=CronTrigger(
                                       day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=start_hour,minute=start_minute, second=start_second
                                   ))
-                    print('jobs reschedule')
+                    # print('jobs reschedule')
                 except:
-                    print('no job existed')
-                    print('create new job')
+                    # print('no job existed')
+                    # print('create new job')
 
                     scheduler.add_job(sendScheduleToIoT,
                                       trigger=CronTrigger(
                                           day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=start_hour,minute=start_minute, second=start_second
                                       ),
                                       id=jobId, replace_existing=True, args=[text], max_instances=1,misfire_grace_time=3600)
-                print("Schedule created {}".format(text))
+                # print("Schedule created {}".format(text))
                 if pause == False:
                     scheduler.resume_job(jobId)
-                    print("Schedule resume {}".format(text))
+                    # print("Schedule resume {}".format(text))
                 else:
                     scheduler.pause_job(jobId)
-                    print("Schedule pause {}".format(text))
+                    # print("Schedule pause {}".format(text))
 
                 #update to firebase
                 text = {'sch_duration':duration, "sch_on": "{:02d}:{:02d}:{:02d}".format(int(start_hour), int(start_minute), int(start_second)),  "pause":pause}
@@ -169,7 +169,7 @@ def createJobSchedule(request):
                 # off time
                 try:
                     newSch = scheduleRelay.objects.get(scheduleId=scheduleID_Off)
-                    print('schedule is exist')
+                    # print('schedule is exist')
                     newSch.period = period
                     newSch.startTime = '{:02d}:{:02d}:{:02d}'.format(int(end_hour), int(end_minute), int(end_second))
                     newSch.duration = 0
@@ -178,7 +178,7 @@ def createJobSchedule(request):
                     newSch.save()
 
                 except:
-                    print('create new schedule')
+                    # print('create new schedule')
                     f1 = farm.objects.get(farmCode=farmCode)
                     r1 = relayDevice.objects.get(farm_id=f1, relayNumber=device[-1])
                     newSch = scheduleRelay(relay=r1, period=period, startTime='{:02d}:{:02d}:{:02d}'.format(int(end_hour), int(end_minute), int(end_second)), duration=0,
@@ -191,27 +191,27 @@ def createJobSchedule(request):
                     scheduler.reschedule_job(jobId, trigger=CronTrigger(
                                       day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=end_hour, minute=end_minute,second=end_second
                                   ))
-                    print('jobs reschedule')
+                    # print('jobs reschedule')
                 except:
-                    print('no job existed')
-                    print('create new job')
+                    # print('no job existed')
+                    # print('create new job')
 
                     scheduler.add_job(sendScheduleToIoT,
                                       trigger=CronTrigger(
                                           day_of_week='mon,tue,wed,thu,fri,sat,sun', hour=end_hour, minute=end_minute,second=end_second
                                       ),
                                       id=jobId, replace_existing=True, args=[text], max_instances=1, misfire_grace_time=3600)
-                print("Schedule created {}".format(text))
+                # print("Schedule created {}".format(text))
                 if pause == False:
                     scheduler.resume_job(jobId)
-                    print("Schedule resume {}".format(text))
+                    # print("Schedule resume {}".format(text))
                 else:
                     scheduler.pause_job(jobId)
-                    print("Schedule pause {}".format(text))
+                    # print("Schedule pause {}".format(text))
 
                 #update to firebase
                 text = {"sch_off": "{:02d}:{:02d}:{:02d}".format(int(end_hour), int(end_minute), int(end_second)), "pause":pause}
-                print(str(text)+ " update to firebase")
+                # print(str(text)+ " update to firebase")
                 db = firebase.database()
                 db.child("farmCode").child(farmCode).child('Relay'+str(device[-1])).child('Schedule').child('Period'+str(period)).update(text)
 
@@ -231,10 +231,10 @@ def createJobSchedule(request):
 def getUser(request):
     print("function createSchedule")
     data = json.loads(str(request.body, encoding='utf-8'))
-    print(data['token'])
+    # print(data['token'])
     user = Token.objects.get(key=data['token']).user
-    print(user.__dict__)
+    # print(user.__dict__)
     list_farm=farm.objects.filter(farmUser=user)
-    print(list_farm)
+    # print(list_farm)
     return Response({"token":data['token'], "detail":{"user":user.username, "farm":[item.farmCode for item in list_farm]}},status.HTTP_200_OK)
 
