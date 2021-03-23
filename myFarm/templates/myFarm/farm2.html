@@ -19,9 +19,806 @@
 <body>
 
 <div class="container-fluid">
-    {#   Set schedule part #}
+    {# farm detail part#}
     <div class="row">
-<hr>
+        <div class="col-xs-12">
+            <h1>Farm name : {{ farmCode }}</h1>
+            <h3>ออนไลน์ล่าสุด :<span id="last_Time"></span></h3>
+        </div>
+    </div>
+    {#    sensor part#}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row">
+
+                <div class="col-xs-12">
+                    <div class="row">
+                        {#        temp sensor#}
+                        <div class="col-xs-6">
+                            <div class="row"
+                                 style="margin-left: 2%;margin-right: 2%;margin-top: 2%;margin-bottom: 2%; ">
+                                <div class="col-xs-12"
+                                     style="  background-color: #14cc41;  border-radius: 12px;">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <h4>เซ็นเซอร์อากาศ</h4>
+                                        </div>
+                                    </div>
+{#                                    <hr>#}
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <div class="row">
+                                                        <div class="col-xs-4">
+                                                            {#                                            <i class="fa fa-thermometer-half" aria-hidden="true"#}
+                                                            {#                                               style="font-size:36px"></i>#}
+                                                            <h4>อุณหภูมิ</h4>
+                                                        </div>
+                                                        <div class="col-xs-8">
+                                                            <h3><span id="sensorAirTemp"></span></h3>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <div class="row">
+                                                        <div class="col-xs-4">
+                                                            {#                                            <i class="fa fa-humidity" aria-hidden="true"#}
+                                                            {#                                               style="font-size:36px"></i>#}
+                                                            <h4>ความชื้น</h4>
+
+                                                        </div>
+                                                        <div class="col-xs-8">
+                                                            <h3><span id="sensorAirHumid"></span></h3>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {#        board sensor#}
+                        <div class="col-xs-6">
+                            <div class="row"
+                                 style="margin-left: 2%;margin-right: 2%;margin-top: 2%;margin-bottom: 2%; ">
+                                <div class="col-xs-12"
+                                     style="  background-color: #14cc41;  border-radius: 12px;">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <h4>เซ็นเซอร์ที่บอร์ด</h4>
+                                        </div>
+                                    </div>
+{#                                    <hr>#}
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <div class="row">
+                                                        <div class="col-xs-4">
+                                                            {#                                            <i class="fa fa-thermometer-half" aria-hidden="true"#}
+                                                            {#                                               style="font-size:36px"></i>#}
+                                                            <h4>อุณหภูมิ</h4>
+                                                        </div>
+                                                        <div class="col-xs-8">
+                                                            <h3><span id="sensorBoardTemp"></span></h3>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <div class="row">
+                                                        <div class="col-xs-4">
+                                                            {#                                            <i class="fa fa-humidity" aria-hidden="true"#}
+                                                            {#                                               style="font-size:36px"></i>#}
+                                                            <h4>ความชื้น</h4>
+                                                        </div>
+                                                        <div class="col-xs-8">
+                                                            <h3><span id="sensorBoardHumid"></span></h3>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="row">
+                        {#            soil sensor#}
+                        <div class="col-xs-6">
+                            <div class="row"
+                                 style="margin-left: 2%;margin-right: 2%;margin-top: 2%;margin-bottom: 2%; ">
+                                <div class="col-xs-12"
+                                     style="  background-color: #14cc41;  border-radius: 12px;">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <h4>เซ็นเซอร์ความชื้นของดิน</h4>
+                                        </div>
+                                    </div>
+{#                                    <hr>#}
+                                    <div class="row">
+                                        <div class="col-xs-4">
+                                            <div class="row">
+                                                <div class="col-xs-4">
+                                                    <h4>โซน 1</h4>
+                                                </div>
+                                                <div class="col-xs-8">
+                                                    <h3><span id="sensorSoil1"></span></h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <div class="row">
+                                                <div class="col-xs-4">
+                                                    <h4>โซน 2</h4>
+                                                </div>
+                                                <div class="col-xs-8">
+                                                    <h3><span id="sensorSoil2"></span></h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <div class="row">
+                                                <div class="col-xs-4">
+                                                    <h4>โซน 3</h4>
+                                                </div>
+                                                <div class="col-xs-8">
+                                                    <h3><span id="sensorSoil3"></span></h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {#            flow sensor#}
+                        <div class="col-xs-6">
+                            <div class="row"
+                                 style="margin-left: 2%;margin-right: 2%;margin-top: 2%;margin-bottom: 2%; ">
+                                <div class="col-xs-12"
+                                     style="  background-color: #14cc41;  border-radius: 12px;">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <h4>เซ็นเซอร์การไหลของน้ำ</h4>
+                                        </div>
+                                    </div>
+{#                                    <hr>#}
+                                    <div class="row">
+                                        <div class="col-xs-4">
+                                            <div class="row">
+                                                <div class="col-xs-4">
+                                                    <h4>โซน 1</h4>
+                                                </div>
+                                                <div class="col-xs-8">
+                                                    <h3><span id="sensorFlow1"></span></h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <div class="row">
+                                                <div class="col-xs-4">
+                                                    <h4>โซน 2</h4>
+                                                </div>
+                                                <div class="col-xs-8">
+                                                    <h3><span id="sensorFlow2"></span></h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <div class="row">
+                                                <div class="col-xs-4">
+                                                    <h4>โซน 3</h4>
+                                                </div>
+                                                <div class="col-xs-8">
+                                                    <h3><span id="sensorFlow3"></span></h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {#    manual part#}
+    <div class="row">
+        <div class="col">
+            <div class="row">
+                {# relay 1#}
+                <div class="col-xs-4">
+                    <div class="row" style="margin-left: 2%;margin-right: 2%;margin-top: 2%;margin-bottom: 2%; ">
+                        <div class="col-xs-12"
+                             style="  background-color: antiquewhite; border: 2px solid black; border-radius: 12px;">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <h5 style="font-size:18px" class="fa">{{ relay1Name }}</h5>
+                                </div>
+                                <div class="col-xs-6">
+                                    <h5 style="font-size:18px" class="fa">Setting</h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <h5 style="font-size:18px" class="fa">โหมดปัจจุบัน:</h5> <span
+                                        style="font-size:18px" class="fa" id="Relay1_mode"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+
+                                    <button type="button" class="btn btn-warning btn-block btn-lg"
+                                            onclick="setModeRelay(relay=1, mode='manual', farmCode='{{ farmCode }}')"
+                                            id="setRelay1Manual">
+                                        <h5 style="font-size:18px" class="fa">Manual</h5>
+                                    </button>
+                                </div>
+                                <div class="col-xs-6">
+
+                                    <button type="button" class="btn btn-primary btn-block btn-lg"
+                                            onclick="setModeRelay(relay=1, mode='schedule', farmCode='{{ farmCode }}')"
+                                            id="setRelay1Schedule">
+                                        <h5 style="font-size:18px" class="fa">Schedule</h5>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <h5 style="font-size:18px" class="fa">สถานะปัจจุบัน :</h5> <span
+                                                        style="font-size:18px" class="fa"
+                                                        id="Relay1_cur_status"></span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <h5 style="font-size:18px" class="fa">สถานะตามตาราง : </h5><span
+                                                        style="font-size:18px" class="fa"
+                                                        id="Relay1_sch_status"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="row">
+                                                <div class="col-xs-6">
+                                                    <button type="button" class="btn btn-success btn-block btn-lg"
+                                                            onclick="controlRelay(relay=1, control='on', farmCode='{{ farmCode }}')"
+                                                            id="controlRelay1On">
+                                                        <h5 style="font-size:18px" class="fa">On</h5>
+                                                    </button>
+                                                </div>
+                                                <div class="col-xs-6">
+
+                                                    <button type="button" class="btn btn-danger btn-block btn-lg"
+                                                            onclick="controlRelay(relay=1, control='off', farmCode='{{ farmCode }}')"
+                                                            id="controlRelay1Off">
+                                                        <h5 style="font-size:18px" class="fa">Off</h5>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {# relay 2#}
+                <div class="col-xs-4">
+                    <div class="row" style="margin-left: 2%;margin-right: 2%;margin-top: 2%;margin-bottom: 2%; ">
+                        <div class="col-xs-12"
+                             style="  background-color: antiquewhite; border: 2px solid black; border-radius: 12px;">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <h5 style="font-size:18px" class="fa">{{ relay2Name }}</h5>
+                                </div>
+                                <div class="col-xs-6">
+                                    <h5 style="font-size:18px" class="fa">Setting</h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <h5 style="font-size:18px" class="fa">โหมดปัจจุบัน:</h5> <span
+                                        style="font-size:18px" class="fa" id="Relay2_mode"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+
+                                    <button type="button" class="btn btn-warning btn-block btn-lg"
+                                            onclick="setModeRelay(relay=2, mode='manual', farmCode='{{ farmCode }}')"
+                                            id="setRelay2Manual">
+                                        <h5 style="font-size:18px" class="fa">Manual</h5>
+                                    </button>
+                                </div>
+                                <div class="col-xs-6">
+
+                                    <button type="button" class="btn btn-primary btn-block btn-lg"
+                                            onclick="setModeRelay(relay=2, mode='schedule', farmCode='{{ farmCode }}')"
+                                            id="setRelay2Schedule">
+                                        <h5 style="font-size:18px" class="fa">Schedule</h5>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <h5 style="font-size:18px" class="fa">สถานะปัจจุบัน :</h5> <span
+                                                        style="font-size:18px" class="fa"
+                                                        id="Relay2_cur_status"></span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <h5 style="font-size:18px" class="fa">สถานะตามตาราง : </h5><span
+                                                        style="font-size:18px" class="fa"
+                                                        id="Relay2_sch_status"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="row">
+                                                <div class="col-xs-6">
+                                                    <button type="button" class="btn btn-success btn-block btn-lg"
+                                                            onclick="controlRelay(relay=2, control='on', farmCode='{{ farmCode }}')"
+                                                            id="controlRelay2On">
+                                                        <h5 style="font-size:18px" class="fa">On</h5>
+                                                    </button>
+                                                </div>
+                                                <div class="col-xs-6">
+
+                                                    <button type="button" class="btn btn-danger btn-block btn-lg"
+                                                            onclick="controlRelay(relay=2, control='off', farmCode='{{ farmCode }}')"
+                                                            id="controlRelay2Off">
+                                                        <h5 style="font-size:18px" class="fa">Off</h5>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                {# relay 3#}
+                <div class="col-xs-4">
+                    <div class="row" style="margin-left: 2%;margin-right: 2%;margin-top: 2%;margin-bottom: 2%; ">
+                        <div class="col-xs-12"
+                             style="  background-color: antiquewhite; border: 2px solid black; border-radius: 12px;">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <h5 style="font-size:18px" class="fa">{{ relay3Name }}</h5>
+                                </div>
+                                <div class="col-xs-6">
+                                    <h5 style="font-size:18px" class="fa">Setting</h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <h5 style="font-size:18px" class="fa">โหมดปัจจุบัน:</h5> <span
+                                        style="font-size:18px" class="fa" id="Relay3_mode"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+
+                                    <button type="button" class="btn btn-warning btn-block btn-lg"
+                                            onclick="setModeRelay(relay=3, mode='manual', farmCode='{{ farmCode }}')"
+                                            id="setRelay3Manual">
+                                        <h5 style="font-size:18px" class="fa">Manual</h5>
+                                    </button>
+                                </div>
+                                <div class="col-xs-6">
+
+                                    <button type="button" class="btn btn-primary btn-block btn-lg"
+                                            onclick="setModeRelay(relay=3, mode='schedule', farmCode='{{ farmCode }}')"
+                                            id="setRelay3Schedule">
+                                        <h5 style="font-size:18px" class="fa">Schedule</h5>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <h5 style="font-size:18px" class="fa">สถานะปัจจุบัน :</h5> <span
+                                                        style="font-size:18px" class="fa"
+                                                        id="Relay3_cur_status"></span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <h5 style="font-size:18px" class="fa">สถานะตามตาราง : </h5><span
+                                                        style="font-size:18px" class="fa"
+                                                        id="Relay3_sch_status"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="row">
+                                                <div class="col-xs-6">
+                                                    <button type="button" class="btn btn-success btn-block btn-lg"
+                                                            onclick="controlRelay(relay=3, control='on', farmCode='{{ farmCode }}')"
+                                                            id="controlRelay3On">
+                                                        <h5 style="font-size:18px" class="fa">On</h5>
+                                                    </button>
+                                                </div>
+                                                <div class="col-xs-6">
+
+                                                    <button type="button" class="btn btn-danger btn-block btn-lg"
+                                                            onclick="controlRelay(relay=3, control='off', farmCode='{{ farmCode }}')"
+                                                            id="controlRelay3Off">
+                                                        <h5 style="font-size:18px" class="fa">Off</h5>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                {# relay 4#}
+                <div class="col-xs-4">
+                    <div class="row" style="margin-left: 2%;margin-right: 2%;margin-top: 2%;margin-bottom: 2%; ">
+                        <div class="col-xs-12"
+                             style="  background-color: antiquewhite; border: 2px solid black; border-radius: 12px;">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <h5 style="font-size:18px" class="fa">{{ relay4Name }}</h5>
+                                </div>
+                                <div class="col-xs-6">
+                                    <h5 style="font-size:18px" class="fa">Setting</h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <h5 style="font-size:18px" class="fa">โหมดปัจจุบัน:</h5> <span
+                                        style="font-size:18px" class="fa" id="Relay4_mode"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+
+                                    <button type="button" class="btn btn-warning btn-block btn-lg"
+                                            onclick="setModeRelay(relay=4, mode='manual', farmCode='{{ farmCode }}')"
+                                            id="setRelay4Manual">
+                                        <h5 style="font-size:18px" class="fa">Manual</h5>
+                                    </button>
+                                </div>
+                                <div class="col-xs-6">
+
+                                    <button type="button" class="btn btn-primary btn-block btn-lg"
+                                            onclick="setModeRelay(relay=4, mode='schedule', farmCode='{{ farmCode }}')"
+                                            id="setRelay4Schedule">
+                                        <h5 style="font-size:18px" class="fa">Schedule</h5>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <h5 style="font-size:18px" class="fa">สถานะปัจจุบัน :</h5> <span
+                                                        style="font-size:18px" class="fa"
+                                                        id="Relay4_cur_status"></span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <h5 style="font-size:18px" class="fa">สถานะตามตาราง : </h5><span
+                                                        style="font-size:18px" class="fa"
+                                                        id="Relay4_sch_status"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="row">
+                                                <div class="col-xs-6">
+                                                    <button type="button" class="btn btn-success btn-block btn-lg"
+                                                            onclick="controlRelay(relay=4, control='on', farmCode='{{ farmCode }}')"
+                                                            id="controlRelay4On">
+                                                        <h5 style="font-size:18px" class="fa">On</h5>
+                                                    </button>
+                                                </div>
+                                                <div class="col-xs-6">
+
+                                                    <button type="button" class="btn btn-danger btn-block btn-lg"
+                                                            onclick="controlRelay(relay=4, control='off', farmCode='{{ farmCode }}')"
+                                                            id="controlRelay4Off">
+                                                        <h5 style="font-size:18px" class="fa">Off</h5>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {# relay 5#}
+                <div class="col-xs-4">
+                    <div class="row" style="margin-left: 2%;margin-right: 2%;margin-top: 2%;margin-bottom: 2%; ">
+                        <div class="col-xs-12"
+                             style="  background-color: antiquewhite; border: 2px solid black; border-radius: 12px;">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <h5 style="font-size:18px" class="fa">{{ relay5Name }}</h5>
+                                </div>
+                                <div class="col-xs-6">
+                                    <h5 style="font-size:18px" class="fa">Setting</h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <h5 style="font-size:18px" class="fa">โหมดปัจจุบัน:</h5> <span
+                                        style="font-size:18px" class="fa" id="Relay5_mode"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+
+                                    <button type="button" class="btn btn-warning btn-block btn-lg"
+                                            onclick="setModeRelay(relay=5, mode='manual', farmCode='{{ farmCode }}')"
+                                            id="setRelay5Manual">
+                                        <h5 style="font-size:18px" class="fa">Manual</h5>
+                                    </button>
+                                </div>
+                                <div class="col-xs-6">
+
+                                    <button type="button" class="btn btn-primary btn-block btn-lg"
+                                            onclick="setModeRelay(relay=5, mode='schedule', farmCode='{{ farmCode }}')"
+                                            id="setRelay5Schedule">
+                                        <h5 style="font-size:18px" class="fa">Schedule</h5>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <h5 style="font-size:18px" class="fa">สถานะปัจจุบัน :</h5> <span
+                                                        style="font-size:18px" class="fa"
+                                                        id="Relay5_cur_status"></span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <h5 style="font-size:18px" class="fa">สถานะตามตาราง : </h5><span
+                                                        style="font-size:18px" class="fa"
+                                                        id="Relay5_sch_status"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="row">
+                                                <div class="col-xs-6">
+                                                    <button type="button" class="btn btn-success btn-block btn-lg"
+                                                            onclick="controlRelay(relay=5, control='on', farmCode='{{ farmCode }}')"
+                                                            id="controlRelay5On">
+                                                        <h5 style="font-size:18px" class="fa">On</h5>
+                                                    </button>
+                                                </div>
+                                                <div class="col-xs-6">
+
+                                                    <button type="button" class="btn btn-danger btn-block btn-lg"
+                                                            onclick="controlRelay(relay=5, control='off', farmCode='{{ farmCode }}')"
+                                                            id="controlRelay5Off">
+                                                        <h5 style="font-size:18px" class="fa">Off</h5>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                {# relay 6#}
+                <div class="col-xs-4">
+                    <div class="row" style="margin-left: 2%;margin-right: 2%;margin-top: 2%;margin-bottom: 2%; ">
+                        <div class="col-xs-12"
+                             style="  background-color: antiquewhite; border: 2px solid black; border-radius: 12px;">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <h5 style="font-size:18px" class="fa">{{ relay6Name }}</h5>
+                                </div>
+                                <div class="col-xs-6">
+                                    <h5 style="font-size:18px" class="fa">Setting</h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <h5 style="font-size:18px" class="fa">โหมดปัจจุบัน:</h5> <span
+                                        style="font-size:18px" class="fa" id="Relay6_mode"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+
+                                    <button type="button" class="btn btn-warning btn-block btn-lg"
+                                            onclick="setModeRelay(relay=6, mode='manual', farmCode='{{ farmCode }}')"
+                                            id="setRelay6Manual">
+                                        <h5 style="font-size:18px" class="fa">Manual</h5>
+                                    </button>
+                                </div>
+                                <div class="col-xs-6">
+
+                                    <button type="button" class="btn btn-primary btn-block btn-lg"
+                                            onclick="setModeRelay(relay=6, mode='schedule', farmCode='{{ farmCode }}')"
+                                            id="setRelay6Schedule">
+                                        <h5 style="font-size:18px" class="fa">Schedule</h5>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <h5 style="font-size:18px" class="fa">สถานะปัจจุบัน :</h5> <span
+                                                        style="font-size:18px" class="fa"
+                                                        id="Relay6_cur_status"></span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <h5 style="font-size:18px" class="fa">สถานะตามตาราง : </h5><span
+                                                        style="font-size:18px" class="fa"
+                                                        id="Relay6_sch_status"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="row">
+                                                <div class="col-xs-6">
+                                                    <button type="button" class="btn btn-success btn-block btn-lg"
+                                                            onclick="controlRelay(relay=6, control='on', farmCode='{{ farmCode }}')"
+                                                            id="controlRelay6On">
+                                                        <h5 style="font-size:18px" class="fa">On</h5>
+                                                    </button>
+                                                </div>
+                                                <div class="col-xs-6">
+
+                                                    <button type="button" class="btn btn-danger btn-block btn-lg"
+                                                            onclick="controlRelay(relay=6, control='off', farmCode='{{ farmCode }}')"
+                                                            id="controlRelay6Off">
+                                                        <h5 style="font-size:18px" class="fa">Off</h5>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    {#   Set schedule part #}
+
+
+    <script>
+
+        // Unix time value from server: seconds since 1970-01-01T00:00:00Z
+        // Below is a number for 2014-07-02T06:48:24.000Z, set to actual server value
+        {#var serverTime = 1404283704;#}
+
+        var serverTime = "{{ serverTime }}";
+        {#console.log(serverTime)#}
+
+        var doClock = (function () {
+
+            // Calc offset from server time
+            // Javascript time value is milliseconds since above epoch
+            var serverOffset = serverTime - (new Date() / 1000 | 0);
+
+            // Helper
+            function z(n) {
+                return (n < 10 ? '0' : '') + n
+            }
+
+            return function () {
+
+                // Create a new Date object each time so
+                // it doesn't matter if a second or more is skipped
+                var now = new Date();
+
+                // Adjust for server offset
+                now.setSeconds(now.getSeconds() + serverOffset);
+
+                // write clock to document, values are local, not UTC
+                document.getElementById('clock').innerHTML = now.getFullYear() + '-' +
+                    z(now.getMonth() + 1) + '-' +
+                    z(now.getDate()) + ' ' +
+                    z(now.getHours()) + ':' +
+                    z(now.getMinutes()) + ':' +
+                    z(now.getSeconds());
+                // Run again just after next full second
+                setTimeout(doClock, 1020 - now.getMilliseconds());
+
+
+            };
+        }());
+
+        window.onload = doClock;
+
+    </script>
+
+    {# Clock #}
+    <div class="row">
+        <div class="col">
+            <div id="clock"></div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <hr>
 
         {#   Relay1  #}
         <div class="row">
@@ -30,7 +827,7 @@
                     <div class="col-xs-12">
                         <button type="button" class="btn btn-info" data-toggle="collapse"
                                 data-target="#Relay1Show ">
-                            <h5 style="font-size:18px" class="fa">ปั๊มน้ำ</h5>
+                            <h5 style="font-size:18px" class="fa">{{ relay1Name }}</h5>
 
                         </button>
 
@@ -64,7 +861,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod1R1Start">
                             เป็นเวลา <input id="timePeriod1R1Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod1R1Stop" disabled>
-                            <button type="button" class="sendButton11" onclick="scheduleSet(relay_num=1,period=1,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton11"
+                                    onclick="scheduleSet(relay_num=1,period=1,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -90,7 +888,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod2R1Start">
                             เป็นเวลา <input id="timePeriod2R1Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod2R1Stop" disabled>
-                            <button type="button" class="sendButton12" onclick="scheduleSet(relay_num=1,period=2,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton12"
+                                    onclick="scheduleSet(relay_num=1,period=2,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -117,7 +916,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod3R1Start">
                             เป็นเวลา <input id="timePeriod3R1Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod3R1Stop" disabled>
-                            <button type="button" class="sendButton13" onclick="scheduleSet(relay_num=1,period=3,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton13"
+                                    onclick="scheduleSet(relay_num=1,period=3,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -144,7 +944,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod4R1Start">
                             เป็นเวลา <input id="timePeriod4R1Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod4R1Stop" disabled>
-                            <button type="button"  class="sendButton14"onclick="scheduleSet(relay_num=1,period=4,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton14"
+                                    onclick="scheduleSet(relay_num=1,period=4,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -172,7 +973,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod5R1Start">
                             เป็นเวลา <input id="timePeriod5R1Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod5R1Stop" disabled>
-                            <button type="button" class="sendButton15" onclick="scheduleSet(relay_num=1,period=5,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton15"
+                                    onclick="scheduleSet(relay_num=1,period=5,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -199,7 +1001,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod6R1Start">
                             เป็นเวลา <input id="timePeriod6R1Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod6R1Stop" disabled>
-                            <button type="button" class="sendButton16" onclick="scheduleSet(relay_num=1,period=6,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton16"
+                                    onclick="scheduleSet(relay_num=1,period=6,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -208,7 +1011,7 @@
                 </div>
             </div>
         </div>
-<hr>
+        <hr>
 
 
         {#   relay2  #}
@@ -218,7 +1021,7 @@
                     <div class="col-xs-12">
                         <button type="button" class="btn btn-info" data-toggle="collapse"
                                 data-target="#Relay2Show ">
-                            <h5 style="font-size:18px" class="fa">ปั๊มปุ๋ย</h5>
+                            <h5 style="font-size:18px" class="fa">{{ relay2Name }}</h5>
 
                             <button type="button" class="btn btn-warning" data-toggle="collapse"
                                     data-target="#Relay2Edit ">
@@ -249,7 +1052,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod1R2Start">
                             เป็นเวลา <input id="timePeriod1R2Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod1R2Stop" disabled>
-                            <button type="button" class="sendButton21"onclick="scheduleSet(relay_num=2,period=1,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton21"
+                                    onclick="scheduleSet(relay_num=2,period=1,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -275,7 +1079,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod2R2Start">
                             เป็นเวลา <input id="timePeriod2R2Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod2R2Stop" disabled>
-                            <button type="button" class="sendButton22"onclick="scheduleSet(relay_num=2,period=2,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton22"
+                                    onclick="scheduleSet(relay_num=2,period=2,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -302,7 +1107,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod3R2Start">
                             เป็นเวลา <input id="timePeriod3R2Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod3R1Stop" disabled>
-                            <button type="button" class="sendButton23"onclick="scheduleSet(relay_num=2,period=3,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton23"
+                                    onclick="scheduleSet(relay_num=2,period=3,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -329,7 +1135,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod4R2Start">
                             เป็นเวลา <input id="timePeriod4R2Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod4R2Stop" disabled>
-                            <button type="button" class="sendButton24"onclick="scheduleSet(relay_num=2,period=4,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton24"
+                                    onclick="scheduleSet(relay_num=2,period=4,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -357,7 +1164,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod5R2Start">
                             เป็นเวลา <input id="timePeriod5R2Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod5R2Stop" disabled>
-                            <button type="button" class="sendButton25"onclick="scheduleSet(relay_num=2,period=5,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton25"
+                                    onclick="scheduleSet(relay_num=2,period=5,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -384,7 +1192,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod6R2Start">
                             เป็นเวลา <input id="timePeriod6R2Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod6R2Stop" disabled>
-                            <button type="button" class="sendButton26"onclick="scheduleSet(relay_num=2,period=6,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton26"
+                                    onclick="scheduleSet(relay_num=2,period=6,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -394,7 +1203,7 @@
             </div>
         </div>
 
-<hr>
+        <hr>
 
         {#   Relay3  #}
         <div class="row">
@@ -403,7 +1212,7 @@
                     <div class="col-xs-12">
                         <button type="button" class="btn btn-info" data-toggle="collapse"
                                 data-target="#Relay3Show ">
-                            <h5 style="font-size:18px" class="fa">เดรนวาล์ว</h5>
+                            <h5 style="font-size:18px" class="fa">{{ relay3Name }}</h5>
                         </button>
 
                         <button type="button" class="btn btn-warning" data-toggle="collapse"
@@ -436,7 +1245,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod1R3Start">
                             เป็นเวลา <input id="timePeriod1R3Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod1R3Stop" disabled>
-                            <button type="button" class="sendButton31"onclick="scheduleSet(relay_num=3,period=1,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton31"
+                                    onclick="scheduleSet(relay_num=3,period=1,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -462,7 +1272,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod2R3Start">
                             เป็นเวลา <input id="timePeriod2R3Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod2R3Stop" disabled>
-                            <button type="button" class="sendButton32"onclick="scheduleSet(relay_num=3,period=2,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton32"
+                                    onclick="scheduleSet(relay_num=3,period=2,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -489,7 +1300,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod3R3Start">
                             เป็นเวลา <input id="timePeriod3R3Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod3R3Stop" disabled>
-                            <button type="button" class="sendButton33"onclick="scheduleSet(relay_num=3,period=3,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton33"
+                                    onclick="scheduleSet(relay_num=3,period=3,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -516,7 +1328,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod4R3Start">
                             เป็นเวลา <input id="timePeriod4R3Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod4R3Stop" disabled>
-                            <button type="button" class="sendButton34"onclick="scheduleSet(relay_num=3,period=4,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton34"
+                                    onclick="scheduleSet(relay_num=3,period=4,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -544,7 +1357,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod5R3Start">
                             เป็นเวลา <input id="timePeriod5R3Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod5R3Stop" disabled>
-                            <button type="button" class="sendButton35"onclick="scheduleSet(relay_num=3,period=5,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton35"
+                                    onclick="scheduleSet(relay_num=3,period=5,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -571,7 +1385,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod6R3Start">
                             เป็นเวลา <input id="timePeriod6R3Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod6R3Stop" disabled>
-                            <button type="button" class="sendButton36"onclick="scheduleSet(relay_num=3,period=6,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton36"
+                                    onclick="scheduleSet(relay_num=3,period=6,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -580,7 +1395,7 @@
                 </div>
             </div>
         </div>
-<hr>
+        <hr>
 
         {#   Relay4  #}
         <div class="row">
@@ -589,7 +1404,7 @@
                     <div class="col-xs-12">
                         <button type="button" class="btn btn-info" data-toggle="collapse"
                                 data-target="#Relay4Show ">
-                            <h5 style="font-size:18px" class="fa">โซน 1</h5>
+                            <h5 style="font-size:18px" class="fa">{{ relay4Name }}</h5>
                         </button>
 
                         <button type="button" class="btn btn-warning" data-toggle="collapse"
@@ -622,7 +1437,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod1R4Start">
                             เป็นเวลา <input id="timePeriod1R4Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod1R4Stop" disabled>
-                            <button type="button" class="sendButton41"onclick="scheduleSet(relay_num=4,period=1,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton41"
+                                    onclick="scheduleSet(relay_num=4,period=1,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -648,7 +1464,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod2R4Start">
                             เป็นเวลา <input id="timePeriod2R4Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod2R4Stop" disabled>
-                            <button type="button" class="sendButton42"onclick="scheduleSet(relay_num=4,period=2,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton42"
+                                    onclick="scheduleSet(relay_num=4,period=2,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -675,7 +1492,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod3R4Start">
                             เป็นเวลา <input id="timePeriod3R4Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod3R4Stop" disabled>
-                            <button type="button" class="sendButton43"onclick="scheduleSet(relay_num=4,period=3,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton43"
+                                    onclick="scheduleSet(relay_num=4,period=3,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -702,7 +1520,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod4R4Start">
                             เป็นเวลา <input id="timePeriod4R4Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod4R4Stop" disabled>
-                            <button type="button" class="sendButton44"onclick="scheduleSet(relay_num=4,period=4,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton44"
+                                    onclick="scheduleSet(relay_num=4,period=4,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -730,7 +1549,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod5R4Start">
                             เป็นเวลา <input id="timePeriod5R4Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod5R4Stop" disabled>
-                            <button type="button"class="sendButton45" onclick="scheduleSet(relay_num=4,period=5,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton45"
+                                    onclick="scheduleSet(relay_num=4,period=5,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -757,7 +1577,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod6R4Start">
                             เป็นเวลา <input id="timePeriod6R4Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod6R4Stop" disabled>
-                            <button type="button" class="sendButton46"onclick="scheduleSet(relay_num=4,period=6,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton46"
+                                    onclick="scheduleSet(relay_num=4,period=6,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -766,7 +1587,7 @@
                 </div>
             </div>
         </div>
-<hr>
+        <hr>
 
         {#   Relay5  #}
         <div class="row">
@@ -775,7 +1596,7 @@
                     <div class="col-xs-12">
                         <button type="button" class="btn btn-info" data-toggle="collapse"
                                 data-target="#Relay5Show ">
-                            <h5 style="font-size:18px" class="fa">โซน 2</h5>
+                            <h5 style="font-size:18px" class="fa">{{ relay5Name }}</h5>
                         </button>
 
                         <button type="button" class="btn btn-warning" data-toggle="collapse"
@@ -807,7 +1628,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod1R5Start">
                             เป็นเวลา <input id="timePeriod1R5Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod1R5Stop" disabled>
-                            <button type="button" class="sendButton51"onclick="scheduleSet(relay_num=5,period=1,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton51"
+                                    onclick="scheduleSet(relay_num=5,period=1,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -833,7 +1655,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod2R5Start">
                             เป็นเวลา <input id="timePeriod2R5Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod2R5Stop" disabled>
-                            <button type="button" class="sendButton52"onclick="scheduleSet(relay_num=5,period=2,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton52"
+                                    onclick="scheduleSet(relay_num=5,period=2,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -860,7 +1683,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod3R5Start">
                             เป็นเวลา <input id="timePeriod3R5Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod3R5Stop" disabled>
-                            <button type="button" class="sendButton53"onclick="scheduleSet(relay_num=5,period=3,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton53"
+                                    onclick="scheduleSet(relay_num=5,period=3,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -887,7 +1711,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod4R5Start">
                             เป็นเวลา <input id="timePeriod4R5Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod4R5Stop" disabled>
-                            <button type="button" class="sendButton54"onclick="scheduleSet(relay_num=5,period=4,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton54"
+                                    onclick="scheduleSet(relay_num=5,period=4,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -915,7 +1740,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod5R5Start">
                             เป็นเวลา <input id="timePeriod5R5Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod5R5Stop" disabled>
-                            <button type="button" class="sendButton55"onclick="scheduleSet(relay_num=5,period=5,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton55"
+                                    onclick="scheduleSet(relay_num=5,period=5,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -942,7 +1768,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod6R5Start">
                             เป็นเวลา <input id="timePeriod6R5Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod6R5Stop" disabled>
-                            <button type="button"class="sendButton56" onclick="scheduleSet(relay_num=5,period=6,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton56"
+                                    onclick="scheduleSet(relay_num=5,period=6,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -951,7 +1778,7 @@
                 </div>
             </div>
         </div>
-<hr>
+        <hr>
 
 
         {#   Relay6  #}
@@ -961,7 +1788,7 @@
                     <div class="col-xs-12">
                         <button type="button" class="btn btn-info" data-toggle="collapse"
                                 data-target="#Relay6Show ">
-                            <h5 style="font-size:18px" class="fa">โซน 3</h5>
+                            <h5 style="font-size:18px" class="fa">{{ relay6Name }}</h5>
 
                         </button>
                         <button type="button" class="btn btn-warning" data-toggle="collapse"
@@ -993,7 +1820,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod1R6Start">
                             เป็นเวลา <input id="timePeriod1R6Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod1R6Stop" disabled>
-                            <button type="button" class="sendButton61"onclick="scheduleSet(relay_num=6,period=1,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton61"
+                                    onclick="scheduleSet(relay_num=6,period=1,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -1019,7 +1847,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod2R6Start">
                             เป็นเวลา <input id="timePeriod2R6Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod2R6Stop" disabled>
-                            <button type="button"class="sendButton62" onclick="scheduleSet(relay_num=6,period=2,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton62"
+                                    onclick="scheduleSet(relay_num=6,period=2,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -1046,7 +1875,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod3R6Start">
                             เป็นเวลา <input id="timePeriod3R6Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod3R6Stop" disabled>
-                            <button type="button" class="sendButton63"onclick="scheduleSet(relay_num=6,period=3,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton63"
+                                    onclick="scheduleSet(relay_num=6,period=3,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -1073,7 +1903,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod4R6Start">
                             เป็นเวลา <input id="timePeriod4R6Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod4R6Stop" disabled>
-                            <button type="button"class="sendButton64" onclick="scheduleSet(relay_num=6,period=4,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton64"
+                                    onclick="scheduleSet(relay_num=6,period=4,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -1101,7 +1932,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod5R6Start">
                             เป็นเวลา <input id="timePeriod5R6Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod5R6Stop" disabled>
-                            <button type="button"class="sendButton65" onclick="scheduleSet(relay_num=6,period=5,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton65"
+                                    onclick="scheduleSet(relay_num=6,period=5,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -1128,7 +1960,8 @@
                             เริ่มเวลา <input type="time" id="timePeriod6R6Start">
                             เป็นเวลา <input id="timePeriod6R6Delay" maxlength="3" size="3"> นาที
                             สิ้นสุดเวลา <input type="time" id="timePeriod6R6Stop" disabled>
-                            <button type="button" class="sendButton66"onclick="scheduleSet(relay_num=6,period=6,farmCode='{{ farmCode }}')">
+                            <button type="button" class="sendButton66"
+                                    onclick="scheduleSet(relay_num=6,period=6,farmCode='{{ farmCode }}')">
                                 ตั้งเวลา
                             </button>
                         </div>
@@ -1137,7 +1970,7 @@
                 </div>
             </div>
         </div>
-    <hr>
+        <hr>
 
     </div>
 </div>
