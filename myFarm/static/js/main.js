@@ -22,7 +22,7 @@ function setModeRelay(relay, mode, farmCode) {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     var raw = JSON.stringify({
-        "farmID": localStorage.farmCode,
+        "farmCode": localStorage.farmCode,
         "token": localStorage.tk,
         "method": "setMode",
         "detail": {"device": "Relay" + relay.toString(), "mode": mode}
@@ -34,7 +34,9 @@ function setModeRelay(relay, mode, farmCode) {
         body: raw,
         redirect: 'follow'
     };
-    fetch("https://navitaiot.herokuapp.com/setMode/", requestOptions)
+        // fetch("http://127.0.0.1:8000/setMode/", requestOptions)
+
+    fetch("https://navitaiot.herokuapp.com/setMode2/", requestOptions)
         .then(response => response.text())
         .then(result => console.log(result))
         .catch(error => console.log('error', error));
@@ -42,14 +44,15 @@ function setModeRelay(relay, mode, farmCode) {
 
 function controlRelay(relay, control, farmCode) {
 
+    // var url = "http://127.0.0.1:8000/controlRelay/"
 
-    var url = "https://navitaiot.herokuapp.com/testAPI2/"
+    var url = "https://navitaiot.herokuapp.com/controlRelay/"
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Cookie", "csrftoken=rEjFtI8SYft2HZ0JZJe02HuyzYjPv7VTqbsNnfbl1V0zHQVt7VsdwAhzhjVdVRsH");
 
     var raw = JSON.stringify({
-        "farmID": localStorage.farmCode,
+        "farmCode": localStorage.farmCode,
         "token": localStorage.tk,
         "method": "control",
         "detail": {"device": "Relay" + relay.toString(), "control": control}
