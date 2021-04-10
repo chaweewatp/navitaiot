@@ -52,8 +52,6 @@ firebase = pyrebase.initialize_app(config)
 
 # Create your views here.
 
-
-
 @api_view(['POST'])
 @permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
 def test(request):
@@ -90,9 +88,6 @@ def login(request):
             status.HTTP_200_OK)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
-
-
-
 
 
 
@@ -221,8 +216,8 @@ def createJobSchedule(request):
                 r1 = relayDevice.objects.get(farm_id=f1, relayNumber=device[-1])
                 responseSchedule(farmCode, r1)
                 return Response({"method":"scheduleSet", "detail":{"device":device,}},status.HTTP_200_OK)
-        else:
-            return Response({"no farm data"}, status.HTTP_404_NOT_FOUND)
+        # else:
+        #     return Response({"no farm data"}, status.HTTP_404_NOT_FOUND)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
 
@@ -238,3 +233,127 @@ def getUser(request):
     # print(list_farm)
     return Response({"token":data['token'], "detail":{"user":user.username, "farm":[item.farmCode for item in list_farm]}},status.HTTP_200_OK)
 
+def firebaseModeSet(mode, farmID, relay):
+    print("function firebaseModeSet")
+
+    # print(relay)
+    text = {'manual': mode}
+    db = firebase.database()
+    db.child("farmCode").child(farmID).child(relay).update(text)
+
+def modeManualSet(farmID, relay):
+    print("function modeManualSet")
+
+    f1 = farm.objects.get(farmCode=farmID)
+    r1 = relayDevice.objects.get(farm=f1, relayNumber=relay[-1])
+    r1.manualMode = True
+    r1.save()
+    #pause schedule
+
+    # update firebase
+    firebaseModeSet(mode=True, farmID=farmID, relay=relay)
+    # print('farmID :{} - relay number : {} set as Manual mode'.format(farmID, relay))
+
+def modeScheduleSet(farmID, relay):
+    print("function modeScheduleSet")
+    f1 = farm.objects.get(farmCode=farmID)
+    r1 = relayDevice.objects.get(farm=f1, relayNumber=relay[-1])
+    r1.manualMode = False
+    r1.save()
+    # resume schedule
+
+    # update firebase
+    firebaseModeSet(mode=False, farmID=farmID, relay=relay)
+    # print('farmID :{} - relay number : {} set as Schedule mode'.format(farmID, relay))
+    # print(r1.__dict__)
+
+    # เช็คก่อนว่าตอนที่กดมา อยู่ในระหว่าง schedule ไหม มีในเวลาที่ตั้งไว้ไหม
+    responseSchedule(farmID, r1)
+
+@api_view(['POST'])
+@permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
+def setMode2(request):
+    print("function setMode")
+    # print('Raw Data: "%s"' % request.__dict__)
+    # print('Body Data: "%s"' % request.body)
+    data = json.loads(str(request.body, encoding='utf-8'))
+    print(data)
+    try:
+        user = Token.objects.get(key=data['token']).user
+        for item in farm.objects.filter(farmUser=user):
+            print(item.farmCode)
+            if item.farmCode==data["farmCode"]:
+                farmCode=data['farmCode']
+                if data['method']=="setMode":
+                    relay=data['detail']['device']
+                    if data['detail']['mode']=="schedule":
+                        # set manual mode "False" in relay model
+                        modeScheduleSet(farmCode, relay)
+
+                    elif data['detail']['mode']=="manual":
+                        # set manual mode "True" in relay model
+                        modeManualSet(farmCode, relay)
+                    else:
+                        pass
+                return Response("OK")
+        return Response({"no farm data"}, status.HTTP_404_NOT_FOUND)
+
+    except ValueError as e:
+        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
+
+def sendCommandOn(chipID, device):
+    print("function sendCommandOn")
+    topic = chipID
+    msg = device + "/turnOn"
+    client.publish(topic, msg)
+    print('Message publish to ' + chipID + ", msg :" + msg)
+
+def sendCommandOff(chipID, device):
+    print("function sendCommandOff")
+
+    topic = chipID
+    msg = device + "/turnOff"
+    client.publish(topic, msg)
+    print('Message publish to ' + chipID + ", msg :" + msg)
+
+@api_view(['POST'])
+@permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
+def controlRelay(request):
+    print("function controlRelay")
+    data = json.loads(str(request.body, encoding='utf-8'))
+    try:
+        user = Token.objects.get(key=data['token']).user
+
+        for item in farm.objects.filter(farmUser=user):
+            print(item.farmCode)
+            if item.farmCode==data["farmCode"]:
+                farmCode = data["farmCode"]
+                relay = data["detail"]["device"]
+                if data["method"] == "control":
+                    if data["detail"]["control"] == "on":
+                        sendCommandOn(chipID=farmCode, device='relay'+relay[-1])
+                        # set mode --> manual
+                        modeManualSet(farmID=farmCode, relay=relay)
+
+                        recieveTime = datetime.datetime.now().strftime("%Y-%m-%d:%H-%M-%S")
+                        db = firebase.database()
+                        db.child("farmCode").child(farmCode).child('logs').child('relay'+relay[-1]).child(
+                            '{}'.format(recieveTime)).set({'type': 'manual', 'oper': 'On'})
+
+                    elif data["detail"]["control"] == "off":
+                        sendCommandOff(chipID=farmCode, device='relay'+relay[-1])
+                        # set mode --> manual
+                        modeManualSet(farmID=farmCode, relay=relay)
+
+                        recieveTime = datetime.datetime.now().strftime("%Y-%m-%d:%H-%M-%S")
+                        db = firebase.database()
+                        db.child("farmCode").child(farmCode).child('logs').child('relay'+relay[-1]).child(
+                            '{}'.format(recieveTime)).set({'type': 'manual', 'oper': 'Off'})
+
+                    else:
+                        pass
+                return Response("OK2")
+        return Response({"no farm data"}, status.HTTP_404_NOT_FOUND)
+
+    except ValueError as e:
+        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)

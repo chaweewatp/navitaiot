@@ -226,11 +226,38 @@ def on_message(client, userdata, msg):
         text = {'last_time': serverTime}
         db.child("farmCode").child(farmID).update(text)
 
-    if msg.topic == "TEST/MQTT":
-        # print(data)
+    # if msg.topic == "TEST/MQTT_old":
+    #     # print(data)
+    #     farmID = data[0:6]
+    #     # print(farmID)
+    #     serverTime = datetime.timestamp(datetime.now())
+    #     text = {'last_time': serverTime}
+    #     db = firebase.database()
+    #     db.child("farmCode").child(farmID).update(text)
+    #     recieveTime = datetime.now().strftime("%Y-%m-%d:%H-%M-%S")
+    #
+    #     content = data.split(' ')
+    #     dict_a = {"humid": "boardHumi", "temp": "boardTemp",
+    #               "flowSen1": "flowSen1", "flowSen2": "flowSen2","flowSen3": "flowSen3",
+    #               "airHumid":"airHumid", "airTemp":"airTemp",
+    #               "soil1A":"soil1A", "soil2A":"soil2A", "soil3A":"soil3A",
+    #               "soil1B": "soil1B", "soil2B": "soil2B", "soil3B": "soil3B"
+    #               }
+    #     # print({dict_a["{}".format(item.split('=')[0])] :item.split('=')[1] for item in content[1:]})
+    #     raw_data = {'farmID': farmID,
+    #                 'detail': {dict_a["{}".format(item.split('=')[0])]: item.split('=')[1] for item in content[1:]}}
+    #     db = firebase.database()
+    #     #value
+    #     for key, value in raw_data['detail'].items():
+    #         db.child("farmCode").child(raw_data['farmID']).child('sensors').child(key).update(
+    #             {'t': serverTime, 'v': value})
+    #         db.child("farmCode").child(raw_data['farmID']).child('sensors').child(key).child('history').child(
+    #             # '{}'.format(recieveTime)).set({'v': value})
+
+    if msg.topic == "TEST/MQTT":  #report sensors
         farmID = data[0:6]
-        # print(farmID)
-        serverTime = datetime.timestamp(datetime.now())
+        nowTime=datetime.now()
+        serverTime = datetime.timestamp(nowTime)
         text = {'last_time': serverTime}
         db = firebase.database()
         db.child("farmCode").child(farmID).update(text)
@@ -247,12 +274,10 @@ def on_message(client, userdata, msg):
         raw_data = {'farmID': farmID,
                     'detail': {dict_a["{}".format(item.split('=')[0])]: item.split('=')[1] for item in content[1:]}}
         db = firebase.database()
-        #value
         for key, value in raw_data['detail'].items():
             db.child("farmCode").child(raw_data['farmID']).child('sensors').child(key).update(
                 {'t': serverTime, 'v': value})
-            db.child("farmCode").child(raw_data['farmID']).child('sensors').child(key).child('history').child(
-                '{}'.format(recieveTime)).set({'v': value})
+            db.child("farmCode").child(raw_data['farmID']).child('sensors').child(key).child('history2').child(nowTime.year).child(nowTime.month).child(nowTime.day).push({'t': serverTime, 'v': value})
 
 
 def sendToMQTT(client, userdata, msg):
@@ -284,9 +309,9 @@ client.on_message = on_message
 client.username_pw_set("hjjfrnei:hjjfrnei", password='2YTkbiI66pGxct-1sG2r2grx2yT7sAXj')
 client.connect("jaguar.rmq.cloudamqp.com", 1883, 60)
 
-print('start MQTT client')
-client.loop_start()
-print('MQTT client started')
+# print('start MQTT client')
+# client.loop_start()
+# print('MQTT client started')
 
 # from django_apscheduler.jobstores import DjangoJobStore
 # from django_apscheduler.models import DjangoJobExecution

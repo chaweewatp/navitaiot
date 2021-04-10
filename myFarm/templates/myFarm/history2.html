@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {#    <link rel="stylesheet" href="{% static  'css/landingPage.css' %}">#}
+    {#    <link rel="stylesheet" href="{% static 'css/landingPageFonts.css' %}">#}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <script src="http://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.js"></script>
+    <link href="http://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script src="../../static/js/Chart.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-clockpicker.min.css' %}">
+
+    <title>Title</title>
+
+    <style>
+        .block {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .y {
+            background: yellow;
+        }
+
+        .r {
+            background: red;
+        }
+
+        .b {
+            background: lightblue;
+        }
+
+        .g {
+            background: lightgreen;
+        }
+
+    </style>
+
+
+    <style>
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+    </style>
+
+
+
+
+</head>
+<body>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-analytics.js"></script>
+
+
+<div class="body">
+
+<div class="container-fluid">
+      <label>
+        Enter date:
+        <input type="date" id="selectedDate">
+          </label>
+    <p><button onclick="getDate()">Submit</button></p>
+
+<canvas id="myChart" width="400" height="400"></canvas>
+
+
+    </div>
+</div>
+
+
+{# control relay#}
+<script>
+
+</script>
+
+{# Schedule set#}
+<script>
+
+</script>
+
+
+{# schedule Edit#}
+<script>
+
+</script>
+
+{#  <script src="../../static/js/vendor/modernizr-3.8.0.min.js"></script>#}
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+{#  <script>window.jQuery || document.write('<script src="./js/vendor/jquery-3.4.1.min.js"><\/script>')</script>#}
+{#  <script src="../../static/js/plugins.js"></script>#}
+{#<script src="{% static 'js/main.js' %}"></script>#}
+{#  <script src="../../static/js/main.js"></script>#}
+
+<script>
+    var today=new Date()
+    d=(today.getDate()).toString()
+    m=(today.getMonth()+1).toString()
+    y=(today.getFullYear()).toString()
+    function getDate(){
+        console.log('button click')
+
+        var input = document.getElementById( 'selectedDate' ).value;
+        var x = new Date( input );
+        console.log(x)
+        y=x.getFullYear()
+        m=x.getMonth()+1
+        d=x.getDate()
+        console.log(d)
+        console.log(m)
+        console.log(y)
+
+            var dataArray=[];
+    var btc =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/boardTemp/history2/"+y+"/"+m+"/"+d);
+    btc.on('value',function(snapshot){
+    var arr = snapshot.val();
+    arr2=genData2(arr)
+    dataArray[0]={
+                    data: genData(arr2),
+                    label: "Baord Temperature",
+                    borderColor: "#3e95cd",
+                    fill: false
+                }
+
+    })
+
+    var bhc =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/boardHumi/history2/"+y+"/"+m+"/"+d);
+    bhc.on('value',function(snapshot){
+    var arr = snapshot.val();
+    arr2=genData2(arr)
+    dataArray[1]={
+                    data: genData(arr2),
+                    label: "Board humidity",
+                    borderColor: "#FFFF00",
+                    fill: false
+                }
+    {#console.log('plot new data')#}
+    });
+
+    var atc =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/airTemp/history2/"+y+"/"+m+"/"+d);
+    atc.on('value',function(snapshot){
+    var arr = snapshot.val();
+    arr2=genData2(arr)
+    dataArray[2]={
+                    data: genData(arr2),
+                    label: "Air Temperature",
+                    borderColor: "#00FF00",
+                    fill: false
+                }
+    {#console.log('plot new data')#}
+    {#plotGraph(dataArray)#}
+    });
+
+    var ahc =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/airHumid/history2/"+y+"/"+m+"/"+d);
+    ahc.on('value',function(snapshot){
+    var arr = snapshot.val();
+    arr2=genData2(arr)
+    dataArray[3]={
+                    data: genData(arr2),
+                    label: "Air Humidity",
+                    borderColor: "#AA0000",
+                    fill: false
+                }
+    {#console.log('plot new data')#}
+    {#plotGraph(dataArray)#}
+    });
+
+    var sc1 =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/soil1A/history2/"+y+"/"+m+"/"+d);
+    sc1.on('value',function(snapshot){
+    var arr = snapshot.val();
+    arr2=genData2(arr)
+    dataArray[4]={
+                    data: genData(arr2),
+                    label: "Soil humidity 1",
+                    borderColor: "#AA00FF",
+                    fill: false
+                }
+    {#console.log('plot new data')#}
+    {#plotGraph(dataArray)#}
+    });
+
+        var sc2 =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/soil2A/history2/"+y+"/"+m+"/"+d);
+    sc2.on('value',function(snapshot){
+    var arr = snapshot.val();
+    arr2=genData2(arr)
+    dataArray[5]={
+                    data: genData(arr2),
+                    label: "Soil humidity 2",
+                    borderColor: "#FF00AA",
+                    fill: false
+                }
+    {#console.log('plot new data')#}
+    {#plotGraph(dataArray)#}
+    });
+
+    var sc3 =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/soil3A/history2/"+y+"/"+m+"/"+d);
+    sc3.on('value',function(snapshot){
+    var arr = snapshot.val();
+    arr2=genData2(arr)
+    dataArray[6]={
+                    data: genData(arr2),
+                    label: "Soil humidity 3",
+                    borderColor: "#AAFFAA",
+                    fill: false
+                }
+    {#console.log('plot new data')#}
+    {#plotGraph(dataArray)#}
+    });
+
+    var fs1 =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/flowSen1/history2/"+y+"/"+m+"/"+d);
+    fs1.on('value',function(snapshot){
+    var arr = snapshot.val();
+    arr2=genData2(arr)
+    dataArray[7]={
+                    data: genData(arr2),
+                    label: "Flow sensor 1",
+                    borderColor: "#AA00FF",
+                    fill: false
+                }
+    {#console.log('plot new data')#}
+    {#plotGraph(dataArray)#}
+    });
+
+    var fs2 =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/flowSen2/history2/"+y+"/"+m+"/"+d);
+    fs2.on('value',function(snapshot){
+    var arr = snapshot.val();
+    arr2=genData2(arr)
+    dataArray[8]={
+                    data: genData(arr2),
+                    label: "Flow sensor 2",
+                    borderColor: "#FF00AA",
+                    fill: false
+                }
+    {#console.log('plot new data')#}
+    {#plotGraph(dataArray)#}
+    });
+
+    var fs3 =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/flowSen3/history2/"+y+"/"+m+"/"+d);
+    fs3.on('value',function(snapshot){
+    var arr = snapshot.val();
+    arr2=genData2(arr)
+    dataArray[9]={
+                    data: genData(arr2),
+                    label: "Flow sensor 3",
+                    borderColor: "#AAFFAA",
+                    fill: false
+                }
+    console.log('plot new data')
+    plotGraph(dataArray)
+    });
+    }
+    function UnixToDate(inputTime){
+        const unixTimestamp = inputTime;
+        const milliseconds = unixTimestamp * 1000
+        const dateObject = new Date(milliseconds)
+        const humanDateFormat = dateObject.toLocaleString()
+        return humanDateFormat
+    }
+
+    function genData(arr) {
+        let returnArr = [];
+        var i;
+        for (i = 0; i < arr.length; i++) {
+            {#console.log(arr[i])#}
+            returnArr.push({'y':arr[i]['v'], 'x':UnixToDate(arr[i]['t'])})
+        }
+        return returnArr
+    }
+
+    function genData2(arr){
+        let returnArr=[];
+        var i;
+        {#console.log(arr)#}
+        for(var key in arr) {
+            {#console.log(arr[key]);#}
+            returnArr.push(arr[key])
+        }
+        return returnArr
+    }
+
+
+    function plotGraph(dataArray){
+    var config = {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: dataArray
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    type: 'time',
+                    distribution: 'linear',
+                }],
+                title: {
+                    display: false,
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: {
+                duration: 0
+            },
+            hover: {
+                animationDuration: 0
+            },
+            responsiveAnimationDuration: 0,
+
+            }
+        };
+    var ctx = document.getElementById('myChart').getContext('2d');
+    new Chart(ctx, config);
+    }
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+        apiKey: "AIzaSyCs9xyouIlR_7SBQwCpL_Bde22ZDC4vpWM",
+        authDomain: "navitaiot.firebaseapp.com",
+        databaseURL: "https://navitaiot.firebaseio.com",
+        projectId: "navitaiot",
+        storageBucket: "navitaiot.appspot.com",
+        messagingSenderId: "840926440731",
+        appId: "1:840926440731:web:9e7d0a635d9e89ff0db7be",
+        measurementId: "G-5FY5JL3YN1"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+
+    var dataArray=[];
+    var btc =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/boardTemp/history2/"+y+"/"+m+"/"+d);
+    btc.on('value',function(snapshot){
+    var arr = snapshot.val();
+    arr2=genData2(arr)
+    dataArray[0]={
+                    data: genData(arr2),
+                    label: "Baord Temperature",
+                    borderColor: "#3e95cd",
+                    fill: false
+                }
+
+    })
+
+    var bhc =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/boardHumi/history2/"+y+"/"+m+"/"+d);
+    bhc.on('value',function(snapshot){
+    var arr = snapshot.val();
+    arr2=genData2(arr)
+    dataArray[1]={
+                    data: genData(arr2),
+                    label: "Board humidity",
+                    borderColor: "#FFFF00",
+                    fill: false
+                }
+    {#console.log('plot new data')#}
+    });
+
+    var atc =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/airTemp/history2/"+y+"/"+m+"/"+d);
+    atc.on('value',function(snapshot){
+    var arr = snapshot.val();
+    arr2=genData2(arr)
+    dataArray[2]={
+                    data: genData(arr2),
+                    label: "Air Temperature",
+                    borderColor: "#00FF00",
+                    fill: false
+                }
+    {#console.log('plot new data')#}
+    {#plotGraph(dataArray)#}
+    });
+
+    var ahc =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/airHumid/history2/"+y+"/"+m+"/"+d);
+    ahc.on('value',function(snapshot){
+    var arr = snapshot.val();
+    arr2=genData2(arr)
+    dataArray[3]={
+                    data: genData(arr2),
+                    label: "Air Humidity",
+                    borderColor: "#AA0000",
+                    fill: false
+                }
+    {#console.log('plot new data')#}
+    {#plotGraph(dataArray)#}
+    });
+
+    var sc1 =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/soil1A/history2/"+y+"/"+m+"/"+d);
+    sc1.on('value',function(snapshot){
+    var arr = snapshot.val();
+    arr2=genData2(arr)
+    dataArray[4]={
+                    data: genData(arr2),
+                    label: "Soil humidity 1",
+                    borderColor: "#AA00FF",
+                    fill: false
+                }
+    {#console.log('plot new data')#}
+    {#plotGraph(dataArray)#}
+    });
+
+        var sc2 =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/soil2A/history2/"+y+"/"+m+"/"+d);
+    sc2.on('value',function(snapshot){
+    var arr = snapshot.val();
+    arr2=genData2(arr)
+    dataArray[5]={
+                    data: genData(arr2),
+                    label: "Soil humidity 2",
+                    borderColor: "#FF00AA",
+                    fill: false
+                }
+    {#console.log('plot new data')#}
+    {#plotGraph(dataArray)#}
+    });
+
+    var sc3 =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/soil3A/history2/"+y+"/"+m+"/"+d);
+    sc3.on('value',function(snapshot){
+    var arr = snapshot.val();
+    arr2=genData2(arr)
+    dataArray[6]={
+                    data: genData(arr2),
+                    label: "Soil humidity 3",
+                    borderColor: "#AAFFAA",
+                    fill: false
+                }
+    {#console.log('plot new data')#}
+    {#plotGraph(dataArray)#}
+    });
+
+    var fs1 =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/flowSen1/history2/"+y+"/"+m+"/"+d);
+    fs1.on('value',function(snapshot){
+    var arr = snapshot.val();
+    arr2=genData2(arr)
+    dataArray[7]={
+                    data: genData(arr2),
+                    label: "Flow sensor 1",
+                    borderColor: "#AA00FF",
+                    fill: false
+                }
+    {#console.log('plot new data')#}
+    {#plotGraph(dataArray)#}
+    });
+
+    var fs2 =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/flowSen2/history2/"+y+"/"+m+"/"+d);
+    fs2.on('value',function(snapshot){
+    var arr = snapshot.val();
+    arr2=genData2(arr)
+    dataArray[8]={
+                    data: genData(arr2),
+                    label: "Flow sensor 2",
+                    borderColor: "#FF00AA",
+                    fill: false
+                }
+    {#console.log('plot new data')#}
+    {#plotGraph(dataArray)#}
+    });
+
+    var fs3 =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/flowSen3/history2/"+y+"/"+m+"/"+d);
+    fs3.on('value',function(snapshot){
+    var arr = snapshot.val();
+    arr2=genData2(arr)
+    dataArray[9]={
+                    data: genData(arr2),
+                    label: "Flow sensor 3",
+                    borderColor: "#AAFFAA",
+                    fill: false
+                }
+    console.log('plot new data')
+    plotGraph(dataArray)
+    });
+
+
+
+
+
+    {##}
+    {##}
+    {#var bh = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/sensors/boardHumi/history");#}
+    {#bh.orderByKey().limitToLastQ(5).on('value', function (snapshot) {#}
+    {#    arr = snapshotToArray(snapshot)#}
+    {#    var i;#}
+    {#    for (i = 0; i < arr.length; i++) {#}
+            {#console.log(i)#}
+            {#console.log(arr[i])#}
+            {#console.log(arr[i]['v'])#}
+    {#        document.getElementById("bhv" + (i + 1).toString()).innerHTML = arr[i]['v'];#}
+    {#        document.getElementById("bht" + (i + 1).toString()).innerHTML = arr[i]['key'];#}
+    {#    }#}
+    {#})#}
+    {##}
+    {##}
+    {#var bt = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/sensors/boardTemp/history");#}
+    {#bt.orderByKey().limitToLast(5).on('value', function (snapshot) {#}
+    {#    arr = snapshotToArray(snapshot)#}
+    {#    var i;#}
+    {#    for (i = 0; i < arr.length; i++) {#}
+            {#console.log(i)#}
+            {#console.log(arr[i])#}
+            {#console.log(arr[i]['v'])#}
+    {#        document.getElementById("btv" + (i + 1).toString()).innerHTML = arr[i]['v'];#}
+    {#        document.getElementById("btt" + (i + 1).toString()).innerHTML = arr[i]['key'];#}
+    {#    }#}
+    {#})#}
+    {##}
+    {##}
+    {#var r1 = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/logs/relay1");#}
+    {#r1.orderByKey().limitToLast(5).on('value', function (snapshot) {#}
+    {#    arr = snapshotToArray(snapshot)#}
+    {#    console.log(arr)#}
+    {#    var i;#}
+    {#    for (i = 0; i < arr.length; i++) {#}
+            {#console.log(arr[i])#}
+    {#        document.getElementById("r1v" + (i + 1).toString()).innerHTML = arr[i]['oper'];#}
+    {#        document.getElementById("r1p" + (i + 1).toString()).innerHTML = arr[i]['type'];#}
+    {##}
+    {#        document.getElementById("r1t" + (i + 1).toString()).innerHTML = arr[i]['key'];#}
+    {#    }#}
+    {#})#}
+    {##}
+    {#var r2 = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/logs/relay2");#}
+    {#r2.orderByKey().limitToLast(5).on('value', function (snapshot) {#}
+    {#    arr = snapshotToArray(snapshot)#}
+    {#    console.log(arr)#}
+    {#    var i;#}
+    {#    for (i = 0; i < arr.length; i++) {#}
+            {#console.log(arr[i])#}
+    {#        document.getElementById("r2v" + (i + 1).toString()).innerHTML = arr[i]['oper'];#}
+    {#        document.getElementById("r2p" + (i + 1).toString()).innerHTML = arr[i]['type'];#}
+    {##}
+    {#        document.getElementById("r2t" + (i + 1).toString()).innerHTML = arr[i]['key'];#}
+    {#    }#}
+    {#})#}
+    {##}
+    {#var r3 = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/logs/relay3");#}
+    {#r3.orderByKey().limitToLast(5).on('value', function (snapshot) {#}
+    {#    arr = snapshotToArray(snapshot)#}
+    {#    console.log(arr)#}
+    {#    var i;#}
+    {#    for (i = 0; i < arr.length; i++) {#}
+            {#console.log(arr[i])#}
+    {#        document.getElementById("r3v" + (i + 1).toString()).innerHTML = arr[i]['oper'];#}
+    {#        document.getElementById("r3p" + (i + 1).toString()).innerHTML = arr[i]['type'];#}
+    {##}
+    {#        document.getElementById("r3t" + (i + 1).toString()).innerHTML = arr[i]['key'];#}
+    {#    }#}
+    {#})#}
+    {##}
+    {##}
+    {#var r4 = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/logs/relay4");#}
+    {#r4.orderByKey().limitToLast(5).on('value', function (snapshot) {#}
+    {#    arr = snapshotToArray(snapshot)#}
+    {#    console.log(arr)#}
+    {#    var i;#}
+    {#    for (i = 0; i < arr.length; i++) {#}
+            {#console.log(arr[i])#}
+    {#        document.getElementById("r4v" + (i + 1).toString()).innerHTML = arr[i]['oper'];#}
+    {#        document.getElementById("r4p" + (i + 1).toString()).innerHTML = arr[i]['type'];#}
+    {##}
+    {#        document.getElementById("r4t" + (i + 1).toString()).innerHTML = arr[i]['key'];#}
+    {#    }#}
+    {#})#}
+    {##}
+    {#var r5 = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/logs/relay5");#}
+    {#r5.orderByKey().limitToLast(5).on('value', function (snapshot) {#}
+    {#    arr = snapshotToArray(snapshot)#}
+    {#    console.log(arr)#}
+    {#    var i;#}
+    {#    for (i = 0; i < arr.length; i++) {#}
+            {#console.log(arr[i])#}
+    {#        document.getElementById("r5v" + (i + 1).toString()).innerHTML = arr[i]['oper'];#}
+    {#        document.getElementById("r5p" + (i + 1).toString()).innerHTML = arr[i]['type'];#}
+    {##}
+    {#        document.getElementById("r5t" + (i + 1).toString()).innerHTML = arr[i]['key'];#}
+    {#    }#}
+    {#})#}
+    {##}
+    {#var r6 = firebase.database().ref("farmCode/" + '{{ farmCode }}' + "/logs/relay6");#}
+    {#r6.orderByKey().limitToLast(5).on('value', function (snapshot) {#}
+    {#    arr = snapshotToArray(snapshot)#}
+    {#    console.log(arr)#}
+    {#    var i;#}
+    {#    for (i = 0; i < arr.length; i++) {#}
+            {#console.log(arr[i])#}
+    {#        document.getElementById("r6v" + (i + 1).toString()).innerHTML = arr[i]['oper'];#}
+    {#        document.getElementById("r6p" + (i + 1).toString()).innerHTML = arr[i]['type'];#}
+    {##}
+    {#        document.getElementById("r6t" + (i + 1).toString()).innerHTML = arr[i]['key'];#}
+    {#    }#}
+    {#})#}
+
+
+</script>
+
+
+</body>
+</html>
