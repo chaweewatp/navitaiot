@@ -337,8 +337,8 @@ def controlRelay(request):
 
                         recieveTime = datetime.datetime.now().strftime("%Y-%m-%d:%H-%M-%S")
                         db = firebase.database()
-                        nowTime = datetime.now()
-                        serverTime = datetime.timestamp(nowTime)
+                        nowTime = datetime.datetime.now()
+                        serverTime = datetime.datetime.timestamp(nowTime)
                         db.child("farmCode").child(farmCode).child('logs').child('relay' + relay[-1]).child(
                             'history').child(
                             nowTime.year).child(nowTime.month).child(nowTime.day).push(
@@ -352,8 +352,8 @@ def controlRelay(request):
 
                         recieveTime = datetime.datetime.now().strftime("%Y-%m-%d:%H-%M-%S")
                         db = firebase.database()
-                        nowTime = datetime.now()
-                        serverTime = datetime.timestamp(nowTime)
+                        nowTime = datetime.datetime.now()
+                        serverTime = datetime.datetime.timestamp(nowTime)
                         db.child("farmCode").child(farmCode).child('logs').child('relay'+relay[-1]).child(
                             'history').child(
                             nowTime.year).child(nowTime.month).child(nowTime.day).push({'type': 'manual', 'oper': 'Off', 't': serverTime})
