@@ -353,7 +353,15 @@ def sendScheduleToIoT(text):
             recieveTime = datetime.datetime.now().strftime("%Y-%m-%d:%H-%M-%S")
             db = firebase.database()
             db.child("farmCode").child(chipId).child('logs').child('relay'+device[-1]).child(
-                '{}'.format(recieveTime)).set({'type': 'schedule', 'oper': 'on'})
+                '{}'.format(recieveTime)).set({'type': 'schedule', 'oper': 'On'})
+
+            nowTime = datetime.now()
+            serverTime = datetime.timestamp(nowTime)
+            db.child("farmCode").child(chipId).child('logs').child('relay' + device[-1]).child(
+                'history').child(
+                nowTime.year).child(nowTime.month).child(nowTime.day).push(
+                {'type': 'schedule', 'oper': 'On', 't': serverTime})
+
         r1.scheduleStatus=True
         r1.save()
         text = {'sch_status':True}
@@ -369,7 +377,12 @@ def sendScheduleToIoT(text):
             db.child("farmCode").child(chipId).child('logs').child('relay'+device[-1]).child(
                 '{}'.format(recieveTime)).set({'type': 'schedule', 'oper': 'off'})
 
-
+            nowTime = datetime.now()
+            serverTime = datetime.timestamp(nowTime)
+            db.child("farmCode").child(chipId).child('logs').child('relay' + device[-1]).child(
+                'history').child(
+                nowTime.year).child(nowTime.month).child(nowTime.day).push(
+                {'type': 'schedule', 'oper': 'Off', 't': serverTime})
 
         r1.scheduleStatus=False
         r1.save()
