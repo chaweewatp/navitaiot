@@ -355,8 +355,8 @@ def sendScheduleToIoT(text):
             db.child("farmCode").child(chipId).child('logs').child('relay'+device[-1]).child(
                 '{}'.format(recieveTime)).set({'type': 'schedule', 'oper': 'On'})
 
-            nowTime = datetime.now()
-            serverTime = datetime.timestamp(nowTime)
+            nowTime = datetime.datetime.now()
+            serverTime = datetime.datetime.timestamp(nowTime)
             db.child("farmCode").child(chipId).child('logs').child('relay' + device[-1]).child(
                 'history').child(
                 nowTime.year).child(nowTime.month).child(nowTime.day).push(
@@ -377,8 +377,8 @@ def sendScheduleToIoT(text):
             db.child("farmCode").child(chipId).child('logs').child('relay'+device[-1]).child(
                 '{}'.format(recieveTime)).set({'type': 'schedule', 'oper': 'off'})
 
-            nowTime = datetime.now()
-            serverTime = datetime.timestamp(nowTime)
+            nowTime = datetime.datetime.now()
+            serverTime = datetime.datetime.timestamp(nowTime)
             db.child("farmCode").child(chipId).child('logs').child('relay' + device[-1]).child(
                 'history').child(
                 nowTime.year).child(nowTime.month).child(nowTime.day).push(
