@@ -337,8 +337,13 @@ def controlRelay(request):
 
                         recieveTime = datetime.datetime.now().strftime("%Y-%m-%d:%H-%M-%S")
                         db = firebase.database()
-                        db.child("farmCode").child(farmCode).child('logs').child('relay'+relay[-1]).child(
-                            '{}'.format(recieveTime)).set({'type': 'manual', 'oper': 'On'})
+                        nowTime = datetime.now()
+                        serverTime = datetime.timestamp(nowTime)
+                        db.child("farmCode").child(farmCode).child('logs').child('relay' + relay[-1]).child(
+                            'history').child(
+                            nowTime.year).child(nowTime.month).child(nowTime.day).push(
+                            {'type': 'manual', 'oper': 'On', 't': serverTime})
+
 
                     elif data["detail"]["control"] == "off":
                         sendCommandOff(chipID=farmCode, device='relay'+relay[-1])
@@ -347,8 +352,11 @@ def controlRelay(request):
 
                         recieveTime = datetime.datetime.now().strftime("%Y-%m-%d:%H-%M-%S")
                         db = firebase.database()
+                        nowTime = datetime.now()
+                        serverTime = datetime.timestamp(nowTime)
                         db.child("farmCode").child(farmCode).child('logs').child('relay'+relay[-1]).child(
-                            '{}'.format(recieveTime)).set({'type': 'manual', 'oper': 'Off'})
+                            'history').child(
+                            nowTime.year).child(nowTime.month).child(nowTime.day).push({'type': 'manual', 'oper': 'Off', 't': serverTime})
 
                     else:
                         pass

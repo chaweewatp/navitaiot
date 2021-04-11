@@ -168,156 +168,156 @@
     y=(today.getFullYear()).toString()
     function getDate(){
         console.log('button click')
-
         var input = document.getElementById( 'selectedDate' ).value;
         var x = new Date( input );
         console.log(x)
         y=x.getFullYear()
         m=x.getMonth()+1
         d=x.getDate()
-        console.log(d)
-        console.log(m)
-        console.log(y)
+        {#console.log(d)#}
+        {#console.log(m)#}
+        {#console.log(y)#}
 
-            var dataArray=[];
-    var btc =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/boardTemp/history2/"+y+"/"+m+"/"+d);
-    btc.on('value',function(snapshot){
-    var arr = snapshot.val();
-    arr2=genData2(arr)
-    dataArray[0]={
-                    data: genData(arr2),
-                    label: "Baord Temperature",
-                    borderColor: "#3e95cd",
-                    fill: false
-                }
+        var dataArray=[];
+        var btc =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/boardTemp/history2/"+y+"/"+m+"/"+d);
+        btc.on('value',function(snapshot){
+        var arr = snapshot.val();
+        arr2=genData2(arr)
+        dataArray[0]={
+                        data: genData(arr2),
+                        label: "Baord Temperature",
+                        borderColor: "#3e95cd",
+                        fill: false
+                    }
 
-    })
+        })
 
-    var bhc =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/boardHumi/history2/"+y+"/"+m+"/"+d);
-    bhc.on('value',function(snapshot){
-    var arr = snapshot.val();
-    arr2=genData2(arr)
-    dataArray[1]={
-                    data: genData(arr2),
-                    label: "Board humidity",
-                    borderColor: "#FFFF00",
-                    fill: false
-                }
-    {#console.log('plot new data')#}
-    });
+        var bhc =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/boardHumi/history2/"+y+"/"+m+"/"+d);
+        bhc.on('value',function(snapshot){
+        var arr = snapshot.val();
+        arr2=genData2(arr)
+        dataArray[1]={
+                        data: genData(arr2),
+                        label: "Board humidity",
+                        borderColor: "#FFFF00",
+                        fill: false
+                    }
+        {#console.log('plot new data')#}
+        });
 
-    var atc =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/airTemp/history2/"+y+"/"+m+"/"+d);
-    atc.on('value',function(snapshot){
-    var arr = snapshot.val();
-    arr2=genData2(arr)
-    dataArray[2]={
-                    data: genData(arr2),
-                    label: "Air Temperature",
-                    borderColor: "#00FF00",
-                    fill: false
-                }
-    {#console.log('plot new data')#}
-    {#plotGraph(dataArray)#}
-    });
+        var atc =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/airTemp/history2/"+y+"/"+m+"/"+d);
+        atc.on('value',function(snapshot){
+        var arr = snapshot.val();
+        arr2=genData2(arr)
+        dataArray[2]={
+                        data: genData(arr2),
+                        label: "Air Temperature",
+                        borderColor: "#00FF00",
+                        fill: false
+                    }
+        {#console.log('plot new data')#}
+        {#plotGraph(dataArray)#}
+        });
 
-    var ahc =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/airHumid/history2/"+y+"/"+m+"/"+d);
-    ahc.on('value',function(snapshot){
-    var arr = snapshot.val();
-    arr2=genData2(arr)
-    dataArray[3]={
-                    data: genData(arr2),
-                    label: "Air Humidity",
-                    borderColor: "#AA0000",
-                    fill: false
-                }
-    {#console.log('plot new data')#}
-    {#plotGraph(dataArray)#}
-    });
+        var ahc =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/airHumid/history2/"+y+"/"+m+"/"+d);
+        ahc.on('value',function(snapshot){
+        var arr = snapshot.val();
+        arr2=genData2(arr)
+        dataArray[3]={
+                        data: genData(arr2),
+                        label: "Air Humidity",
+                        borderColor: "#AA0000",
+                        fill: false
+                    }
+        {#console.log('plot new data')#}
+        {#plotGraph(dataArray)#}
+        });
 
-    var sc1 =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/soil1A/history2/"+y+"/"+m+"/"+d);
-    sc1.on('value',function(snapshot){
-    var arr = snapshot.val();
-    arr2=genData2(arr)
-    dataArray[4]={
-                    data: genData(arr2),
-                    label: "Soil humidity 1",
-                    borderColor: "#AA00FF",
-                    fill: false
-                }
-    {#console.log('plot new data')#}
-    {#plotGraph(dataArray)#}
-    });
+        var sc1 =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/soil1A/history2/"+y+"/"+m+"/"+d);
+        sc1.on('value',function(snapshot){
+        var arr = snapshot.val();
+        arr2=genData2(arr)
+        dataArray[4]={
+                        data: genData(arr2),
+                        label: "Soil humidity 1",
+                        borderColor: "#AA00FF",
+                        fill: false
+                    }
+        {#console.log('plot new data')#}
+        {#plotGraph(dataArray)#}
+        });
 
-        var sc2 =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/soil2A/history2/"+y+"/"+m+"/"+d);
-    sc2.on('value',function(snapshot){
-    var arr = snapshot.val();
-    arr2=genData2(arr)
-    dataArray[5]={
-                    data: genData(arr2),
-                    label: "Soil humidity 2",
-                    borderColor: "#FF00AA",
-                    fill: false
-                }
-    {#console.log('plot new data')#}
-    {#plotGraph(dataArray)#}
-    });
+            var sc2 =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/soil2A/history2/"+y+"/"+m+"/"+d);
+        sc2.on('value',function(snapshot){
+        var arr = snapshot.val();
+        arr2=genData2(arr)
+        dataArray[5]={
+                        data: genData(arr2),
+                        label: "Soil humidity 2",
+                        borderColor: "#FF00AA",
+                        fill: false
+                    }
+        {#console.log('plot new data')#}
+        {#plotGraph(dataArray)#}
+        });
 
-    var sc3 =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/soil3A/history2/"+y+"/"+m+"/"+d);
-    sc3.on('value',function(snapshot){
-    var arr = snapshot.val();
-    arr2=genData2(arr)
-    dataArray[6]={
-                    data: genData(arr2),
-                    label: "Soil humidity 3",
-                    borderColor: "#AAFFAA",
-                    fill: false
-                }
-    {#console.log('plot new data')#}
-    {#plotGraph(dataArray)#}
-    });
+        var sc3 =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/soil3A/history2/"+y+"/"+m+"/"+d);
+        sc3.on('value',function(snapshot){
+        var arr = snapshot.val();
+        arr2=genData2(arr)
+        dataArray[6]={
+                        data: genData(arr2),
+                        label: "Soil humidity 3",
+                        borderColor: "#AAFFAA",
+                        fill: false
+                    }
+        {#console.log('plot new data')#}
+        {#plotGraph(dataArray)#}
+        });
 
-    var fs1 =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/flowSen1/history2/"+y+"/"+m+"/"+d);
-    fs1.on('value',function(snapshot){
-    var arr = snapshot.val();
-    arr2=genData2(arr)
-    dataArray[7]={
-                    data: genData(arr2),
-                    label: "Flow sensor 1",
-                    borderColor: "#AA00FF",
-                    fill: false
-                }
-    {#console.log('plot new data')#}
-    {#plotGraph(dataArray)#}
-    });
+        var fs1 =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/flowSen1/history2/"+y+"/"+m+"/"+d);
+        fs1.on('value',function(snapshot){
+        var arr = snapshot.val();
+        arr2=genData2(arr)
+        dataArray[7]={
+                        data: genData(arr2),
+                        label: "Flow sensor 1",
+                        borderColor: "#AA00FF",
+                        fill: false
+                    }
+        {#console.log('plot new data')#}
+        {#plotGraph(dataArray)#}
+        });
 
-    var fs2 =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/flowSen2/history2/"+y+"/"+m+"/"+d);
-    fs2.on('value',function(snapshot){
-    var arr = snapshot.val();
-    arr2=genData2(arr)
-    dataArray[8]={
-                    data: genData(arr2),
-                    label: "Flow sensor 2",
-                    borderColor: "#FF00AA",
-                    fill: false
-                }
-    {#console.log('plot new data')#}
-    {#plotGraph(dataArray)#}
-    });
+        var fs2 =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/flowSen2/history2/"+y+"/"+m+"/"+d);
+        fs2.on('value',function(snapshot){
+        var arr = snapshot.val();
+        arr2=genData2(arr)
+        dataArray[8]={
+                        data: genData(arr2),
+                        label: "Flow sensor 2",
+                        borderColor: "#FF00AA",
+                        fill: false
+                    }
+        {#console.log('plot new data')#}
+        {#plotGraph(dataArray)#}
+        });
 
-    var fs3 =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/flowSen3/history2/"+y+"/"+m+"/"+d);
-    fs3.on('value',function(snapshot){
-    var arr = snapshot.val();
-    arr2=genData2(arr)
-    dataArray[9]={
-                    data: genData(arr2),
-                    label: "Flow sensor 3",
-                    borderColor: "#AAFFAA",
-                    fill: false
-                }
-    console.log('plot new data')
-    plotGraph(dataArray)
+        var fs3 =firebase.database().ref("farmCode/"+'{{ farmCode }}' + "/sensors/flowSen3/history2/"+y+"/"+m+"/"+d);
+        fs3.on('value',function(snapshot){
+        var arr = snapshot.val();
+        arr2=genData2(arr)
+        dataArray[9]={
+                        data: genData(arr2),
+                        label: "Flow sensor 3",
+                        borderColor: "#AAFFAA",
+                        fill: false
+                    }
+        console.log('plot new data')
+        plotGraph(dataArray)
     });
     }
+
     function UnixToDate(inputTime){
         const unixTimestamp = inputTime;
         const milliseconds = unixTimestamp * 1000
@@ -325,7 +325,6 @@
         const humanDateFormat = dateObject.toLocaleString()
         return humanDateFormat
     }
-
     function genData(arr) {
         let returnArr = [];
         var i;
@@ -347,41 +346,40 @@
         return returnArr
     }
 
-
     function plotGraph(dataArray){
-    var config = {
-        type: 'line',
-        data: {
-            labels: [],
-            datasets: dataArray
-        },
-        options: {
-            scales: {
-                xAxes: [{
-                    type: 'time',
-                    distribution: 'linear',
-                }],
-                title: {
-                    display: false,
-                }
+        var config = {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: dataArray
             },
-            responsive: true,
-            maintainAspectRatio: false,
-            animation: {
-                duration: 0
-            },
-            hover: {
-                animationDuration: 0
-            },
-            responsiveAnimationDuration: 0,
+            options: {
+                scales: {
+                    xAxes: [{
+                        type: 'time',
+                        distribution: 'linear',
+                    }],
+                    title: {
+                        display: false,
+                    }
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: {
+                    duration: 0
+                },
+                hover: {
+                    animationDuration: 0
+                },
+                responsiveAnimationDuration: 0,
 
-            }
-        };
-    var ctx = document.getElementById('myChart').getContext('2d');
-    new Chart(ctx, config);
-    }
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+                }
+            };
+        var ctx = document.getElementById('myChart').getContext('2d');
+        new Chart(ctx, config);
+        }
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
     var firebaseConfig = {
         apiKey: "AIzaSyCs9xyouIlR_7SBQwCpL_Bde22ZDC4vpWM",
         authDomain: "navitaiot.firebaseapp.com",
@@ -392,6 +390,7 @@
         appId: "1:840926440731:web:9e7d0a635d9e89ff0db7be",
         measurementId: "G-5FY5JL3YN1"
     };
+
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     firebase.analytics();
@@ -402,11 +401,11 @@
     var arr = snapshot.val();
     arr2=genData2(arr)
     dataArray[0]={
-                    data: genData(arr2),
-                    label: "Baord Temperature",
-                    borderColor: "#3e95cd",
-                    fill: false
-                }
+            data: genData(arr2),
+            label: "Baord Temperature",
+            borderColor: "#3e95cd",
+            fill: false
+        }
 
     })
 

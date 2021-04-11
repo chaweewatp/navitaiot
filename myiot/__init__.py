@@ -103,6 +103,11 @@ def on_message(client, userdata, msg):
             db.child("farmCode").child(farmID).child('logs').child('relay{}'.format(item[5])).child(
                 '{}'.format(recieveTime)).set({'type': 'report', 'oper': item[6:]})
 
+            nowTime = datetime.now()
+            serverTime = datetime.timestamp(nowTime)
+            db.child("farmCode").child(farmID).child('logs').child('relay{}'.format(content[5])).child('history').child(
+                nowTime.year).child(nowTime.month).child(nowTime.day).push({'type': 'report', 'oper': content[6:], 't':serverTime})
+
             if item == 'relay1On':
                 text = {'cur_status': True}
                 db.child("farmCode").child(farmID).child('Relay1').update(text)
@@ -179,6 +184,12 @@ def on_message(client, userdata, msg):
 
         db.child("farmCode").child(farmID).child('logs').child('relay{}'.format(content[5])).child(
             '{}'.format(recieveTime)).set({'type': 'report', 'oper': content[6:]})
+        nowTime = datetime.now()
+        serverTime = datetime.timestamp(nowTime)
+
+        db.child("farmCode").child(farmID).child('logs').child('relay{}'.format(content[5])).child('history').child(
+            nowTime.year).child(nowTime.month).child(nowTime.day).push(
+            {'type': 'report', 'oper': content[6:], 't': serverTime})
 
         if content == 'relay1On':
             text = {'cur_status': True}
