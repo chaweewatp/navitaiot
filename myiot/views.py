@@ -342,10 +342,7 @@ def sendScheduleToIoT(text):
     device = res["device"]
     f1 = farm.objects.get(farmCode=chipId)
     r1 = relayDevice.objects.get(farm=f1, relayNumber=device[-1])
-    # print('relay detail :')
-    # print(r1.__dict__)
-    # print('relay manual mode :')
-    # print(r1.manualMode)
+
     if res["command"] == "On":
         if r1.manualMode == False: #check if manual mode is disable
             sendCommandOn(chipID=chipId, device=device)
@@ -376,7 +373,6 @@ def sendScheduleToIoT(text):
             db = firebase.database()
             db.child("farmCode").child(chipId).child('logs').child('relay'+device[-1]).child(
                 '{}'.format(recieveTime)).set({'type': 'schedule', 'oper': 'off'})
-
             nowTime = datetime.datetime.now()
             serverTime = datetime.datetime.timestamp(nowTime)
             db.child("farmCode").child(chipId).child('logs').child('relay' + device[-1]).child(
