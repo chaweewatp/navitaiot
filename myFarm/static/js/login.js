@@ -3,7 +3,7 @@ function login() {
     var password = $("#password").val();
     var settings = {
         // "url": "http://127.0.0.1:8000/login",
-        //         "url": "http://10.90.14.133:8000/login",
+        // "url": "http://10.90.14.133:8000/login",
         "url": "https://navitaiot.herokuapp.com/login",
 
         "method": "POST",

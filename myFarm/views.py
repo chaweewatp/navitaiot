@@ -28,9 +28,6 @@ firebase = pyrebase.initialize_app(config)
 def index(request):
     return render(request, 'myFarm/index.html')
 
-
-
-
 def home(request):
     print('User access to home page')
     return render(request, 'myFarm/home.html')
@@ -108,7 +105,6 @@ def pageFarm(request, id):
 
     return render(request, 'myFarm/farm.html', context)
 
-
 def history(request, id):
     context={
         'farmName': farm.objects.get(farmCode=id).farmName,
@@ -178,7 +174,7 @@ def farm2(request, tk, farmCode):
                 'initialchk66': relay6Ref.val()['Schedule']['Period6']['pause'],
 
             }
-
+            print(context)
             return render(request, 'myFarm/farm2.html', context)
     return HttpResponse("No farm")
 
