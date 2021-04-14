@@ -17,7 +17,7 @@ function login() {
         localStorage.setItem('tk',response.token)
         localStorage.setItem('farmCode',response.farmCode)
         localStorage.setItem('APIkey',response.APIkey)
-        window.location = "/farm2/" + localStorage.farmCode;
+        window.location = "/farmlist/" + localStorage.tk;
     }).fail((response) => {
         alert("Incorrect username or password")
     });

@@ -9,6 +9,9 @@ urlpatterns = [
     path('history/<id>/', views.history, name='history'),
     path('index/', views.index, name='index'),
     path('farm2/<farmCode>', views.farm2, name='farm2'),
-    path('history2/<farmCode>/', views.history2, name='history2'),
+    path('history2/<farmCode>', views.history2, name='history2'),
+    path('farmlist/<tk>/', views.farmlist, name='farmlist'),
+    path('farmlist/<tk>/farm/<farmCode>/', views.farm2, name='farm2'),
+    path('farmlist/<tk>/farm/<farmCode>/history', views.history3, name='history3'),
 
 ]
