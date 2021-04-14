@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<div class="container-fluid">
+    {# farm detail part#}
+    <div class="row">
+        <div class="col-xs-12">
+
+            My list farm<br>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+
+            {% if listFarm %}
+                <div class="row">
+                    {% for item in listFarm %}
+                        <div class="col-xs-4">
+                            <div class="card" style="width: 18rem;">
+                                <img src="https://static-s.aa-cdn.net/img/ios/1512717491/cb9ea5cdf869bb50ccb95c29e1c4b8b5?v=1"
+                                     class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ item.farmCode }}</h5>
+                                    <p class="card-text">{{ item.lastTime }}</p>
+                                    <a href="farm/{{ item.farmCode }}" class="btn btn-primary">Go to farm</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                There is no farm <br>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

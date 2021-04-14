@@ -83,7 +83,6 @@ def login(request):
         return Response({
             'token': token.key,
             'name':'Miss Jingjai Sawasdee',
-            'farmCode':'AA0002',
             'APIkey':"AIzaSyCs9xyouIlR_7SBQwCpL_Bde22ZDC4vpWM"},
             status.HTTP_200_OK)
     except ValueError as e:
@@ -365,3 +364,9 @@ def controlRelay(request):
 
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+@permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
+def getHistory(request):
+    return Response("OK2")
