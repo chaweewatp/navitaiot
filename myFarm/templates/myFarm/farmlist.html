@@ -34,7 +34,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">{{ item.farmCode }}</h5>
                                     <p class="card-text">{{ item.lastTime }}</p>
-                                    <a href="farm/{{ item.farmCode }}" class="btn btn-primary">Go to farm</a>
+                                    <a  class="btn btn-primary" onclick="goFarm(farmCode='{{ item.farmCode }}')">Go to farm</a>
                                 </div>
                             </div>
                         </div>
@@ -49,4 +49,11 @@
 </div>
 
 </body>
+<script>
+    function goFarm(farmCode) {
+        localStorage.farmCode=farmCode
+        window.location = "farm/" + farmCode;
+
+    }
+</script>
 </html>
