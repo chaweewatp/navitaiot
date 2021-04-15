@@ -1,7 +1,6 @@
 from django.urls import path, include
 from . import views
 
-from .__init__ import  client
 
 
 urlpatterns = [
@@ -19,9 +18,5 @@ urlpatterns = [
     path('returnJob/', views.returnJob, name='returnJob'),
     path('getJob/<id>', views.getJob, name='getJob'),
     path('removeJob/<id>', views.removeJob, name='removeJob'),
-
 ]
 
-print('start MQTT client')
-client.loop_start()
-print('MQTT client started')
