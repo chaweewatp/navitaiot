@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from myiot.__init__ import  client
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -22,3 +23,7 @@ urlpatterns = [
     path('', include('myFarm.urls')),
     path('', include('myAPI.urls'))
 ]
+
+print('start MQTT client')
+client.loop_start()
+print('MQTT client started')
