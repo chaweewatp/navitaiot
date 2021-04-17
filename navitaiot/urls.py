@@ -24,6 +24,6 @@ urlpatterns = [
     path('', include('myAPI.urls'))
 ]
 
-print('start MQTT client')
-client.loop_start()
-print('MQTT client started')
+# print('start MQTT client')
+# client.loop_start()
+# print('MQTT client started')

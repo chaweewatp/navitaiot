@@ -313,6 +313,7 @@ def sendToMQTT(client, userdata, msg):
     client.publish(mqttTopic, str(response['return']))
 
 
+
 client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
@@ -320,9 +321,9 @@ client.on_message = on_message
 client.username_pw_set("hjjfrnei:hjjfrnei", password='2YTkbiI66pGxct-1sG2r2grx2yT7sAXj')
 client.connect("jaguar.rmq.cloudamqp.com", 1883, 60)
 
-# print('start MQTT client')
-# client.loop_start()
-# print('MQTT client started')
+print('start MQTT client')
+client.loop_start()
+print('MQTT client started')
 
 # from django_apscheduler.jobstores import DjangoJobStore
 # from django_apscheduler.models import DjangoJobExecution
@@ -334,3 +335,9 @@ scheduler.start()
 
 # from .foo import foo
 # foo()
+
+
+
+
+
+
