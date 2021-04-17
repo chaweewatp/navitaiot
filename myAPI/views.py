@@ -28,9 +28,11 @@ import json
 
 # from .mqtt import client, sendToMQTT
 from myiot.__init__ import client
+# from navitaiot.__init__ import client
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from myiot.__init__ import scheduler
+# from navitaiot.__init__ import scheduler
 
 from apscheduler.triggers.cron import CronTrigger
 from django_apscheduler.models import DjangoJobExecution

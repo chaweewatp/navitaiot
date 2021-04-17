@@ -7,7 +7,10 @@
 {#    <link rel="stylesheet" href="{% static  'css/landingPage.css' %}">#}
 {#    <link rel="stylesheet" href="{% static 'css/landingPageFonts.css' %}">#}
 {#    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">#}
-{#    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>#}
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 {#    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>#}
         <title>Title</title>
@@ -15,16 +18,36 @@
 </head>
 <body>
   <div class="body">
-      <div class="container-fluid">
-        <div class="row">
-            <div class="col-xs-12 col-md12 text-title">
-                NAVITA-IOT
-            </div>
-        </div>
-
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">FarmConnect</a>
     </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Home</a></li>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1 <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Page 1-1</a></li>
+          <li><a href="#">Page 1-2</a></li>
+          <li><a href="#">Page 1-3</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Page 2</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+      <li><a href="/index/"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    </ul>
   </div>
+</nav>
 
+        <div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12">
+            Welcome to FarmConnect
+        </div>
+    </div>
+        </div>
 {#  <script src="../../static/js/vendor/modernizr-3.8.0.min.js"></script>#}
 {#  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>#}
 {#  <script>window.jQuery || document.write('<script src="./js/vendor/jquery-3.4.1.min.js"><\/script>')</script>#}
