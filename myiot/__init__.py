@@ -313,15 +313,12 @@ def sendToMQTT(client, userdata, msg):
     client.publish(mqttTopic, str(response['return']))
 
 
-
+print('start MQTT client')
 client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
-
 client.username_pw_set("hjjfrnei:hjjfrnei", password='2YTkbiI66pGxct-1sG2r2grx2yT7sAXj')
 client.connect("jaguar.rmq.cloudamqp.com", 1883, 60)
-
-print('start MQTT client')
 client.loop_start()
 print('MQTT client started')
 
