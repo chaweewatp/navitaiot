@@ -18,5 +18,7 @@ urlpatterns = [
     path('returnJob/', views.returnJob, name='returnJob'),
     path('getJob/<id>', views.getJob, name='getJob'),
     path('removeJob/<id>', views.removeJob, name='removeJob'),
+    path('sendTestMQTT/<clientID>', views.sendTestMQTT, name='sendTestMQTT'),
+
 ]
 
