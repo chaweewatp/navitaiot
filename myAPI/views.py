@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.db import close_old_connections
 
+from django_apscheduler.models import DjangoJob
 
 from rest_framework.decorators import api_view
 from rest_framework.decorators import permission_classes
@@ -392,15 +393,21 @@ def getJobs(request):
         for item in farm.objects.filter(farmUser=user):
             if item.farmCode==data["farmCode"]:
                 for period in ['1','2','3','4','5','6']:
-                    # AA0002_relay1_period1_Off
-                    jobOn = scheduler.get_job(job_id='{}_{}_period{}_On'.format(data['farmCode'], data['relay'],period))
-                    jobOff= scheduler.get_job(job_id='{}_{}_period{}_Off'.format(data['farmCode'], data['relay'], period))
-                    print(jobOn)
-                    print(jobOff)
-                    if jobOn is not None:
-                        detail['schedule']['period{}'.format(period)]['On'].update({'id':jobOn.id, 'next_run':jobOn.next_run_time})
-                    if jobOff is not None:
-                        detail['schedule']['period{}'.format(period)]['Off'].update({'id':jobOff.id, 'next_run':jobOff.next_run_time})
+                    try:
+                        jobOn=DjangoJob.objects.get(id='{}_relay{}_period{}_On'.format(data['farmCode'], data['relay'],period))
+                        jobOff= DjangoJob.objects.get(id='{}_relay{}_period{}_Off'.format(data['farmCode'], data['relay'], period))
+
+                        # AA0002_relay1_period1_Off
+                        # jobOn = scheduler.get_job(job_id='{}_{}_period{}_On'.format(data['farmCode'], data['relay'],period))
+                        # jobOff= scheduler.get_job(job_id='{}_{}_period{}_Off'.format(data['farmCode'], data['relay'], period))
+                        print(jobOn)
+                        print(jobOff)
+                        if jobOn is not None:
+                            detail['schedule']['period{}'.format(period)]['On'].update({'id':jobOn.id, 'next_run':jobOn.next_run_time})
+                        if jobOff is not None:
+                            detail['schedule']['period{}'.format(period)]['Off'].update({'id':jobOff.id, 'next_run':jobOff.next_run_time})
+                    except:
+                        pass
                 # for job in scheduler.get_jobs():
                 #     print(job.id)
                 #     print(job.name)
