@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '-pe5g$#y#8x%%^58&1*^5haqq3)8ljux8x+w6qauv*z(xht$g_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -39,9 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_apscheduler',
     'myFarm',
-    'myiot',
+    'myiot.apps.MyiotConfig',
+    'django_apscheduler',
     'corsheaders',
     'rest_framework',  # add DRF
     'rest_framework.authtoken',  # add token authentication
