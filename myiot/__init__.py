@@ -337,7 +337,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 
 scheduler = BackgroundScheduler()
 # scheduler.add_jobstore(DjangoJobStore(), "default")
-scheduler.start()
+# scheduler.start()
 
 # from .foo import foo
 # foo()
