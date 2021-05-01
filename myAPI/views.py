@@ -372,3 +372,40 @@ def controlRelay(request):
 @permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
 def getHistory(request):
     return Response("OK2")
+
+
+@api_view(['POST'])
+@permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
+def getJobs(request):
+    print("function getJobs")
+    data = json.loads(str(request.body, encoding='utf-8'))
+    detail={'farmCode':data["farmCode"], 'relay':data['relay'],
+            'schedule':{'period1':{'On':{},'Off':{}},
+                        'period2': {'On': {}, 'Off': {}},
+                        'period3': {'On': {}, 'Off': {}},
+                        'period4': {'On': {}, 'Off': {}},
+                        'period5': {'On': {}, 'Off': {}},
+                        'period6': {'On': {}, 'Off': {}},
+                        }}
+    try:
+        user = Token.objects.get(key=data['token']).user
+        for item in farm.objects.filter(farmUser=user):
+            if item.farmCode==data["farmCode"]:
+                for period in ['1','2','3','4','5','6']:
+                    # AA0002_relay1_period1_Off
+                    jobOn = scheduler.get_job(job_id='{}_{}_period{}_On'.format(data['farmCode'], data['relay'],period))
+                    jobOff= scheduler.get_job(job_id='{}_{}_period{}_Off'.format(data['farmCode'], data['relay'], period))
+                    print(jobOn)
+                    print(jobOff)
+                    if jobOn is not None:
+                        detail['schedule']['period{}'.format(period)]['On'].update({'id':jobOn.id, 'next_run':jobOn.next_run_time})
+                    if jobOff is not None:
+                        detail['schedule']['period{}'.format(period)]['Off'].update({'id':jobOff.id, 'next_run':jobOff.next_run_time})
+                # for job in scheduler.get_jobs():
+                #     print(job.id)
+                #     print(job.name)
+                #     print(job.next_run_time)
+
+        return Response({'detail':detail})
+    except ValueError as e:
+        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)

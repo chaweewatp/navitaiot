@@ -24,6 +24,7 @@ def on_connect(client, userdata, flags, rc):
     client.subscribe("reportRelay")
     client.subscribe("reportListRelay")
     client.subscribe("wakeUp")
+    client.subscribe("TestWiFiBoard")
 
 
 def on_message(client, userdata, msg):
@@ -35,6 +36,10 @@ def on_message(client, userdata, msg):
     # print(msg.topic)
     # print("message data :")
     # print(data)
+
+    if msg.topic=="TestWiFiBoard":
+        print('message recieve ' + data)
+
     if msg.topic == "wakeUp":
         farmID = data.split('/')[0]
         content = data.split('/')[1]
@@ -311,6 +316,10 @@ def sendToMQTT(client, userdata, msg):
     # print("-----------------------------------------")
 
     client.publish(mqttTopic, str(response['return']))
+
+
+
+
 
 
 print('start MQTT client')

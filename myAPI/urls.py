@@ -9,4 +9,5 @@ urlpatterns = [
     path('setMode2/', views.setMode2, name='setMode2'),
     path('controlRelay/', views.controlRelay, name='controlRelay'),
     path('createJobSchedule/', views.createJobSchedule, name='createJobSchedule'),
+    path('getJobs/', views.getJobs, name='getJobs'),
 ]

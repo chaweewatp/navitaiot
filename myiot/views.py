@@ -232,6 +232,18 @@ def updateFirebase(request, farmID, text):
 #     print('Body Data: "%s"' % request.body)
 #     return HttpResponse("OK")
 
+@api_view(['POST'])
+@permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
+def sendTestMQTT(request, clientID):
+    topic=clientID
+    msg='testMsg'
+    client.publish(topic, msg)
+    print('Message publish to ' + clientID + ", msg :" + msg)
+    print()
+    return HttpResponse("ON")
+
+
+
 def sendCommandONLED():
     print("function sendCommandONLED")
 
