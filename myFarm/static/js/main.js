@@ -9,6 +9,7 @@ jQuery(document).ready(function () {
 
 });
 
+
 function getFarmDetail() {
     console.log(localStorage.farmID)
     console.log(localStorage.tk)
@@ -34,7 +35,7 @@ function setModeRelay(relay, mode, farmCode) {
         body: raw,
         redirect: 'follow'
     };
-        // fetch("http://127.0.0.1:8000/setMode/", requestOptions)
+    // fetch("http://127.0.0.1:8000/setMode/", requestOptions)
 
     fetch("https://navitaiot.herokuapp.com/setMode2/", requestOptions)
         .then(response => response.text())
@@ -794,4 +795,87 @@ function scheduleSet(relay_num, period, farmCode) {
 }
 
 
+function getJob(farmCode, relay_num) {
+//     // var farmCode=farmCode;
+//     // var relay_num=relay_num
+//                     alert('message')
+//
+//     var myHeaders = new Headers();
+//     myHeaders.append("Content-Type", "application/json");
+//     var raw = JSON.stringify({
+//         "farmCode": farmCode,
+//         "token": localStorage.tk,
+//         "relay": relay_num,
+//     });
+//
+//     var requestOptions = {
+//         method: 'POST',
+//         headers: myHeaders,
+//         body: raw,
+//         redirect: 'follow'
+//     };
+//     fetch("http://127.0.0.1:8000/getJobs/", requestOptions)
+// .then((res) => res.text())
+// .then(console.log.bind(console))
+// .catch(console.error.bind(console));
 
+    jQuery.ajax({
+    url: "http://127.0.0.1:8000/getJobs/",
+    type: "POST",
+    headers: {
+        "Content-Type": "application/json; charset=utf-8",
+    },
+    contentType: "application/json",
+    data: JSON.stringify({
+        "token": localStorage.tk,
+        "farmCode": farmCode,
+        "relay": relay_num
+    })
+})
+.done(function(data, textStatus, jqXHR) {
+    console.log("HTTP Request Succeeded: " + jqXHR.status);
+    console.log(data);
+    console.log(data['schedule'])
+    console.log(data['schedule']['period1'])
+    var newLine = "\r\n"
+
+    var msg = "ตารางการทำงาน"
+
+    msg += newLine;
+    msg += "ช่วง 1 เปิด "+data['schedule']['period1']['On']['next_run'].toString();
+    msg += newLine;
+    msg += "ช่วง 1 ปิด "+data['schedule']['period1']['Off']['next_run'].toString();
+    msg += newLine;
+    msg += "ช่วง 2 เปิด "+data['schedule']['period2']['On']['next_run'].toString();
+    msg += newLine;
+    msg += "ช่วง 2 ปิด "+data['schedule']['period2']['Off']['next_run'].toString();
+    msg += newLine;
+    msg += "ช่วง 3 เปิด "+data['schedule']['period3']['On']['next_run'].toString();
+    msg += newLine;
+    msg += "ช่วง 3 ปิด "+data['schedule']['period3']['Off']['next_run'].toString();
+    msg += newLine;
+    msg += "ช่วง 4 เปิด "+data['schedule']['period4']['On']['next_run'].toString();
+    msg += newLine;
+    msg += "ช่วง 4 ปิด "+data['schedule']['period4']['Off']['next_run'].toString();
+    msg += newLine;
+    msg += "ช่วง 5 เปิด "+data['schedule']['period5']['On']['next_run'].toString();
+    msg += newLine;
+    msg += "ช่วง 5 ปิด "+data['schedule']['period5']['Off']['next_run'].toString();
+    msg += newLine;
+    msg += "ช่วง 6 เปิด "+data['schedule']['period6']['On']['next_run'].toString();
+    msg += newLine;
+    msg += "ช่วง 6 ปิด "+data['schedule']['period6']['Off']['next_run'].toString();
+    alert(msg);
+
+})
+.fail(function(jqXHR, textStatus, errorThrown) {
+    console.log("HTTP Request Failed");
+})
+.always(function() {
+    /* ... */
+});
+
+
+
+
+}

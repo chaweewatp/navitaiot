@@ -375,12 +375,17 @@ def getHistory(request):
     return Response("OK2")
 
 
+def convNextruntime(oldTime):
+    newTime=oldTime+ datetime.timedelta(hours=7)
+    # return "{}/{}/{} {}-{}".format(newTime.day, newTime.month, newTime.year, newTime.hour, newTime.minute)
+    return "{}/{}/{} {}:{}".format(newTime.day, newTime.month, newTime.year, newTime.hour, newTime.minute)
+
 @api_view(['POST'])
 @permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
 def getJobs(request):
     print("function getJobs")
     data = json.loads(str(request.body, encoding='utf-8'))
-    detail={'farmCode':data["farmCode"], 'relay':data['relay'],
+    return_json={'farmCode':data["farmCode"], 'relay':data['relay'],
             'schedule':{'period1':{'On':{},'Off':{}},
                         'period2': {'On': {}, 'Off': {}},
                         'period3': {'On': {}, 'Off': {}},
@@ -393,26 +398,36 @@ def getJobs(request):
         for item in farm.objects.filter(farmUser=user):
             if item.farmCode==data["farmCode"]:
                 for period in ['1','2','3','4','5','6']:
+                    print(period)
+
                     try:
                         jobOn=DjangoJob.objects.get(id='{}_relay{}_period{}_On'.format(data['farmCode'], data['relay'],period))
                         jobOff= DjangoJob.objects.get(id='{}_relay{}_period{}_Off'.format(data['farmCode'], data['relay'], period))
-
-                        # AA0002_relay1_period1_Off
-                        # jobOn = scheduler.get_job(job_id='{}_{}_period{}_On'.format(data['farmCode'], data['relay'],period))
-                        # jobOff= scheduler.get_job(job_id='{}_{}_period{}_Off'.format(data['farmCode'], data['relay'], period))
                         print(jobOn)
-                        print(jobOff)
-                        if jobOn is not None:
-                            detail['schedule']['period{}'.format(period)]['On'].update({'id':jobOn.id, 'next_run':jobOn.next_run_time})
-                        if jobOff is not None:
-                            detail['schedule']['period{}'.format(period)]['Off'].update({'id':jobOff.id, 'next_run':jobOff.next_run_time})
+                        print(jobOn.next_run_time)
+                        print(type(jobOn.next_run_time))
+
+                        if jobOn.next_run_time is not None:
+                            return_json['schedule']['period{}'.format(period)]['On'].update({'id':jobOn.id, 'next_run':convNextruntime(jobOn.next_run_time)})
+                        else:
+                            return_json['schedule']['period{}'.format(period)]['On'].update(
+                                {'id': jobOn.id, 'next_run': '---------'})
+                        if jobOff.next_run_time is not None:
+                            return_json['schedule']['period{}'.format(period)]['Off'].update({'id':jobOff.id, 'next_run':convNextruntime(jobOff.next_run_time)})
+                        else:
+                            return_json['schedule']['period{}'.format(period)]['Off'].update({'id':jobOff.id, 'next_run':'---------'})
+
                     except:
-                        pass
+                        return_json['schedule']['period{}'.format(period)]['On'].update(
+                            {'id': 'none', 'next_run': '---------'})
+                        return_json['schedule']['period{}'.format(period)]['Off'].update(
+                            {'id': 'none', 'next_run': '---------'})
+
                 # for job in scheduler.get_jobs():
                 #     print(job.id)
                 #     print(job.name)
                 #     print(job.next_run_time)
-
-        return Response({'detail':detail})
+        print(return_json)
+        return Response(return_json, status=HTTP_200_OK)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)

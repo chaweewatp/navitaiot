@@ -831,18 +831,20 @@
                             <h5 style="font-size:18px" class="fa">{{ relay1Name }}</h5>
 
                         </button>
-
                         <button type="button" class="btn btn-warning" data-toggle="collapse"
                                 data-target="#Relay1Edit ">
                             <i style="font-size:32px" class="fa">&#xf013;</i>
+                        </button>
 
+                        <button type="button" class="btn btn-warning"
+                                onclick="getJob('{{ farmCode }}', '1')">
+                            <i style="font-size:32px" class="fa">&#xf133;</i>
                         </button>
                     </div>
                 </div>
                 <div class="collapse" id="Relay1Show">
                     {#                    period 1#}
                     <div class="row">
-
                         <div class="col-xs-4" id="R1_Sch1">
                             <span id="R1_Sch1_on"></span> -
                             <span id="R1_Sch1_off"></span>
@@ -951,8 +953,6 @@
                             </button>
                         </div>
                     </div>
-
-
                     {#                    period 5#}
                     <div class="row">
                         <div class="col-xs-4" id="R1_Sch5">
@@ -1023,10 +1023,15 @@
                         <button type="button" class="btn btn-info" data-toggle="collapse"
                                 data-target="#Relay2Show ">
                             <h5 style="font-size:18px" class="fa">{{ relay2Name }}</h5>
+                                                    </button>
+
 
                             <button type="button" class="btn btn-warning" data-toggle="collapse"
                                     data-target="#Relay2Edit ">
                                 <i style="font-size:32px" class="fa">&#xf013;</i></button>
+                                                <button type="button" class="btn btn-warning"
+                                onclick="getJob('{{ farmCode }}', '2')">
+                            <i style="font-size:32px" class="fa">&#xf133;</i>
                         </button>
                     </div>
                 </div>
@@ -1221,6 +1226,11 @@
                             <i style="font-size:32px" class="fa">&#xf013;</i>
 
                         </button>
+
+                                                <button type="button" class="btn btn-warning"
+                                onclick="getJob('{{ farmCode }}', '3')">
+                            <i style="font-size:32px" class="fa">&#xf133;</i>
+                        </button>
                     </div>
                 </div>
                 <div class="collapse" id="Relay3Show">
@@ -1413,6 +1423,10 @@
                             <i style="font-size:32px" class="fa">&#xf013;</i>
 
                         </button>
+                                                <button type="button" class="btn btn-warning"
+                                onclick="getJob('{{ farmCode }}', '4')">
+                            <i style="font-size:32px" class="fa">&#xf133;</i>
+                        </button>
                     </div>
                 </div>
                 <div class="collapse" id="Relay4Show">
@@ -1603,6 +1617,10 @@
                         <button type="button" class="btn btn-warning" data-toggle="collapse"
                                 data-target="#Relay5Edit ">
                             <i style="font-size:32px" class="fa">&#xf013;</i>
+                        </button>
+                                                <button type="button" class="btn btn-warning"
+                                onclick="getJob('{{ farmCode }}', '5')">
+                            <i style="font-size:32px" class="fa">&#xf133;</i>
                         </button>
                     </div>
                 </div>
@@ -1795,6 +1813,10 @@
                         <button type="button" class="btn btn-warning" data-toggle="collapse"
                                 data-target="#Relay6Edit ">
                             <i style="font-size:32px" class="fa">&#xf013;</i>
+                        </button>
+                                                <button type="button" class="btn btn-warning"
+                                onclick="getJob('{{ farmCode }}', '6')">
+                            <i style="font-size:32px" class="fa">&#xf133;</i>
                         </button>
                     </div>
                 </div>
