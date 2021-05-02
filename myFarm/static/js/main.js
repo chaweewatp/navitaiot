@@ -820,7 +820,9 @@ function getJob(farmCode, relay_num) {
 // .catch(console.error.bind(console));
 
     jQuery.ajax({
-    url: "http://127.0.0.1:8000/getJobs/",
+    // url: "http://127.0.0.1:8000/getJobs/",
+            url: "https://navitaiot.herokuapp.com/getJobs/",
+
     type: "POST",
     headers: {
         "Content-Type": "application/json; charset=utf-8",
