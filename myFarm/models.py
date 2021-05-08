@@ -138,11 +138,12 @@ class valveDevice(models.Model):
 class relayDevice(models.Model):
     farm = models.ForeignKey(farm, on_delete=models.CASCADE)
     relayNumber = models.CharField(max_length=10)
-    # relayName=models.CharField(max_length=20, blank=True, null=True)
-    # maxDurationOn=models.IntegerField(blank=True, null=True, default=120)
+    relayName=models.CharField(max_length=20, blank=True, null=True)
+    maxDurationOn=models.IntegerField(blank=True, null=True, default=120)
     scheduleStatus=models.BooleanField(blank=True, null=True)
     currentStatus=models.BooleanField(blank=True, null=True)
     manualMode=models.BooleanField(blank=True, null=True, default=False)
+
     class Meta:
         ordering = ['farm', 'relayNumber']
     def __str__(self):
