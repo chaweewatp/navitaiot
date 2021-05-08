@@ -202,6 +202,7 @@ def createJobSchedule(request):
                                       ),
                                       id=jobId, replace_existing=True, args=[text], max_instances=1, misfire_grace_time=3600)
                 DjangoJobExecution.objects.filter(job=jobId).delete()
+                #
                 # print("Schedule created {}".format(text))
                 if pause == False:
                     scheduler.resume_job(jobId)
